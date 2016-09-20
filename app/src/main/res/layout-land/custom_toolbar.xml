@@ -1,0 +1,49 @@
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:background="?attr/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/hamburger"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_arrow_back_white_24dp"
+            android:padding="10dp"/>
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/hamburger"
+            android:id="@+id/AppbarTittle"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stores"
+            android:textColor="@color/textcolor"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit ="marquee_forever"
+            android:focusable="true"
+            android:layout_marginRight="100dp"
+            android:focusableInTouchMode="true"
+            android:scrollHorizontally="true"/>
+        <ImageView
+            android:layout_marginRight="16dp"
+            android:id="@+id/logoff"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_power_white_24dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

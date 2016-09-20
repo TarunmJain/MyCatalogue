@@ -1,0 +1,144 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEF1F5"
+    android:descendantFocusability="beforeDescendants"
+    android:fitsSystemWindows="true"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/toolbar"></include>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tool_bar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/content_addcalldetails" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:layout_marginTop="15dp">
+
+                    <com.balysv.materialripple.MaterialRippleLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        app:mrl_rippleAlpha="0.1"
+                        app:mrl_rippleColor="#000000"
+                        app:mrl_rippleDelayClick="true"
+                        app:mrl_rippleDimension="10dp"
+                        app:mrl_rippleDuration="350"
+                        app:mrl_rippleFadeDuration="75"
+                        app:mrl_rippleHover="true"
+                        app:mrl_rippleOverlay="true"
+                        app:mrl_ripplePersistent="false">
+
+                        <Button
+                            android:id="@+id/cancel"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:background="@drawable/accentovalbuttonprimarycolor"
+                            android:padding="10dp"
+                            android:text="CANCEL"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </com.balysv.materialripple.MaterialRippleLayout>
+
+                    <com.balysv.materialripple.MaterialRippleLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        app:mrl_rippleAlpha="0.1"
+                        app:mrl_rippleColor="#000000"
+                        app:mrl_rippleDelayClick="true"
+                        app:mrl_rippleDimension="10dp"
+                        app:mrl_rippleDuration="350"
+                        app:mrl_rippleFadeDuration="75"
+                        app:mrl_rippleHover="true"
+                        app:mrl_rippleOverlay="true"
+                        app:mrl_ripplePersistent="false">
+
+                        <Button
+                            android:id="@+id/saveandnew"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:background="@drawable/accentovalbutton"
+                            android:padding="10dp"
+                            android:text="SAVE AND CREATE FOLLOW-UP TASK"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </com.balysv.materialripple.MaterialRippleLayout>
+
+                    <com.balysv.materialripple.MaterialRippleLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        app:mrl_rippleAlpha="0.1"
+                        app:mrl_rippleColor="#000000"
+                        app:mrl_rippleDelayClick="true"
+                        app:mrl_rippleDimension="10dp"
+                        app:mrl_rippleDuration="350"
+                        app:mrl_rippleFadeDuration="75"
+                        app:mrl_rippleHover="true"
+                        app:mrl_rippleOverlay="true"
+                        app:mrl_ripplePersistent="false">
+
+                        <Button
+                            android:id="@+id/save"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:background="@drawable/accentovalbutton"
+                            android:padding="10dp"
+                            android:text="SAVE"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </com.balysv.materialripple.MaterialRippleLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_pencil_white_24dp"
+        android:visibility="gone" />
+</android.support.design.widget.CoordinatorLayout>

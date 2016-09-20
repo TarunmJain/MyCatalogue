@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.centura_technologies.mystore_seller.MainActivity">
+    <item
+        android:id="@+id/logout"
+        android:title="logout"
+        android:icon="@drawable/ic_power_white_24dp"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/slideshow"
+        android:title="SlideShow"
+        android:icon="@drawable/ic_slideshow_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+
+    <!--<item
+        android:id="@+id/Seacrh"
+        android:title="Seacrh"
+        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />-->
+</menu>

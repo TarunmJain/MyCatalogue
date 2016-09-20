@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:id="@+id/create_task"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Create Task"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:padding="50dp"
+            android:textColor="@color/greytext"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewcolor"/>
+    <LinearLayout
+        android:id="@+id/create_event"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Create Event"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:padding="50dp"
+            android:textColor="@color/greytext"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewcolor"/>
+    <LinearLayout
+        android:id="@+id/create_call"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Create Call"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:padding="50dp"
+            android:textColor="@color/greytext"/>
+    </LinearLayout>
+
+</LinearLayout>

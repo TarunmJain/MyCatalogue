@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_margin="1dp"
+    android:id="@+id/leadpane">
+
+    <ImageView
+        android:id="@+id/deletelead"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_delete_grey600_24dp"
+        android:padding="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"/>
+
+    <TextView
+        android:id="@+id/newcompanyname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Company Name : "
+        android:textSize="14sp"
+        android:textColor="@color/greytext"
+        android:padding="14dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/newfirstname"
+        android:layout_below="@+id/newcompanyname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Name : "
+        android:textSize="14sp"
+        android:textColor="@color/greytext"
+        android:padding="14dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/newlastname"
+        android:layout_below="@+id/newfirstname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name : "
+        android:textSize="14sp"
+        android:textColor="@color/greytext"
+        android:padding="14dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/newphonenumber"
+        android:layout_below="@+id/newlastname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone : "
+        android:textSize="14sp"
+        android:textColor="@color/greytext"
+        android:padding="14dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/leadssource"
+        android:layout_below="@+id/newphonenumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leads Source : "
+        android:textSize="14sp"
+        android:textColor="@color/greytext"
+        android:padding="14dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/leadsstatus"
+        android:layout_below="@+id/leadssource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leads Status : "
+        android:textSize="14sp"
+        android:textColor="@color/greytext"
+        android:padding="14dp"
+        android:layout_marginLeft="5dp"/>
+
+   <!-- <TextView
+        android:id="@+id/contactpersonname"
+        android:layout_below="@+id/leadsstatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact Name : "
+        android:textSize="14sp"
+        android:textColor="@color/greytext"
+        android:padding="14dp"
+        android:layout_marginLeft="5dp"/>
+
+    <TextView
+        android:id="@+id/contactpersonnumber"
+        android:layout_below="@+id/leadsstatus"
+        android:layout_toRightOf="@+id/contactpersonname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact Phone : "
+        android:textSize="14sp"
+        android:textColor="@color/greytext"
+        android:padding="14dp"
+        android:layout_marginLeft="5dp"/>-->
+
+</RelativeLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primarycolordddd">#e6e6e6</color>
+    <color name="primarycolordddeeee">#595959</color>
+    <!--<color name="primarycolor">#273b3f</color>-->
+    <color name="primarycolor">#000000</color>
+    <color name="secondarycolor">#D3D3D3</color>
+    <color name="primarycolordark">#000000</color>
+    <color name="accentcolor">#f37021</color>
+    <color name="whitecolor">#FFFFFF</color>
+    <color name="blackcolor">#000000</color>
+    <color name="view">#dde3ec</color>
+    <color name="textcolor">#ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="textcolor1">#999999</color>
+    <color name="facebookcolor">#3b5998</color>
+    <!-- <color name="primarycolor">#673AB7</color>-->
+    <!--  <color name="primarycolordark">#512DA8</color>-->
+    <!--<color name="primarycolordark">#0097A7</color>
+    <color name="primarycolor">#00BCD4</color>-->
+    <color name="googlecolor">#D84B37</color>
+    <color name="hint">#999999</color>
+    <color name="tabsscrollcolor">#FFFF00</color>
+    <color name="cartadded">#fff412</color>
+    <color name="one">#ec864f</color>
+    <color name="two">#40a7b0</color>
+    <color name="three">#ff7d63</color>
+    <color name="four">#4085b0</color>
+    <color name="lightprimarycolor">#b2dfdb</color>
+    <color name="primarycolorlight">#009688</color>
+    <color name ="viewcolor">#d3d3d3</color>
+    <color name ="accentcolorDark">#EF6C00</color>
+    <color name ="accentcolorRipple">#E65100</color>
+    <color name="primarytext">#212121</color>
+    <color name="secondarytext">#727272</color>
+    <color name="dividercolor">#b6b6b6</color>
+    <color name="none">#88000000</color>
+    <color name="white_light_gray">#BBBBBB</color>
+    <color name="black">#000000</color>
+    <color name="cartbackground">#dddddd</color>
+    <color name="totalamount">#ff3333</color>
+    <color name="price">#D84B37</color>
+    <color name="transparent">#00000000</color>
+    <color name="logibackground">#80000000</color>
+    <color name="thankyoutext">#43A047</color>
+    <color name="expecteddelivery">#FFE082</color>
+    <color name="finalprice">#F44336</color>
+    <color name="texthint">#9E9E9E</color>
+    <color name="circlepagebackground">#15000000</color>
+    <color name="addstoreview">#d3d3d3</color>
+    <color name="greytext">#95000000</color>
+    <color name="drawersub">#54000000</color>
+    <color name="homepageheader">#30000000</color>
+    <color name="carttext">#333</color>
+
+</resources>
