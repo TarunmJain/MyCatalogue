@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.R;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         holder.tittle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Catalogue.search.setText(data.get(position));
+                Catalogue.editsearch.setText(data.get(position));
                 Catalogue.searchicon.performClick();
             }
         });

@@ -2,12 +2,15 @@ package com.centura_technologies.mycatalogue.Catalogue.View;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +33,6 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
     Context mContext;
     ArrayList<CategoryTree> data;
     int openedtab;
-    ArrayList<CategoryTree> categorylist;
     LinearLayoutManager layoutManager;
 
     public SectionlistAdapter(Context context, ArrayList<CategoryTree> model, LinearLayoutManager layoutManager1) {
@@ -38,12 +40,6 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
         this.data = model;
         openedtab = -1;
         layoutManager = layoutManager1;
-        /*categorylist = new ArrayList<Categories>();
-        for (int i = 0; i < DB.getInitialModel().getCategories().size(); i++) {
-            if (DB.getInitialModel().getCategories().get(i).getSectionId().matches(StaticData.SelectedSectionId)) {
-                categorylist.add(DB.getInitialModel().getCategories().get(i));
-            }
-        }*/
     }
 
     @Override
@@ -55,49 +51,27 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
 
     @Override
     public void onBindViewHolder(final SectionlistAdapter.ViewHolder holder, final int position) {
-        holder.catagories1.setText(data.get(position).getTitle());
-        holder.catagories1.setTextColor(Color.parseColor("#FFFFFF"));
-        // holder.catagories1.setTypeface(null, Typeface.NORMAL);
-        // for Normal Text
-        holder.subCatagoriesView.setAdapter(new CategorylistAdapter(mContext,data.get(position).getCategories()));
-        int viewHeight = GenericData.convertDpToPixels(48, mContext);
-        viewHeight = viewHeight * categorylist.size();
-        holder.subCatagoriesView.getLayoutParams().height = viewHeight;
-        holder.subCatagoriesView.setVisibility(View.GONE);
-        holder.arrow.setImageResource(R.drawable.ic_keyboard_arrow_right_white_24dp);
-        Anims.setFadeout(mContext, holder.subCatagoriesView);
-
+        String catagorystring = data.get(position).getTitle();
+        holder.catagories1.setText(catagorystring);
+        GenericData.setImage(data.get(position).getImageUrl(), holder.icon,mContext);
+        holder.gridView.setAdapter(new CategorylistAdapter(mContext, data.get(position).getCategories()));
+        int viewHeight = GenericData.convertDpToPixels(135, mContext);
+        viewHeight = viewHeight * ((data.get(position).getCategories().size() + 1) / 2);
+        holder.gridView.getLayoutParams().height = viewHeight;
+        holder.gridView.setVisibility(View.GONE);
+        Anims.setFadeout(mContext, holder.gridView);
         if (openedtab == position) {
-            // holder.catagories1.setTypeface(null, Typeface.BOLD);
-            holder.catagories1.setTextColor(Color.parseColor("#FFFFFF"));
-            holder.subCatagoriesView.setVisibility(View.VISIBLE);
-            Anims.setfadein(mContext, holder.subCatagoriesView);
-            holder.arrow.setImageResource(R.drawable.ic_keyboard_arrow_down_white_24dp);
+            holder.gridView.setVisibility(View.VISIBLE);
+            Anims.setfadein(mContext, holder.gridView);
         }
-
-        /*if (StaticData.SelectedSection) {
-            holder.subCatagoriesView.setAdapter(new CategorylistAdapter(mContext));
-            int viewHeight1 = GenericData.convertDpToPixels(48, mContext);
-            viewHeight1 = viewHeight1 * categorylist.size();
-            holder.subCatagoriesView.getLayoutParams().height = viewHeight;
-            holder.subCatagoriesView.setVisibility(View.VISIBLE);
-        }*/
-
-/*
-        //remove if no subcategory
-        if(catagories.get(position).getSubCategories().size()==0)
-            holder.pane.setVisibility(View.GONE);
-        else
-            holder.pane.setVisibility(View.VISIBLE);*/
-
         holder.pane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (categorylist.size() == 0) {
+                if (data.get(position).getCategories().size() == 0) {
                     //callApi(catagories.get(position).getId(), Urls.CatagoryProducts, "CategoryId");
-                } else if (categorylist.size() == 1) {
-                    // callApi(catagories.get(position).getSubCategories().get(0).getId(), Urls.SubCatagoryProducts, "SubCategoryId");
-                } else {
+                } else if (data.get(position).getCategories().size() == 1) {
+                    //callApi(catagories.get(position).getSubCategories().get(0).getId(), Urls.SubCatagoryProducts, "SubCategoryId");
+                }else {
                     layoutManager.scrollToPositionWithOffset(position, 0);
                     if (openedtab != position) {
                         openedtab = position;
@@ -118,18 +92,18 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView catagories1;
-        ImageView arrow;
-        ListView subCatagoriesView;
+        ImageView icon;
+        GridView gridView;
         LinearLayoutManager layoutManager;
-        RelativeLayout pane;
+        CardView pane;
 
         public ViewHolder(View v) {
             super(v);
             layoutManager = new LinearLayoutManager(mContext);
-            pane = (RelativeLayout) v.findViewById(R.id.catagoryPane);
-            catagories1 = (TextView) v.findViewById(R.id.catagoriestext);
-            arrow = (ImageView) v.findViewById(R.id.arrow);
-            subCatagoriesView = (ListView) v.findViewById(R.id.subcatagoriesView);
+            pane = (CardView) itemView.findViewById(R.id.catagoryPane);
+            catagories1 = (TextView) itemView.findViewById(R.id.catagoriestext);
+            icon = (ImageView) itemView.findViewById(R.id.catagoriesimage);
+            gridView = (GridView) itemView.findViewById(R.id.gridview);
         }
     }
 }

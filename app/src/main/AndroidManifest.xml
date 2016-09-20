@@ -45,6 +45,8 @@
             android:screenOrientation="landscape"/>
         <activity android:name=".Activity.Controller.ActivityList"
             android:screenOrientation="landscape"/>
+        <activity android:name=".Catalogue.Controller.Catalogue"
+            android:screenOrientation="landscape"/>
         <activity android:name=".Activity.Controller.AddCall"
             android:screenOrientation="landscape"/>
         <activity android:name=".Activity.Controller.AddEvent"

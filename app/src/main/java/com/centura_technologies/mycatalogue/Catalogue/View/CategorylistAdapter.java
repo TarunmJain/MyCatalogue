@@ -1,6 +1,7 @@
 package com.centura_technologies.mycatalogue.Catalogue.View;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class CategorylistAdapter  extends BaseAdapter {
         } else {
             holder = (ViewHolder) vi.getTag();
         }
-        holder.pane = (LinearLayout) vi.findViewById(R.id.SubCatagoryPane);
+        holder.pane = (CardView) vi.findViewById(R.id.SubCatagoryPane);
         holder.subCatagory = (TextView) vi.findViewById(R.id.textView1);
         holder.subCatagory.setText(categorylist.get(position).getTitle());
         holder.imageView1=(ImageView)vi.findViewById(R.id.imageView1);
@@ -87,7 +88,7 @@ public class CategorylistAdapter  extends BaseAdapter {
     }
 
     static class ViewHolder {
-        LinearLayout pane;
+        CardView pane;
         TextView subCatagory;
         ImageView imageView1;
     }

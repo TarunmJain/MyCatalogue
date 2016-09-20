@@ -52,10 +52,11 @@ import java.util.List;
  */
 public class Catalogue extends AppCompatActivity {
     Toolbar toolbar;
-    ImageView filtericon, categoryicon, listicon, searchicon;
+    ImageView filtericon, categoryicon, listicon;
+    public static ImageView searchicon;
     RelativeLayout nocategory, quickview;
     static LinearLayout searchlayout, filterlayout, categorylayout, productlayout;
-    EditText editsearch;
+    public static EditText editsearch;
     Spinner spinner;
     FloatingActionButton fab;
     static RecyclerView recyclerview, recyclerview1, catagoriesrecyclerview, productsrecyclerview, filterrecyclerview;

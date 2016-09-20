@@ -3,62 +3,82 @@
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <!--<android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
+    <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        card_view:cardCornerRadius="2dp"
-        android:padding="10dp">-->
-
-    <android.support.v7.widget.CardView
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:id="@+id/catagoryPane"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="2dp">
-
-        <ImageView
-            android:id="@+id/arrow"
-            android:padding="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_keyboard_arrow_right_white_24dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
-        <TextView
-            android:layout_toLeftOf="@+id/arrow"
-            android:id="@+id/catagoriestext"
+        android:layout_height="wrap_content"
+        app:mrl_rippleOverlay="true"
+        app:mrl_rippleColor="#000000"
+        app:mrl_rippleAlpha="0.1"
+        app:mrl_rippleDimension="10dp"
+        app:mrl_rippleHover="true"
+        app:mrl_rippleDuration="350"
+        app:mrl_rippleFadeDuration="75"
+        app:mrl_rippleDelayClick="true"
+        app:mrl_ripplePersistent="false">
+        <android.support.v7.widget.CardView
+            android:id="@+id/catagoryPane"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Text"
-            android:textSize="20sp"
-            android:padding="20dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:singleLine="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:scrollHorizontally="true"/>
+            android:background="@color/white"
+            android:layout_height="100dp">
+            <RelativeLayout
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:id="@+id/imagelayout"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/catagoriesimage"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/noimage"
+                    android:layout_marginLeft="100dp"
+                    android:layout_centerVertical="true"
+                    android:background="@color/transparent" />
+                <TextView
+                    android:layout_toRightOf="@+id/catagoriesimage"
+                    android:textSize="18sp"
+                    android:layout_margin="5dp"
+                    android:id="@+id/catagoriestext"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/black"
+                    android:text="Text"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:scrollHorizontally="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="match_parent">
 
-    </android.support.v7.widget.CardView>
+            </RelativeLayout>
 
-    <ListView
-        android:background="#DDDDDD"
-        android:divider="@color/white"
-        android:id="@+id/subcatagoriesView"
+        </android.support.v7.widget.CardView>
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="1dp"
+        android:background="@color/viewcolor"/>
+
+    <GridView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"
+        android:gravity="center"
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"/>
+
+
 </LinearLayout>
