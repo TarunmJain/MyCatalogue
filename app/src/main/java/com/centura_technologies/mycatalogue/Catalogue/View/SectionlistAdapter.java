@@ -55,21 +55,32 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
         holder.catagories1.setText(catagorystring);
         GenericData.setImage(data.get(position).getImageUrl(), holder.icon,mContext);
         holder.gridView.setAdapter(new CategorylistAdapter(mContext, data.get(position).getCategories()));
-        int viewHeight = GenericData.convertDpToPixels(135, mContext);
-        viewHeight = viewHeight * ((data.get(position).getCategories().size() + 1) / 2);
+        int viewHeight = GenericData.convertDpToPixels(460, mContext);
+        viewHeight = viewHeight * ((data.get(position).getCategories().size() + 1) / 3);
         holder.gridView.getLayoutParams().height = viewHeight;
-        holder.gridView.setVisibility(View.GONE);
-        Anims.setFadeout(mContext, holder.gridView);
-        if (openedtab == position) {
-            holder.gridView.setVisibility(View.VISIBLE);
-            Anims.setfadein(mContext, holder.gridView);
-        }
+        holder.gridView.setVisibility(View.VISIBLE);
         holder.pane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (data.get(position).getCategories().size() == 0) {
+                    layoutManager.scrollToPositionWithOffset(position, 0);
+                    if (openedtab != position) {
+                        openedtab = position;
+                        notifyDataSetChanged();
+                    } else {
+                        openedtab = -1;
+                        notifyDataSetChanged();
+                    }
                     //callApi(catagories.get(position).getId(), Urls.CatagoryProducts, "CategoryId");
                 } else if (data.get(position).getCategories().size() == 1) {
+                    layoutManager.scrollToPositionWithOffset(position, 0);
+                    if (openedtab != position) {
+                        openedtab = position;
+                        notifyDataSetChanged();
+                    } else {
+                        openedtab = -1;
+                        notifyDataSetChanged();
+                    }
                     //callApi(catagories.get(position).getSubCategories().get(0).getId(), Urls.SubCatagoryProducts, "SubCategoryId");
                 }else {
                     layoutManager.scrollToPositionWithOffset(position, 0);

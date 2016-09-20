@@ -58,7 +58,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
     @Override
     public void onBindViewHolder(final CatalogueAdapter.ViewHolder holder, final int position) {
         GenericData.setImage(products.get(position).getImageUrl(), holder.image, mContext);
-        holder.title.setText(GenericData.Concatinate(products.get(position).getTitle(), 20));
+        holder.title.setText(products.get(position).getTitle());
         if (StaticData.ProductsInList) {
             product_specification.setLayoutManager(new LinearLayoutManager(mContext));
             holder.image.setOnClickListener(new View.OnClickListener() {
