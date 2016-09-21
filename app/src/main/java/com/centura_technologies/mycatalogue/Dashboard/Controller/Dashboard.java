@@ -97,7 +97,7 @@ public class Dashboard extends AppCompatActivity {
         DrawerOnClicks();
 
         tree=new ArrayList<CategoryTree>();
-
+        DB.setTreelist(tree);
         for(int i=0;i<DB.getInitialModel().getSections().size();i++){
             id=DB.getInitialModel().getSections().get(i).getId();
             model=new CategoryTree(); 

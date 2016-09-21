@@ -73,7 +73,6 @@ public class SectionCatalogue extends AppCompatActivity {
         }
         recyclerView.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,3));
         category_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3));
-
         InitialzationSectionAdapter(SectionCatalogue.this);
 
         if(Section_to_Category){
