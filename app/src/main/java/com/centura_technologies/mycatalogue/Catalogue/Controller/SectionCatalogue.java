@@ -1,5 +1,6 @@
 package com.centura_technologies.mycatalogue.Catalogue.Controller;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,10 +14,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.View.SectionCatalogueAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
+
+import java.util.ArrayList;
 
 /**
  * Created by Centura User1 on 31-08-2016.
@@ -26,7 +31,11 @@ public class SectionCatalogue extends AppCompatActivity {
     DrawerLayout Drawer;
     ActionBarDrawerToggle mDrawerToggle;
     SharedPreferences sharedPreferences;
-    RecyclerView recyclerView;
+    static RecyclerView recyclerView;
+    static RecyclerView category_recyclerview;
+    public static ArrayList<CategoryTree> categories;
+    public static ArrayList<Categories> category=new ArrayList<Categories>();
+    public static boolean Section_to_Category=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,10 +65,38 @@ public class SectionCatalogue extends AppCompatActivity {
         mDrawerToggle.syncState();
 
         recyclerView=(RecyclerView)findViewById(R.id.section_recyclerview);
+        category_recyclerview=(RecyclerView)findViewById(R.id.category_recyclerview);
+
+        categories=new ArrayList<CategoryTree>();
+        for(int i=0;i<DB.getTreelist().size();i++){
+            categories.add(DB.getTreelist().get(i));
+        }
         recyclerView.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,3));
-        recyclerView.setAdapter(new SectionCatalogueAdapter(SectionCatalogue.this, DB.getInitialModel().getSections()));
+        category_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3));
+
+        InitialzationSectionAdapter(SectionCatalogue.this);
+
+        if(Section_to_Category){
+            InitialzationSectionAdapter(SectionCatalogue.this);
+        }else {
+            InitialzationCategoryAdapter(SectionCatalogue.this);
+        }
 
         GenericData.DrawerOnClicks(SectionCatalogue.this);
+    }
+
+    public static void InitialzationCategoryAdapter(Context context){
+        category_recyclerview.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        Section_to_Category=false;
+        category_recyclerview.setAdapter(new SectionCatalogueAdapter(context));
+    }
+
+    public static void InitialzationSectionAdapter(Context context){
+        recyclerView.setVisibility(View.VISIBLE);
+        category_recyclerview.setVisibility(View.GONE);
+        Section_to_Category=true;
+        recyclerView.setAdapter(new SectionCatalogueAdapter(context));
     }
 
     @Override

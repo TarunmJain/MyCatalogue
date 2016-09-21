@@ -12,6 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
@@ -25,11 +28,16 @@ import java.util.ArrayList;
  */
 public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalogueAdapter.ViewHolder> {
     Context mContext;
-    ArrayList<Sections> data;
+    ArrayList<CategoryTree> data;
+    ArrayList<Categories> model;
 
-    public SectionCatalogueAdapter(Context context, ArrayList<Sections> model) {
+    public SectionCatalogueAdapter(Context context) {
         this.mContext = context;
-        this.data = model;
+        if(SectionCatalogue.Section_to_Category){
+            this.data = SectionCatalogue.categories;
+        }else {
+            this.model=SectionCatalogue.category;
+        }
     }
 
     @Override
@@ -41,25 +49,41 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
 
     @Override
     public void onBindViewHolder(SectionCatalogueAdapter.ViewHolder holder, final int position) {
-        GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
-        holder.text.setText(data.get(position).getTitle());
-        holder.categoryImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StaticData.SelectedSectionId = data.get(position).getId();
-                StaticData.position=position;
-                StaticData.SelectedSection=true;
-                if(DB.getInitialModel().getProducts().size()!=0) {
-                    mContext.startActivity(new Intent(mContext, Catalogue.class));
-                }else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
-                Toast.makeText(mContext, StaticData.SelectedSectionId, Toast.LENGTH_SHORT).show();
-            }
-        });
+        if(SectionCatalogue.Section_to_Category){
+            GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
+            holder.text.setText(data.get(position).getTitle());
+            holder.categoryImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SectionCatalogue.category=data.get(position).getCategories();
+                    SectionCatalogue.InitialzationCategoryAdapter(mContext);
+                }
+            });
+        }else {
+            GenericData.setImage(model.get(position).getImageUrl(), holder.categoryImage, mContext);
+            holder.text.setText(model.get(position).getTitle());
+            holder.categoryImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    StaticData.SelectedCategoryId = model.get(position).getId();
+                    StaticData.position=position;
+                    if(DB.getInitialModel().getProducts().size()!=0) {
+                        mContext.startActivity(new Intent(mContext, Catalogue.class));
+                    }else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, StaticData.SelectedSectionId, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        if(SectionCatalogue.Section_to_Category){
+            return data.size();
+        }else {
+            return model.size();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
