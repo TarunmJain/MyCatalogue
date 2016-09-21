@@ -78,24 +78,24 @@ public class SectionCatalogue extends AppCompatActivity {
         if(Section_to_Category){
             InitialzationSectionAdapter(SectionCatalogue.this);
         }else {
-            InitialzationCategoryAdapter(SectionCatalogue.this);
+            InitialzationCategoryAdapter(SectionCatalogue.this,null);
         }
 
         GenericData.DrawerOnClicks(SectionCatalogue.this);
     }
 
-    public static void InitialzationCategoryAdapter(Context context){
+    public static void InitialzationCategoryAdapter(Context context,CategoryTree categoryTree){
         category_recyclerview.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         Section_to_Category=false;
-        category_recyclerview.setAdapter(new SectionCatalogueAdapter(context));
+        category_recyclerview.setAdapter(new SectionCatalogueAdapter(context,categoryTree));
     }
 
     public static void InitialzationSectionAdapter(Context context){
         recyclerView.setVisibility(View.VISIBLE);
         category_recyclerview.setVisibility(View.GONE);
         Section_to_Category=true;
-        recyclerView.setAdapter(new SectionCatalogueAdapter(context));
+        recyclerView.setAdapter(new SectionCatalogueAdapter(context,null));
     }
 
     @Override

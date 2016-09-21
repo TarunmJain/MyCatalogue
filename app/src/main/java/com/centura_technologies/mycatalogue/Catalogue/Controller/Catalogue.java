@@ -67,6 +67,8 @@ public class Catalogue extends AppCompatActivity {
     public static ArrayList<Products> products;
     public static ArrayList<CategoryTree> categories;
     List<String> sortby = new ArrayList<String>();
+    RelativeLayout.LayoutParams params;
+    RelativeLayout specificationpane;
     static public String SearchString = "";
     static int SearchPageNumber = 0;
     static String item = "";
@@ -91,6 +93,8 @@ public class Catalogue extends AppCompatActivity {
         filterlayout = (LinearLayout) findViewById(R.id.filterlayout);
         categorylayout = (LinearLayout) findViewById(R.id.categorylayout);
         productlayout = (LinearLayout) findViewById(R.id.productlayout);
+        specificationpane= (RelativeLayout) findViewById(R.id.specificationpane);
+        params = (RelativeLayout.LayoutParams)(specificationpane).getLayoutParams();
         editsearch = (EditText) findViewById(R.id.editsearch);
         spinner = (Spinner) findViewById(R.id.spinner);
         fab=(FloatingActionButton)findViewById(R.id.fab);
@@ -183,6 +187,7 @@ public class Catalogue extends AppCompatActivity {
                     grid_to_listflag = false;
                 } else {
                     quickview.setVisibility(View.VISIBLE);
+                    setspecificationstoRight();
                     StaticData.ProductsInGrid = false;
                     StaticData.ProductsInList = true;
                     productsrecyclerview.setLayoutManager(new LinearLayoutManager(Catalogue.this, LinearLayoutManager.VERTICAL, false));
@@ -360,6 +365,18 @@ public class Catalogue extends AppCompatActivity {
             if(catagoriesrecyclerview!=null)
                 catagoriesrecyclerview.setAdapter(new SectionlistAdapter(context, categories, layoutManager1));
 
+    }
+
+    void setspecificationsBelow(){
+        params.addRule(RelativeLayout.BELOW, R.id.leftlayout);
+        params.addRule(RelativeLayout.RIGHT_OF, 0);
+        specificationpane.setLayoutParams(params);
+
+    }
+    void setspecificationstoRight(){
+        params.addRule(RelativeLayout.RIGHT_OF,R.id.leftlayout);
+        params.addRule(RelativeLayout.BELOW,0);
+        specificationpane.setLayoutParams(params);
     }
 
     @Override

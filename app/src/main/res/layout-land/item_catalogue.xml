@@ -22,7 +22,7 @@
                 android:layout_toLeftOf="@+id/shortlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
                 android:gravity="start"
                 android:padding="10dp"
                 android:singleLine="true"
@@ -34,6 +34,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
                 android:layout_margin="5dp"
                 android:padding="5dp"
                 android:src="@drawable/favorite7" />
@@ -42,11 +43,10 @@
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/title"
                 android:layout_centerInParent="true"
-                android:scaleType="fitXY"
                 android:paddingTop="5dp"
                 android:layout_marginBottom="1dp"
+                android:layout_above="@+id/shortlist"
                 android:src="@drawable/loginscreen" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
