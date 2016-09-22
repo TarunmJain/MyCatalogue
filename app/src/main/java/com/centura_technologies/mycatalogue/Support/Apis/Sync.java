@@ -146,16 +146,23 @@ public class Sync {
         Set<String> attrname = new HashSet<String>(AttName);
         for (String str : attrname) {
             FilterItem att = new FilterItem();
-            ArrayList<Valuepair> Values = new ArrayList<Valuepair>();
+            ArrayList<String> Values = new ArrayList<String>();
             att.setTitle(str);
             for (AttributeClass data : allattr) {
-                if (data.getAttributeName().matches(str)){
-                    Valuepair tempvaluepair=new Valuepair();
-                    tempvaluepair.ValueName=data.getAttributeValue();
-                    Values.add(tempvaluepair);
+                if (data.getAttributeName().matches(str)) {
+                    String tempvaluepair = data.getAttributeValue();
+                    if (!tempvaluepair.matches(""))
+                        Values.add(tempvaluepair);
                 }
             }
-            att.setValue(Values);
+            Set<String> attrval = new HashSet<String>(Values);
+            ArrayList<Valuepair> finalValues = new ArrayList<Valuepair>();
+            for (String tempvalue : attrval) {
+                Valuepair tempvalpair = new Valuepair();
+                tempvalpair.ValueName = tempvalue;
+                finalValues.add(tempvalpair);
+            }
+            att.setValue(finalValues);
             list.add(att);
         }
 

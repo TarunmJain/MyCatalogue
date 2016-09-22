@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +46,7 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -61,7 +63,8 @@ public class Catalogue extends AppCompatActivity {
     static LinearLayout searchlayout, filterlayout, categorylayout, productlayout;
     public static EditText editsearch;
     Spinner spinner;
-    FloatingActionButton fab;
+    //FloatingActionButton fab;
+    Button apply, clear;
     static RecyclerView recyclerview, recyclerview1, catagoriesrecyclerview, productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
@@ -69,7 +72,11 @@ public class Catalogue extends AppCompatActivity {
     ArrayList<String> suggestionsData = new ArrayList<String>();
     public static ArrayList<Products> products;
     public static ArrayList<CategoryTree> categories;
+    Products filterprod;
+    ArrayList<Products> categoryproducts = new ArrayList<Products>();
+
     List<String> sortby = new ArrayList<String>();
+    List<String> filterlist;
     RelativeLayout.LayoutParams params;
     RelativeLayout specificationpane;
     static public String SearchString = "";
@@ -89,7 +96,7 @@ public class Catalogue extends AppCompatActivity {
         filtericon = (ImageView) findViewById(R.id.filtericon);
         categoryicon = (ImageView) findViewById(R.id.categoryicon);
         listicon = (ImageView) findViewById(R.id.listicon);
-        cat_filterlist= (RecyclerView) findViewById(R.id.cat_filterlist);
+        cat_filterlist = (RecyclerView) findViewById(R.id.cat_filterlist);
         searchicon = (ImageView) findViewById(R.id.searchicon);
         quickview = (RelativeLayout) findViewById(R.id.quickview);
         nocategory = (RelativeLayout) findViewById(R.id.nocategory);
@@ -97,18 +104,19 @@ public class Catalogue extends AppCompatActivity {
         filterlayout = (LinearLayout) findViewById(R.id.filterlayout);
         categorylayout = (LinearLayout) findViewById(R.id.categorylayout);
         productlayout = (LinearLayout) findViewById(R.id.productlayout);
-        specificationpane= (RelativeLayout) findViewById(R.id.specificationpane);
-        params = (RelativeLayout.LayoutParams)(specificationpane).getLayoutParams();
+        specificationpane = (RelativeLayout) findViewById(R.id.specificationpane);
+        params = (RelativeLayout.LayoutParams) (specificationpane).getLayoutParams();
         editsearch = (EditText) findViewById(R.id.editsearch);
         spinner = (Spinner) findViewById(R.id.spinner);
-        fab=(FloatingActionButton)findViewById(R.id.fab);
+        //fab = (FloatingActionButton) findViewById(R.id.fab);
+        apply = (Button) findViewById(R.id.applyfilter);
+        clear = (Button) findViewById(R.id.cancelfilter);
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerview1 = (RecyclerView) findViewById(R.id.recyclerview1);
         catagoriesrecyclerview = (RecyclerView) findViewById(R.id.catagoriesrecyclerview);
         productsrecyclerview = (RecyclerView) findViewById(R.id.productsrecyclerview);
 
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
-
         recyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         recyclerview1.setLayoutManager(new LinearLayoutManager(Catalogue.this));
 
@@ -142,9 +150,9 @@ public class Catalogue extends AppCompatActivity {
         }
     }
 
-    public static void categorylist(){
-        categories=new ArrayList<CategoryTree>();
-        for(int i=0;i<DB.getTreelist().size();i++){
+    public static void categorylist() {
+        categories = new ArrayList<CategoryTree>();
+        for (int i = 0; i < DB.getTreelist().size(); i++) {
             categories.add(DB.getTreelist().get(i));
         }
     }
@@ -216,13 +224,52 @@ public class Catalogue extends AppCompatActivity {
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        /*fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Catalogue.this, Shortlist.class));
                 finish();
             }
+        });*/
+
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productslist();
+                boolean matched = false;
+                filterprod = new Products();
+                categoryproducts = new ArrayList<Products>();
+                categoryproducts = products;
+                products = new ArrayList<Products>();
+                StaticData.filter=StaticData.filter.substring(1,StaticData.filter.length());
+                filterlist = new ArrayList<String>(Arrays.asList(StaticData.filter.split(",")));
+                for (int i = 0; i < categoryproducts.size(); i++) {
+                    matched = false;
+                    for (int j = 0; j < categoryproducts.get(i).getAttributes().size(); j++) {
+                        if (matched)
+                            break;
+                        for (int k = 0; k < filterlist.size(); k++) {
+                            if (categoryproducts.get(i).getAttributes().get(j).getAttributeValue().matches(filterlist.get(k))) {
+                                filterprod = categoryproducts.get(i);
+                                products.add(filterprod);
+                                matched = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                InitializeAdapter(Catalogue.this);
+            }
         });
+
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     private void SortSpinner() {
@@ -366,21 +413,22 @@ public class Catalogue extends AppCompatActivity {
             cat_filterlist.setAdapter(new TempFilterAdapter(context, StaticData.filtermodel.getItem()));
     }
 
-    public static void InitializeCategoryAdapter(Context context){
-            if(catagoriesrecyclerview!=null)
-                catagoriesrecyclerview.setAdapter(new SectionlistAdapter(context, categories, layoutManager1));
+    public static void InitializeCategoryAdapter(Context context) {
+        if (catagoriesrecyclerview != null)
+            catagoriesrecyclerview.setAdapter(new SectionlistAdapter(context, categories, layoutManager1));
 
     }
 
-    void setspecificationsBelow(){
+    void setspecificationsBelow() {
         params.addRule(RelativeLayout.BELOW, R.id.leftlayout);
         params.addRule(RelativeLayout.RIGHT_OF, 0);
         specificationpane.setLayoutParams(params);
 
     }
-    void setspecificationstoRight(){
-        params.addRule(RelativeLayout.RIGHT_OF,R.id.leftlayout);
-        params.addRule(RelativeLayout.BELOW,0);
+
+    void setspecificationstoRight() {
+        params.addRule(RelativeLayout.RIGHT_OF, R.id.leftlayout);
+        params.addRule(RelativeLayout.BELOW, 0);
         specificationpane.setLayoutParams(params);
     }
 

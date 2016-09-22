@@ -25,9 +25,9 @@ public class TempFilterItemAdapter extends RecyclerView.Adapter<TempFilterItemAd
     Context context;
     ArrayList<Valuepair> model;
 
-    public TempFilterItemAdapter(Context context, ArrayList<Valuepair> payment) {
+    public TempFilterItemAdapter(Context context, ArrayList<Valuepair> data) {
         this.context = context;
-        this.model = payment;
+        this.model = data;
     }
 
     @Override
@@ -68,7 +68,6 @@ public class TempFilterItemAdapter extends RecyclerView.Adapter<TempFilterItemAd
                 }
             }
         }
-        Toast.makeText(context, StaticData.filter, Toast.LENGTH_SHORT).show();
     }
 
     @Override

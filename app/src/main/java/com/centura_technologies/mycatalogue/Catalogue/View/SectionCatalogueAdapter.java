@@ -94,7 +94,6 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
                             mContext.startActivity(new Intent(mContext, Catalogue.class));
 
                         }else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(mContext, StaticData.SelectedSectionId, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
