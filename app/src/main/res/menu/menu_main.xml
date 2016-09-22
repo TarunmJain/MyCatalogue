@@ -6,6 +6,12 @@
         android:id="@+id/logout"
         android:title="logout"
         android:icon="@drawable/ic_power_white_24dp"
+        android:orderInCategory="300"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/shortlist"
+        android:title="shortlist"
+        android:icon="@drawable/ic_heart_white_24dp"
         android:orderInCategory="200"
         app:showAsAction="ifRoom" />
     <item

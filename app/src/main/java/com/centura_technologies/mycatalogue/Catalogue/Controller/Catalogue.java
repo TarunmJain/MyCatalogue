@@ -30,12 +30,14 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.View.CatalogueAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.FilterAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SearchAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SearchProductsAdapter;
+import com.centura_technologies.mycatalogue.Catalogue.View.SectionCatalogueAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SectionlistAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.TempFilterAdapter;
 import com.centura_technologies.mycatalogue.R;
@@ -59,13 +61,15 @@ public class Catalogue extends AppCompatActivity {
     static RecyclerView cat_filterlist;
     ImageView filtericon, categoryicon, listicon;
     public static ImageView searchicon;
-    RelativeLayout nocategory, quickview;
+    RelativeLayout nocategory;
+    RelativeLayout quickview;
+    static RelativeLayout fabpane;
     static LinearLayout searchlayout, filterlayout, categorylayout, productlayout;
     public static EditText editsearch;
     Spinner spinner;
     //FloatingActionButton fab;
     Button apply, clear;
-    static RecyclerView recyclerview, recyclerview1, catagoriesrecyclerview, productsrecyclerview;
+    static RecyclerView recyclerview, recyclerview1,sectionsrecyclerview, catagoriesrecyclerview, productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
     static LinearLayoutManager layoutManager1;
@@ -74,7 +78,7 @@ public class Catalogue extends AppCompatActivity {
     public static ArrayList<CategoryTree> categories;
     Products filterprod;
     ArrayList<Products> categoryproducts = new ArrayList<Products>();
-
+    public static ArrayList<Categories> category=new ArrayList<Categories>();
     List<String> sortby = new ArrayList<String>();
     List<String> filterlist;
     RelativeLayout.LayoutParams params;
@@ -83,6 +87,7 @@ public class Catalogue extends AppCompatActivity {
     static int SearchPageNumber = 0;
     static String item = "";
     public static boolean grid_to_listflag = false;
+    public static boolean Section_to_Category=false;
 
 
     @Override
@@ -104,6 +109,7 @@ public class Catalogue extends AppCompatActivity {
         filterlayout = (LinearLayout) findViewById(R.id.filterlayout);
         categorylayout = (LinearLayout) findViewById(R.id.categorylayout);
         productlayout = (LinearLayout) findViewById(R.id.productlayout);
+        fabpane=(RelativeLayout)findViewById(R.id.fabpane);
         specificationpane = (RelativeLayout) findViewById(R.id.specificationpane);
         params = (RelativeLayout.LayoutParams) (specificationpane).getLayoutParams();
         editsearch = (EditText) findViewById(R.id.editsearch);
@@ -113,9 +119,12 @@ public class Catalogue extends AppCompatActivity {
         clear = (Button) findViewById(R.id.cancelfilter);
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerview1 = (RecyclerView) findViewById(R.id.recyclerview1);
+        sectionsrecyclerview=(RecyclerView)findViewById(R.id.sectionsrecyclerview);
         catagoriesrecyclerview = (RecyclerView) findViewById(R.id.catagoriesrecyclerview);
         productsrecyclerview = (RecyclerView) findViewById(R.id.productsrecyclerview);
 
+        sectionsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this,3));
+        catagoriesrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         recyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         recyclerview1.setLayoutManager(new LinearLayoutManager(Catalogue.this));
@@ -162,6 +171,7 @@ public class Catalogue extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
+                fabpane.setVisibility(View.GONE);
                 searchlayout.setVisibility(View.GONE);
                 filterlayout.setVisibility(View.VISIBLE);
                 categorylayout.setVisibility(View.GONE);
@@ -172,13 +182,17 @@ public class Catalogue extends AppCompatActivity {
         categoryicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fabpane.setVisibility(View.GONE);
                 searchlayout.setVisibility(View.GONE);
                 filterlayout.setVisibility(View.GONE);
                 categorylayout.setVisibility(View.VISIBLE);
                 productlayout.setVisibility(View.GONE);
-                layoutManager1 = new LinearLayoutManager(Catalogue.this, LinearLayoutManager.VERTICAL, false);
-                catagoriesrecyclerview.setLayoutManager(layoutManager1);
-                InitializeCategoryAdapter(Catalogue.this);
+                InitialzationSectionAdapter(Catalogue.this);
+                if(Section_to_Category){
+                    InitialzationSectionAdapter(Catalogue.this);
+                }else {
+                    InitialzationCategoryAdapter(Catalogue.this,null);
+                }
             }
         });
 
@@ -241,7 +255,7 @@ public class Catalogue extends AppCompatActivity {
                 categoryproducts = new ArrayList<Products>();
                 categoryproducts = products;
                 products = new ArrayList<Products>();
-                StaticData.filter=StaticData.filter.substring(1,StaticData.filter.length());
+                StaticData.filter = StaticData.filter.substring(1, StaticData.filter.length());
                 filterlist = new ArrayList<String>(Arrays.asList(StaticData.filter.split(",")));
                 for (int i = 0; i < categoryproducts.size(); i++) {
                     matched = false;
@@ -259,6 +273,12 @@ public class Catalogue extends AppCompatActivity {
                     }
                 }
                 InitializeAdapter(Catalogue.this);
+                for (int x = 0; x < StaticData.filtermodel.getItem().size(); x++) {
+                    for (int y = 0; y < StaticData.filtermodel.getItem().get(x).getValue().size(); y++) {
+                        StaticData.filtermodel.getItem().get(x).getValue().get(y).Selected = false;
+                    }
+                }
+                cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
             }
         });
 
@@ -266,7 +286,12 @@ public class Catalogue extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                for (int x = 0; x < StaticData.filtermodel.getItem().size(); x++) {
+                    for (int y = 0; y < StaticData.filtermodel.getItem().get(x).getValue().size(); y++) {
+                        StaticData.filtermodel.getItem().get(x).getValue().get(y).Selected = false;
+                    }
+                }
+                cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
             }
         });
 
@@ -382,7 +407,22 @@ public class Catalogue extends AppCompatActivity {
         }
     }
 
+    public static void InitialzationCategoryAdapter(Context context,CategoryTree categoryTree){
+        catagoriesrecyclerview.setVisibility(View.VISIBLE);
+        sectionsrecyclerview.setVisibility(View.GONE);
+        Section_to_Category=false;
+        catagoriesrecyclerview.setAdapter(new SectionlistAdapter(context, categoryTree));
+    }
+
+    public static void InitialzationSectionAdapter(Context context){
+        sectionsrecyclerview.setVisibility(View.VISIBLE);
+        catagoriesrecyclerview.setVisibility(View.GONE);
+        Section_to_Category=true;
+        sectionsrecyclerview.setAdapter(new SectionlistAdapter(context, null));
+    }
+
     public static void InitializeAdapter(Context context) {
+        fabpane.setVisibility(View.VISIBLE);
         searchlayout.setVisibility(View.GONE);
         filterlayout.setVisibility(View.GONE);
         categorylayout.setVisibility(View.GONE);
@@ -413,11 +453,11 @@ public class Catalogue extends AppCompatActivity {
             cat_filterlist.setAdapter(new TempFilterAdapter(context, StaticData.filtermodel.getItem()));
     }
 
-    public static void InitializeCategoryAdapter(Context context) {
+   /* public static void InitializeCategoryAdapter(Context context) {
         if (catagoriesrecyclerview != null)
             catagoriesrecyclerview.setAdapter(new SectionlistAdapter(context, categories, layoutManager1));
 
-    }
+    }*/
 
     void setspecificationsBelow() {
         params.addRule(RelativeLayout.BELOW, R.id.leftlayout);
@@ -449,6 +489,9 @@ public class Catalogue extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if(item.getItemId()==R.id.shortlist){
+            startActivity(new Intent(Catalogue.this, Shortlist.class));
+        }
         if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
             finish();
         }

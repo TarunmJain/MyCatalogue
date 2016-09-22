@@ -1,11 +1,13 @@
 package com.centura_technologies.mycatalogue.Catalogue.View;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,10 +26,17 @@ import java.util.ArrayList;
 public class TempFilterItemAdapter extends RecyclerView.Adapter<TempFilterItemAdapter.ViewHolder> {
     Context context;
     ArrayList<Valuepair> model;
+    Button apply,clear;
+    Activity a;
 
     public TempFilterItemAdapter(Context context, ArrayList<Valuepair> data) {
         this.context = context;
         this.model = data;
+        a=(Activity)context;
+        apply=(Button)a.findViewById(R.id.applyfilter);
+        clear=(Button)a.findViewById(R.id.cancelfilter);
+
+
     }
 
     @Override
@@ -55,6 +64,14 @@ public class TempFilterItemAdapter extends RecyclerView.Adapter<TempFilterItemAd
                     model.get(position).Selected = true;
                 notifyItemChanged(position);
                 callFilterApi();
+            }
+        });
+
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
