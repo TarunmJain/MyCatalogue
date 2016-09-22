@@ -96,6 +96,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
                         StaticData.SelectedCategoryId = model.get(finalPosition).getId();
                         StaticData.position= finalPosition;
                         if(DB.getInitialModel().getProducts().size()!=0) {
+                            Catalogue.productslist();
                             Catalogue.InitializeAdapter(mContext);
 
                         }else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
