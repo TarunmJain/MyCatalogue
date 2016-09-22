@@ -92,7 +92,6 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
                         StaticData.position= finalPosition;
                         if(DB.getInitialModel().getProducts().size()!=0) {
                             mContext.startActivity(new Intent(mContext, Catalogue.class));
-
                         }else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -10,9 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
@@ -31,11 +34,13 @@ public class SectionCatalogue extends AppCompatActivity {
     DrawerLayout Drawer;
     ActionBarDrawerToggle mDrawerToggle;
     SharedPreferences sharedPreferences;
-    static RecyclerView recyclerView;
-    static RecyclerView category_recyclerview;
+    public static RecyclerView recyclerView;
+    static LinearLayout collectionlay;
+    static RecyclerView category_recyclerview,collections_recyclerview;
     public static ArrayList<CategoryTree> categories;
     public static ArrayList<Categories> category=new ArrayList<Categories>();
     public static boolean Section_to_Category=false;
+    int h1, h2,screenhight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +51,7 @@ public class SectionCatalogue extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Drawer = (DrawerLayout) findViewById(R.id.drawer);
         sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
-
+        collectionlay= (LinearLayout) findViewById(R.id.collectionlay);
         mDrawerToggle = new ActionBarDrawerToggle(SectionCatalogue.this, Drawer, toolbar, R.string.opendrawer, R.string.closedrawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -65,8 +70,11 @@ public class SectionCatalogue extends AppCompatActivity {
         mDrawerToggle.syncState();
 
         recyclerView=(RecyclerView)findViewById(R.id.section_recyclerview);
-        category_recyclerview=(RecyclerView)findViewById(R.id.category_recyclerview);
 
+
+        category_recyclerview=(RecyclerView)findViewById(R.id.category_recyclerview);
+        collections_recyclerview=(RecyclerView)findViewById(R.id.collections_recyclerview);
+        //UiManuplation();
         categories=new ArrayList<CategoryTree>();
         for(int i=0;i<DB.getTreelist().size();i++){
             categories.add(DB.getTreelist().get(i));
@@ -86,15 +94,28 @@ public class SectionCatalogue extends AppCompatActivity {
 
     public static void InitialzationCategoryAdapter(Context context,CategoryTree categoryTree){
         category_recyclerview.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
+        collectionlay.setVisibility(View.GONE);
         Section_to_Category=false;
+
         category_recyclerview.setAdapter(new SectionCatalogueAdapter(context,categoryTree));
     }
 
     public static void InitialzationSectionAdapter(Context context){
-        recyclerView.setVisibility(View.VISIBLE);
+        collectionlay.setVisibility(View.VISIBLE);
         category_recyclerview.setVisibility(View.GONE);
         Section_to_Category=true;
+        int finallines=0;
+        int viewHeight = GenericData.convertDpToPixels(310, context);
+        if(SectionCatalogue.categories.size()<3)
+            finallines=1;
+        else {
+            float lines=(float)(SectionCatalogue.categories.size())/3;
+            finallines=(int)lines;
+            if(lines>finallines)
+                finallines+=1;
+        }
+        viewHeight = viewHeight * finallines;
+        recyclerView.getLayoutParams().height = viewHeight;
         recyclerView.setAdapter(new SectionCatalogueAdapter(context,null));
     }
 
@@ -118,5 +139,14 @@ public class SectionCatalogue extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void UiManuplation() {
+        h1 = 0;
+        h2 = 0;
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        screenhight = metrics.heightPixels;
+        recyclerView.getLayoutParams().height = screenhight-200;
+        category_recyclerview.getLayoutParams().height = screenhight-200;
     }
 }
