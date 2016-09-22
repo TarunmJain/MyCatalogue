@@ -36,8 +36,10 @@ import com.centura_technologies.mycatalogue.Catalogue.View.FilterAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SearchAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SearchProductsAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SectionlistAdapter;
+import com.centura_technologies.mycatalogue.Catalogue.View.TempFilterAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
+import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
@@ -52,6 +54,7 @@ import java.util.List;
  */
 public class Catalogue extends AppCompatActivity {
     Toolbar toolbar;
+    static RecyclerView cat_filterlist;
     ImageView filtericon, categoryicon, listicon;
     public static ImageView searchicon;
     RelativeLayout nocategory, quickview;
@@ -59,7 +62,7 @@ public class Catalogue extends AppCompatActivity {
     public static EditText editsearch;
     Spinner spinner;
     FloatingActionButton fab;
-    static RecyclerView recyclerview, recyclerview1, catagoriesrecyclerview, productsrecyclerview, filterrecyclerview;
+    static RecyclerView recyclerview, recyclerview1, catagoriesrecyclerview, productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
     static LinearLayoutManager layoutManager1;
@@ -86,6 +89,7 @@ public class Catalogue extends AppCompatActivity {
         filtericon = (ImageView) findViewById(R.id.filtericon);
         categoryicon = (ImageView) findViewById(R.id.categoryicon);
         listicon = (ImageView) findViewById(R.id.listicon);
+        cat_filterlist= (RecyclerView) findViewById(R.id.cat_filterlist);
         searchicon = (ImageView) findViewById(R.id.searchicon);
         quickview = (RelativeLayout) findViewById(R.id.quickview);
         nocategory = (RelativeLayout) findViewById(R.id.nocategory);
@@ -102,8 +106,8 @@ public class Catalogue extends AppCompatActivity {
         recyclerview1 = (RecyclerView) findViewById(R.id.recyclerview1);
         catagoriesrecyclerview = (RecyclerView) findViewById(R.id.catagoriesrecyclerview);
         productsrecyclerview = (RecyclerView) findViewById(R.id.productsrecyclerview);
-        filterrecyclerview = (RecyclerView) findViewById(R.id.filterrecyclerview);
 
+        cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
 
         recyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         recyclerview1.setLayoutManager(new LinearLayoutManager(Catalogue.this));
@@ -120,7 +124,7 @@ public class Catalogue extends AppCompatActivity {
         setsuggestiondata();
         searchset();
         OnClicks();
-
+        Sync.syncFilters(Catalogue.this, products);
         StaticData.ProductsInGrid = true;
         StaticData.ProductsInList = false;
         productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
@@ -149,6 +153,7 @@ public class Catalogue extends AppCompatActivity {
         filtericon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
                 searchlayout.setVisibility(View.GONE);
                 filterlayout.setVisibility(View.VISIBLE);
                 categorylayout.setVisibility(View.GONE);
@@ -358,7 +363,7 @@ public class Catalogue extends AppCompatActivity {
         }
         productsrecyclerview.setAdapter(new CatalogueAdapter(context, products));
         if (StaticData.filtermodel.getItem() != null)
-            filterrecyclerview.setAdapter(new FilterAdapter(context, StaticData.filtermodel.getItem()));
+            cat_filterlist.setAdapter(new TempFilterAdapter(context, StaticData.filtermodel.getItem()));
     }
 
     public static void InitializeCategoryAdapter(Context context){

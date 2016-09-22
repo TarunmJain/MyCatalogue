@@ -18,6 +18,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -91,6 +92,7 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
                         StaticData.position= finalPosition;
                         if(DB.getInitialModel().getProducts().size()!=0) {
                             mContext.startActivity(new Intent(mContext, Catalogue.class));
+
                         }else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
                         Toast.makeText(mContext, StaticData.SelectedSectionId, Toast.LENGTH_SHORT).show();
                     }
