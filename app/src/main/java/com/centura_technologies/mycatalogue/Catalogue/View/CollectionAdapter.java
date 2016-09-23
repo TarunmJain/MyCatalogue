@@ -1,6 +1,7 @@
 package com.centura_technologies.mycatalogue.Catalogue.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -41,7 +43,10 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         holder.collectionpane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                StaticData.SelectedCollectionProducts=new ArrayList<String>();
+                StaticData.SelectedCollection=true;
+                StaticData.SelectedCollectionProducts=data.get(position).getProductIds();
+                mContext.startActivity(new Intent(mContext, Catalogue.class));
             }
         });
     }

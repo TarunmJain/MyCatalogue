@@ -154,20 +154,27 @@ public class Catalogue extends AppCompatActivity {
         if (StaticData.SelectedSection) {
             StaticData.SelectedCategoryId = DB.getInitialModel().getCategories().get(0).getId();
         }
-        if(StaticData.SelectedCategoryId.matches("-1"))
-        {
-            for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
-                    products.add(DB.getInitialModel().getProducts().get(i));
+        if(StaticData.SelectedCollection){
+            for(int j=0;j<DB.getInitialModel().getProducts().size();j++){
+                for(int k=0;k<StaticData.SelectedCollectionProducts.size();k++){
+                    if(DB.getInitialModel().getProducts().get(j).getId().matches(StaticData.SelectedCollectionProducts.get(k))){
+                        products.add(DB.getInitialModel().getProducts().get(j));
+                        StaticData.SelectedCollection=false;
+                    }
+                }
             }
-        }
-        else {
-            for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
-                if (DB.getInitialModel().getProducts().get(i).getCategoryId().matches(StaticData.SelectedCategoryId))
+        }else if(StaticData.SelectedCategoryId.matches("-1")) {
+                for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
                     products.add(DB.getInitialModel().getProducts().get(i));
+                }
+            } else {
+                for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
+                    if (DB.getInitialModel().getProducts().get(i).getCategoryId().matches(StaticData.SelectedCategoryId))
+                        products.add(DB.getInitialModel().getProducts().get(i));
+                }
             }
-        }
-
     }
+
 
     public static void categorylist() {
         categories = new ArrayList<CategoryTree>();

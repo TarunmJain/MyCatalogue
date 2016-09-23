@@ -31,11 +31,11 @@ public class StaticData {
     public static String SelectedSectionId="";
     public static String SelectedCategoryId="";
     public static String SelectedProductsId="";
-    public static String SelectedCollectionId="";
+    public static ArrayList<String> SelectedCollectionProducts;
     public static boolean SelectedProductImage=false;           //CatalogueDetails Image
     public static boolean SelectedSection=false;                //Clicked Section
     public static boolean ClickedProduct=false;
-    public static boolean ShortlistedProductClicked=false;
+    public static boolean SelectedCollection=false;
     public static boolean Shortlisted=false;
 
     public static String Options="";
