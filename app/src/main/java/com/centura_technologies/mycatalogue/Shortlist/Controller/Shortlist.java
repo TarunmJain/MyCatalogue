@@ -41,6 +41,8 @@ public class Shortlist extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem register = menu.findItem(R.id.logout);
         register.setVisible(false);
+        MenuItem register2 = menu.findItem(R.id.shortlist);
+        register2.setVisible(false);
         return true;
     }
 
