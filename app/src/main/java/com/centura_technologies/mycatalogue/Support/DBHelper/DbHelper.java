@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
@@ -118,10 +119,19 @@ public class DbHelper extends SQLiteOpenHelper {
         db.delete(this.InitialData,"TableName=?",new String[]{"Products"});
         db.insert(this.InitialData, null, contentValues);
     }
+    private void savecollections(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        contentValues = new ContentValues();
+        contentValues.put(this.TableName, "Collections");
+        contentValues.put(this.Data, gson.toJsonTree(DB.getInitialModel().getCollections()).getAsJsonArray().toString());
+        db.delete(this.InitialData,"TableName=?",new String[]{"Collections"});
+        db.insert(this.InitialData, null, contentValues);
+    }
     public void saveinitialmodel() {
         saveSections();
         saveCategories();
         saveproducts();
+        savecollections();
     }
 
     private void loadSections(InitialModel initialModel){
@@ -164,13 +174,26 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    private void loadcollections(InitialModel initialModel){
+        SQLiteDatabase db = DbHelper.this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from InitialData where "+this.TableName+"=?",new String[]{"Collections"});
+        res.moveToFirst();
+        while (res.isAfterLast() == false) {
+            Type listType = new TypeToken<ArrayList<CollectionModel>>(){}.getType();
+            ArrayList<CollectionModel> temp=new ArrayList<CollectionModel>();
+            temp=gson.fromJson(res.getString(res.getColumnIndex("Data")).toString(),listType);
+            initialModel.setCollections(temp);
+            //String test=initialModel.getProducts().get(0).getTitle();
+            res.moveToNext();
+        }
+    }
+
     public  void loadinitialmodel() {
         InitialModel initialModel=new InitialModel();
         loadSections(initialModel);
         loadCategories(initialModel);
         loadproducts(initialModel);
+        loadcollections(initialModel);
         DB.setInitialModel(initialModel);
-        ArrayList<Products> model=DB.getInitialModel().getProducts();
-        ArrayList<Categories> model1=DB.getInitialModel().getCategories();
     }
 }

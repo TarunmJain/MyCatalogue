@@ -1,37 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="1dp"
-    android:layout_marginRight="1dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="310dp"
-    android:background="@color/white"
-    android:id="@+id/pane">
+    android:layout_height="310dp">
 
-    <TextView
-        android:padding="10dp"
-        android:layout_toLeftOf="@+id/delete"
-        android:id="@+id/title"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:singleLine="true"
-        android:layout_alignParentTop="true"/>
-    <ImageView
-        android:id="@+id/delete"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:padding="10dp"
-        android:layout_alignParentRight="true"
-        android:layout_margin="5dp"
-        android:src="@drawable/ic_delete_grey600_24dp"/>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="5dp"
+        android:id="@+id/pane">
 
-    <ImageView
-        android:layout_below="@+id/title"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        android:id="@+id/image"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:src="@drawable/loginscreen"
-        android:layout_centerInParent="true"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_toLeftOf="@+id/delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="start"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:layout_margin="5dp"
+                android:text="Title" />
+
+            <ImageView
+                android:id="@+id/delete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_delete_grey600_24dp" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:paddingTop="5dp"
+                android:layout_marginBottom="1dp"
+                android:layout_above="@+id/delete"
+                android:src="@drawable/loginscreen" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
 </RelativeLayout>

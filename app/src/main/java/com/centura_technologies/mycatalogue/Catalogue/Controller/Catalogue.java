@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
@@ -69,7 +70,7 @@ public class Catalogue extends AppCompatActivity {
     Spinner spinner;
     //FloatingActionButton fab;
     Button apply, clear;
-    static RecyclerView recyclerview, recyclerview1,sectionsrecyclerview, catagoriesrecyclerview, productsrecyclerview;
+    static RecyclerView recyclerview, recyclerview1, sectionsrecyclerview, catagoriesrecyclerview, productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
     static LinearLayoutManager layoutManager1;
@@ -78,7 +79,7 @@ public class Catalogue extends AppCompatActivity {
     public static ArrayList<CategoryTree> categories;
     Products filterprod;
     ArrayList<Products> categoryproducts = new ArrayList<Products>();
-    public static ArrayList<Categories> category=new ArrayList<Categories>();
+    public static ArrayList<Categories> category = new ArrayList<Categories>();
     List<String> sortby = new ArrayList<String>();
     List<String> filterlist;
     RelativeLayout.LayoutParams params;
@@ -87,7 +88,7 @@ public class Catalogue extends AppCompatActivity {
     static int SearchPageNumber = 0;
     static String item = "";
     public static boolean grid_to_listflag = false;
-    public static boolean Section_to_Category=false;
+    public static boolean Section_to_Category = false;
 
 
     @Override
@@ -109,21 +110,21 @@ public class Catalogue extends AppCompatActivity {
         filterlayout = (LinearLayout) findViewById(R.id.filterlayout);
         categorylayout = (LinearLayout) findViewById(R.id.categorylayout);
         productlayout = (LinearLayout) findViewById(R.id.productlayout);
-        fabpane=(RelativeLayout)findViewById(R.id.fabpane);
+        fabpane = (RelativeLayout) findViewById(R.id.fabpane);
         specificationpane = (RelativeLayout) findViewById(R.id.specificationpane);
         params = (RelativeLayout.LayoutParams) (specificationpane).getLayoutParams();
         editsearch = (EditText) findViewById(R.id.editsearch);
         spinner = (Spinner) findViewById(R.id.spinner);
         //fab = (FloatingActionButton) findViewById(R.id.fab);
         apply = (Button) findViewById(R.id.applyfilter);
-        clear = (Button) findViewById(R.id.cancelfilter);
+        clear = (Button) findViewById(R.id.cancelfiltertest);
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerview1 = (RecyclerView) findViewById(R.id.recyclerview1);
-        sectionsrecyclerview=(RecyclerView)findViewById(R.id.sectionsrecyclerview);
+        sectionsrecyclerview = (RecyclerView) findViewById(R.id.sectionsrecyclerview);
         catagoriesrecyclerview = (RecyclerView) findViewById(R.id.catagoriesrecyclerview);
         productsrecyclerview = (RecyclerView) findViewById(R.id.productsrecyclerview);
 
-        sectionsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this,3));
+        sectionsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         catagoriesrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         recyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
@@ -188,10 +189,10 @@ public class Catalogue extends AppCompatActivity {
                 categorylayout.setVisibility(View.VISIBLE);
                 productlayout.setVisibility(View.GONE);
                 InitialzationSectionAdapter(Catalogue.this);
-                if(Section_to_Category){
+                if (Section_to_Category) {
                     InitialzationSectionAdapter(Catalogue.this);
-                }else {
-                    InitialzationCategoryAdapter(Catalogue.this,null);
+                } else {
+                    InitialzationCategoryAdapter(Catalogue.this, null);
                 }
             }
         });
@@ -249,36 +250,40 @@ public class Catalogue extends AppCompatActivity {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productslist();
-                boolean matched = false;
-                filterprod = new Products();
-                categoryproducts = new ArrayList<Products>();
-                categoryproducts = products;
-                products = new ArrayList<Products>();
-                StaticData.filter = StaticData.filter.substring(1, StaticData.filter.length());
-                filterlist = new ArrayList<String>(Arrays.asList(StaticData.filter.split(",")));
-                for (int i = 0; i < categoryproducts.size(); i++) {
-                    matched = false;
-                    for (int j = 0; j < categoryproducts.get(i).getAttributes().size(); j++) {
-                        if (matched)
-                            break;
-                        for (int k = 0; k < filterlist.size(); k++) {
-                            if (categoryproducts.get(i).getAttributes().get(j).getAttributeValue().matches(filterlist.get(k))) {
-                                filterprod = categoryproducts.get(i);
-                                products.add(filterprod);
-                                matched = true;
+                if (StaticData.filter != "") {
+                    productslist();
+                    boolean matched = false;
+                    filterprod = new Products();
+                    categoryproducts = new ArrayList<Products>();
+                    categoryproducts = products;
+                    products = new ArrayList<Products>();
+                    StaticData.filter = StaticData.filter.substring(1, StaticData.filter.length());
+                    filterlist = new ArrayList<String>(Arrays.asList(StaticData.filter.split(",")));
+                    for (int i = 0; i < categoryproducts.size(); i++) {
+                        matched = false;
+                        for (int j = 0; j < categoryproducts.get(i).getAttributes().size(); j++) {
+                            if (matched)
                                 break;
+                            for (int k = 0; k < filterlist.size(); k++) {
+                                if (categoryproducts.get(i).getAttributes().get(j).getAttributeValue().matches(filterlist.get(k))) {
+                                    filterprod = categoryproducts.get(i);
+                                    products.add(filterprod);
+                                    matched = true;
+                                    break;
+                                }
                             }
                         }
                     }
-                }
-                InitializeAdapter(Catalogue.this);
-                for (int x = 0; x < StaticData.filtermodel.getItem().size(); x++) {
-                    for (int y = 0; y < StaticData.filtermodel.getItem().get(x).getValue().size(); y++) {
-                        StaticData.filtermodel.getItem().get(x).getValue().get(y).Selected = false;
+                    InitializeAdapter(Catalogue.this);
+                    StaticData.filter="";
+                    for (int x = 0; x < StaticData.filtermodel.getItem().size(); x++) {
+                        for (int y = 0; y < StaticData.filtermodel.getItem().get(x).getValue().size(); y++) {
+                            StaticData.filtermodel.getItem().get(x).getValue().get(y).Selected = false;
+                        }
                     }
-                }
-                cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
+                    cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
+                } else
+                    Toast.makeText(Catalogue.this, "Filter cannot be apply without selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -407,17 +412,17 @@ public class Catalogue extends AppCompatActivity {
         }
     }
 
-    public static void InitialzationCategoryAdapter(Context context,CategoryTree categoryTree){
+    public static void InitialzationCategoryAdapter(Context context, CategoryTree categoryTree) {
         catagoriesrecyclerview.setVisibility(View.VISIBLE);
         sectionsrecyclerview.setVisibility(View.GONE);
-        Section_to_Category=false;
+        Section_to_Category = false;
         catagoriesrecyclerview.setAdapter(new SectionlistAdapter(context, categoryTree));
     }
 
-    public static void InitialzationSectionAdapter(Context context){
+    public static void InitialzationSectionAdapter(Context context) {
         sectionsrecyclerview.setVisibility(View.VISIBLE);
         catagoriesrecyclerview.setVisibility(View.GONE);
-        Section_to_Category=true;
+        Section_to_Category = true;
         sectionsrecyclerview.setAdapter(new SectionlistAdapter(context, null));
     }
 
@@ -489,7 +494,7 @@ public class Catalogue extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if(item.getItemId()==R.id.shortlist){
+        if (item.getItemId() == R.id.shortlist) {
             startActivity(new Intent(Catalogue.this, Shortlist.class));
         }
         if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed

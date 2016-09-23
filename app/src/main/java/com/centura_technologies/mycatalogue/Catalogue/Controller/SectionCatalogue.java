@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -19,6 +20,8 @@ import android.widget.LinearLayout;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
+import com.centura_technologies.mycatalogue.Catalogue.View.CollectionAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SectionCatalogueAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
@@ -30,6 +33,7 @@ import java.util.ArrayList;
  * Created by Centura User1 on 31-08-2016.
  */
 public class SectionCatalogue extends AppCompatActivity {
+    private static final int HORIZONTAL = 1;
     Toolbar toolbar;
     DrawerLayout Drawer;
     ActionBarDrawerToggle mDrawerToggle;
@@ -39,6 +43,7 @@ public class SectionCatalogue extends AppCompatActivity {
     static RecyclerView category_recyclerview,collections_recyclerview;
     public static ArrayList<CategoryTree> categories;
     public static ArrayList<Categories> category=new ArrayList<Categories>();
+    public static ArrayList<CollectionModel> collectionmodel;
     public static boolean Section_to_Category=false;
     int h1, h2,screenhight;
 
@@ -70,8 +75,6 @@ public class SectionCatalogue extends AppCompatActivity {
         mDrawerToggle.syncState();
 
         recyclerView=(RecyclerView)findViewById(R.id.section_recyclerview);
-
-
         category_recyclerview=(RecyclerView)findViewById(R.id.category_recyclerview);
         collections_recyclerview=(RecyclerView)findViewById(R.id.collections_recyclerview);
         //UiManuplation();
@@ -79,8 +82,14 @@ public class SectionCatalogue extends AppCompatActivity {
         for(int i=0;i<DB.getTreelist().size();i++){
             categories.add(DB.getTreelist().get(i));
         }
+        collectionmodel=new ArrayList<CollectionModel>();
+        for(int k=0;k<DB.getInitialModel().getCollections().size();k++){
+            collectionmodel.add(DB.getInitialModel().getCollections().get(k));
+        }
         recyclerView.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,3));
         category_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3));
+        collections_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,1,GridLayoutManager.HORIZONTAL,false));
+        InitializationCollectionAdapter(SectionCatalogue.this);
         InitialzationSectionAdapter(SectionCatalogue.this);
 
         if(Section_to_Category){
@@ -90,6 +99,10 @@ public class SectionCatalogue extends AppCompatActivity {
         }
 
         GenericData.DrawerOnClicks(SectionCatalogue.this);
+    }
+
+    public static void InitializationCollectionAdapter(Context context){
+        collections_recyclerview.setAdapter(new CollectionAdapter(context,collectionmodel));
     }
 
     public static void InitialzationCategoryAdapter(Context context,CategoryTree categoryTree){

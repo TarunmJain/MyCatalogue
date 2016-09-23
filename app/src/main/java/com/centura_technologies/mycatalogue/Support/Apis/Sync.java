@@ -88,6 +88,11 @@ public class Sync {
                             GetImageFromUrl getImageFromUrl2 = new GetImageFromUrl();
                             getImageFromUrl2.execute(param2);
                         }
+                        for(int j=0;j<temp.getCollections().size();j++){
+                            ImageCache param3 = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
+                            GetImageFromUrl getImageFromUrl3 = new GetImageFromUrl();
+                            getImageFromUrl3.execute(param3);
+                        }
                         GenericData.imagesChached = true;
                         DB.setInitialModel(temp);
                         db.saveinitialmodel();

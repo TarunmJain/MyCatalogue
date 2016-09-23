@@ -3,6 +3,7 @@ package com.centura_technologies.mycatalogue.Shortlist.View;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,13 +93,13 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView text;
         ImageView image,delete;
-        RelativeLayout pane;
+        CardView pane;
         public ViewHolder(View itemView) {
             super(itemView);
             text=(TextView)itemView.findViewById(R.id.title);
             image=(ImageView)itemView.findViewById(R.id.image);
             delete= (ImageView) itemView.findViewById(R.id.delete);
-            pane=(RelativeLayout)itemView.findViewById(R.id.pane);
+            pane=(CardView)itemView.findViewById(R.id.pane);
         }
     }
 }

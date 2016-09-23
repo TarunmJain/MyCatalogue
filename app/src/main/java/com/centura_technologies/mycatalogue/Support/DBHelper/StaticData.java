@@ -31,6 +31,7 @@ public class StaticData {
     public static String SelectedSectionId="";
     public static String SelectedCategoryId="";
     public static String SelectedProductsId="";
+    public static String SelectedCollectionId="";
     public static boolean SelectedProductImage=false;           //CatalogueDetails Image
     public static boolean SelectedSection=false;                //Clicked Section
     public static boolean ClickedProduct=false;
