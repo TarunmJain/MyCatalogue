@@ -109,7 +109,6 @@ public class SectionCatalogue extends AppCompatActivity {
         category_recyclerview.setVisibility(View.VISIBLE);
         collectionlay.setVisibility(View.GONE);
         Section_to_Category=false;
-
         category_recyclerview.setAdapter(new SectionCatalogueAdapter(context,categoryTree));
     }
 

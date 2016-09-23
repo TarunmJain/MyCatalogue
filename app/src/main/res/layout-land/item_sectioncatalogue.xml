@@ -31,11 +31,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal">
                 <ImageView
-                    android:paddingBottom="40dp"
                     android:id="@+id/image"
                     android:scaleType="fitXY"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/text" />
                 <TextView
                     android:padding="2dp"
                     android:id="@+id/text"
@@ -51,13 +51,15 @@
                     android:layout_alignParentStart="true" />
                 <TextView
                     android:elevation="10dp"
+                    android:padding="15dp"
+
                     android:visibility="gone"
                     android:id="@+id/backlay"
                     android:layout_width="match_parent"
                     android:background="#80000000"
                     android:textColor="@color/white"
                     android:text="BACK"
-                    android:textSize="50sp"
+                    android:textSize="30sp"
                     android:gravity="center"
                     android:textStyle="bold"
                     android:layout_height="match_parent" />

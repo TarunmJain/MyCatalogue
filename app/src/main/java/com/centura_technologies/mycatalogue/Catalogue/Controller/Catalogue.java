@@ -154,10 +154,19 @@ public class Catalogue extends AppCompatActivity {
         if (StaticData.SelectedSection) {
             StaticData.SelectedCategoryId = DB.getInitialModel().getCategories().get(0).getId();
         }
-        for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
-            if (DB.getInitialModel().getProducts().get(i).getCategoryId().matches(StaticData.SelectedCategoryId))
-                products.add(DB.getInitialModel().getProducts().get(i));
+        if(StaticData.SelectedCategoryId.matches("-1"))
+        {
+            for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
+                    products.add(DB.getInitialModel().getProducts().get(i));
+            }
         }
+        else {
+            for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
+                if (DB.getInitialModel().getProducts().get(i).getCategoryId().matches(StaticData.SelectedCategoryId))
+                    products.add(DB.getInitialModel().getProducts().get(i));
+            }
+        }
+
     }
 
     public static void categorylist() {
