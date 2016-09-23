@@ -128,7 +128,6 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
                     }
                 });
             }
-
         }
 
     }
