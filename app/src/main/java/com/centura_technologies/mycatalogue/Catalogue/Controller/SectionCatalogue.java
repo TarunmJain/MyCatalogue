@@ -34,7 +34,7 @@ import java.util.ArrayList;
  */
 public class SectionCatalogue extends AppCompatActivity {
     private static final int HORIZONTAL = 1;
-    Toolbar toolbar;
+    static Toolbar toolbar;
     DrawerLayout Drawer;
     ActionBarDrawerToggle mDrawerToggle;
     SharedPreferences sharedPreferences;
@@ -52,7 +52,7 @@ public class SectionCatalogue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sectioncatalogue);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        toolbar.setTitle("Sections");
+        toolbar.setTitle("Catalogue");
         setSupportActionBar(toolbar);
         Drawer = (DrawerLayout) findViewById(R.id.drawer);
         sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
@@ -105,14 +105,28 @@ public class SectionCatalogue extends AppCompatActivity {
         collections_recyclerview.setAdapter(new CollectionAdapter(context,collectionmodel));
     }
 
-    public static void InitialzationCategoryAdapter(Context context,CategoryTree categoryTree){
+    public static void InitialzationCategoryAdapter(final Context context,CategoryTree categoryTree){
+        toolbar.setTitle(categoryTree.getTitle());
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InitialzationSectionAdapter(context);
+            }
+        });
         category_recyclerview.setVisibility(View.VISIBLE);
         collectionlay.setVisibility(View.GONE);
         Section_to_Category=false;
         category_recyclerview.setAdapter(new SectionCatalogueAdapter(context,categoryTree));
     }
 
-    public static void InitialzationSectionAdapter(Context context){
+    public static void InitialzationSectionAdapter(final Context context){
+        toolbar.setTitle("Catalogue");
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InitialzationSectionAdapter(context);
+            }
+        });
         collectionlay.setVisibility(View.VISIBLE);
         category_recyclerview.setVisibility(View.GONE);
         Section_to_Category=true;

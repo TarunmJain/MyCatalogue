@@ -13,9 +13,48 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
+        <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tool_bar"
-            layout="@layout/toolbar"></include>
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/primarycolor"
+            android:minHeight="?attr/actionBarSize"
+            android:titleTextColor="@color/white"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:titleTextAppearance="@style/Toolbar.TitleText">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/sectionbreadcrumb"
+                    android:textSize="18sp"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:id="@+id/slashbreadcrumb"
+                    android:text=" > "
+                    android:textColor="@color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/categorybreadcrumb"
+                    android:textSize="18sp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
 
         <RelativeLayout
             android:id="@+id/fabpane"
@@ -156,6 +195,7 @@
                     android:textSize="18sp" />
 
             </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/searchlayout"
                 android:layout_width="match_parent"
@@ -175,6 +215,7 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"></android.support.v7.widget.RecyclerView>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/filterlayout"
                 android:layout_width="match_parent"
@@ -188,11 +229,11 @@
 
                     <TextView
                         android:id="@+id/textView"
-                        android:layout_above="@+id/cardview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="16dp"
+                        android:layout_above="@+id/cardview"
                         android:gravity="center_vertical"
+                        android:padding="16dp"
                         android:text="Filter Products"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -201,9 +242,9 @@
                         android:id="@+id/cardview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/footer"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
+                        android:layout_below="@+id/footer"
                         android:background="@color/white"
                         app:cardElevation="10dp">
 
@@ -256,6 +297,7 @@
                 </RelativeLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/categorylayout"
                 android:layout_width="match_parent"
@@ -269,14 +311,16 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
                     android:background="@color/material_grey_100"></android.support.v7.widget.RecyclerView>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/catagoriesrecyclerview"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="start"
-                    android:visibility="gone"
-                    android:background="@color/material_grey_100"></android.support.v7.widget.RecyclerView>
+                    android:background="@color/material_grey_100"
+                    android:visibility="gone"></android.support.v7.widget.RecyclerView>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/productlayout"
                 android:layout_width="match_parent"
@@ -297,8 +341,9 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:cardElevation="10dp"
-                        app:cardCornerRadius="5dp">
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="10dp">
+
                         <RelativeLayout
                             android:id="@+id/quickview"
                             android:layout_width="match_parent"

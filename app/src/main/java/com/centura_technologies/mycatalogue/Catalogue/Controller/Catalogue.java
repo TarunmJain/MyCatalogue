@@ -31,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
@@ -87,6 +88,7 @@ public class Catalogue extends AppCompatActivity {
     static public String SearchString = "";
     static int SearchPageNumber = 0;
     static String item = "";
+    TextView slashbreadcrumb,catagorybreadcrumb,sectionbreadcrumb;
     public static boolean grid_to_listflag = false;
     public static boolean Section_to_Category = false;
 
@@ -96,7 +98,14 @@ public class Catalogue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalogue);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        toolbar.setTitle("Catalogue");
+        slashbreadcrumb = (TextView) findViewById(R.id.slashbreadcrumb);
+        catagorybreadcrumb =(TextView) findViewById(R.id.categorybreadcrumb);
+        sectionbreadcrumb =(TextView) findViewById(R.id.sectionbreadcrumb);
+        toolbar.setTitle("");
+        sectionbreadcrumb.setText(BreadCrumb.Section);
+        catagorybreadcrumb.setText(BreadCrumb.Category);
+        if(BreadCrumb.Category.matches(""))
+            slashbreadcrumb.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         filtericon = (ImageView) findViewById(R.id.filtericon);
@@ -184,6 +193,20 @@ public class Catalogue extends AppCompatActivity {
     }
 
     private void OnClicks() {
+        catagorybreadcrumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        sectionbreadcrumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SectionCatalogue.InitialzationSectionAdapter(getApplicationContext());
+                finish();
+            }
+        });
         filtericon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
