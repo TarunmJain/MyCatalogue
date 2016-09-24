@@ -21,6 +21,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Dashboard.View.SlidingImage_Adapter;
+import com.centura_technologies.mycatalogue.Order.Controller.Order;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
@@ -254,7 +255,7 @@ public class Dashboard extends AppCompatActivity {
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Dashboard.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+               startActivity(new Intent(Dashboard.this, Order.class));
             }
         });
        /* billing.setOnClickListener(new View.OnClickListener() {

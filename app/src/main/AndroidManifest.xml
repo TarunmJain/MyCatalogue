@@ -65,48 +65,14 @@
             android:screenOrientation="landscape"/>
         <activity android:name=".Shortlist.Controller.SlideShow"
             android:screenOrientation="landscape"/>
-        <activity
-            android:name=".Login.Controller.Login"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Dashboard.Controller.Dashboard"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Leads.Controller.LeadsList"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Leads.Controller.AddLeads"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Activity.Controller.ActivityList"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Activity.Controller.AddCall"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Activity.Controller.AddEvent"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Activity.Controller.AddTask"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Catalogue.Controller.CatalogueDetails"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Catalogue.Controller.ImageViewer"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Shortlist.Controller.Shortlist"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Catalogue.Controller.SectionCatalogue"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Catalogue.Controller.CategoryCatalogue"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Shortlist.Controller.SlideShow"
-            android:screenOrientation="landscape" />
+        <activity android:name=".Order.Controller.Order"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".AboutUs.Controller.AboutUs"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".Settings.Controller.Settings"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".Sync.Controller.Sync"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
