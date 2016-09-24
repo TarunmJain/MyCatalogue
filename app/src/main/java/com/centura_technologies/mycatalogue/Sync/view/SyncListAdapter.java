@@ -78,7 +78,6 @@ public class SyncListAdapter extends RecyclerView.Adapter<SyncListAdapter.ViewHo
                         holder.text.setVisibility(View.GONE);
                         holder.textdown.setVisibility(View.VISIBLE);
                     }
-
                     else
                     {
                         holder.text.setVisibility(View.VISIBLE);
