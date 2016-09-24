@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -43,6 +44,8 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         holder.collectionpane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BreadCrumb.Section=data.get(position).getTitle();
+                BreadCrumb.Category="";
                 StaticData.SelectedCollectionProducts=new ArrayList<String>();
                 StaticData.SelectedCollection=true;
                 StaticData.SelectedCollectionProducts=data.get(position).getProductIds();

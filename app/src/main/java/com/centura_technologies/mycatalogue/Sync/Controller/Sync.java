@@ -4,18 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.centura_technologies.mycatalogue.Catalogue.View.SectionlistAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
+import com.centura_technologies.mycatalogue.Sync.view.SyncListAdapter;
 
 /**
  * Created by Centura User1 on 23-09-2016.
  */
 public class Sync extends AppCompatActivity {
     Toolbar toolbar;
+    RecyclerView sync_list;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,6 +30,9 @@ public class Sync extends AppCompatActivity {
         toolbar.setTitle("Sync");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        sync_list= (RecyclerView) findViewById(R.id.sync_list);
+        sync_list.setLayoutManager(new GridLayoutManager(Sync.this, 3));
+        sync_list.setAdapter(new SyncListAdapter(Sync.this));
     }
 
     @Override
