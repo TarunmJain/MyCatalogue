@@ -106,9 +106,9 @@ public class SectionCatalogue extends AppCompatActivity {
     }
 
     public static void BillingProducts(){
-        billprod=new BillingProducts();
         billprodlist=new ArrayList<BillingProducts>();
         for(int i=0;i<DB.getInitialModel().getProducts().size();i++){
+            billprod=new BillingProducts();
             billprod.setId(DB.getInitialModel().getProducts().get(i).getId());
             billprod.setTitle(DB.getInitialModel().getProducts().get(i).getTitle());
             billprod.setDescription(DB.getInitialModel().getProducts().get(i).getDescription());
@@ -132,8 +132,8 @@ public class SectionCatalogue extends AppCompatActivity {
             billprod.setProductImages(DB.getInitialModel().getProducts().get(i).getProductImages());
             billprod.setAttributes(DB.getInitialModel().getProducts().get(i).getAttributes());
             billprod.setVariants(DB.getInitialModel().getProducts().get(i).getVariants());
+            billprodlist.add(billprod);
         }
-        billprodlist.add(billprod);
         DB.setBillprodlist(billprodlist);
     }
 

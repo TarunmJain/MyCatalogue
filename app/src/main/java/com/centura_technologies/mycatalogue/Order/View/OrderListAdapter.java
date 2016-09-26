@@ -41,7 +41,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         holder.name.setText(data.get(position).getTitle());
         holder.unit.setText(data.get(position).getWeight() + "");
         holder.qty.setText(qty+"");
-        holder.price.setText(data.get(position).getSellingPrice() + "");
+        holder.price.setText(data.get(position).getPrice() + "");
         double amount=data.get(position).getSellingPrice()*Double.parseDouble(qty+"");
         holder.amount.setText(amount+"");
         holder.orderlistlayout.setOnClickListener(new View.OnClickListener() {
