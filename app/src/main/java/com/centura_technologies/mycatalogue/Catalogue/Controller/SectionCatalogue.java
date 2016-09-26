@@ -89,6 +89,7 @@ public class SectionCatalogue extends AppCompatActivity {
         for(int k=0;k<DB.getInitialModel().getCollections().size();k++){
             collectionmodel.add(DB.getInitialModel().getCollections().get(k));
         }
+        BillingProducts();
         recyclerView.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,3));
         category_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3));
         collections_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,1,GridLayoutManager.HORIZONTAL,false));
