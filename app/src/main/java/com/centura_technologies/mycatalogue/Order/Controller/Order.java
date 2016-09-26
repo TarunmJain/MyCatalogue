@@ -1,12 +1,16 @@
 package com.centura_technologies.mycatalogue.Order.Controller;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.centura_technologies.mycatalogue.Order.View.OrderListAdapter;
 import com.centura_technologies.mycatalogue.R;
 
 /**
@@ -14,6 +18,7 @@ import com.centura_technologies.mycatalogue.R;
  */
 public class Order extends AppCompatActivity {
     Toolbar toolbar;
+    static RecyclerView orderlist_recyclerview;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,6 +28,14 @@ public class Order extends AppCompatActivity {
         toolbar.setTitle("Orders");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        orderlist_recyclerview=(RecyclerView)findViewById(R.id.orderlist_recyclerview);
+        orderlist_recyclerview.setLayoutManager(new LinearLayoutManager(Order.this, LinearLayoutManager.VERTICAL, false));
+        InitializeAdapter(Order.this);
+
+    }
+
+    public static void InitializeAdapter(Context context){
+        orderlist_recyclerview.setAdapter(new OrderListAdapter(context));
     }
 
     @Override
