@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Order.Controller.Order;
+import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 
@@ -20,11 +21,11 @@ import java.util.ArrayList;
  */
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> {
     Context mContext;
-    ArrayList<Products> data;
-    int qty=0;
+    ArrayList<BillingProducts> data;
+    int qty;
     public OrderListAdapter(Context context){
         this.mContext=context;
-        data= DB.getInitialModel().getProducts();
+        data= DB.getBillprodlist();
     }
 
     @Override
@@ -36,6 +37,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     @Override
     public void onBindViewHolder(OrderListAdapter.ViewHolder holder, int position) {
+        qty=data.get(position).getQuantity();
         holder.name.setText(data.get(position).getTitle());
         holder.unit.setText(data.get(position).getWeight() + "");
         holder.qty.setText(qty+"");
@@ -52,7 +54,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         holder.qty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                     
+              qty=+1;
             }
         });
     }

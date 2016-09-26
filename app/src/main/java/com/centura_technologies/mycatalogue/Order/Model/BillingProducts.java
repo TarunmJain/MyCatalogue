@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by Centura User1 on 26-09-2016.
  */
-public class OrderProducts {
+public class BillingProducts {
     private String Id;
     private String SectionId;
     private String CategoryId;
@@ -21,7 +21,9 @@ public class OrderProducts {
     private String VideoUrl;
     private String PdfUrl;
     private Double MRP;
+    private Double Amount;
     private int Quantity;
+    private Double Price;
     private Double SellingPrice;
     private ArrayList<AttributeClass> Attributes;
     private ArrayList<VarientModel> Variants;
@@ -31,7 +33,7 @@ public class OrderProducts {
     private boolean WishList;
     private String SelectedVarient;
 
-    public OrderProducts(){
+    public BillingProducts(){
         Id="";
         SectionId="";
         CategoryId="";
@@ -44,7 +46,9 @@ public class OrderProducts {
         VideoUrl="";
         PdfUrl="";
         MRP=0.0;
+        Amount=0.0;
         Quantity=0;
+        Price=0.0;
         SellingPrice=0.0;
         Attributes=new ArrayList<AttributeClass>();
         Variants=new ArrayList<VarientModel>();
@@ -149,6 +153,22 @@ public class OrderProducts {
 
     public void setMRP(Double MRP) {
         this.MRP = MRP;
+    }
+
+    public Double getAmount() {
+        return Amount;
+    }
+
+    public void setAmount(Double amount) {
+        Amount = amount;
+    }
+
+    public Double getPrice() {
+        return Price;
+    }
+
+    public void setPrice(Double price) {
+        Price = price;
     }
 
     public int getQuantity() {

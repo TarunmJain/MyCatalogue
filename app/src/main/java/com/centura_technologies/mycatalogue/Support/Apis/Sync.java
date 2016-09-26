@@ -97,6 +97,8 @@ public class Sync {
                         DB.setInitialModel(temp);
                         db.saveinitialmodel();
                         db.loadinitialmodel();
+
+
                         //ArrayList<Products> tempprod=DB.getInitialModel().getProducts();
                         /*ArrayList<Sections> tempsec=DB.getInitialModel().getSections();
                         ArrayList<Categories> tempcat=DB.getInitialModel().getCategories();

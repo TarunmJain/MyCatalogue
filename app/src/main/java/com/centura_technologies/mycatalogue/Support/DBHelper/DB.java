@@ -5,6 +5,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.Leads.Model.LeadsModel;
+import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,8 @@ public class DB {
     private static ArrayList<Sections> CategoryData=new ArrayList<Sections>();
     private static CategoryTree tree=new CategoryTree();
     private static ArrayList<CategoryTree> treelist=new ArrayList<CategoryTree>();
+    private static BillingProducts billingProducts=new BillingProducts();
+    private static ArrayList<BillingProducts> billprodlist=new ArrayList<BillingProducts>();
 
     public static InitialModel getInitialModel() {return initialModel;}
     public static void setInitialModel(InitialModel initialModel) {DB.initialModel = initialModel;}
@@ -45,17 +48,27 @@ public class DB {
     public static CategoryTree getTree() {
         return tree;
     }
-
     public static void setTree(CategoryTree tree) {
         DB.tree = tree;
     }
-
     public static ArrayList<CategoryTree> getTreelist() {
         return treelist;
     }
-
     public static void setTreelist(ArrayList<CategoryTree> treelist) {
         DB.treelist = treelist;
+    }
+
+    public static BillingProducts getBillingProducts() {
+        return billingProducts;
+    }
+    public static void setBillingProducts(BillingProducts billingProducts) {
+        DB.billingProducts = billingProducts;
+    }
+    public static ArrayList<BillingProducts> getBillprodlist() {
+        return billprodlist;
+    }
+    public static void setBillprodlist(ArrayList<BillingProducts> billprodlist) {
+        DB.billprodlist = billprodlist;
     }
 
     public static void AddLead(LeadsModel newlead){
