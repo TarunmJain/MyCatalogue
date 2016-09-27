@@ -1,12 +1,19 @@
 package com.centura_technologies.mycatalogue.Order.View;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Order.Controller.Order;
@@ -22,39 +29,110 @@ import java.util.ArrayList;
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> {
     Context mContext;
     ArrayList<BillingProducts> data;
-    int qty;
-    public OrderListAdapter(Context context,ArrayList<BillingProducts> model){
-        this.mContext=context;
-        this.data= model;
+    ImageView qtydecrement, qtyincrement;
+    Button apply, cancel;
+    EditText qtytext;
+
+    public OrderListAdapter(Context context, ArrayList<BillingProducts> model) {
+        this.mContext = context;
+        this.data = model;
     }
 
     @Override
     public OrderListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_orderlist,parent,false);
-        ViewHolder vh=new ViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_orderlist, parent, false);
+        ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(OrderListAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final OrderListAdapter.ViewHolder holder, final int position) {
         holder.name.setText(data.get(position).getTitle());
         holder.unit.setText(data.get(position).getWeight() + "");
-        holder.qty.setText(data.get(position).getQuantity()+"");
+        holder.qty.setText(data.get(position).getQuantity() + "");
         holder.price.setText(data.get(position).getPrice() + "");
-        double amount=data.get(position).getSellingPrice()*Double.parseDouble(data.get(position).getQuantity()+"");
-        holder.amount.setText(amount+"");
-        holder.orderlistlayout.setOnClickListener(new View.OnClickListener() {
+        double amount = data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + "");
+        holder.amount.setText(amount + "");
+
+        holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.get(position).setQuantity(data.get(position).getQuantity()+1);
+                data.get(position).setQuantity(data.get(position).getQuantity() + 1);
                 notifyDataSetChanged();
                 Order.InitializeAdapter(mContext);
             }
         });
+
+        holder.unit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                notifyDataSetChanged();
+                Order.InitializeAdapter(mContext);
+            }
+        });
+
         holder.qty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.get(position).setQuantity(data.get(position).getQuantity()+1);
+                final Dialog dialog = new Dialog(mContext);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_quantity);
+                qtydecrement = (ImageView) dialog.findViewById(R.id.qtydecrement);
+                qtyincrement = (ImageView) dialog.findViewById(R.id.qtyincrement);
+                qtytext = (EditText) dialog.findViewById(R.id.qtytext);
+                apply = (Button) dialog.findViewById(R.id.apply);
+                cancel = (Button) dialog.findViewById(R.id.cancel);
+                qtytext.setText(data.get(position).getQuantity()+"");
+                dialog.show();
+                qtydecrement.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (data.get(position).getQuantity() != 0) {
+                            data.get(position).setQuantity(data.get(position).getQuantity() - 1);
+                            qtytext.setText(data.get(position).getQuantity()+"");
+                        } else
+                            Toast.makeText(mContext, "Min Count is 0", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                qtyincrement.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                        qtytext.setText(data.get(position).getQuantity()+"");
+                    }
+                });
+                apply.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        data.get(position).setQuantity(Integer.parseInt(qtytext.getText().toString()));
+                        dialog.cancel();
+                        notifyDataSetChanged();
+                        Order.InitializeAdapter(mContext);
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+            }
+        });
+
+        holder.price.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                notifyDataSetChanged();
+                Order.InitializeAdapter(mContext);
+            }
+        });
+
+        holder.amount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data.get(position).setQuantity(data.get(position).getQuantity() + 1);
                 notifyDataSetChanged();
                 Order.InitializeAdapter(mContext);
             }
@@ -67,16 +145,17 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name,unit,qty,price,amount;
+        TextView name, unit, qty, price, amount;
         LinearLayout orderlistlayout;
+
         public ViewHolder(View v) {
             super(v);
-            name=(TextView)v.findViewById(R.id.name);
-            unit=(TextView)v.findViewById(R.id.unit);
-            qty=(TextView)v.findViewById(R.id.qty);
-            price=(TextView)v.findViewById(R.id.price);
-            amount=(TextView)v.findViewById(R.id.amount);
-            orderlistlayout=(LinearLayout)v.findViewById(R.id.orderlistlayout);
+            name = (TextView) v.findViewById(R.id.name);
+            unit = (TextView) v.findViewById(R.id.unit);
+            qty = (TextView) v.findViewById(R.id.qty);
+            price = (TextView) v.findViewById(R.id.price);
+            amount = (TextView) v.findViewById(R.id.amount);
+            orderlistlayout = (LinearLayout) v.findViewById(R.id.orderlistlayout);
         }
     }
 }
