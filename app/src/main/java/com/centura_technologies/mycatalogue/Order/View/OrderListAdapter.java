@@ -23,9 +23,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     Context mContext;
     ArrayList<BillingProducts> data;
     int qty;
-    public OrderListAdapter(Context context){
+    public OrderListAdapter(Context context,ArrayList<BillingProducts> model){
         this.mContext=context;
-        data= DB.getBillprodlist();
+        this.data= model;
     }
 
     @Override
@@ -36,25 +36,27 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(OrderListAdapter.ViewHolder holder, int position) {
-        qty=data.get(position).getQuantity();
+    public void onBindViewHolder(OrderListAdapter.ViewHolder holder, final int position) {
         holder.name.setText(data.get(position).getTitle());
         holder.unit.setText(data.get(position).getWeight() + "");
-        holder.qty.setText(qty+"");
+        holder.qty.setText(data.get(position).getQuantity()+"");
         holder.price.setText(data.get(position).getPrice() + "");
-        double amount=data.get(position).getSellingPrice()*Double.parseDouble(qty+"");
+        double amount=data.get(position).getSellingPrice()*Double.parseDouble(data.get(position).getQuantity()+"");
         holder.amount.setText(amount+"");
         holder.orderlistlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                qty = +1;
+                data.get(position).setQuantity(data.get(position).getQuantity()+1);
+                notifyDataSetChanged();
                 Order.InitializeAdapter(mContext);
             }
         });
         holder.qty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              qty=+1;
+                data.get(position).setQuantity(data.get(position).getQuantity()+1);
+                notifyDataSetChanged();
+                Order.InitializeAdapter(mContext);
             }
         });
     }

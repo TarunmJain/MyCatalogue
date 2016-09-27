@@ -10,8 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.Order.View.OrderListAdapter;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
+import com.centura_technologies.mycatalogue.Support.GenericData;
+
+import java.util.ArrayList;
 
 /**
  * Created by Centura User1 on 24-09-2016.
@@ -19,6 +24,7 @@ import com.centura_technologies.mycatalogue.R;
 public class Order extends AppCompatActivity {
     Toolbar toolbar;
     static RecyclerView orderlist_recyclerview;
+    static ArrayList<BillingProducts> model;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,13 +35,17 @@ public class Order extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         orderlist_recyclerview=(RecyclerView)findViewById(R.id.orderlist_recyclerview);
+        model= DB.getBillprodlist();
         orderlist_recyclerview.setLayoutManager(new LinearLayoutManager(Order.this, LinearLayoutManager.VERTICAL, false));
+        int viewHeight= GenericData.convertDpToPixels(52, Order.this);
+        viewHeight = viewHeight * ((model.size()));
+        orderlist_recyclerview.getLayoutParams().height = viewHeight;
         InitializeAdapter(Order.this);
 
     }
 
     public static void InitializeAdapter(Context context){
-        orderlist_recyclerview.setAdapter(new OrderListAdapter(context));
+        orderlist_recyclerview.setAdapter(new OrderListAdapter(context,model));
     }
 
     @Override
