@@ -23,6 +23,7 @@ import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.GetImageFromUrl;
 import com.centura_technologies.mycatalogue.Support.ImageCache;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,6 +118,43 @@ public class Sync {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 //GenericData.ShowDialog(context,"Loading...",false);
+                Log.d("Error", "Error");
+            }
+        });
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void SyncSectionList(final Context mContext){
+        sharedPreferences = mContext.getSharedPreferences(GenericData.MyPref, mContext.MODE_PRIVATE);
+        final ArrayList<Sections> model = new ArrayList<Sections>();
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("StoreCode", "92sc93");
+        JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Request.Method.POST, Urls.SectionList, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response.optString("IsSuccess").matches("true")) {
+                    Sections sections=new Sections();
+                    try {
+                        JSONObject jsonObject=response.getJSONObject("Data");
+                        sections=gson.fromJson(jsonObject.toString(),Sections.class);
+                        model.add(sections);
+                        for (int i = 0; i < model.size(); i++) {
+                            ImageCache param1 = new ImageCache(model.get(i).getImageUrl(), model.get(i).getId(), mContext);
+                            GetImageFromUrl getImageFromUrl1 = new GetImageFromUrl();
+                            getImageFromUrl1.execute(param1);
+                        }
+                        GenericData.imagesChached = true;
+                        db.savesectionlist();
+                        db.loadsectionlist();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
                 Log.d("Error", "Error");
             }
         });

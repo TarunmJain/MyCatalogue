@@ -11,6 +11,7 @@ public class Urls {
     public static String parent ="http://mystoreservices.azurewebsites.net/api/Catalogue/";
     public static String Login=parent+"login";
     public static String Initial=parent+"initial";
+    public static String SectionList=parent+"sectionlist";
 
 
 

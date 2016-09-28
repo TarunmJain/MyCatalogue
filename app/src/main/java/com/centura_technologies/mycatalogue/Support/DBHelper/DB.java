@@ -20,8 +20,8 @@ public class DB {
     private static ArrayList<LeadsModel> leads=new ArrayList<LeadsModel>();
     private static ActivitiesModel activitymodel=new ActivitiesModel();
     private static ArrayList<ActivitiesModel> activities=new ArrayList<ActivitiesModel>();
-    private static Sections cataloguemodel=new Sections();
-    private static ArrayList<Sections> CategoryData=new ArrayList<Sections>();
+    private static Sections sectionmodel=new Sections();
+    private static ArrayList<Sections> sectionlist=new ArrayList<Sections>();
     private static CategoryTree tree=new CategoryTree();
     private static ArrayList<CategoryTree> treelist=new ArrayList<CategoryTree>();
     private static BillingProducts billingProducts=new BillingProducts();
@@ -40,10 +40,21 @@ public class DB {
     public static ArrayList<ActivitiesModel> getActivities() {return activities;}
     public static void setActivities(ArrayList<ActivitiesModel> activities) {DB.activities = activities;}
 
-    public static ArrayList<Sections> getCategoryData() {return CategoryData;}
-    public static void setCategoryData(ArrayList<Sections> categoryData) {CategoryData = categoryData;}
-    public static Sections getCataloguemodel() {return cataloguemodel;}
-    public static void setCataloguemodel(Sections cataloguemodel) {DB.cataloguemodel = cataloguemodel;}
+    public static Sections getSectionmodel() {
+        return sectionmodel;
+    }
+
+    public static void setSectionmodel(Sections sectionmodel) {
+        DB.sectionmodel = sectionmodel;
+    }
+
+    public static ArrayList<Sections> getSectionlist() {
+        return sectionlist;
+    }
+
+    public static void setSectionlist(ArrayList<Sections> sectionlist) {
+        DB.sectionlist = sectionlist;
+    }
 
     public static CategoryTree getTree() {
         return tree;

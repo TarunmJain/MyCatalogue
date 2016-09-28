@@ -30,6 +30,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static String TableName = "TableName";
     public static String Data = "Data";
     public static String InitialData = "InitialData";
+    public static String SectionList="SectionList";
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -127,12 +128,27 @@ public class DbHelper extends SQLiteOpenHelper {
         db.delete(this.InitialData,"TableName=?",new String[]{"Collections"});
         db.insert(this.InitialData, null, contentValues);
     }
+
+    private void saveSectionList() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        contentValues = new ContentValues();
+        contentValues.put(this.TableName, "SectionsList");
+        contentValues.put(this.Data, gson.toJsonTree(DB.getInitialModel().getSections()).getAsJsonArray().toString());
+        db.delete(this.InitialData, "TableName=?", new String[]{"SectionsList"});
+        db.insert(this.InitialData, null, contentValues);
+    }
+
     public void saveinitialmodel() {
         saveSections();
         saveCategories();
         saveproducts();
         savecollections();
     }
+    public void savesectionlist(){
+        saveSectionList();
+    }
+
+
 
     private void loadSections(InitialModel initialModel){
         SQLiteDatabase db = DbHelper.this.getReadableDatabase();
@@ -188,6 +204,20 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    private void loadSections(){
+        SQLiteDatabase db = DbHelper.this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from InitialData where "+this.TableName+"=?",new String[]{"SectionsList"});
+        res.moveToFirst();
+        while (res.isAfterLast() == false) {
+            //initialModel.setSections(gson.fromJson(res.getString(res.getColumnIndex("Data")).toString(), ArrayList.class));
+            Type listType = new TypeToken<ArrayList<Sections>>(){}.getType();
+            ArrayList<Sections> sec=new ArrayList<Sections>();
+            sec=gson.fromJson(res.getString(res.getColumnIndex("Data")).toString(),listType);
+            DB.setSectionlist(sec);
+            res.moveToNext();
+        }
+    }
+
     public  void loadinitialmodel() {
         InitialModel initialModel=new InitialModel();
         loadSections(initialModel);
@@ -195,5 +225,8 @@ public class DbHelper extends SQLiteOpenHelper {
         loadproducts(initialModel);
         loadcollections(initialModel);
         DB.setInitialModel(initialModel);
+    }
+    public void loadsectionlist(){
+        loadSections();
     }
 }
