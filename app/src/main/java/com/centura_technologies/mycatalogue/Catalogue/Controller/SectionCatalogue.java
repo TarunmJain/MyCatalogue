@@ -47,8 +47,7 @@ public class SectionCatalogue extends AppCompatActivity {
     public static ArrayList<CollectionModel> collectionmodel;
     public static boolean Section_to_Category=false;
     int h1, h2,screenhight;
-    static BillingProducts billprod;
-    static ArrayList<BillingProducts> billprodlist;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,7 +88,6 @@ public class SectionCatalogue extends AppCompatActivity {
         for(int k=0;k<DB.getInitialModel().getCollections().size();k++){
             collectionmodel.add(DB.getInitialModel().getCollections().get(k));
         }
-        BillingProducts();
         recyclerView.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,3));
         category_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3));
         collections_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,1,GridLayoutManager.HORIZONTAL,false));
@@ -104,39 +102,6 @@ public class SectionCatalogue extends AppCompatActivity {
 
         GenericData.DrawerOnClicks(SectionCatalogue.this);
     }
-
-    public static void BillingProducts(){
-        billprodlist=new ArrayList<BillingProducts>();
-        for(int i=0;i<DB.getInitialModel().getProducts().size();i++){
-            billprod=new BillingProducts();
-            billprod.setId(DB.getInitialModel().getProducts().get(i).getId());
-            billprod.setTitle(DB.getInitialModel().getProducts().get(i).getTitle());
-            billprod.setDescription(DB.getInitialModel().getProducts().get(i).getDescription());
-            billprod.setSectionId(DB.getInitialModel().getProducts().get(i).getSectionId());
-            billprod.setCategoryId(DB.getInitialModel().getProducts().get(i).getCategoryId());
-            billprod.setSKU(DB.getInitialModel().getProducts().get(i).getSKU());
-            billprod.setBarCode(DB.getInitialModel().getProducts().get(i).getBarCode());
-            billprod.setImageUrl(DB.getInitialModel().getProducts().get(i).getImageUrl());
-            billprod.setVideoUrl(DB.getInitialModel().getProducts().get(i).getVideoUrl());
-            billprod.setPdfUrl(DB.getInitialModel().getProducts().get(i).getPdfUrl());
-            billprod.setMRP(DB.getInitialModel().getProducts().get(i).getMRP());
-            billprod.setAmount(0.0);
-            billprod.setQuantity(0);
-            billprod.setPrice(DB.getInitialModel().getProducts().get(i).getSellingPrice());
-            billprod.setSellingPrice(DB.getInitialModel().getProducts().get(i).getSellingPrice());
-            billprod.setTags(DB.getInitialModel().getProducts().get(i).getTags());
-            billprod.setStatus(DB.getInitialModel().getProducts().get(i).getStatus());
-            billprod.setWeight(DB.getInitialModel().getProducts().get(i).getWeight());
-            billprod.setWishList(DB.getInitialModel().getProducts().get(i).isWishList());
-            billprod.setSelectedVarient(DB.getInitialModel().getProducts().get(i).getSelectedVarient());
-            billprod.setProductImages(DB.getInitialModel().getProducts().get(i).getProductImages());
-            billprod.setAttributes(DB.getInitialModel().getProducts().get(i).getAttributes());
-            billprod.setVariants(DB.getInitialModel().getProducts().get(i).getVariants());
-            billprodlist.add(billprod);
-        }
-        DB.setBillprodlist(billprodlist);
-    }
-
     public static void InitializationCollectionAdapter(Context context){
         collections_recyclerview.setAdapter(new CollectionAdapter(context,collectionmodel));
     }

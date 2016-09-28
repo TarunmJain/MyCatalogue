@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/material_grey_100"/>
-                <com.balysv.materialripple.MaterialRippleLayout
+               <!-- <com.balysv.materialripple.MaterialRippleLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:mrl_rippleOverlay="true"
@@ -111,10 +111,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:orientation="horizontal">
-                        <!--<ImageView
+                        &lt;!&ndash;<ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_delete_grey600_24dp" />-->
+                            android:src="@drawable/ic_delete_grey600_24dp" />&ndash;&gt;
                         <TextView
                             android:id="@+id/leadstext"
                             android:layout_width="wrap_content"
@@ -129,8 +129,8 @@
                     android:id="@+id/view7"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/material_grey_100"/>
-                <com.balysv.materialripple.MaterialRippleLayout
+                    android:background="@color/material_grey_100"/>-->
+               <!-- <com.balysv.materialripple.MaterialRippleLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:mrl_rippleOverlay="true"
@@ -150,10 +150,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:orientation="horizontal">
-                        <!--<ImageView
+                        &lt;!&ndash;<ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_delete_grey600_24dp" />-->
+                            android:src="@drawable/ic_delete_grey600_24dp" />&ndash;&gt;
                         <TextView
                             android:id="@+id/activitytext"
                             android:layout_width="wrap_content"
@@ -169,7 +169,7 @@
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/material_grey_100"/>
+                    android:background="@color/material_grey_100"/>-->
                 <com.balysv.materialripple.MaterialRippleLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -331,7 +331,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/material_grey_100"/>
-                <com.balysv.materialripple.MaterialRippleLayout
+                <!--<com.balysv.materialripple.MaterialRippleLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:mrl_rippleOverlay="true"
@@ -351,10 +351,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:orientation="horizontal">
-                        <!--<ImageView
+                        &lt;!&ndash;<ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_bell_grey600_24dp" />-->
+                            android:src="@drawable/ic_bell_grey600_24dp" />&ndash;&gt;
                         <TextView
                             android:id="@+id/billingtext"
                             android:layout_width="wrap_content"
@@ -390,10 +390,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:orientation="horizontal">
-                        <!--<ImageView
+                        &lt;!&ndash;<ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_bell_grey600_24dp" />-->
+                            android:src="@drawable/ic_bell_grey600_24dp" />&ndash;&gt;
                         <TextView
                             android:id="@+id/customertext"
                             android:layout_width="wrap_content"
@@ -429,10 +429,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:orientation="horizontal">
-                        <!--<ImageView
+                        &lt;!&ndash;<ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_bell_grey600_24dp" />-->
+                            android:src="@drawable/ic_bell_grey600_24dp" />&ndash;&gt;
                         <TextView
                             android:id="@+id/routeplantext"
                             android:layout_width="wrap_content"
@@ -468,10 +468,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:orientation="horizontal">
-                        <!--<ImageView
+                        &lt;!&ndash;<ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_bell_grey600_24dp" />-->
+                            android:src="@drawable/ic_bell_grey600_24dp" />&ndash;&gt;
                         <TextView
                             android:id="@+id/expensestext"
                             android:layout_width="wrap_content"
@@ -486,7 +486,7 @@
                     android:id="@+id/view11"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/material_grey_100"/>
+                    android:background="@color/material_grey_100"/>-->
                 <com.balysv.materialripple.MaterialRippleLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

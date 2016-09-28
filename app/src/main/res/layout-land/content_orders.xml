@@ -64,20 +64,34 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_toLeftOf="@+id/billdate"
+                                    android:layout_toLeftOf="@+id/billdatelayout"
                                     android:gravity="center"
                                     android:text="Bill Date:"
                                     android:textColor="@color/greytext"
                                     android:textSize="16sp" />
-                                <EditText
-                                    android:id="@+id/billdate"
+                                <RelativeLayout
+                                    android:id="@+id/billdatelayout"
                                     android:layout_width="220dp"
                                     android:layout_height="match_parent"
-                                    android:layout_alignParentRight="true"
                                     android:layout_marginBottom="10dp"
                                     android:layout_marginRight="10dp"
                                     android:layout_marginTop="10dp"
+                                    android:layout_alignParentRight="true">
+                                <TextView
+                                    android:id="@+id/billdate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:paddingLeft="5dp"
+                                    android:gravity="center_vertical"
                                     android:background="@drawable/transparentsquarebutton" />
+                                    <ImageView
+                                        android:id="@+id/clender"
+                                        android:layout_width="40dp"
+                                        android:layout_height="match_parent"
+                                        android:padding="5dp"
+                                        android:layout_alignParentRight="true"
+                                        android:src="@drawable/ic_calendar_black_24dp"/>
+                                </RelativeLayout>
                             </RelativeLayout>
                         </LinearLayout>
                     </LinearLayout>

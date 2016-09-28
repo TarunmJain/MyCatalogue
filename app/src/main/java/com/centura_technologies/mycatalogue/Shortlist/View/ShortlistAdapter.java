@@ -71,6 +71,7 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
                     recyclerView.setVisibility(View.GONE);
                     emptyshortlist.setVisibility(View.VISIBLE);
                 }
+                Catalogue.InitializeAdapter(mContext);
                 notifyDataSetChanged();
 
             }

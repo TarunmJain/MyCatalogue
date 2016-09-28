@@ -37,7 +37,10 @@ import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogu
 import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.Leads.Controller.LeadsList;
 import com.centura_technologies.mycatalogue.Login.Controller.Login;
+import com.centura_technologies.mycatalogue.Order.Controller.Order;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
+import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
@@ -75,6 +78,7 @@ public class GenericData {
     public static TextView maintext, subtext;
     static boolean contactPermission;
     static LinearLayout dashboard, leads, activity, catalogues, products, shortlist, order, billing, customer, routeplan, expenses, sync, aboutus, logout;
+    static View view2,view6,view7,view9,view10,view11;
     static TextView dashboardtext;
     static DrawerLayout Drawer;
 
@@ -327,40 +331,46 @@ public class GenericData {
     public static void DrawerOnClicks(final Context context) {
         final Activity a=((Activity)context);
         dashboard = (LinearLayout)a.findViewById(R.id.dashboard);
-        leads = (LinearLayout) a.findViewById(R.id.leads);
-        activity = (LinearLayout) a.findViewById(R.id.activity);
+        /*leads = (LinearLayout) a.findViewById(R.id.leads);
+        activity = (LinearLayout) a.findViewById(R.id.activity);*/
         catalogues = (LinearLayout) a.findViewById(R.id.catalogues);
         products = (LinearLayout) a.findViewById(R.id.products);
         shortlist = (LinearLayout) a.findViewById(R.id.shortlist);
         order = (LinearLayout) a.findViewById(R.id.Order);
-        billing = (LinearLayout) a.findViewById(R.id.billing);
+        /*billing = (LinearLayout) a.findViewById(R.id.billing);
         customer = (LinearLayout) a.findViewById(R.id.customer);
         routeplan = (LinearLayout) a.findViewById(R.id.routeplan);
-        expenses = (LinearLayout) a.findViewById(R.id.expenses);
+        expenses = (LinearLayout) a.findViewById(R.id.expenses);*/
         sync = (LinearLayout) a.findViewById(R.id.sync);
         aboutus = (LinearLayout) a.findViewById(R.id.aboutus);
         logout = (LinearLayout) a.findViewById(R.id.logout);
         dashboardtext = (TextView)a.findViewById(R.id.dashboardtext);
         Drawer = (DrawerLayout) a.findViewById(R.id.drawer);
 
-        if(StaticData.Options.matches("Catalogue")){
+
+        /*if(StaticData.Options.matches("Catalogue")){
             leads.setVisibility(View.GONE);
             activity.setVisibility(View.GONE);
             billing.setVisibility(View.GONE);
             customer.setVisibility(View.GONE);
             routeplan.setVisibility(View.GONE);
             expenses.setVisibility(View.GONE);
-        }
+            view7.setVisibility(View.GONE);
+            view2.setVisibility(View.GONE);
+            view6.setVisibility(View.GONE);
+            view9.setVisibility(View.GONE);
+            view10.setVisibility(View.GONE);
+            view11.setVisibility(View.GONE);
+        }*/
 
         dashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 a.startActivity(new Intent(context, Dashboard.class));
-                a.finish();
                 Drawer.closeDrawer(Gravity.LEFT);
             }
         });
-        leads.setOnClickListener(new View.OnClickListener() {
+       /* leads.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 a.startActivity(new Intent(context, LeadsList.class));
@@ -375,7 +385,7 @@ public class GenericData {
                 a.finish();
                 Drawer.closeDrawer(Gravity.LEFT);
             }
-        });
+        });*/
         catalogues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -389,23 +399,24 @@ public class GenericData {
             @Override
             public void onClick(View view) {
                 a.startActivity(new Intent(context, SectionCatalogue.class));
-                a.finish();
                 Drawer.closeDrawer(Gravity.LEFT);
             }
         });
         shortlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
+                a.startActivity(new Intent(context, Shortlist.class));
+                Drawer.closeDrawer(Gravity.LEFT);
             }
         });
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
+                a.startActivity(new Intent(context, Order.class));
+                Drawer.closeDrawer(Gravity.LEFT);
             }
         });
-        billing.setOnClickListener(new View.OnClickListener() {
+        /*billing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
@@ -428,18 +439,18 @@ public class GenericData {
             public void onClick(View view) {
                 Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         sync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
+                a.startActivity(new Intent(context, Settings.class));
+                Drawer.closeDrawer(Gravity.LEFT);
             }
         });
         aboutus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 a.startActivity(new Intent(context, AboutUs.class));
-                a.finish();
                 Drawer.closeDrawer(Gravity.LEFT);
             }
         });

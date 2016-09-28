@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import com.centura_technologies.mycatalogue.Catalogue.View.SectionlistAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
-import com.centura_technologies.mycatalogue.Sync.view.SyncListAdapter;
+import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
 
 /**
  * Created by Centura User1 on 23-09-2016.
@@ -32,7 +32,7 @@ public class Sync extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sync_list= (RecyclerView) findViewById(R.id.sync_list);
         sync_list.setLayoutManager(new GridLayoutManager(Sync.this, 3));
-        sync_list.setAdapter(new SyncListAdapter(Sync.this));
+        sync_list.setAdapter(new SyncAdapter(Sync.this));
     }
 
     @Override

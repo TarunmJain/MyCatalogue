@@ -28,16 +28,10 @@ public class Dashboarddrawer {
 
     public static void show(final Context mContext, ViewGroup view) {
         dashboard = (LinearLayout) view.findViewById(R.id.dashboard);
-        leads = (LinearLayout) view.findViewById(R.id.leads);
-        activity = (LinearLayout) view.findViewById(R.id.activity);
         catalogues = (LinearLayout) view.findViewById(R.id.catalogues);
         products = (LinearLayout) view.findViewById(R.id.products);
         shortlist = (LinearLayout) view.findViewById(R.id.shortlist);
         order = (LinearLayout) view.findViewById(R.id.Order);
-        billing = (LinearLayout) view.findViewById(R.id.billing);
-        customer = (LinearLayout) view.findViewById(R.id.customer);
-        routeplan = (LinearLayout) view.findViewById(R.id.routeplan);
-        expenses = (LinearLayout) view.findViewById(R.id.expenses);
         sync = (LinearLayout) view.findViewById(R.id.sync);
         aboutus = (LinearLayout) view.findViewById(R.id.aboutus);
         logout = (LinearLayout) view.findViewById(R.id.logout);
@@ -55,20 +49,7 @@ public class Dashboarddrawer {
                 Drawer.closeDrawer(Gravity.LEFT);
             }
         });
-        leads.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, LeadsList.class));
-                Drawer.closeDrawer(Gravity.LEFT);
-            }
-        });
-        activity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                context.startActivity(new Intent(context, ActivityList.class));
-                Drawer.closeDrawer(Gravity.LEFT);
-            }
-        });
+
         catalogues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,30 +74,7 @@ public class Dashboarddrawer {
                 Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
             }
         });
-        billing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-        customer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-        routeplan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-        expenses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
+
         sync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

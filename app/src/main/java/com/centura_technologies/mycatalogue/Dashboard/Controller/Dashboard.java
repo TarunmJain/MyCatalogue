@@ -23,6 +23,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogu
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Dashboard.View.SlidingImage_Adapter;
 import com.centura_technologies.mycatalogue.Order.Controller.Order;
+import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
@@ -55,6 +56,8 @@ public class Dashboard extends AppCompatActivity {
     ArrayList<CategoryTree> tree;
     CategoryTree model;
     String id;
+    static BillingProducts billprod;
+    static ArrayList<BillingProducts> billprodlist;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +101,7 @@ public class Dashboard extends AppCompatActivity {
         others = (TextView) findViewById(R.id.others);
 
         DrawerOnClicks();
+        BillingProducts();
 
         tree = new ArrayList<CategoryTree>();
         DB.setTreelist(tree);
@@ -126,6 +130,38 @@ public class Dashboard extends AppCompatActivity {
         }
         init();
         OnClicks();
+    }
+
+    public static void BillingProducts(){
+        billprodlist=new ArrayList<BillingProducts>();
+        for(int i=0;i<DB.getInitialModel().getProducts().size();i++){
+            billprod=new BillingProducts();
+            billprod.setId(DB.getInitialModel().getProducts().get(i).getId());
+            billprod.setTitle(DB.getInitialModel().getProducts().get(i).getTitle());
+            billprod.setDescription(DB.getInitialModel().getProducts().get(i).getDescription());
+            billprod.setSectionId(DB.getInitialModel().getProducts().get(i).getSectionId());
+            billprod.setCategoryId(DB.getInitialModel().getProducts().get(i).getCategoryId());
+            billprod.setSKU(DB.getInitialModel().getProducts().get(i).getSKU());
+            billprod.setBarCode(DB.getInitialModel().getProducts().get(i).getBarCode());
+            billprod.setImageUrl(DB.getInitialModel().getProducts().get(i).getImageUrl());
+            billprod.setVideoUrl(DB.getInitialModel().getProducts().get(i).getVideoUrl());
+            billprod.setPdfUrl(DB.getInitialModel().getProducts().get(i).getPdfUrl());
+            billprod.setMRP(DB.getInitialModel().getProducts().get(i).getMRP());
+            billprod.setAmount(0.0);
+            billprod.setQuantity(0);
+            billprod.setPrice(DB.getInitialModel().getProducts().get(i).getSellingPrice());
+            billprod.setSellingPrice(DB.getInitialModel().getProducts().get(i).getSellingPrice());
+            billprod.setTags(DB.getInitialModel().getProducts().get(i).getTags());
+            billprod.setStatus(DB.getInitialModel().getProducts().get(i).getStatus());
+            billprod.setWeight(DB.getInitialModel().getProducts().get(i).getWeight());
+            billprod.setWishList(DB.getInitialModel().getProducts().get(i).isWishList());
+            billprod.setSelectedVarient(DB.getInitialModel().getProducts().get(i).getSelectedVarient());
+            billprod.setProductImages(DB.getInitialModel().getProducts().get(i).getProductImages());
+            billprod.setAttributes(DB.getInitialModel().getProducts().get(i).getAttributes());
+            billprod.setVariants(DB.getInitialModel().getProducts().get(i).getVariants());
+            billprodlist.add(billprod);
+        }
+        DB.setBillprodlist(billprodlist);
     }
 
     private void init() {
