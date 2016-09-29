@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.CatalogueDetails;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
@@ -29,9 +30,11 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
     ImageView product_image;
     TextView product_title, product_description;
     ArrayList<Products> products;
+    ArrayList<Products> shortlist;
 
     public CatalogueAdapter(Context context, ArrayList<Products> model) {
         products = new ArrayList<Products>();
+        shortlist=new ArrayList<Products>();
         products = model;
         this.mContext = context;
         activity = (Activity) mContext;
@@ -91,7 +94,8 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
             });
         }
 
-        for (Products model : StaticData.wishlistData) {
+
+        for (Products model : DB.getShortlistedlist()) {
             if (model.getId().matches(products.get(position).getId())) {
                 holder.wishlist.setImageResource(R.drawable.heart374);
                 break;
@@ -102,10 +106,10 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
             @Override
             public void onClick(View v) {
                 boolean found = false;
-                for (Products model : StaticData.wishlistData) {
+                for (Products model : DB.getShortlistedlist()) {
                     if (model.getId().matches(products.get(position).getId())) {
                         holder.wishlist.setImageResource(R.drawable.favorite7);
-                        StaticData.wishlistData.remove(model);
+                        DB.getShortlistedlist().remove(model);
                         found = true;
                         break;
                     }
@@ -114,7 +118,8 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                 if (!found) {
                     holder.wishlist.setImageResource(R.drawable.heart374);
                     StaticData.Shortlisted = true;
-                    StaticData.wishlistData.add(products.get(position));
+                    shortlist.add(products.get(position));
+                    DB.setShortlistedlist(shortlist);
                 }
             }
         });

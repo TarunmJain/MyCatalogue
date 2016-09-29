@@ -2,6 +2,7 @@ package com.centura_technologies.mycatalogue.Order.View;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,9 +34,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     Button apply, cancel;
     EditText qtytext;
 
-    public OrderListAdapter(Context context, ArrayList<BillingProducts> model) {
+    public OrderListAdapter(Context context) {
         this.mContext = context;
-        this.data = model;
+        if(Order.shortlistedorders)
+            this.data=Order.shorlistedmodel;
+            else
+            this.data = DB.getBillprodlist();
     }
 
     @Override
@@ -47,13 +51,25 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     @Override
     public void onBindViewHolder(final OrderListAdapter.ViewHolder holder, final int position) {
+        if(Order.shortlistedorders){
+            holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+
+        }else {
+            if(data.get(position).getQuantity()>0)
+                holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.accentcolor));
+            else
+                holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+        }
         holder.name.setText(data.get(position).getTitle());
         holder.unit.setText(data.get(position).getWeight() + "");
         holder.qty.setText(data.get(position).getQuantity() + "");
         holder.price.setText(data.get(position).getPrice() + "");
         double amount = data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + "");
         holder.amount.setText(amount + "");
+        onClicks(holder,position);
+    }
 
+    private void onClicks(final ViewHolder holder, final int position) {
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

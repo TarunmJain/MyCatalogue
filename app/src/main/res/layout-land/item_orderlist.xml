@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@drawable/transparentsquarebutton">
 
     <LinearLayout
         android:id="@+id/orderlistlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/transparentsquarebutton"
+        android:background="@color/white"
         android:weightSum="5">
         <TextView
             android:id="@+id/name"

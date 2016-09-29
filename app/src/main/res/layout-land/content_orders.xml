@@ -4,37 +4,135 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@color/white"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Categories :"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:background="@drawable/transparentsquarebutton">
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"></Spinner>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/shortlistedorder"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="3"
+                        android:weightSum="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_weight="0.8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Selected"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/checked"
+                            android:layout_weight="0.2"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:src="@mipmap/checking" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/clear"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1.5"
+                        android:background="@color/accentcolor"
+                        android:padding="10dp"
+                        android:text="Clear"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                    <Button
+                        android:id="@+id/save"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1.5"
+                        android:background="@color/accentcolor"
+                        android:padding="10dp"
+                        android:text="Save"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="10dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:weightSum="2">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="horizontal"
                         android:weightSum="2">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
+
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="70dp">
+
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -43,6 +141,7 @@
                                     android:text="Bill No:"
                                     android:textColor="@color/greytext"
                                     android:textSize="16sp" />
+
                                 <EditText
                                     android:id="@+id/billno"
                                     android:layout_width="220dp"
@@ -54,13 +153,16 @@
                                     android:background="@drawable/transparentsquarebutton" />
                             </RelativeLayout>
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
+
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="70dp">
+
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -69,45 +171,52 @@
                                     android:text="Bill Date:"
                                     android:textColor="@color/greytext"
                                     android:textSize="16sp" />
+
                                 <RelativeLayout
                                     android:id="@+id/billdatelayout"
                                     android:layout_width="220dp"
                                     android:layout_height="match_parent"
+                                    android:layout_alignParentRight="true"
                                     android:layout_marginBottom="10dp"
                                     android:layout_marginRight="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_alignParentRight="true">
-                                <TextView
-                                    android:id="@+id/billdate"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:paddingLeft="5dp"
-                                    android:gravity="center_vertical"
-                                    android:background="@drawable/transparentsquarebutton" />
+                                    android:layout_marginTop="10dp">
+
+                                    <TextView
+                                        android:id="@+id/billdate"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/transparentsquarebutton"
+                                        android:gravity="center_vertical"
+                                        android:paddingLeft="5dp" />
+
                                     <ImageView
                                         android:id="@+id/clender"
                                         android:layout_width="40dp"
                                         android:layout_height="match_parent"
-                                        android:padding="5dp"
                                         android:layout_alignParentRight="true"
-                                        android:src="@drawable/ic_calendar_black_24dp"/>
+                                        android:padding="5dp"
+                                        android:src="@drawable/ic_calendar_black_24dp" />
                                 </RelativeLayout>
                             </RelativeLayout>
                         </LinearLayout>
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="horizontal"
                         android:weightSum="2">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
+
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="70dp">
+
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -116,6 +225,7 @@
                                     android:text="Customer Name:"
                                     android:textColor="@color/greytext"
                                     android:textSize="16sp" />
+
                                 <EditText
                                     android:id="@+id/custname"
                                     android:layout_width="220dp"
@@ -127,13 +237,16 @@
                                     android:background="@drawable/transparentsquarebutton" />
                             </RelativeLayout>
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1">
+
                             <RelativeLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="70dp">
+
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -142,6 +255,7 @@
                                     android:text="Sales Person Name:"
                                     android:textColor="@color/greytext"
                                     android:textSize="16sp" />
+
                                 <EditText
                                     android:id="@+id/salespersonname"
                                     android:layout_width="220dp"
@@ -156,22 +270,26 @@
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="10dp"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="10dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="2dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="5">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -180,6 +298,7 @@
                             android:gravity="center"
                             android:text="Name"
                             android:textColor="@color/black" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -188,6 +307,7 @@
                             android:gravity="center"
                             android:text="Unit"
                             android:textColor="@color/black" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -196,6 +316,7 @@
                             android:gravity="center"
                             android:text="Qty"
                             android:textColor="@color/black" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -204,6 +325,7 @@
                             android:gravity="center"
                             android:text="Price"
                             android:textColor="@color/black" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -213,6 +335,7 @@
                             android:text="Amount"
                             android:textColor="@color/black" />
                     </LinearLayout>
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/orderlist_recyclerview"
                         android:layout_width="match_parent"

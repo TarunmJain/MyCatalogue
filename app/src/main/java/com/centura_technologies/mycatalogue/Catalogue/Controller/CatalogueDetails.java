@@ -55,6 +55,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     ScrollView scrollView;
     public static String videourl="";
     public static String pdfurl="";
+    static ArrayList<Products> shortlisted;
 
 
     @Override
@@ -69,6 +70,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         logff.setVisibility(View.GONE);
         context = CatalogueDetails.this;
         allproducts = new ArrayList<Products>();
+        shortlisted=new ArrayList<Products>();
         // allproducts = EventBus.getDefault().removeStickyEvent(ArrayList.class);
         if (StaticData.ClickedProduct) {
             for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
@@ -275,7 +277,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     private static void productClicks(final Products productdetail) {
-        for (Products model : StaticData.wishlistData) {
+        for (Products model : DB.getShortlistedlist()) {
             if (model.getId().matches(productdetail.getId())) {
                 if (StaticData.Shortlisted) {
                     shortlist.setImageResource(R.drawable.heart374);
@@ -287,10 +289,10 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
             @Override
             public void onClick(View v) {
                 boolean found = false;
-                for (Products model : StaticData.wishlistData) {
+                for (Products model : DB.getShortlistedlist()) {
                     if (model.getId().matches(productdetail.getId())) {
                         shortlist.setImageResource(R.drawable.favorite7);
-                        StaticData.wishlistData.remove(model);
+                        DB.getShortlistedlist().remove(model);
                         found = true;
                         break;
                     }
@@ -298,7 +300,9 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
 
                 if (!found) {
                     shortlist.setImageResource(R.drawable.heart374);
-                    StaticData.wishlistData.add(productdetail);
+                    shortlisted.add(productdetail);
+                    DB.setShortlistedlist(shortlisted);
+                    //StaticData.wishlistData.add(productdetail);
                 }
             }
         });

@@ -37,6 +37,8 @@ public class StaticData {
     public static boolean ClickedProduct=false;
     public static boolean SelectedCollection=false;
     public static boolean Shortlisted=false;
+    public static boolean shortlistedorders=false;
+
 
     public static String Options="";
 }

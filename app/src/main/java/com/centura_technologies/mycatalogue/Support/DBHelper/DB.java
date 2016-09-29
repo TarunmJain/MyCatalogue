@@ -3,6 +3,7 @@ package com.centura_technologies.mycatalogue.Support.DBHelper;
 import com.centura_technologies.mycatalogue.Activity.Model.ActivitiesModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.Leads.Model.LeadsModel;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
@@ -26,6 +27,8 @@ public class DB {
     private static ArrayList<CategoryTree> treelist=new ArrayList<CategoryTree>();
     private static BillingProducts billingProducts=new BillingProducts();
     private static ArrayList<BillingProducts> billprodlist=new ArrayList<BillingProducts>();
+    private static Products shortlisted=new Products();
+    private static ArrayList<Products> shortlistedlist=new ArrayList<Products>();
 
     public static InitialModel getInitialModel() {return initialModel;}
     public static void setInitialModel(InitialModel initialModel) {DB.initialModel = initialModel;}
@@ -40,21 +43,19 @@ public class DB {
     public static ArrayList<ActivitiesModel> getActivities() {return activities;}
     public static void setActivities(ArrayList<ActivitiesModel> activities) {DB.activities = activities;}
 
-    public static Sections getSectionmodel() {
-        return sectionmodel;
-    }
-
+    public static Sections getSectionmodel() {return sectionmodel;}
     public static void setSectionmodel(Sections sectionmodel) {
         DB.sectionmodel = sectionmodel;
     }
-
     public static ArrayList<Sections> getSectionlist() {
         return sectionlist;
     }
+    public static void setSectionlist(ArrayList<Sections> sectionlist) {DB.sectionlist = sectionlist;}
 
-    public static void setSectionlist(ArrayList<Sections> sectionlist) {
-        DB.sectionlist = sectionlist;
-    }
+    public static Products getShortlisted() {return shortlisted;}
+    public static void setShortlisted(Products shortlisted) {DB.shortlisted = shortlisted;}
+    public static ArrayList<Products> getShortlistedlist() {return shortlistedlist;}
+    public static void setShortlistedlist(ArrayList<Products> shortlistedlist) {DB.shortlistedlist = shortlistedlist;}
 
     public static CategoryTree getTree() {
         return tree;

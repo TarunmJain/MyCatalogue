@@ -17,6 +17,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.CatalogueDetails;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
@@ -34,12 +35,12 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
     public ShortlistAdapter(final Context context){
         this.mContext=context;
         this.model= new ArrayList<Products>();
-        this.model= StaticData.wishlistData;
+        this.model= DB.getShortlistedlist();
         final Activity a=(Activity)context;
         recyclerView=(RecyclerView)a.findViewById(R.id.shortlistrecyclerview);
         emptyshortlist=(RelativeLayout)a.findViewById(R.id.empty_shortlist);
         shortlistnow=(Button)a.findViewById(R.id.shortlist);
-        if(StaticData.wishlistData.size()==0){
+        if(model.size()==0){
             recyclerView.setVisibility(View.GONE);
             emptyshortlist.setVisibility(View.VISIBLE);
         }
@@ -66,8 +67,8 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StaticData.wishlistData.remove(position);
-                if (StaticData.wishlistData.size() == 0) {
+                DB.getShortlistedlist().remove(position);
+                if (model.size() == 0) {
                     recyclerView.setVisibility(View.GONE);
                     emptyshortlist.setVisibility(View.VISIBLE);
                 }
