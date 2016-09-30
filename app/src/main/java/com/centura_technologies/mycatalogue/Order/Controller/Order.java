@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -22,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
@@ -39,7 +42,7 @@ import java.util.Calendar;
  */
 public class Order extends AppCompatActivity {
     Toolbar toolbar;
-    static RecyclerView orderlist_recyclerview;
+    public static RecyclerView orderlist_recyclerview;
     public static ArrayList<BillingProducts> shorlistedmodel;
     RelativeLayout billdatelayout;
     EditText billno, custname, salespersonname;
@@ -51,6 +54,13 @@ public class Order extends AppCompatActivity {
     int mYear, mMonth, mDay;
     static final int DATE_DIALOG_ID = 0;
     public static boolean shortlistedorders = false;
+    public static boolean selectedcategories = false;
+    ArrayAdapter<String> dataAdapter;
+    ArrayList<String> categories;
+    ArrayList<String> categoryids;
+    public static String item = "-1";
+    static BillingProducts billingProducts;
+    public static ArrayList<BillingProducts> billingProductsArrayList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +82,14 @@ public class Order extends AppCompatActivity {
         clear = (Button) findViewById(R.id.clear);
         save = (Button) findViewById(R.id.save);
         orderlist_recyclerview.setLayoutManager(new LinearLayoutManager(Order.this, LinearLayoutManager.VERTICAL, false));
-
+        categories = new ArrayList<String>();
+        categoryids = new ArrayList<String>();
+        categories.add("All Products");
+        categoryids.add("-1");
+        for (int i = 0; i < DB.getInitialModel().getCategories().size(); i++) {
+            categoryids.add(DB.getInitialModel().getCategories().get(i).getId());
+            categories.add(DB.getInitialModel().getCategories().get(i).getTitle());
+        }
         InitializeAdapter(Order.this);
         onClicks();
 
@@ -101,7 +118,6 @@ public class Order extends AppCompatActivity {
                     checked.setImageResource(R.mipmap.checking);
                     InitializeAdapter(Order.this);
                 } else {
-                    shortlistedorders = true;
                     for (BillingProducts temp : DB.getBillprodlist()) {
                         if (temp.getQuantity() > 0) {
                             shorlistedmodel.add(temp);
@@ -109,8 +125,12 @@ public class Order extends AppCompatActivity {
                     }
                     if (shorlistedmodel.size() != 0) {
                         checked.setImageResource(R.mipmap.checked);
-                        InitializeAdapter(Order.this);
-                    } else Toast.makeText(Order.this, "Please Select the Item", Toast.LENGTH_SHORT).show();
+                        shortlistedorders = true;
+                    } else {
+                        shortlistedorders = false;
+                        Toast.makeText(Order.this, "Please Select the Item", Toast.LENGTH_SHORT).show();
+                    }
+                    InitializeAdapter(Order.this);
                 }
                 /*if (StaticData.shortlistedorders) {
                     checked.setImageResource(R.mipmap.checked);
@@ -135,6 +155,21 @@ public class Order extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //item = parent.getItemAtPosition(position).toString();
+                item = categoryids.get(position);
+                selectedcategories = true;
+                InitializeAdapter(Order.this);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
@@ -168,6 +203,42 @@ public class Order extends AppCompatActivity {
     }
 
     public static void InitializeAdapter(Context context) {
+        if (selectedcategories) {
+
+            billingProductsArrayList = new ArrayList<BillingProducts>();
+            if (item.matches("-1"))
+                billingProductsArrayList = DB.getBillprodlist();
+            else
+                for (int j = 0; j < DB.getInitialModel().getProducts().size(); j++) {
+                    if (DB.getInitialModel().getProducts().get(j).getCategoryId().matches(item)) {
+                        billingProducts = new BillingProducts();
+                        billingProducts.setId(DB.getInitialModel().getProducts().get(j).getId());
+                        billingProducts.setTitle(DB.getInitialModel().getProducts().get(j).getTitle());
+                        billingProducts.setDescription(DB.getInitialModel().getProducts().get(j).getDescription());
+                        billingProducts.setSectionId(DB.getInitialModel().getProducts().get(j).getSectionId());
+                        billingProducts.setCategoryId(DB.getInitialModel().getProducts().get(j).getCategoryId());
+                        billingProducts.setSKU(DB.getInitialModel().getProducts().get(j).getSKU());
+                        billingProducts.setBarCode(DB.getInitialModel().getProducts().get(j).getBarCode());
+                        billingProducts.setImageUrl(DB.getInitialModel().getProducts().get(j).getImageUrl());
+                        billingProducts.setVideoUrl(DB.getInitialModel().getProducts().get(j).getVideoUrl());
+                        billingProducts.setPdfUrl(DB.getInitialModel().getProducts().get(j).getPdfUrl());
+                        billingProducts.setMRP(DB.getInitialModel().getProducts().get(j).getMRP());
+                        billingProducts.setAmount(0.0);
+                        billingProducts.setQuantity(0);
+                        billingProducts.setPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                        billingProducts.setSellingPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                        billingProducts.setTags(DB.getInitialModel().getProducts().get(j).getTags());
+                        billingProducts.setStatus(DB.getInitialModel().getProducts().get(j).getStatus());
+                        billingProducts.setWeight(DB.getInitialModel().getProducts().get(j).getWeight());
+                        billingProducts.setWishList(DB.getInitialModel().getProducts().get(j).isWishList());
+                        billingProducts.setSelectedVarient(DB.getInitialModel().getProducts().get(j).getSelectedVarient());
+                        billingProducts.setProductImages(DB.getInitialModel().getProducts().get(j).getProductImages());
+                        billingProducts.setAttributes(DB.getInitialModel().getProducts().get(j).getAttributes());
+                        billingProducts.setVariants(DB.getInitialModel().getProducts().get(j).getVariants());
+                        billingProductsArrayList.add(billingProducts);
+                    }
+                }
+        }
         int viewHeight = GenericData.convertDpToPixels(72, context);
         viewHeight = viewHeight * ((DB.getBillprodlist().size()));
         orderlist_recyclerview.getLayoutParams().height = viewHeight;
