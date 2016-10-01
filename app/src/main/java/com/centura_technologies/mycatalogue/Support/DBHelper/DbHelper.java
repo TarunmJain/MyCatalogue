@@ -9,10 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
+import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.ApplicationClass;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.google.gson.Gson;
@@ -133,7 +135,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         contentValues = new ContentValues();
         contentValues.put(this.TableName, "SectionsList");
-        contentValues.put(this.Data, gson.toJsonTree(DB.getInitialModel().getSections()).getAsJsonArray().toString());
+        contentValues.put(this.Data, gson.toJsonTree(DB.getSectionlist()).getAsJsonArray().toString());
         db.delete(this.InitialData, "TableName=?", new String[]{"SectionsList"});
         db.insert(this.InitialData, null, contentValues);
     }
@@ -225,6 +227,28 @@ public class DbHelper extends SQLiteOpenHelper {
         loadproducts(initialModel);
         loadcollections(initialModel);
         DB.setInitialModel(initialModel);
+        loadsectionlist();
+        Sync.BillingProducts();
+
+        ArrayList<CategoryTree> temptree=new ArrayList<CategoryTree>();
+        CategoryTree model;
+        String id;
+        for (int i = 0; i < DB.getInitialModel().getSections().size(); i++) {
+            id = DB.getInitialModel().getSections().get(i).getId();
+            model = new CategoryTree();
+            model.setId(DB.getInitialModel().getSections().get(i).getId());
+            model.setTitle(DB.getInitialModel().getSections().get(i).getTitle());
+            model.setImageUrl(DB.getInitialModel().getSections().get(i).getImageUrl());
+            model.setPriority(DB.getInitialModel().getSections().get(i).getPriority());
+            model.setSelected(DB.getInitialModel().getSections().get(i).isSelected());
+            for (int j = 0; j < DB.getInitialModel().getCategories().size(); j++) {
+                if (id.matches(DB.getInitialModel().getCategories().get(j).getSectionId())) {
+                    model.categories.add(DB.getInitialModel().getCategories().get(j));
+                }
+            }
+            temptree.add(model);
+        }
+        DB.setTreelist(temptree);
     }
     public void loadsectionlist(){
         loadSections();

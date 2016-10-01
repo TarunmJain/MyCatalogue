@@ -53,11 +53,8 @@ public class Dashboard extends AppCompatActivity {
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
     ArrayList<String> images;
-    ArrayList<CategoryTree> tree;
-    CategoryTree model;
-    String id;
-    static BillingProducts billprod;
-    static ArrayList<BillingProducts> billprodlist;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,25 +98,8 @@ public class Dashboard extends AppCompatActivity {
         others = (TextView) findViewById(R.id.others);
 
         DrawerOnClicks();
-        BillingProducts();
 
-        tree = new ArrayList<CategoryTree>();
-        DB.setTreelist(tree);
-        for (int i = 0; i < DB.getInitialModel().getSections().size(); i++) {
-            id = DB.getInitialModel().getSections().get(i).getId();
-            model = new CategoryTree();
-            model.setId(DB.getInitialModel().getSections().get(i).getId());
-            model.setTitle(DB.getInitialModel().getSections().get(i).getTitle());
-            model.setImageUrl(DB.getInitialModel().getSections().get(i).getImageUrl());
-            model.setPriority(DB.getInitialModel().getSections().get(i).getPriority());
-            model.setSelected(DB.getInitialModel().getSections().get(i).isSelected());
-            for (int j = 0; j < DB.getInitialModel().getCategories().size(); j++) {
-                if (id.matches(DB.getInitialModel().getCategories().get(j).getSectionId())) {
-                    model.categories.add(DB.getInitialModel().getCategories().get(j));
-                }
-            }
-            DB.getTreelist().add(model);
-        }
+
 
         if (StaticData.Options.matches("Catalogue")) {
             alloptions.setVisibility(View.GONE);
@@ -132,67 +112,7 @@ public class Dashboard extends AppCompatActivity {
         OnClicks();
     }
 
-    public static void BillingProducts(){
-        billprodlist=new ArrayList<BillingProducts>();
-        if(StaticData.shortlistedorders){
-            for(int j=0;j<DB.getShortlistedlist().size();j++){
-                billprod=new BillingProducts();
-                billprod.setId(DB.getShortlistedlist().get(j).getId());
-                billprod.setTitle(DB.getShortlistedlist().get(j).getTitle());
-                billprod.setDescription(DB.getShortlistedlist().get(j).getDescription());
-                billprod.setSectionId(DB.getShortlistedlist().get(j).getSectionId());
-                billprod.setCategoryId(DB.getShortlistedlist().get(j).getCategoryId());
-                billprod.setSKU(DB.getShortlistedlist().get(j).getSKU());
-                billprod.setBarCode(DB.getShortlistedlist().get(j).getBarCode());
-                billprod.setImageUrl(DB.getShortlistedlist().get(j).getImageUrl());
-                billprod.setVideoUrl(DB.getShortlistedlist().get(j).getVideoUrl());
-                billprod.setPdfUrl(DB.getShortlistedlist().get(j).getPdfUrl());
-                billprod.setMRP(DB.getShortlistedlist().get(j).getMRP());
-                billprod.setAmount(0.0);
-                billprod.setQuantity(0);
-                billprod.setPrice(DB.getShortlistedlist().get(j).getSellingPrice());
-                billprod.setSellingPrice(DB.getShortlistedlist().get(j).getSellingPrice());
-                billprod.setTags(DB.getShortlistedlist().get(j).getTags());
-                billprod.setStatus(DB.getShortlistedlist().get(j).getStatus());
-                billprod.setWeight(DB.getShortlistedlist().get(j).getWeight());
-                billprod.setWishList(DB.getShortlistedlist().get(j).isWishList());
-                billprod.setSelectedVarient(DB.getShortlistedlist().get(j).getSelectedVarient());
-                billprod.setProductImages(DB.getShortlistedlist().get(j).getProductImages());
-                billprod.setAttributes(DB.getShortlistedlist().get(j).getAttributes());
-                billprod.setVariants(DB.getShortlistedlist().get(j).getVariants());
-                billprodlist.add(billprod);
-            }
-        }else {
-            for(int i=0;i<DB.getInitialModel().getProducts().size();i++){
-                billprod=new BillingProducts();
-                billprod.setId(DB.getInitialModel().getProducts().get(i).getId());
-                billprod.setTitle(DB.getInitialModel().getProducts().get(i).getTitle());
-                billprod.setDescription(DB.getInitialModel().getProducts().get(i).getDescription());
-                billprod.setSectionId(DB.getInitialModel().getProducts().get(i).getSectionId());
-                billprod.setCategoryId(DB.getInitialModel().getProducts().get(i).getCategoryId());
-                billprod.setSKU(DB.getInitialModel().getProducts().get(i).getSKU());
-                billprod.setBarCode(DB.getInitialModel().getProducts().get(i).getBarCode());
-                billprod.setImageUrl(DB.getInitialModel().getProducts().get(i).getImageUrl());
-                billprod.setVideoUrl(DB.getInitialModel().getProducts().get(i).getVideoUrl());
-                billprod.setPdfUrl(DB.getInitialModel().getProducts().get(i).getPdfUrl());
-                billprod.setMRP(DB.getInitialModel().getProducts().get(i).getMRP());
-                billprod.setAmount(0.0);
-                billprod.setQuantity(0);
-                billprod.setPrice(DB.getInitialModel().getProducts().get(i).getSellingPrice());
-                billprod.setSellingPrice(DB.getInitialModel().getProducts().get(i).getSellingPrice());
-                billprod.setTags(DB.getInitialModel().getProducts().get(i).getTags());
-                billprod.setStatus(DB.getInitialModel().getProducts().get(i).getStatus());
-                billprod.setWeight(DB.getInitialModel().getProducts().get(i).getWeight());
-                billprod.setWishList(DB.getInitialModel().getProducts().get(i).isWishList());
-                billprod.setSelectedVarient(DB.getInitialModel().getProducts().get(i).getSelectedVarient());
-                billprod.setProductImages(DB.getInitialModel().getProducts().get(i).getProductImages());
-                billprod.setAttributes(DB.getInitialModel().getProducts().get(i).getAttributes());
-                billprod.setVariants(DB.getInitialModel().getProducts().get(i).getVariants());
-                billprodlist.add(billprod);
-            }
-        }
-        DB.setBillprodlist(billprodlist);
-    }
+
 
     private void init() {
         images = new ArrayList<String>();

@@ -515,7 +515,7 @@
                             android:id="@+id/synctext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sync"
+                            android:text="Settings"
                             android:layout_marginLeft="8dp"
                             android:textSize="18sp"
                             android:textColor="@color/greytext"/>

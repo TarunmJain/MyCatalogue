@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.centura_technologies.mycatalogue.Catalogue.View.SectionlistAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
-import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
+import com.centura_technologies.mycatalogue.Sync.view.SyncAdapter;
 
 /**
  * Created by Centura User1 on 23-09-2016.
@@ -21,18 +23,41 @@ import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
 public class Sync extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView sync_list;
+    Button appysync, cancel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        appysync = (Button) findViewById(R.id.appysync);
+        cancel = (Button) findViewById(R.id.cancel_sync);
         toolbar.setTitle("Sync");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        sync_list= (RecyclerView) findViewById(R.id.sync_list);
+        sync_list = (RecyclerView) findViewById(R.id.sync_list);
         sync_list.setLayoutManager(new GridLayoutManager(Sync.this, 3));
         sync_list.setAdapter(new SyncAdapter(Sync.this));
+        setOnClinks();
+    }
+
+    private void setOnClinks() {
+        appysync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (com.centura_technologies.mycatalogue.Support.Apis.Sync.SyncCollections)
+                    com.centura_technologies.mycatalogue.Support.Apis.Sync.syncroniseCollections(Sync.this);
+                else
+                    com.centura_technologies.mycatalogue.Support.Apis.Sync.syncroniseSections(Sync.this);
+
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

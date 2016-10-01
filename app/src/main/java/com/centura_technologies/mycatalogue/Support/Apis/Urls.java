@@ -12,6 +12,9 @@ public class Urls {
     public static String Login=parent+"login";
     public static String Initial=parent+"initial";
     public static String SectionList=parent+"sectionlist";
+    public static String collectionlist=parent+"collectionlist";
+    public static String sectiondata=parent+"sectiondata";
+
 
 
 

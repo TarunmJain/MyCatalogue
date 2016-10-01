@@ -108,7 +108,7 @@ public class Login extends Activity {
                                 public void onResponse(JSONObject response) {
                                     GenericData.ShowDialog(Login.this, "Loading...", false);
                                     if (GenericData.sucess(response, Login.this)) {
-                                        Sync.syncinitial(Login.this);
+                                        Sync.SyncSectionList(Login.this);
                                        // Sync.syncFilters(Login.this);
                                        // Sync.syncproducts(Login.this);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
