@@ -89,9 +89,8 @@
         <activity
             android:name=".Settings.Controller.Settings"
             android:screenOrientation="landscape" />
-        <activity
-            android:name=".Sync.Controller.Sync"
-            android:screenOrientation="landscape" />
+        <activity android:name=".Sync.Controller.SyncClass"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

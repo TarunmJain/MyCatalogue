@@ -1,6 +1,5 @@
 package com.centura_technologies.mycatalogue.Sync.Controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.centura_technologies.mycatalogue.Catalogue.View.SectionlistAdapter;
 import com.centura_technologies.mycatalogue.R;
-import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
-import com.centura_technologies.mycatalogue.Sync.view.SyncAdapter;
+import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
 
 /**
  * Created by Centura User1 on 23-09-2016.
  */
-public class Sync extends AppCompatActivity {
+public class SyncClass extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView sync_list;
     Button appysync, cancel;
@@ -36,8 +33,8 @@ public class Sync extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         sync_list = (RecyclerView) findViewById(R.id.sync_list);
-        sync_list.setLayoutManager(new GridLayoutManager(Sync.this, 3));
-        sync_list.setAdapter(new SyncAdapter(Sync.this));
+        sync_list.setLayoutManager(new GridLayoutManager(SyncClass.this, 3));
+        sync_list.setAdapter(new SyncAdapter(SyncClass.this));
         setOnClinks();
     }
 
@@ -46,9 +43,9 @@ public class Sync extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (com.centura_technologies.mycatalogue.Support.Apis.Sync.SyncCollections)
-                    com.centura_technologies.mycatalogue.Support.Apis.Sync.syncroniseCollections(Sync.this);
+                    com.centura_technologies.mycatalogue.Support.Apis.Sync.syncroniseCollections(SyncClass.this);
                 else
-                    com.centura_technologies.mycatalogue.Support.Apis.Sync.syncroniseSections(Sync.this);
+                    com.centura_technologies.mycatalogue.Support.Apis.Sync.syncroniseSections(SyncClass.this);
 
             }
         });

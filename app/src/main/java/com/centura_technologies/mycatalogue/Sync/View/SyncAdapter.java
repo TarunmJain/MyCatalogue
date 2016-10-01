@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 
@@ -25,18 +26,20 @@ public class SyncAdapter extends RecyclerView.Adapter<SyncAdapter.ViewHolder> {
 
     public SyncAdapter(Context context) {
         this.mContext = context;
-        this.data = DB.getInitialModel().getSections();
+        Sync.SelectedSectionSync= new ArrayList<>();
+        Sync.SyncCollections=false;
+        this.data = DB.getSectionlist();
     }
 
     @Override
-    public SyncAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_synclist, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(final SyncAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.textdown.setVisibility(View.GONE);
         if (position == 0) {
             holder.categoryImage.setImageResource(R.drawable.common);
@@ -49,12 +52,14 @@ public class SyncAdapter extends RecyclerView.Adapter<SyncAdapter.ViewHolder> {
                     if (holder.text.getVisibility() == View.VISIBLE)
                     {
                         holder.text.setVisibility(View.GONE);
+                        Sync.SyncCollections=true;
                         holder.textdown.setVisibility(View.VISIBLE);
                     }
 
                     else
                     {
                         holder.text.setVisibility(View.VISIBLE);
+                        Sync.SyncCollections=false;
                         holder.textdown.setVisibility(View.GONE);
                     }
                 }
@@ -64,18 +69,20 @@ public class SyncAdapter extends RecyclerView.Adapter<SyncAdapter.ViewHolder> {
             GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
             holder.text.setText(data.get(position).getTitle());
             holder.textdown.setText(data.get(position).getTitle());
-            final int finalPosition1 = position;
+            final int finalPosition = position;
             holder.categoryImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (holder.text.getVisibility() == View.VISIBLE)
                     {
                         holder.text.setVisibility(View.GONE);
+                        Sync.SelectedSectionSync.add(data.get(finalPosition).getId());
                         holder.textdown.setVisibility(View.VISIBLE);
                     }
                     else
                     {
                         holder.text.setVisibility(View.VISIBLE);
+                        Sync.SelectedSectionSync.remove(data.get(finalPosition).getId());
                         holder.textdown.setVisibility(View.GONE);
                     }
                 }

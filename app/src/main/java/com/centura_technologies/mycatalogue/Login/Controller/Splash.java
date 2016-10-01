@@ -40,7 +40,7 @@ public class Splash extends Activity {
             public void run() {
                 if (sharedPreferences.getString(GenericData.Sp_Status, "").matches("LoggedIn")) {
                   db.loadinitialmodel();
-                   // Sync.syncFilters(Splash.this);
+                   // SyncClass.syncFilters(Splash.this);
                     StaticData.Options="Catalogue";
                     startActivity(new Intent(Splash.this, Dashboard.class));
                     finish();

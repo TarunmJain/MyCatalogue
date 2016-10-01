@@ -1,6 +1,5 @@
 package com.centura_technologies.mycatalogue.Dashboard.Controller;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,16 +19,14 @@ import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
-import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Dashboard.View.SlidingImage_Adapter;
 import com.centura_technologies.mycatalogue.Order.Controller.Order;
-import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
-import com.centura_technologies.mycatalogue.Sync.Controller.Sync;
+import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -273,7 +270,7 @@ public class Dashboard extends AppCompatActivity {
         sync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, Sync.class));
+                startActivity(new Intent(Dashboard.this, SyncClass.class));
             }
         });
         aboutus.setOnClickListener(new View.OnClickListener() {

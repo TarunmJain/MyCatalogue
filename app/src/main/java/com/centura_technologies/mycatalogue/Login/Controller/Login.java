@@ -109,8 +109,8 @@ public class Login extends Activity {
                                     GenericData.ShowDialog(Login.this, "Loading...", false);
                                     if (GenericData.sucess(response, Login.this)) {
                                         Sync.SyncSectionList(Login.this);
-                                       // Sync.syncFilters(Login.this);
-                                       // Sync.syncproducts(Login.this);
+                                       // SyncClass.syncFilters(Login.this);
+                                       // SyncClass.syncproducts(Login.this);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString(GenericData.Sp_Username, username.getText().toString());
                                         editor.putString(GenericData.Sp_Password, password.getText().toString());

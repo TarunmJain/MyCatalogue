@@ -38,7 +38,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     public OrderListAdapter(Context context) {
         this.mContext = context;
-        viewHeight = GenericData.convertDpToPixels(72, mContext);
         this.data = DB.getBillprodlist();
        /* if (Order.shortlistedorders)
             this.data = Order.shorlistedmodel;
@@ -58,7 +57,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     @Override
     public void onBindViewHolder(final OrderListAdapter.ViewHolder holder, final int position) {
-
         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
         if(Order.shortlistedorders)
         {
@@ -80,7 +78,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             if(Order.item.matches("-1"))
             {
                 holder.orderlistlayout.setVisibility(View.VISIBLE);
-                Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
+                //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
                 if (data.get(position).getQuantity() > 0)
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.accentcolor));
                 else
@@ -97,7 +95,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 if(data.get(position).getCategoryId().matches(Order.item))
                 {
                     holder.orderlistlayout.setVisibility(View.VISIBLE);
-                    Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
+                    //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
                     if (data.get(position).getQuantity() > 0)
                         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.accentcolor));
                     else
