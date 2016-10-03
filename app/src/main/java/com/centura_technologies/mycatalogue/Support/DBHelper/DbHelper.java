@@ -122,7 +122,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.delete(this.InitialData,"TableName=?",new String[]{"Products"});
         db.insert(this.InitialData, null, contentValues);
     }
-    private void savecollections(){
+     private void savecollections(){
         SQLiteDatabase db = this.getWritableDatabase();
         contentValues = new ContentValues();
         contentValues.put(this.TableName, "Collections");

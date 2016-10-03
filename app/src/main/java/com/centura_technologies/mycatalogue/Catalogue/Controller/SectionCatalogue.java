@@ -40,7 +40,7 @@ public class SectionCatalogue extends AppCompatActivity {
     ActionBarDrawerToggle mDrawerToggle;
     SharedPreferences sharedPreferences;
     public static RecyclerView recyclerView;
-    static LinearLayout collectionlay;
+    static LinearLayout collectionlay,collection_cardview;
     static RecyclerView category_recyclerview,collections_recyclerview;
     public static ArrayList<CategoryTree> categories;
     public static ArrayList<Categories> category=new ArrayList<Categories>();
@@ -59,6 +59,7 @@ public class SectionCatalogue extends AppCompatActivity {
         Drawer = (DrawerLayout) findViewById(R.id.drawer);
         sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
         collectionlay= (LinearLayout) findViewById(R.id.collectionlay);
+        collection_cardview=(LinearLayout)findViewById(R.id.collection_cardview);
         mDrawerToggle = new ActionBarDrawerToggle(SectionCatalogue.this, Drawer, toolbar, R.string.opendrawer, R.string.closedrawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -103,7 +104,12 @@ public class SectionCatalogue extends AppCompatActivity {
         GenericData.DrawerOnClicks(SectionCatalogue.this);
     }
     public static void InitializationCollectionAdapter(Context context){
-        collections_recyclerview.setAdapter(new CollectionAdapter(context,collectionmodel));
+        if(collectionmodel.size()!=0){
+            collection_cardview.setVisibility(View.VISIBLE);
+            collections_recyclerview.setAdapter(new CollectionAdapter(context,collectionmodel));
+        }else {
+            collection_cardview.setVisibility(View.GONE);
+        }
     }
 
     public static void InitialzationCategoryAdapter(final Context context,CategoryTree categoryTree){

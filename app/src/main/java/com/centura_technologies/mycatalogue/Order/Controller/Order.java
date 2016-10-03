@@ -154,7 +154,12 @@ public class Order extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                for(BillingProducts prod:DB.getBillprodlist()){
+                    if(prod.getQuantity()>0){
+                        prod.setQuantity(0);
+                    }
+                }
+                InitializeAdapter(Order.this);
             }
         });
 
