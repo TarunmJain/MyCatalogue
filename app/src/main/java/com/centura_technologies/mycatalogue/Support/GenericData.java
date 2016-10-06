@@ -9,9 +9,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -42,6 +45,8 @@ import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
 import org.json.JSONObject;
@@ -202,7 +207,28 @@ public class GenericData {
     }*/
 
     public static void setImage(String url, ImageView image, Context context) {
+        DbHelper dbHelper= new DbHelper(context);
+        url= dbHelper.returnImage(Urls.parentIP+url);
         if (url != null)
+            if (!url.matches("")) {
+                url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
+                Bitmap bitmap = BitmapFactory.decodeFile(url);
+                if(bitmap!=null)
+                {
+                    // bitmap = Bitmap.createBitmap(bitmap, 0, 0, 400, 1000);
+                    image.setImageBitmap(bitmap);
+                }
+
+                    /*String path = Environment.getExternalStorageDirectory() + image;
+                    File imgFile = new File(path);
+                    if (imgFile.exists()) {
+                        String abx = imgFile.getAbsolutePath();
+                        Bitmap myBitmap = BitmapFactory.decodeFile(abx);
+                        myBitmap = Bitmap.createBitmap(myBitmap, 0, 0, 400, 1000);
+                        img.setImageBitmap(myBitmap);
+                    }*/
+            }
+       /* if (url != null)
             if (!url.matches(""))
                 //Picasso.with(context).load(Urls.parentIP + url).into(image);
                 Glide
@@ -212,7 +238,7 @@ public class GenericData {
                         .crossFade()
                         .into(image);
             else image.setImageResource(R.drawable.noimage);
-        else image.setImageResource(R.drawable.noimage);
+        else image.setImageResource(R.drawable.noimage);*/
     }
 
     public static void GenerateSignatureGlide() {

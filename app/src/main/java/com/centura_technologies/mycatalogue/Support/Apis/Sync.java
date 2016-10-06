@@ -327,6 +327,12 @@ public class Sync {
                             }
                         }
 
+                        for (int i = 0; i < temp.getCategories().size(); i++) {
+                            ImageCache param = new ImageCache(temp.getCategories().get(i).getImageUrl(), temp.getCategories().get(i).getId(), context);
+                            GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
+                            getImageFromUrl.execute(param);
+                        }
+
                         for (int j = 0; j < temp.getCollections().size(); j++) {
                             ImageCache param3 = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
                             GetImageFromUrl getImageFromUrl3 = new GetImageFromUrl();
@@ -383,6 +389,12 @@ public class Sync {
                                     break;
                                 }
                             }
+                        }
+
+                        for (int i = 0; i < temp.getCategories().size(); i++) {
+                            ImageCache param = new ImageCache(temp.getCategories().get(i).getImageUrl(), temp.getCategories().get(i).getId(), context);
+                            GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
+                            getImageFromUrl.execute(param);
                         }
 
                         for (int i = 0; i < temp.getProducts().size(); i++) {

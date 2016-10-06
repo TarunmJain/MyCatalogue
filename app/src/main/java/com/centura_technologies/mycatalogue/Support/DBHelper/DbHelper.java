@@ -31,7 +31,10 @@ public class DbHelper extends SQLiteOpenHelper {
     ContentValues contentValues = new ContentValues();
     public static String TableName = "TableName";
     public static String Data = "Data";
+    public static String ImagesTable = "Images";
+    public static String ImageURL = "ImageURL";
     public static String InitialData = "InitialData";
+    public static String LocalURL = "LocalURL";
     public static String SectionList="SectionList";
 
     public DbHelper(Context context) {
@@ -79,13 +82,19 @@ public class DbHelper extends SQLiteOpenHelper {
         else {
             db.insert("Images", null, contentValues);
         }*/
+        SQLiteDatabase db = this.getWritableDatabase();
+        contentValues = new ContentValues();
+        contentValues.put(this.ImageURL, image);
+        contentValues.put(this.LocalURL, path);
+        db.delete(this.ImagesTable, "ImageURL=?", new String[]{image});
+        db.insert(this.ImagesTable, null, contentValues);
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        /*SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(image, path);
-        editor.commit();
+        editor.commit();*/
     }
 
-    public String returnImage(String path) {
+    public String returnImage(String imagepath) {
         /*SQLiteDatabase db = this.getReadableDatabase();
         String pathtoimage="";
         Cursor res =  db.rawQuery("select * from " + Table_Images + " where ImageURL = ?", new String[]{path});
@@ -94,7 +103,14 @@ public class DbHelper extends SQLiteOpenHelper {
             pathtoimage=(res.getString(1));
             res.moveToNext();
         }*/
-        String data = sharedPreferences.getString(path, "");
+        String data = "";
+        SQLiteDatabase db = DbHelper.this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from "+this.ImagesTable+" where "+this.ImageURL+"=?",new String[]{imagepath});
+        res.moveToFirst();
+        while (res.isAfterLast() == false) {
+            data=res.getString(res.getColumnIndex(this.LocalURL)).toString();
+            res.moveToNext();
+        }
         return data;
     }
     private void saveSections(){
