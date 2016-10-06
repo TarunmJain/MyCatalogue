@@ -43,6 +43,7 @@ public class DbHelper extends SQLiteOpenHelper {
         StoreCode_var = sharedPreferences.getString(GenericData.Sp_StoreCode, "");
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
@@ -82,6 +83,7 @@ public class DbHelper extends SQLiteOpenHelper {
         else {
             db.insert("Images", null, contentValues);
         }*/
+
         SQLiteDatabase db = this.getWritableDatabase();
         contentValues = new ContentValues();
         contentValues.put(this.ImageURL, image);
