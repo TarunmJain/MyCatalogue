@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.GCMClientManager;
 import com.centura_technologies.mycatalogue.R;
@@ -118,7 +119,7 @@ public class Login extends Activity {
                                         editor.putString(GenericData.Sp_Status, "LoggedIn");
                                         editor.commit();
                                         StaticData.Options="Catalogue";
-                                        startActivity(new Intent(Login.this, Dashboard.class));
+                                        startActivity(new Intent(Login.this, SectionCatalogue.class));
                                         finish();
                                     } else {
                                         //username.setError("Username or password is wrong");

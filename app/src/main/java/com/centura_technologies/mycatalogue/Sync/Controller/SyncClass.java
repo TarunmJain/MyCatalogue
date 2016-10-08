@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.centura_technologies.mycatalogue.R;
-import com.centura_technologies.mycatalogue.Sync.view.SyncAdapter;
+import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
 
 /**
  * Created by Centura User1 on 23-09-2016.

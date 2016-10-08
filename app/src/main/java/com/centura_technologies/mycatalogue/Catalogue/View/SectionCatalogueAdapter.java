@@ -95,7 +95,6 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
             if (position == 0) {
                 holder.backlay.setVisibility(View.VISIBLE);
                 holder.backlay.setText("BACK");
-
                 holder.text.setVisibility(View.VISIBLE);
                 GenericData.setImage(currentTree.getImageUrl(), holder.categoryImage, mContext);
                 holder.text.setText(currentTree.getTitle());
@@ -111,7 +110,6 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
                 position -= 1;
                 GenericData.setImage(model.get(position).getImageUrl(), holder.categoryImage, mContext);
                 holder.text.setText(model.get(position).getTitle());
-
                 holder.text.setVisibility(View.VISIBLE);
                 final int finalPosition = position;
                 holder.categoryImage.setOnClickListener(new View.OnClickListener() {

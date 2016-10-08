@@ -48,7 +48,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
         db.execSQL(
-                "create table IF NOT EXISTS InitialData " +
+                    "create table IF NOT EXISTS InitialData " +
                         "(" +
                         "TableName text, " +
                         "Data text)"
@@ -90,10 +90,6 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(this.LocalURL, path);
         db.delete(this.ImagesTable, "ImageURL=?", new String[]{image});
         db.insert(this.ImagesTable, null, contentValues);
-
-        /*SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(image, path);
-        editor.commit();*/
     }
 
     public String returnImage(String imagepath) {

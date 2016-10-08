@@ -26,7 +26,7 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.GetImageFromUrl;
 import com.centura_technologies.mycatalogue.Support.ImageCache;
-import com.centura_technologies.mycatalogue.Sync.model.SyncSectionsClass;
+import com.centura_technologies.mycatalogue.Sync.Model.SyncSectionsClass;
 import com.google.gson.Gson;
 
 
@@ -52,7 +52,6 @@ public class Sync {
     public static boolean SyncCollections = false;
 
     public static void syncinitial(final Context context) {
-        db = new DbHelper(context);
         sharedPreferences = context.getSharedPreferences(GenericData.MyPref, context.MODE_PRIVATE);
         //if(GenericData.NetCheck(context)&& sharedPreferences.getString(GenericData.Sp_Status,"").matches("LoggedIn")){
         initialapi(context);
@@ -62,6 +61,7 @@ public class Sync {
     }
 
     public static void initialapi(final Context context) {
+        db = new DbHelper(context);
         sharedPreferences = context.getSharedPreferences(GenericData.MyPref, context.MODE_PRIVATE);
         ArrayList<Sections> model = new ArrayList<Sections>();
         RequestQueue queue = Volley.newRequestQueue(context);

@@ -7,6 +7,38 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/synclayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="20dp"
+            android:src="@drawable/ic_sync_grey600_24dp"
+            android:layout_gravity="center"/>
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="4dp">
+            <Button
+                android:id="@+id/syncbutton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="SYNC"
+                android:background="@android:color/transparent"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:padding="20dp"/>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/collectionlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

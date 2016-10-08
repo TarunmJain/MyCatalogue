@@ -4,18 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
+import com.centura_technologies.mycatalogue.Support.Apis.Sync;
+import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
 
 /**
  * Created by Centura User1 on 23-09-2016.
  */
 public class Settings extends AppCompatActivity {
     Toolbar toolbar;
+    CardView syncall,syncsections,synccollections,others;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,6 +31,45 @@ public class Settings extends AppCompatActivity {
         toolbar.setTitle("Settings");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        syncall=(CardView)findViewById(R.id.syncall);
+        syncsections=(CardView)findViewById(R.id.syncsections);
+        synccollections=(CardView)findViewById(R.id.synccollections);
+        others=(CardView)findViewById(R.id.others);
+        OnClicks();
+    }
+
+    private void OnClicks() {
+        syncall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Sync.initialapi(Settings.this);
+                Toast.makeText(Settings.this,"Updated",Toast.LENGTH_SHORT).show();
+                syncall.setClickable(false);
+                syncsections.setClickable(false);
+                synccollections.setClickable(false);
+                others.setClickable(false);
+            }
+        });
+        syncsections.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settings.this, SyncClass.class));
+                syncall.setClickable(true);
+                syncsections.setClickable(true);
+                synccollections.setClickable(true);
+                others.setClickable(true);
+            }
+        });
+        synccollections.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Settings.this, SyncClass.class));
+                syncall.setClickable(true);
+                syncsections.setClickable(true);
+                synccollections.setClickable(true);
+                others.setClickable(true);
+            }
+        });
     }
 
     @Override
