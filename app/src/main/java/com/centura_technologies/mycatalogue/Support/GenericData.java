@@ -75,7 +75,6 @@ public class GenericData {
     public static final String Sp_StoreProductType = "StoreProductType";
     public static ArrayList<Bundle> notificationList = new ArrayList<Bundle>();
     public static boolean progressAlive = false;
-    static ProgressDialog pDialog;
     public static Button button;
     public static Button button1;
     public static Activity a;
@@ -83,9 +82,37 @@ public class GenericData {
     public static TextView maintext, subtext;
     static boolean contactPermission;
     static LinearLayout dashboard, leads, activity, catalogues, products, shortlist, order, billing, customer, routeplan, expenses, sync, aboutus, logout;
-    static View view2,view6,view7,view9,view10,view11;
+    static View view2, view6, view7, view9, view10, view11;
     static TextView dashboardtext;
     static DrawerLayout Drawer;
+    static boolean downloadAlive = false;
+
+    static ProgressDialog pDialog;
+
+    public static void ShowdownloadingDialog(Context context, Boolean flag) {
+        context = context.getApplicationContext();
+        if (flag) {
+            if (downloadAlive) {
+                pDialog.cancel();
+                downloadAlive = false;
+            }
+               /* pDialog=new Dialog(context);
+                pDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                pDialog.setContentView(R.layout.customload);*/
+            pDialog = new ProgressDialog(context);
+            pDialog.setCanceledOnTouchOutside(false);
+            pDialog.setMessage("Downloading data...");
+            downloadAlive = true;
+            pDialog.show();
+        } else {
+            if (downloadAlive) {
+                pDialog.dismiss();
+                pDialog.cancel();
+                downloadAlive = false;
+            }
+        }
+    }
 
     public static void ShowDialog(Context context, String message, Boolean flag) {
         if (flag) {
@@ -122,7 +149,6 @@ public class GenericData {
     }
 
 
-
     public static boolean NetCheck(final Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -152,8 +178,8 @@ public class GenericData {
     }
 
 
-    public static boolean sucess(JSONObject result,Context context) {
-        ShowDialog(context,"",false);
+    public static boolean sucess(JSONObject result, Context context) {
+        ShowDialog(context, "", false);
         if (result.optString("IsSuccess").matches("true"))
             return true;
         else return false;
@@ -207,17 +233,18 @@ public class GenericData {
     }*/
 
     public static void setImage(String url, ImageView image, Context context) {
-        DbHelper dbHelper= new DbHelper(context);
-        url= dbHelper.returnImage(Urls.parentIP+url);
+        DbHelper dbHelper = new DbHelper(context);
+        url = dbHelper.returnImage(Urls.parentIP + url);
         if (url != null)
             if (!url.matches("")) {
                 url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
                 Bitmap bitmap = BitmapFactory.decodeFile(url);
-                if(bitmap!=null)
-                {
+                if (bitmap != null) {
                     // bitmap = Bitmap.createBitmap(bitmap, 0, 0, 400, 1000);
                     image.setImageBitmap(bitmap);
                 }
+            } else image.setImageResource(R.drawable.noimage);
+        else image.setImageResource(R.drawable.noimage);
 
                     /*String path = Environment.getExternalStorageDirectory() + image;
                     File imgFile = new File(path);
@@ -227,7 +254,6 @@ public class GenericData {
                         myBitmap = Bitmap.createBitmap(myBitmap, 0, 0, 400, 1000);
                         img.setImageBitmap(myBitmap);
                     }*/
-            }
        /* if (url != null)
             if (!url.matches(""))
                 //Picasso.with(context).load(Urls.parentIP + url).into(image);
@@ -276,9 +302,10 @@ public class GenericData {
                 requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_CODE);
             }
         } else {
-           // Splash.checkversion(context);
+            // Splash.checkversion(context);
         }
     }
+
     public static void requestPermission_ACCESS_COARSE_LOCATION(Context context) {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.ACCESS_COARSE_LOCATION)) {
@@ -355,8 +382,8 @@ public class GenericData {
 
 
     public static void DrawerOnClicks(final Context context) {
-        final Activity a=((Activity)context);
-        dashboard = (LinearLayout)a.findViewById(R.id.dashboard);
+        final Activity a = ((Activity) context);
+        dashboard = (LinearLayout) a.findViewById(R.id.dashboard);
         /*leads = (LinearLayout) a.findViewById(R.id.leads);
         activity = (LinearLayout) a.findViewById(R.id.activity);*/
         catalogues = (LinearLayout) a.findViewById(R.id.catalogues);
@@ -370,7 +397,7 @@ public class GenericData {
         sync = (LinearLayout) a.findViewById(R.id.sync);
         aboutus = (LinearLayout) a.findViewById(R.id.aboutus);
         logout = (LinearLayout) a.findViewById(R.id.logout);
-        dashboardtext = (TextView)a.findViewById(R.id.dashboardtext);
+        dashboardtext = (TextView) a.findViewById(R.id.dashboardtext);
         Drawer = (DrawerLayout) a.findViewById(R.id.drawer);
 
 

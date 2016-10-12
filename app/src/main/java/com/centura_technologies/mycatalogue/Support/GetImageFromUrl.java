@@ -25,22 +25,31 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
     // String fileURL,fName;
     //Context context;
 
-    @Override protected ImageCache doInBackground(ImageCache... data) {
+    @Override
+    protected ImageCache doInBackground(ImageCache... data) {
         StrictMode.setThreadPolicy(policy);
-        data[0].fileURL= Urls.parentIP+data[0].fileURL;
+        if (data[0].fileURL.matches(""))
+            return null;
+        data[0].fileURL = Urls.parentIP + data[0].fileURL;
+       // GenericData.ShowdownloadingDialog(data[0].context,true);
         data[0].strean = downloadImage(data[0]);
         return data[0];
     }
+
     // Sets the Bitmap returned by doInBackground
     @Override
+
     protected void onPostExecute(ImageCache result) {
         //final code here
         // imageProfile.setImageBitmap(result);
+       // GenericData.ShowdownloadingDialog(result.context,false);
+
     } // Creates Bitmap from InputStream and returns it
+
     private InputStream downloadImage(ImageCache result) {
         try {
             result.strean = getHttpConnection(result.fileURL);
-            File folderDir = Environment.getExternalStoragePublicDirectory("/MyCatalogueLocalData")  ;
+            File folderDir = Environment.getExternalStoragePublicDirectory("/MyCatalogueLocalData");
             File file = new File(folderDir, result.fName);
             if (file.exists()) {
                 file.delete();
@@ -57,8 +66,8 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
                     while ((len1 = result.strean.read(buffer)) != -1) {
                         fileOutputStream.write(buffer, 0, len1);
                     }
-                    DbHelper db=new DbHelper(result.context);
-                    db.saveImage(result.fileURL,"/MyCatalogueLocalData/"+result.fName);
+                    DbHelper db = new DbHelper(result.context);
+                    db.saveImage(result.fileURL, "/MyCatalogueLocalData/" + result.fName);
                     bufferedInputStream.close();
                     fileOutputStream.close();
                     result.strean.close();
@@ -66,12 +75,12 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
                     e.printStackTrace();
                 }
             }
-        }
-        catch (IOException e1) {
+        } catch (IOException e1) {
             e1.printStackTrace();
         }
         return result.strean;
     } // Makes HttpURLConnection and returns InputStream
+
     private InputStream getHttpConnection(String urlString)
             throws IOException {
         InputStream stream = null;
@@ -81,11 +90,10 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
             HttpURLConnection httpConnection = (HttpURLConnection) connection;
             httpConnection.setRequestMethod("GET");
             httpConnection.connect();
-            if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK)
-            { stream = httpConnection.getInputStream();
+            if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                stream = httpConnection.getInputStream();
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return stream;
