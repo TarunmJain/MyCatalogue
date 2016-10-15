@@ -2,18 +2,27 @@ package com.centura_technologies.mycatalogue.Catalogue.View;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Controller.MyRecyclerView;
+import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
+import com.centura_technologies.mycatalogue.Login.Controller.Login;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -27,10 +36,12 @@ import java.util.ArrayList;
 public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ViewHolder> {
     Context mContext;
     ArrayList<CollectionModel> data;
+
     public CollectionAdapter(Context context,ArrayList<CollectionModel> model){
         this.mContext=context;
         this.data=model;
     }
+
 
     @Override
     public CollectionAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -51,11 +62,11 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             holder.collectionpane.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BreadCrumb.Section="All Products";
+                    BreadCrumb.Section = "All Products";
                     StaticData.SelectedCategoryId = "-1";
-                    BreadCrumb.Category="";
-                    if (DB.getInitialModel().getProducts().size() !=- 0) {
-                        Intent i=new Intent(new Intent(mContext, Catalogue.class));
+                    BreadCrumb.Category = "";
+                    if (DB.getInitialModel().getProducts().size() != -0) {
+                        Intent i = new Intent(new Intent(mContext, Catalogue.class));
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(i);
                     } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
@@ -63,7 +74,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             });
         }
 else {
-            position=position-1;
+            position=position - 1;
             holder.collectiontitle.setVisibility(View.VISIBLE);
             holder.collectiontitle.setText(data.get(position).getTitle());
             GenericData.setImage(data.get(position).getImageUrl(), holder.collectionimage, mContext);
@@ -71,18 +82,18 @@ else {
             holder.collectionpane.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BreadCrumb.Section=data.get(finalPosition).getTitle();
-                    BreadCrumb.Category="";
-                    StaticData.SelectedCollectionProducts=new ArrayList<String>();
-                    StaticData.SelectedCollection=true;
-                    StaticData.SelectedCollectionProducts=data.get(finalPosition).getProductIds();
+                    BreadCrumb.Section = data.get(finalPosition).getTitle();
+                    BreadCrumb.Category = "";
+                    StaticData.SelectedCollectionProducts = new ArrayList<String>();
+                    StaticData.SelectedCollection = true;
+                    StaticData.SelectedCollectionProducts = data.get(finalPosition).getProductIds();
                     mContext.startActivity(new Intent(mContext, Catalogue.class));
                 }
             });
         }
 
-
     }
+
 
     @Override
     public int getItemCount() {
@@ -93,12 +104,14 @@ else {
         TextView collectiontitle,backlay;
         ImageView collectionimage;
         CardView collectionpane;
+        RelativeLayout container;
         public ViewHolder(View v) {
             super(v);
             collectiontitle=(TextView)v.findViewById(R.id.text);
             collectionimage=(ImageView)v.findViewById(R.id.image);
             backlay= (TextView) v.findViewById(R.id.backlay);
             collectionpane=(CardView)v.findViewById(R.id.collectionpane);
+            container=(RelativeLayout)v.findViewById(R.id.container);
         }
     }
 }

@@ -51,13 +51,13 @@ public class Order extends AppCompatActivity {
     public static ArrayList<BillingProducts> shorlistedmodel;
     RelativeLayout billdatelayout;
     EditText billno, custname, salespersonname;
-    TextView billdate;
+    TextView billdate,total_products,grandtotal;
     Spinner spinner;
     CardView billdetailheader;
     ImageView checked;
     LinearLayout shortlistedorder,filterpane;
     Button clearBill, saveBIll;
-    TextView PlaceOrder, Cancel;
+    TextView  Cancel;
 
     int mYear, mMonth, mDay;
     static final int DATE_DIALOG_ID = 0;
@@ -96,7 +96,6 @@ public class Order extends AppCompatActivity {
         clearBill = (Button) findViewById(R.id.clear);
         filterpane= (LinearLayout) findViewById(R.id.filterpane);
         saveBIll = (Button) findViewById(R.id.save);
-        PlaceOrder = (TextView) findViewById(R.id.placeorder);
         Cancel= (TextView) findViewById(R.id.cancel);
         orderlist_recyclerview.setLayoutManager(new LinearLayoutManager(Order.this, LinearLayoutManager.VERTICAL, false));
         categories = new ArrayList<String>();

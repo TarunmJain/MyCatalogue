@@ -1,5 +1,6 @@
 package com.centura_technologies.mycatalogue.Order.View;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -34,11 +35,18 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     ImageView qtydecrement, qtyincrement;
     Button apply, cancel;
     EditText qtytext;
+    TextView total_products,grandtotal;
+    Activity a;
+    int total_count=0;
+    Double total_amount=0.0;
     int viewHeight;
 
     public OrderListAdapter(Context context) {
         this.mContext = context;
+        a=(Activity)mContext;
         this.data = DB.getBillprodlist();
+        total_products=(TextView)a.findViewById(R.id.total_products);
+        grandtotal=(TextView)a.findViewById(R.id.grandtotal);
        /* if (Order.shortlistedorders)
             this.data = Order.shorlistedmodel;
         else if (Order.selectedcategories) {
@@ -79,8 +87,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             {
                 holder.orderlistlayout.setVisibility(View.VISIBLE);
                 //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
-                if (data.get(position).getQuantity() > 0)
+                if (data.get(position).getQuantity() > 0){
+                    total_count++;
+                    total_amount+=data.get(position).getAmount();
+                    total_products.setText("Total Products - "+total_count);
+                    grandtotal.setText("Rs "+total_amount+"");
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.accentcolor));
+                }
                 else
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
                 holder.name.setText(data.get(position).getTitle());
@@ -104,8 +117,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                     holder.unit.setText(data.get(position).getWeight() + "");
                     holder.qty.setText(data.get(position).getQuantity() + "");
                     holder.price.setText(data.get(position).getPrice() + "");
-                    double amount = data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + "");
-                    holder.amount.setText(amount + "");
+                    data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
+                    holder.amount.setText(data.get(position).getAmount() + "");
                     onClicks(holder, position);
                 }
                 else holder.orderlistlayout.setVisibility(View.GONE);
@@ -180,6 +193,27 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             }
         });
 
+        holder.plusincrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                notifyDataSetChanged();
+                Order.InitializeAdapter(mContext);
+            }
+        });
+
+        holder.minusincrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (data.get(position).getQuantity() != 0) {
+                    data.get(position).setQuantity(data.get(position).getQuantity() - 1);
+                    notifyDataSetChanged();
+                    Order.InitializeAdapter(mContext);
+                } else
+                    Toast.makeText(mContext, "Min Count is 0", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         holder.price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,6 +240,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, unit, qty, price, amount;
+        ImageView plusincrement,minusincrement;
         LinearLayout orderlistlayout;
 
         public ViewHolder(View v) {
@@ -215,6 +250,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             qty = (TextView) v.findViewById(R.id.qty);
             price = (TextView) v.findViewById(R.id.price);
             amount = (TextView) v.findViewById(R.id.amount);
+            plusincrement=(ImageView)v.findViewById(R.id.plusincrement);
+            minusincrement=(ImageView)v.findViewById(R.id.minusincrement);
             orderlistlayout = (LinearLayout) v.findViewById(R.id.orderlistlayout);
         }
     }
