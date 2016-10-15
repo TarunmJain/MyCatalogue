@@ -3,9 +3,11 @@ package com.centura_technologies.mycatalogue.Order.Controller;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +35,9 @@ import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,9 +53,12 @@ public class Order extends AppCompatActivity {
     EditText billno, custname, salespersonname;
     TextView billdate;
     Spinner spinner;
+    CardView billdetailheader;
     ImageView checked;
-    LinearLayout shortlistedorder;
-    Button clear, save;
+    LinearLayout shortlistedorder,filterpane;
+    Button clearBill, saveBIll;
+    TextView PlaceOrder, Cancel;
+
     int mYear, mMonth, mDay;
     static final int DATE_DIALOG_ID = 0;
     public static boolean shortlistedorders = false;
@@ -61,6 +69,11 @@ public class Order extends AppCompatActivity {
     public static String item = "-1";
     static BillingProducts billingProducts;
     public static ArrayList<BillingProducts> billingProductsArrayList;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,11 +89,15 @@ public class Order extends AppCompatActivity {
         custname = (EditText) findViewById(R.id.custname);
         salespersonname = (EditText) findViewById(R.id.salespersonname);
         checked = (ImageView) findViewById(R.id.checked);
+        billdetailheader = (CardView) findViewById(R.id.billdetailheader);
         orderlist_recyclerview = (RecyclerView) findViewById(R.id.orderlist_recyclerview);
         spinner = (Spinner) findViewById(R.id.spinner);
         shortlistedorder = (LinearLayout) findViewById(R.id.shortlistedorder);
-        clear = (Button) findViewById(R.id.clear);
-        save = (Button) findViewById(R.id.save);
+        clearBill = (Button) findViewById(R.id.clear);
+        filterpane= (LinearLayout) findViewById(R.id.filterpane);
+        saveBIll = (Button) findViewById(R.id.save);
+        PlaceOrder = (TextView) findViewById(R.id.placeorder);
+        Cancel= (TextView) findViewById(R.id.cancel);
         orderlist_recyclerview.setLayoutManager(new LinearLayoutManager(Order.this, LinearLayoutManager.VERTICAL, false));
         categories = new ArrayList<String>();
         categoryids = new ArrayList<String>();
@@ -99,6 +116,9 @@ public class Order extends AppCompatActivity {
         mDay = c.get(Calendar.DATE);
         updateDisplay();
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private void onClicks() {
@@ -144,22 +164,31 @@ public class Order extends AppCompatActivity {
             }
         });
 
-        save.setOnClickListener(new View.OnClickListener() {
+        saveBIll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                billdetailheader.setVisibility(View.VISIBLE);
+                filterpane.setVisibility(View.GONE);
             }
         });
 
-        clear.setOnClickListener(new View.OnClickListener() {
+        clearBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(BillingProducts prod:DB.getBillprodlist()){
-                    if(prod.getQuantity()>0){
+                for (BillingProducts prod : DB.getBillprodlist()) {
+                    if (prod.getQuantity() > 0) {
                         prod.setQuantity(0);
                     }
                 }
                 InitializeAdapter(Order.this);
+            }
+        });
+
+        Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                billdetailheader.setVisibility(View.GONE);
+                filterpane.setVisibility(View.VISIBLE);
             }
         });
 
@@ -246,7 +275,7 @@ public class Order extends AppCompatActivity {
         }
         int viewHeight = GenericData.convertDpToPixels(72, context);
         viewHeight = viewHeight * ((DB.getBillprodlist().size()));
-        orderlist_recyclerview.getLayoutParams().height = viewHeight;
+        //orderlist_recyclerview.getLayoutParams().height = viewHeight;
         orderlist_recyclerview.setAdapter(new OrderListAdapter(context));
     }
 

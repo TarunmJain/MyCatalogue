@@ -220,28 +220,7 @@
                     app:mrl_rippleFadeDuration="75"
                     app:mrl_rippleDelayClick="true"
                     app:mrl_ripplePersistent="false">
-                    <LinearLayout
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:id="@+id/products"
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:orientation="horizontal">
-                        <!--<ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_view_dashboard_grey600_24dp"
-                            />-->
-                        <TextView
-                            android:id="@+id/productstext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Products"
-                            android:layout_marginLeft="8dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/greytext"/>
-                    </LinearLayout>
+
                 </com.balysv.materialripple.MaterialRippleLayout>
                 <View
                     android:id="@+id/view5"

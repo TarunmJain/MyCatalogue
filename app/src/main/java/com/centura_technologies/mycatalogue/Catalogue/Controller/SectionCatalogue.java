@@ -45,8 +45,8 @@ public class SectionCatalogue extends AppCompatActivity {
     ActionBarDrawerToggle mDrawerToggle;
     SharedPreferences sharedPreferences;
     public static RecyclerView recyclerView;
-    Button syncbutton;
-    static LinearLayout collectionlay, collection_cardview, synclayout;
+    //Button syncbutton;
+    static LinearLayout collectionlay, collection_cardview;//synclayout;
     static RecyclerView category_recyclerview, collections_recyclerview;
     public static ArrayList<CategoryTree> categories;
     public static ArrayList<Categories> category = new ArrayList<Categories>();
@@ -60,14 +60,13 @@ public class SectionCatalogue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sectioncatalogue);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        toolbar.setTitle("Catalogue");
+        toolbar.setTitle("Collections");
         setSupportActionBar(toolbar);
         Drawer = (DrawerLayout) findViewById(R.id.drawer);
         sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
         collectionlay = (LinearLayout) findViewById(R.id.collectionlay);
         collection_cardview = (LinearLayout) findViewById(R.id.collection_cardview);
-        synclayout = (LinearLayout) findViewById(R.id.synclayout);
-        syncbutton = (Button) findViewById(R.id.syncbutton);
+
         mDrawerToggle = new ActionBarDrawerToggle(SectionCatalogue.this, Drawer, toolbar, R.string.opendrawer, R.string.closedrawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -99,7 +98,7 @@ public class SectionCatalogue extends AppCompatActivity {
         }
         recyclerView.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3));
         category_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3));
-        collections_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 1, GridLayoutManager.HORIZONTAL, false));
+        collections_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,3, GridLayoutManager.VERTICAL, false));
         InitializationCollectionAdapter(SectionCatalogue.this);
         InitialzationSectionAdapter(SectionCatalogue.this);
 
@@ -109,12 +108,6 @@ public class SectionCatalogue extends AppCompatActivity {
             InitialzationCategoryAdapter(SectionCatalogue.this, null);
         }
 
-        syncbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SectionCatalogue.this, SyncClass.class));
-            }
-        });
 
         GenericData.DrawerOnClicks(SectionCatalogue.this);
     }
@@ -166,11 +159,10 @@ public class SectionCatalogue extends AppCompatActivity {
         viewHeight = viewHeight * finallines;
         recyclerView.getLayoutParams().height = viewHeight;
         if (categories.size() != 0) {
-            synclayout.setVisibility(View.GONE);
+
             collectionlay.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(new SectionCatalogueAdapter(context, null));
         } else {
-            synclayout.setVisibility(View.VISIBLE);
             collectionlay.setVisibility(View.GONE);
         }
     }

@@ -57,11 +57,10 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
     public void onBindViewHolder(SectionCatalogueAdapter.ViewHolder holder, int position) {
         holder.backlay.setVisibility(View.GONE);
         if (SectionCatalogue.Section_to_Category) {
-            if (position == data.size()) {
+            if (position == 0) {
                 holder.backlay.setVisibility(View.VISIBLE);
                 holder.backlay.setText("All Products");
                 holder.categoryImage.setImageResource(R.drawable.common);
-                holder.text.setVisibility(View.GONE);
                 final int finalPosition1 = position;
                 holder.categoryImage.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -77,6 +76,7 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
                     }
                 });
             } else {
+                position=position-1;
                 GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
                 holder.text.setText(data.get(position).getTitle());
                 holder.text.setVisibility(View.VISIBLE);

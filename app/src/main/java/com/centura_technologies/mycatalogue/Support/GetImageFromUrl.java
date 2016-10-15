@@ -28,8 +28,11 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
     @Override
     protected ImageCache doInBackground(ImageCache... data) {
         StrictMode.setThreadPolicy(policy);
+        if(data[0].fileURL==null)
+            return null;
         if (data[0].fileURL.matches(""))
             return null;
+
         data[0].fileURL = Urls.parentIP + data[0].fileURL;
        // GenericData.ShowdownloadingDialog(data[0].context,true);
         data[0].strean = downloadImage(data[0]);

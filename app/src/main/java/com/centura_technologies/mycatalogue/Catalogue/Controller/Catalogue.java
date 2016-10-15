@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,17 +63,19 @@ import java.util.List;
 public class Catalogue extends AppCompatActivity {
     Toolbar toolbar;
     static RecyclerView cat_filterlist;
-    ImageView filtericon, categoryicon, listicon;
+    ImageView listicon;
+    DrawerLayout drawer;
     public static ImageView searchicon;
     RelativeLayout nocategory;
     RelativeLayout quickview;
     static RelativeLayout fabpane;
     static LinearLayout searchlayout, filterlayout, categorylayout, productlayout;
+    LinearLayout leftdrawer, rightdrawer;
     public static EditText editsearch;
     Spinner spinner;
     //FloatingActionButton fab;
-    Button apply, clear;
-    static RecyclerView recyclerview, recyclerview1, sectionsrecyclerview, catagoriesrecyclerview, productsrecyclerview;
+    TextView apply, clear;
+    static RecyclerView recyclerview, recyclerview1, sectionrecycler, categoryrecycler, productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
     static LinearLayoutManager layoutManager1;
@@ -88,7 +92,7 @@ public class Catalogue extends AppCompatActivity {
     static public String SearchString = "";
     static int SearchPageNumber = 0;
     static String item = "";
-    TextView slashbreadcrumb,catagorybreadcrumb,sectionbreadcrumb;
+    TextView slashbreadcrumb, catagorybreadcrumb, sectionbreadcrumb, filtericon, categoryicon;
     public static boolean grid_to_listflag = false;
     public static boolean Section_to_Category = false;
 
@@ -99,21 +103,24 @@ public class Catalogue extends AppCompatActivity {
         setContentView(R.layout.activity_catalogue);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         slashbreadcrumb = (TextView) findViewById(R.id.slashbreadcrumb);
-        catagorybreadcrumb =(TextView) findViewById(R.id.categorybreadcrumb);
-        sectionbreadcrumb =(TextView) findViewById(R.id.sectionbreadcrumb);
+        catagorybreadcrumb = (TextView) findViewById(R.id.categorybreadcrumb);
+        sectionbreadcrumb = (TextView) findViewById(R.id.sectionbreadcrumb);
         toolbar.setTitle("");
         sectionbreadcrumb.setText(BreadCrumb.Section);
         catagorybreadcrumb.setText(BreadCrumb.Category);
-        if(BreadCrumb.Category.matches(""))
+        if (BreadCrumb.Category.matches(""))
             slashbreadcrumb.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        filtericon = (ImageView) findViewById(R.id.filtericon);
-        categoryicon = (ImageView) findViewById(R.id.categoryicon);
+        leftdrawer = (LinearLayout) findViewById(R.id.leftdrawer);
+        rightdrawer = (LinearLayout) findViewById(R.id.rightdrawer);
+        filtericon = (TextView) findViewById(R.id.filtericon);
+        categoryicon = (TextView) findViewById(R.id.categoryicon);
         listicon = (ImageView) findViewById(R.id.listicon);
         cat_filterlist = (RecyclerView) findViewById(R.id.cat_filterlist);
         searchicon = (ImageView) findViewById(R.id.searchicon);
         quickview = (RelativeLayout) findViewById(R.id.quickview);
+        drawer = (DrawerLayout) findViewById(R.id.drawer);
         nocategory = (RelativeLayout) findViewById(R.id.nocategory);
         searchlayout = (LinearLayout) findViewById(R.id.searchlayout);
         filterlayout = (LinearLayout) findViewById(R.id.filterlayout);
@@ -125,16 +132,16 @@ public class Catalogue extends AppCompatActivity {
         editsearch = (EditText) findViewById(R.id.editsearch);
         spinner = (Spinner) findViewById(R.id.spinner);
         //fab = (FloatingActionButton) findViewById(R.id.fab);
-        apply = (Button) findViewById(R.id.applyfilter);
-        clear = (Button) findViewById(R.id.cancelfiltertest);
+        apply = (TextView) findViewById(R.id.applyfilter);
+        clear = (TextView) findViewById(R.id.cancelfiltertest);
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerview1 = (RecyclerView) findViewById(R.id.recyclerview1);
-        sectionsrecyclerview = (RecyclerView) findViewById(R.id.sectionsrecyclerview);
-        catagoriesrecyclerview = (RecyclerView) findViewById(R.id.catagoriesrecyclerview);
+        sectionrecycler = (RecyclerView) findViewById(R.id.sectionrecycler);
+        categoryrecycler = (RecyclerView) findViewById(R.id.categoryrecycler);
         productsrecyclerview = (RecyclerView) findViewById(R.id.productsrecyclerview);
 
-        sectionsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
-        catagoriesrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
+        sectionrecycler.setLayoutManager(new LinearLayoutManager(Catalogue.this));
+        categoryrecycler.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         recyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         recyclerview1.setLayoutManager(new LinearLayoutManager(Catalogue.this));
@@ -163,25 +170,25 @@ public class Catalogue extends AppCompatActivity {
         if (StaticData.SelectedSection) {
             StaticData.SelectedCategoryId = DB.getInitialModel().getCategories().get(0).getId();
         }
-        if(StaticData.SelectedCollection){
-            for(int j=0;j<DB.getInitialModel().getProducts().size();j++){
-                for(int k=0;k<StaticData.SelectedCollectionProducts.size();k++){
-                    if(DB.getInitialModel().getProducts().get(j).getId().matches(StaticData.SelectedCollectionProducts.get(k))){
+        if (StaticData.SelectedCollection) {
+            for (int j = 0; j < DB.getInitialModel().getProducts().size(); j++) {
+                for (int k = 0; k < StaticData.SelectedCollectionProducts.size(); k++) {
+                    if (DB.getInitialModel().getProducts().get(j).getId().matches(StaticData.SelectedCollectionProducts.get(k))) {
                         products.add(DB.getInitialModel().getProducts().get(j));
-                        StaticData.SelectedCollection=false;
+                        StaticData.SelectedCollection = false;
                     }
                 }
             }
-        }else if(StaticData.SelectedCategoryId.matches("-1")) {
-                for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
-                    products.add(DB.getInitialModel().getProducts().get(i));
-                }
-            } else {
-                for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
-                    if (DB.getInitialModel().getProducts().get(i).getCategoryId().matches(StaticData.SelectedCategoryId))
-                        products.add(DB.getInitialModel().getProducts().get(i));
-                }
+        } else if (StaticData.SelectedCategoryId.matches("-1")) {
+            for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
+                products.add(DB.getInitialModel().getProducts().get(i));
             }
+        } else {
+            for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
+                if (DB.getInitialModel().getProducts().get(i).getCategoryId().matches(StaticData.SelectedCategoryId))
+                    products.add(DB.getInitialModel().getProducts().get(i));
+            }
+        }
     }
 
 
@@ -193,40 +200,23 @@ public class Catalogue extends AppCompatActivity {
     }
 
     private void OnClicks() {
-        catagorybreadcrumb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        sectionbreadcrumb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SectionCatalogue.InitialzationSectionAdapter(getApplicationContext());
-                finish();
-            }
-        });
         filtericon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawer.openDrawer(rightdrawer);
+                drawer.closeDrawer(leftdrawer);
                 cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
-                fabpane.setVisibility(View.GONE);
                 searchlayout.setVisibility(View.GONE);
-                filterlayout.setVisibility(View.VISIBLE);
-                categorylayout.setVisibility(View.GONE);
-                productlayout.setVisibility(View.GONE);
             }
         });
 
         categoryicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fabpane.setVisibility(View.GONE);
+                drawer.openDrawer(Gravity.LEFT);
                 searchlayout.setVisibility(View.GONE);
-                filterlayout.setVisibility(View.GONE);
-                categorylayout.setVisibility(View.VISIBLE);
-                productlayout.setVisibility(View.GONE);
+                drawer.openDrawer(leftdrawer);
+                drawer.closeDrawer(rightdrawer);
                 InitialzationSectionAdapter(Catalogue.this);
                 if (Section_to_Category) {
                     InitialzationSectionAdapter(Catalogue.this);
@@ -240,8 +230,6 @@ public class Catalogue extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 searchlayout.setVisibility(View.GONE);
-                filterlayout.setVisibility(View.GONE);
-                categorylayout.setVisibility(View.GONE);
                 productlayout.setVisibility(View.VISIBLE);
                 if (grid_to_listflag) {
                     quickview.setVisibility(View.GONE);
@@ -271,8 +259,6 @@ public class Catalogue extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 searchlayout.setVisibility(View.VISIBLE);
-                filterlayout.setVisibility(View.GONE);
-                categorylayout.setVisibility(View.GONE);
                 productlayout.setVisibility(View.GONE);
                 SearchApi(Catalogue.this);
             }
@@ -289,12 +275,12 @@ public class Catalogue extends AppCompatActivity {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                productslist();
+                categoryproducts = new ArrayList<Products>();
+                categoryproducts = products;
                 if (StaticData.filter != "") {
-                    productslist();
                     boolean matched = false;
                     filterprod = new Products();
-                    categoryproducts = new ArrayList<Products>();
-                    categoryproducts = products;
                     products = new ArrayList<Products>();
                     StaticData.filter = StaticData.filter.substring(1, StaticData.filter.length());
                     filterlist = new ArrayList<String>(Arrays.asList(StaticData.filter.split(",")));
@@ -314,15 +300,15 @@ public class Catalogue extends AppCompatActivity {
                         }
                     }
                     InitializeAdapter(Catalogue.this);
-                    StaticData.filter="";
-                    for (int x = 0; x < StaticData.filtermodel.getItem().size(); x++) {
-                        for (int y = 0; y < StaticData.filtermodel.getItem().get(x).getValue().size(); y++) {
-                            StaticData.filtermodel.getItem().get(x).getValue().get(y).Selected = false;
-                        }
-                    }
-                    cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
+                    drawer.closeDrawer(rightdrawer);
+
                 } else
+                {
                     Toast.makeText(Catalogue.this, "Filter cannot be apply without selected", Toast.LENGTH_SHORT).show();
+                    InitializeAdapter(Catalogue.this);
+                    drawer.closeDrawer(rightdrawer);
+                }
+
             }
         });
 
@@ -330,6 +316,7 @@ public class Catalogue extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StaticData.filter = "";
                 for (int x = 0; x < StaticData.filtermodel.getItem().size(); x++) {
                     for (int y = 0; y < StaticData.filtermodel.getItem().get(x).getValue().size(); y++) {
                         StaticData.filtermodel.getItem().get(x).getValue().get(y).Selected = false;
@@ -373,8 +360,6 @@ public class Catalogue extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     searchlayout.setVisibility(View.VISIBLE);
-                    filterlayout.setVisibility(View.GONE);
-                    categorylayout.setVisibility(View.GONE);
                     productlayout.setVisibility(View.GONE);
                     searchicon.performClick();
                     return true;
@@ -452,24 +437,18 @@ public class Catalogue extends AppCompatActivity {
     }
 
     public static void InitialzationCategoryAdapter(Context context, CategoryTree categoryTree) {
-        catagoriesrecyclerview.setVisibility(View.VISIBLE);
-        sectionsrecyclerview.setVisibility(View.GONE);
         Section_to_Category = false;
-        catagoriesrecyclerview.setAdapter(new SectionlistAdapter(context, categoryTree));
+        categoryrecycler.setAdapter(new SectionlistAdapter(context, categoryTree));
     }
 
     public static void InitialzationSectionAdapter(Context context) {
-        sectionsrecyclerview.setVisibility(View.VISIBLE);
-        catagoriesrecyclerview.setVisibility(View.GONE);
         Section_to_Category = true;
-        sectionsrecyclerview.setAdapter(new SectionlistAdapter(context, null));
+        sectionrecycler.setAdapter(new SectionlistAdapter(context, null));
     }
 
     public static void InitializeAdapter(Context context) {
         fabpane.setVisibility(View.VISIBLE);
         searchlayout.setVisibility(View.GONE);
-        filterlayout.setVisibility(View.GONE);
-        categorylayout.setVisibility(View.GONE);
         productlayout.setVisibility(View.VISIBLE);
         if (item.matches("Price low-high")) {
             ArrayList<Products> sortedproducts = new ArrayList<Products>();
@@ -520,10 +499,10 @@ public class Catalogue extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem register = menu.findItem(R.id.logout);
-        register.setVisible(false);
-        MenuItem register1 = menu.findItem(R.id.slideshow);
-        register1.setVisible(false);
+        MenuItem logout = menu.findItem(R.id.logout);
+        logout.setVisible(false);
+        MenuItem slideshow = menu.findItem(R.id.slideshow);
+        slideshow.setVisible(false);
         return true;
     }
 

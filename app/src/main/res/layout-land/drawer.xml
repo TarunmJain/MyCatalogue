@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="250dp"
+    android:layout_width="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/backgroundlayout"
     android:orientation="vertical"
@@ -51,126 +51,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <com.balysv.materialripple.MaterialRippleLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:mrl_rippleOverlay="true"
-                    app:mrl_rippleColor="#000000"
-                    app:mrl_rippleAlpha="0.1"
-                    app:mrl_rippleDimension="10dp"
-                    app:mrl_rippleHover="true"
-                    app:mrl_rippleDuration="350"
-                    app:mrl_rippleFadeDuration="75"
-                    app:mrl_rippleDelayClick="true"
-                    app:mrl_ripplePersistent="false">
-                    <LinearLayout
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:id="@+id/dashboard"
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:orientation="horizontal">
-                        <!--<ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_view_dashboard_grey600_24dp"
-                            />-->
-                        <TextView
-                            android:id="@+id/dashboardtext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="DashBoard"
-                            android:layout_marginLeft="8dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/greytext"/>
-                    </LinearLayout>
-                </com.balysv.materialripple.MaterialRippleLayout>
-                <View
-                    android:id="@+id/view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/material_grey_100"/>
-               <!-- <com.balysv.materialripple.MaterialRippleLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:mrl_rippleOverlay="true"
-                    app:mrl_rippleColor="#000000"
-                    app:mrl_rippleAlpha="0.1"
-                    app:mrl_rippleDimension="10dp"
-                    app:mrl_rippleHover="true"
-                    app:mrl_rippleDuration="350"
-                    app:mrl_rippleFadeDuration="75"
-                    app:mrl_rippleDelayClick="true"
-                    app:mrl_ripplePersistent="false">
-                    <LinearLayout
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:id="@+id/leads"
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:orientation="horizontal">
-                        &lt;!&ndash;<ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_delete_grey600_24dp" />&ndash;&gt;
-                        <TextView
-                            android:id="@+id/leadstext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Leads"
-                            android:layout_marginLeft="8dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/greytext"/>
-                    </LinearLayout>
-                </com.balysv.materialripple.MaterialRippleLayout>
-                <View
-                    android:id="@+id/view7"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/material_grey_100"/>-->
-               <!-- <com.balysv.materialripple.MaterialRippleLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:mrl_rippleOverlay="true"
-                    app:mrl_rippleColor="#000000"
-                    app:mrl_rippleAlpha="0.1"
-                    app:mrl_rippleDimension="10dp"
-                    app:mrl_rippleHover="true"
-                    app:mrl_rippleDuration="350"
-                    app:mrl_rippleFadeDuration="75"
-                    app:mrl_rippleDelayClick="true"
-                    app:mrl_ripplePersistent="false">
-                    <LinearLayout
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:id="@+id/activity"
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:orientation="horizontal">
-                        &lt;!&ndash;<ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_delete_grey600_24dp" />&ndash;&gt;
-                        <TextView
-                            android:id="@+id/activitytext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Activity"
-                            android:layout_marginLeft="8dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/greytext"/>
-                    </LinearLayout>
-                </com.balysv.materialripple.MaterialRippleLayout>
-
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/material_grey_100"/>-->
-                <com.balysv.materialripple.MaterialRippleLayout
+                <!--<com.balysv.materialripple.MaterialRippleLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:mrl_rippleOverlay="true"
@@ -190,10 +71,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:orientation="horizontal">
-                        <!--<ImageView
+                        &lt;!&ndash;<ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_delete_grey600_24dp" />-->
+                            android:src="@drawable/ic_delete_grey600_24dp" />&ndash;&gt;
                         <TextView
                             android:id="@+id/cataloguetext"
                             android:layout_width="wrap_content"
@@ -209,7 +90,7 @@
                     android:id="@+id/view3"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/material_grey_100"/>
+                    android:background="@color/material_grey_100"/>-->
                 <com.balysv.materialripple.MaterialRippleLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

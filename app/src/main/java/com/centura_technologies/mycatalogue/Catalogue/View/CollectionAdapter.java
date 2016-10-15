@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 
@@ -38,35 +40,63 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(CollectionAdapter.ViewHolder holder, final int position) {
-        holder.collectiontitle.setText(data.get(position).getTitle());
-        GenericData.setImage(data.get(position).getImageUrl(), holder.collectionimage, mContext);
-        holder.collectionpane.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BreadCrumb.Section=data.get(position).getTitle();
-                BreadCrumb.Category="";
-                StaticData.SelectedCollectionProducts=new ArrayList<String>();
-                StaticData.SelectedCollection=true;
-                StaticData.SelectedCollectionProducts=data.get(position).getProductIds();
-                mContext.startActivity(new Intent(mContext, Catalogue.class));
-            }
-        });
+    public void onBindViewHolder(CollectionAdapter.ViewHolder holder, int position) {
+        holder.backlay.setVisibility(View.GONE);
+        if (position == 0) {
+            holder.backlay.setText("All Products");
+            holder.backlay.setVisibility(View.VISIBLE);
+            holder.collectiontitle.setVisibility(View.GONE);
+            GenericData.setImage(data.get((position) % 4).getImageUrl(), holder.collectionimage, mContext);
+            holder.collectionpane.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BreadCrumb.Section="All Products";
+                    StaticData.SelectedCategoryId = "-1";
+                    BreadCrumb.Category="";
+                    if (DB.getInitialModel().getProducts().size() !=- 0) {
+                        Intent i=new Intent(new Intent(mContext, Catalogue.class));
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(i);
+                    } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+else {
+            position=position-1;
+            holder.collectiontitle.setVisibility(View.VISIBLE);
+            holder.collectiontitle.setText(data.get(position).getTitle());
+            GenericData.setImage(data.get(position).getImageUrl(), holder.collectionimage, mContext);
+            final int finalPosition = position;
+            holder.collectionpane.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BreadCrumb.Section=data.get(finalPosition).getTitle();
+                    BreadCrumb.Category="";
+                    StaticData.SelectedCollectionProducts=new ArrayList<String>();
+                    StaticData.SelectedCollection=true;
+                    StaticData.SelectedCollectionProducts=data.get(finalPosition).getProductIds();
+                    mContext.startActivity(new Intent(mContext, Catalogue.class));
+                }
+            });
+        }
+
+
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data.size()+1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView collectiontitle;
+        TextView collectiontitle,backlay;
         ImageView collectionimage;
         CardView collectionpane;
         public ViewHolder(View v) {
             super(v);
             collectiontitle=(TextView)v.findViewById(R.id.text);
             collectionimage=(ImageView)v.findViewById(R.id.image);
+            backlay= (TextView) v.findViewById(R.id.backlay);
             collectionpane=(CardView)v.findViewById(R.id.collectionpane);
         }
     }

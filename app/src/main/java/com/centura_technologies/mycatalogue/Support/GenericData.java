@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
 import com.centura_technologies.mycatalogue.AboutUs.Controller.AboutUs;
 import com.centura_technologies.mycatalogue.Activity.Controller.ActivityList;
+import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.Leads.Controller.LeadsList;
@@ -80,9 +81,7 @@ public class GenericData {
     public static Activity a;
     public static SharedPreferences sharedPreferences;
     public static TextView maintext, subtext;
-    static boolean contactPermission;
-    static LinearLayout dashboard, leads, activity, catalogues, products, shortlist, order, billing, customer, routeplan, expenses, sync, aboutus, logout;
-    static View view2, view6, view7, view9, view10, view11;
+    static LinearLayout catalogues, products, shortlist, order, sync, aboutus, logout;
     static TextView dashboardtext;
     static DrawerLayout Drawer;
     static boolean downloadAlive = false;
@@ -383,75 +382,26 @@ public class GenericData {
 
     public static void DrawerOnClicks(final Context context) {
         final Activity a = ((Activity) context);
-        dashboard = (LinearLayout) a.findViewById(R.id.dashboard);
-        /*leads = (LinearLayout) a.findViewById(R.id.leads);
-        activity = (LinearLayout) a.findViewById(R.id.activity);*/
-        catalogues = (LinearLayout) a.findViewById(R.id.catalogues);
+        //catalogues = (LinearLayout) a.findViewById(R.id.catalogues);
         products = (LinearLayout) a.findViewById(R.id.products);
         shortlist = (LinearLayout) a.findViewById(R.id.shortlist);
         order = (LinearLayout) a.findViewById(R.id.Order);
-        /*billing = (LinearLayout) a.findViewById(R.id.billing);
-        customer = (LinearLayout) a.findViewById(R.id.customer);
-        routeplan = (LinearLayout) a.findViewById(R.id.routeplan);
-        expenses = (LinearLayout) a.findViewById(R.id.expenses);*/
         sync = (LinearLayout) a.findViewById(R.id.sync);
         aboutus = (LinearLayout) a.findViewById(R.id.aboutus);
         logout = (LinearLayout) a.findViewById(R.id.logout);
-        dashboardtext = (TextView) a.findViewById(R.id.dashboardtext);
         Drawer = (DrawerLayout) a.findViewById(R.id.drawer);
 
-
-        /*if(StaticData.Options.matches("Catalogue")){
-            leads.setVisibility(View.GONE);
-            activity.setVisibility(View.GONE);
-            billing.setVisibility(View.GONE);
-            customer.setVisibility(View.GONE);
-            routeplan.setVisibility(View.GONE);
-            expenses.setVisibility(View.GONE);
-            view7.setVisibility(View.GONE);
-            view2.setVisibility(View.GONE);
-            view6.setVisibility(View.GONE);
-            view9.setVisibility(View.GONE);
-            view10.setVisibility(View.GONE);
-            view11.setVisibility(View.GONE);
-        }*/
-
-        dashboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                a.startActivity(new Intent(context, Dashboard.class));
-                Drawer.closeDrawer(Gravity.LEFT);
-            }
-        });
-       /* leads.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                a.startActivity(new Intent(context, LeadsList.class));
-                a.finish();
-                Drawer.closeDrawer(Gravity.LEFT);
-            }
-        });
-        activity.setOnClickListener(new View.OnClickListener() {
+        /*catalogues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                a.startActivity(new Intent(context, ActivityList.class));
-                a.finish();
-                Drawer.closeDrawer(Gravity.LEFT);
-            }
-        });*/
-        catalogues.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*a.startActivity(new Intent(context, SectionCatalogue.class));
-                a.finish();
-                Drawer.closeDrawer(Gravity.LEFT);*/
                 Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         products.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                a.startActivity(new Intent(context, SectionCatalogue.class));
+                StaticData.SelectedCategoryId = "-1";
+                a.startActivity(new Intent(context, Catalogue.class));
                 Drawer.closeDrawer(Gravity.LEFT);
             }
         });
@@ -469,30 +419,6 @@ public class GenericData {
                 Drawer.closeDrawer(Gravity.LEFT);
             }
         });
-        /*billing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-        customer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-        routeplan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-        expenses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });*/
         sync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -510,6 +436,7 @@ public class GenericData {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Drawer.closeDrawer(Gravity.LEFT);
                 GenericData.logout(context);
             }
         });

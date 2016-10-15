@@ -39,11 +39,11 @@ public class TempFilterAdapter extends RecyclerView.Adapter<TempFilterAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.textView.setText(model.get(position).getTitle());
         int finallines=0;
-        int viewHeight = GenericData.convertDpToPixels(60, context);
+        int viewHeight = GenericData.convertDpToPixels(55, context);
         if(model.get(position).getValue().size()<4)
             finallines=1;
         else {
-            float lines=(model.get(position).getValue().size())/3;
+            float lines=(float)(model.get(position).getValue().size())/3;
             finallines=(int)lines;
             if(lines>finallines)
                 finallines+=1;

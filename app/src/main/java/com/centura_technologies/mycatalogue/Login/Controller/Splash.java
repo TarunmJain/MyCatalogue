@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
@@ -42,7 +43,7 @@ public class Splash extends Activity {
                   db.loadinitialmodel();
                    // SyncClass.syncFilters(Splash.this);
                     StaticData.Options="Catalogue";
-                    startActivity(new Intent(Splash.this, Dashboard.class));
+                    startActivity(new Intent(Splash.this, SectionCatalogue.class));
                     finish();
                 } else {
                     Intent intent = new Intent(Splash.this, Login.class);

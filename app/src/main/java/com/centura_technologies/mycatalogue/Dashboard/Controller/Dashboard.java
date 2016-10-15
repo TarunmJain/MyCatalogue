@@ -41,7 +41,7 @@ public class Dashboard extends AppCompatActivity {
     ImageView hamburger, logoff, bannerimage;
     RelativeLayout options, drawerlayout;
     RelativeLayout.LayoutParams params;
-    LinearLayout dashboard, leads, activity, catalogues, products, shortlist, order, billing, customer, routeplan, expenses, sync, aboutus, logout, alloptions;
+    LinearLayout dashboard, leads, activity, catalogues, shortlist, order, billing, customer, routeplan, expenses, sync, aboutus, logout, alloptions;
     TextView dashboardtext, catalogue_option;
     DrawerLayout Drawer;
     TextView Title;
@@ -68,7 +68,6 @@ public class Dashboard extends AppCompatActivity {
         /*leads = (LinearLayout) findViewById(R.id.leads);
         activity = (LinearLayout) findViewById(R.id.activity);*/
         catalogues = (LinearLayout) findViewById(R.id.catalogues);
-        products = (LinearLayout) findViewById(R.id.products);
         shortlist = (LinearLayout) findViewById(R.id.shortlist);
         order = (LinearLayout) findViewById(R.id.Order);
        /* billing = (LinearLayout) findViewById(R.id.billing);
@@ -221,16 +220,11 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //startActivity(new Intent(Dashboard.this, Catalogue.class));
-                Toast.makeText(Dashboard.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Dashboard.this, SectionCatalogue.class));
 
             }
         });
-        products.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Dashboard.this, SectionCatalogue.class));
-            }
-        });
+
         shortlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -243,30 +237,6 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(new Intent(Dashboard.this, Order.class));
             }
         });
-       /* billing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Dashboard.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-        customer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Dashboard.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-        routeplan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Dashboard.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-        expenses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Dashboard.this, "Coming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });*/
         sync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/primarycolor</item>
         <item name="colorPrimaryDark">@color/primarycolordark</item>
         <item name="colorAccent">#E65100</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
         <item name="drawerArrowStyle">@style/WhiteDrawerIconStyle</item>
     </style>
 

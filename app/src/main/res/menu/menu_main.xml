@@ -13,7 +13,7 @@
         android:title="shortlist"
         android:icon="@drawable/ic_heart_white_24dp"
         android:orderInCategory="200"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always|withText" />
     <item
         android:id="@+id/slideshow"
         android:title="SlideShow"

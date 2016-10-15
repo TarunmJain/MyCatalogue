@@ -2,12 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="335dp"
     android:orientation="vertical"
-    android:padding="2dp"
     android:background="#ededed">
     <com.balysv.materialripple.MaterialRippleLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:mrl_rippleOverlay="true"
         app:mrl_rippleColor="#000000"
@@ -25,17 +24,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardElevation="10dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="20dp"
+            android:layout_margin="20dp">
             <RelativeLayout
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal">
                 <ImageView
-                    android:paddingBottom="40dp"
                     android:id="@+id/image"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/text" />
                 <TextView
                     android:padding="2dp"
                     android:id="@+id/text"
@@ -45,7 +46,6 @@
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:layout_gravity="bottom"
-                    android:text="subcategory"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true" />
@@ -54,7 +54,7 @@
                     android:visibility="gone"
                     android:id="@+id/backlay"
                     android:layout_width="match_parent"
-                    android:background="#80000000"
+                    android:background="#70000000"
                     android:textColor="@color/white"
                     android:text="BACK"
                     android:textSize="50sp"
