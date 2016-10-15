@@ -446,7 +446,7 @@ public class GenericData {
             @Override
             public void onClick(View view) {
                 StaticData.SelectedCategoryId = "-1";
-                a.startActivity(new Intent(context, Catalogue.class));
+                a.startActivity(new Intent(context, SectionCatalogue.class));
                 Drawer.closeDrawer(Gravity.LEFT);
             }
         });

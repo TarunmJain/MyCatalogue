@@ -39,94 +39,49 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
     CategoryTree currentTree;
     ArrayList<Categories> model;
 
-    public SectionlistAdapter(Context context,CategoryTree tree) {
+    public SectionlistAdapter(Context context, CategoryTree tree) {
         this.mContext = context;
-        currentTree=new CategoryTree();
-        currentTree=tree;
-        if(Catalogue.Section_to_Category){
-            this.data = Catalogue.categories;
-        }else {
-            this.model=Catalogue.category;
-        }
+        currentTree = new CategoryTree();
+        currentTree = tree;
+        this.data = Catalogue.categories;
     }
 
     @Override
     public SectionlistAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sectioncatalogue, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sectionview, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(final SectionlistAdapter.ViewHolder holder, int position) {
-        holder.backlay.setVisibility(View.GONE);
-        if(Catalogue.Section_to_Category){
-
-            GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
-            holder.text.setText(data.get(position).getTitle());
-            final int finalPosition1 = position;
-            holder.categoryImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Catalogue.category=data.get(finalPosition1).getCategories();
-                    Catalogue.InitialzationCategoryAdapter(mContext,data.get(finalPosition1));
-                }
-            });
-        }else {
-            if(position==0)
-            {
-                holder.backlay.setVisibility(View.VISIBLE);
-                GenericData.setImage(currentTree.getImageUrl(), holder.categoryImage, mContext);
-                holder.text.setText(currentTree.getTitle());
-                holder.categoryImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Catalogue.InitialzationSectionAdapter(mContext);
-                    }
-                });
+        GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
+        holder.text.setText(data.get(position).getTitle());
+        final int finalPosition1 = position;
+        holder.layview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Catalogue.category = data.get(finalPosition1).getCategories();
+                Catalogue.InitialzationCategoryAdapter(mContext, data.get(finalPosition1));
             }
-            else {
-                position-=1;
-                GenericData.setImage(model.get(position).getImageUrl(), holder.categoryImage, mContext);
-                holder.text.setText(model.get(position).getTitle());
-                final int finalPosition = position;
-                holder.categoryImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        StaticData.SelectedCategoryId = model.get(finalPosition).getId();
-                        StaticData.position= finalPosition;
-                        if(DB.getInitialModel().getProducts().size()!=0) {
-                            Catalogue.productslist();
-                            Catalogue.InitializeAdapter(mContext);
-
-                        }else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-        }
+        });
     }
 
     @Override
     public int getItemCount() {
-        if(Catalogue.Section_to_Category){
-            return data.size();
-        }else {
-            return model.size()+1;
-        }
+        return data.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView categoryImage;
-        TextView text,backlay;
-        CardView relativelayout;
+        TextView text;
+        LinearLayout layview;
 
         public ViewHolder(View v) {
             super(v);
             categoryImage = (ImageView) v.findViewById(R.id.image);
             text = (TextView) v.findViewById(R.id.text);
-            backlay= (TextView) v.findViewById(R.id.backlay);
-            relativelayout = (CardView) v.findViewById(R.id.relativelayout);
+            layview = (LinearLayout) v.findViewById(R.id.layview);
         }
     }
 }

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
@@ -20,15 +21,15 @@ import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
 public class SyncClass extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView sync_list;
-    Button appysync, cancel;
+    TextView appysync, cancel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        appysync = (Button) findViewById(R.id.appysync);
-        cancel = (Button) findViewById(R.id.cancel_sync);
+        appysync = (TextView) findViewById(R.id.appysync);
+        cancel = (TextView) findViewById(R.id.cancel_sync);
         toolbar.setTitle("Sync");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

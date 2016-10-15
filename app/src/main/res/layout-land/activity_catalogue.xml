@@ -376,11 +376,23 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="2.5" />
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/categoryrecycler"
+                    <RelativeLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="7.5" />
+                        android:layout_weight="7.5"
+                        android:layout_height="match_parent">
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/categoryrecycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:id="@+id/nocategorytext"
+                            android:layout_width="match_parent"
+                            android:text="No Categories Found for this Section"
+                            android:layout_height="match_parent" />
+                    </RelativeLayout>
+
                 </LinearLayout>
             </LinearLayout>
             <!-- Right drawer-->

@@ -38,6 +38,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.View.CatalogueAdapter;
+import com.centura_technologies.mycatalogue.Catalogue.View.CategorylistAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.FilterAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SearchAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SearchProductsAdapter;
@@ -64,13 +65,13 @@ public class Catalogue extends AppCompatActivity {
     Toolbar toolbar;
     static RecyclerView cat_filterlist;
     ImageView listicon;
-    DrawerLayout drawer;
+    public static DrawerLayout drawer;
     public static ImageView searchicon;
     RelativeLayout nocategory;
     RelativeLayout quickview;
     static RelativeLayout fabpane;
     static LinearLayout searchlayout, filterlayout, categorylayout, productlayout;
-    LinearLayout leftdrawer, rightdrawer;
+    public static LinearLayout leftdrawer, rightdrawer;
     public static EditText editsearch;
     Spinner spinner;
     //FloatingActionButton fab;
@@ -93,8 +94,8 @@ public class Catalogue extends AppCompatActivity {
     static int SearchPageNumber = 0;
     static String item = "";
     TextView slashbreadcrumb, catagorybreadcrumb, sectionbreadcrumb, filtericon, categoryicon;
+    public  static TextView nocategorytext;
     public static boolean grid_to_listflag = false;
-    public static boolean Section_to_Category = false;
 
 
     @Override
@@ -115,6 +116,7 @@ public class Catalogue extends AppCompatActivity {
         leftdrawer = (LinearLayout) findViewById(R.id.leftdrawer);
         rightdrawer = (LinearLayout) findViewById(R.id.rightdrawer);
         filtericon = (TextView) findViewById(R.id.filtericon);
+        nocategorytext= (TextView) findViewById(R.id.nocategorytext);
         categoryicon = (TextView) findViewById(R.id.categoryicon);
         listicon = (ImageView) findViewById(R.id.listicon);
         cat_filterlist = (RecyclerView) findViewById(R.id.cat_filterlist);
@@ -218,11 +220,8 @@ public class Catalogue extends AppCompatActivity {
                 drawer.openDrawer(leftdrawer);
                 drawer.closeDrawer(rightdrawer);
                 InitialzationSectionAdapter(Catalogue.this);
-                if (Section_to_Category) {
-                    InitialzationSectionAdapter(Catalogue.this);
-                } else {
-                    InitialzationCategoryAdapter(Catalogue.this, null);
-                }
+                InitialzationSectionAdapter(Catalogue.this);
+                InitialzationCategoryAdapter(Catalogue.this, null);
             }
         });
 
@@ -302,8 +301,7 @@ public class Catalogue extends AppCompatActivity {
                     InitializeAdapter(Catalogue.this);
                     drawer.closeDrawer(rightdrawer);
 
-                } else
-                {
+                } else {
                     Toast.makeText(Catalogue.this, "Filter cannot be apply without selected", Toast.LENGTH_SHORT).show();
                     InitializeAdapter(Catalogue.this);
                     drawer.closeDrawer(rightdrawer);
@@ -437,17 +435,17 @@ public class Catalogue extends AppCompatActivity {
     }
 
     public static void InitialzationCategoryAdapter(Context context, CategoryTree categoryTree) {
-        Section_to_Category = false;
-        categoryrecycler.setAdapter(new SectionlistAdapter(context, categoryTree));
+        if (categoryTree == null)
+            categoryrecycler.setAdapter(new CategorylistAdapter(context, Catalogue.categories.get(0)));
+        else
+            categoryrecycler.setAdapter(new CategorylistAdapter(context, categoryTree));
     }
 
     public static void InitialzationSectionAdapter(Context context) {
-        Section_to_Category = true;
         sectionrecycler.setAdapter(new SectionlistAdapter(context, null));
     }
 
     public static void InitializeAdapter(Context context) {
-        fabpane.setVisibility(View.VISIBLE);
         searchlayout.setVisibility(View.GONE);
         productlayout.setVisibility(View.VISIBLE);
         if (item.matches("Price low-high")) {
@@ -472,6 +470,7 @@ public class Catalogue extends AppCompatActivity {
             });
         }
         productsrecyclerview.setAdapter(new CatalogueAdapter(context, products));
+        Sync.syncFilters(context, products);
         if (StaticData.filtermodel.getItem() != null)
             cat_filterlist.setAdapter(new TempFilterAdapter(context, StaticData.filtermodel.getItem()));
     }

@@ -2,6 +2,7 @@ package com.centura_technologies.mycatalogue.Catalogue.View;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
@@ -24,72 +26,64 @@ import java.util.ArrayList;
 /**
  * Created by Centura User1 on 31-08-2016.
  */
-public class CategorylistAdapter  extends BaseAdapter {
+public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapter.ViewHolder> {
 
-    ArrayList<Categories> categorylist;
     Context mContext;
-    LayoutInflater li;
+    CategoryTree currentTree;
 
-    public CategorylistAdapter(Context context,ArrayList<Categories> model) {
-        this.categorylist =model;
+    public CategorylistAdapter(Context context, CategoryTree model) {
+        this.currentTree = model;
         mContext = context;
-        /*for (int i = 0; i < DB.getInitialModel().getCategories().size(); i++) {
-            if (DB.getInitialModel().getCategories().get(i).getSectionId().matches(StaticData.SelectedSectionId)) {
-                categorylist.add(DB.getInitialModel().getCategories().get(i));
-            }
-        }*/
-        li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+    }
+
+
+    @Override
+    public CategorylistAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sectioncatalogue, parent, false);
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
     }
 
     @Override
-    public int getCount() {
-        return categorylist.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return position;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(final int position, View view, ViewGroup viewGroup) {
-        View vi = view;
-        ViewHolder holder;
-        if (vi == null) {
-            vi = li.inflate(R.layout.item_categorylist, null);
-            holder = new ViewHolder();
-            vi.setTag(holder);
-        } else {
-            holder = (ViewHolder) vi.getTag();
-        }
-        holder.pane = (CardView) vi.findViewById(R.id.SubCatagoryPane);
-        holder.subCatagory = (TextView) vi.findViewById(R.id.textView1);
-        holder.subCatagory.setText(categorylist.get(position).getTitle());
-        holder.imageView1=(ImageView)vi.findViewById(R.id.imageView1);
-        GenericData.setImage(categorylist.get(position).getImageUrl(),holder.imageView1,mContext);
-        holder.subCatagory.setSelected(true);
-        holder.pane.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(CategorylistAdapter.ViewHolder holder, int position) {
+        GenericData.setImage(currentTree.getCategories().get(position).getImageUrl(), holder.categoryImage, mContext);
+        holder.text.setText(currentTree.getCategories().get(position).getTitle());
+        final int finalPosition = position;
+        holder.categoryImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                StaticData.SelectedCategoryId=categorylist.get(position).getId();
-                StaticData.SelectedSection=false;
-                Catalogue.productslist();
-                Catalogue.InitializeAdapter(mContext);
-                Sync.syncFilters(mContext, Catalogue.products);
-
+            public void onClick(View v) {
+                StaticData.SelectedCategoryId = currentTree.getCategories().get(finalPosition).getId();
+                StaticData.position = finalPosition;
+                if (DB.getInitialModel().getProducts().size() != 0) {
+                    Catalogue.productslist();
+                    Catalogue.InitializeAdapter(mContext);
+                } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
+                Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
             }
         });
-        return vi;
     }
 
-    static class ViewHolder {
-        CardView pane;
-        TextView subCatagory;
-        ImageView imageView1;
+    @Override
+    public int getItemCount() {
+        if (currentTree.getCategories().size() == 0){
+            Catalogue.nocategorytext.setVisibility(View.VISIBLE);
+            Catalogue.nocategorytext.setText("There are no Categories Under the "+currentTree.getTitle()+" Section ");
+        }
+        else
+            Catalogue.nocategorytext.setVisibility(View.GONE);
+        return currentTree.getCategories().size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView categoryImage;
+        TextView text;
+
+        public ViewHolder(View v) {
+            super(v);
+            categoryImage = (ImageView) v.findViewById(R.id.catimage);
+            text = (TextView) v.findViewById(R.id.text);
+
+        }
     }
 }

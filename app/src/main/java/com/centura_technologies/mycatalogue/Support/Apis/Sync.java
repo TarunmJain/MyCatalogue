@@ -173,6 +173,7 @@ public class Sync {
     }
 
     public static void syncFilters(Context mContext, ArrayList<Products> model) {
+        StaticData.filter = "";
         ArrayList<Products> prod = new ArrayList<Products>();
         for (int j = 0; j < model.size(); j++) {
             prod.add(model.get(j));

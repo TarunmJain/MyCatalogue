@@ -2,9 +2,13 @@ package com.centura_technologies.mycatalogue.Support.DBHelper;
 
 import android.content.Context;
 
+import com.centura_technologies.mycatalogue.Catalogue.Model.CustomerModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Filter_model;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
+import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
+import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
+import com.centura_technologies.mycatalogue.Order.Model.SalesmanModel;
 
 import java.util.ArrayList;
 
@@ -15,7 +19,6 @@ public class StaticData {
 
     public static int ApiVersion=10;
     public static String DeviceId="";
-
     public static boolean editlead=false;
     public static boolean edittask=false;
     public static boolean editevent=false;
@@ -38,7 +41,9 @@ public class StaticData {
     public static boolean SelectedCollection=false;
     public static boolean Shortlisted=false;
     public static boolean shortlistedorders=false;
-
-
     public static String Options="";
+
+    public static SalesmanModel CurrentSalesMan = new SalesmanModel();
+    public static ArrayList<CustomerModel> Customers = new ArrayList<CustomerModel>();
+    public static ArrayList<OrderModel> orders=new ArrayList<OrderModel>();
 }

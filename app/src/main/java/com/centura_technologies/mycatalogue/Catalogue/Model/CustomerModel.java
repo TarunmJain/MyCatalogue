@@ -4,6 +4,7 @@ package com.centura_technologies.mycatalogue.Catalogue.Model;
  * Created by Centura User1 on 23-08-2016.
  */
 public class CustomerModel {
+    String Id;
     String Name;
     String Gender;
     String DOB;
@@ -12,12 +13,31 @@ public class CustomerModel {
     String Address;
 
     public CustomerModel(){
+        Id="";
         Name="";
         Gender="";
         DOB="";
         Phone="";
         Email="";
         Address="";
+    }
+
+    public CustomerModel(String name){
+        Id="";
+        Name=name;
+        Gender="";
+        DOB="";
+        Phone="";
+        Email="";
+        Address="";
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 
     public String getName() {

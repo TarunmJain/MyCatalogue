@@ -61,25 +61,22 @@ public class Login extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         companyid = (EditText) findViewById(R.id.companyid);
         login = (Button) findViewById(R.id.login);
         background = (RelativeLayout) findViewById(R.id.background);
         sharedPreferences = this.getSharedPreferences(GenericData.MyPref, this.MODE_PRIVATE);
-
         loginslide();
         setDeviceId();
+        onclick();
     }
-
     private void setDeviceId() {
         GCMClientManager pushClientManager = new GCMClientManager(Login.this, PROJECT_NUMBER);
         pushClientManager.registerIfNeeded(new GCMClientManager.RegistrationCompletedHandler() {
             @Override
             public void onSuccess(String registrationId, boolean isNewRegistration) {
                 DeviceId = registrationId;
-                onclick();
             }
 
             @Override
@@ -110,15 +107,18 @@ public class Login extends Activity {
                                     GenericData.ShowDialog(Login.this, "Loading...", false);
                                     if (GenericData.sucess(response, Login.this)) {
                                         Sync.SyncSectionList(Login.this);
-                                       // SyncClass.syncFilters(Login.this);
-                                       // SyncClass.syncproducts(Login.this);
+                                        // SyncClass.syncFilters(Login.this);
+                                        // SyncClass.syncproducts(Login.this);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString(GenericData.Sp_Username, username.getText().toString());
                                         editor.putString(GenericData.Sp_Password, password.getText().toString());
                                         editor.putString(GenericData.Sp_StoreCode, companyid.getText().toString());
+                                        StaticData.CurrentSalesMan.Id=username.getText().toString();
+                                        StaticData.CurrentSalesMan.Username=username.getText().toString();
+                                        StaticData.CurrentSalesMan.Name=username.getText().toString();
                                         editor.putString(GenericData.Sp_Status, "LoggedIn");
                                         editor.commit();
-                                        StaticData.Options="Catalogue";
+                                        StaticData.Options = "Catalogue";
                                         startActivity(new Intent(Login.this, SectionCatalogue.class));
                                         finish();
                                     } else {
@@ -144,56 +144,6 @@ public class Login extends Activity {
 
     }
 
-    void handlechange() {
-
-        Handler hand = new Handler();
-        hand.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-
-                // change image here
-                change();
-
-            }
-
-            private void change() {
-                // TODO Auto-generated method stub
-
-                Random rand = new Random();
-
-                int index = rand.nextInt(images.length);
-                Animation fadeIn = AnimationUtils.loadAnimation(Login.this, R.anim.fadein);
-                background.startAnimation(fadeIn);
-                background.setBackgroundResource(images[index]);
-
-                /*background.setBackgroundResource(R.drawable.loginscreen);*/
-
-
-                handlechange();
-
-
-                fadeIn.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-                        Animation fadeOut = AnimationUtils.loadAnimation(Login.this, R.anim.fadeout);
-                        background.startAnimation(fadeOut);
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-                });
-            }
-        }, 4000);
-
-
-    }
 
     public void loginslide() {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
