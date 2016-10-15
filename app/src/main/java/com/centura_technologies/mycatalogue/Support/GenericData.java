@@ -11,6 +11,13 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -264,6 +271,44 @@ public class GenericData {
                         .into(image);
             else image.setImageResource(R.drawable.noimage);
         else image.setImageResource(R.drawable.noimage);*/
+    }
+
+
+    public static void setROUNDImage(String url, ImageView image, Context context) {
+        DbHelper dbHelper = new DbHelper(context);
+        url = dbHelper.returnImage(Urls.parentIP + url);
+        if (url != null)
+            if (!url.matches("")) {
+                url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
+                Bitmap bitmap = BitmapFactory.decodeFile(url);
+                if (bitmap != null) {
+                    image.setImageBitmap(roundCornerImage(bitmap,50));
+                }
+            } else image.setImageResource(R.drawable.noimage);
+        else image.setImageResource(R.drawable.noimage);
+
+    }
+
+    public static Bitmap roundCornerImage(Bitmap raw, float round) {
+        int width = raw.getWidth();
+        int height = raw.getHeight();
+        Bitmap result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(result);
+        canvas.drawARGB(0, 0, 0, 0);
+
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.parseColor("#000000"));
+
+        final Rect rect = new Rect(0, 0, width, height);
+        final RectF rectF = new RectF(rect);
+
+        canvas.drawRoundRect(rectF, round, round, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(raw, rect, rect, paint);
+
+        return result;
     }
 
     public static void GenerateSignatureGlide() {

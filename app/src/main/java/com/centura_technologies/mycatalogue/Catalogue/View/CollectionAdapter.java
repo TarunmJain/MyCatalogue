@@ -41,6 +41,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     @Override
     public void onBindViewHolder(CollectionAdapter.ViewHolder holder, int position) {
+
         holder.backlay.setVisibility(View.GONE);
         if (position == 0) {
             holder.backlay.setText("All Products");
