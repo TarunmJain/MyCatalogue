@@ -76,8 +76,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 holder.unit.setText(data.get(position).getWeight() + "");
                 holder.qty.setText(data.get(position).getQuantity() + "");
                 holder.price.setText(data.get(position).getPrice() + "");
-                double amount = data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + "");
-                holder.amount.setText(amount + "");
+                data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
+                holder.amount.setText(data.get(position).getAmount() + "");
                 onClicks(holder, position);
             }
             else holder.orderlistlayout.setVisibility(View.GONE);
@@ -100,8 +100,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 holder.unit.setText(data.get(position).getWeight() + "");
                 holder.qty.setText(data.get(position).getQuantity() + "");
                 holder.price.setText(data.get(position).getPrice() + "");
-                double amount = data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + "");
-                holder.amount.setText(amount + "");
+                data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
+                holder.amount.setText(data.get(position).getAmount() + "");
                 onClicks(holder, position);
             }
             else {
