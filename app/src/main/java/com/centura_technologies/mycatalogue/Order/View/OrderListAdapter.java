@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,18 +36,21 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     ImageView qtydecrement, qtyincrement;
     Button apply, cancel;
     EditText qtytext;
-    TextView total_products,grandtotal;
+    TextView total_products, grandtotal;
+    RelativeLayout footer;
     Activity a;
-    int total_count=0;
-    Double total_amount=0.0;
+    int total_count = 0;
+    Double total_amount = 0.0;
     int viewHeight;
 
     public OrderListAdapter(Context context) {
         this.mContext = context;
-        a=(Activity)mContext;
+        a = (Activity) mContext;
         this.data = DB.getBillprodlist();
-        total_products=(TextView)a.findViewById(R.id.total_products);
-        grandtotal=(TextView)a.findViewById(R.id.grandtotal);
+        total_products = (TextView) a.findViewById(R.id.total_products);
+        grandtotal = (TextView) a.findViewById(R.id.grandtotal);
+        footer=(RelativeLayout)a.findViewById(R.id.footer);
+
        /* if (Order.shortlistedorders)
             this.data = Order.shorlistedmodel;
         else if (Order.selectedcategories) {
@@ -66,11 +70,13 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
     @Override
     public void onBindViewHolder(final OrderListAdapter.ViewHolder holder, final int position) {
         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-        if(Order.shortlistedorders)
-        {
-            if(data.get(position).getQuantity()>0)
-            {
+        if (Order.shortlistedorders) {
+            if (data.get(position).getQuantity() > 0) {
                 holder.orderlistlayout.setVisibility(View.VISIBLE);
+                total_count++;
+                total_amount += data.get(position).getAmount();
+                total_products.setText("Total Products - " + total_count);
+                grandtotal.setText("Rs " + total_amount + "");
                 //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
                 holder.name.setText(data.get(position).getTitle());
                 holder.unit.setText(data.get(position).getWeight() + "");
@@ -79,22 +85,22 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
                 holder.amount.setText(data.get(position).getAmount() + "");
                 onClicks(holder, position);
+            } else {
+                holder.orderlistlayout.setVisibility(View.GONE);
+                footer.setVisibility(View.GONE);
+
             }
-            else holder.orderlistlayout.setVisibility(View.GONE);
-        }
-        else {
-            if(Order.item.matches("-1"))
-            {
+        } else {
+            if (Order.item.matches("-1")) {
                 holder.orderlistlayout.setVisibility(View.VISIBLE);
                 //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
-                if (data.get(position).getQuantity() > 0){
+                if (data.get(position).getQuantity() > 0) {
                     total_count++;
-                    total_amount+=data.get(position).getAmount();
-                    total_products.setText("Total Products - "+total_count);
-                    grandtotal.setText("Rs "+total_amount+"");
+                    total_amount += data.get(position).getAmount();
+                    total_products.setText("Total Products - " + total_count);
+                    grandtotal.setText("Rs " + total_amount + "");
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.accentcolor));
-                }
-                else
+                } else
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
                 holder.name.setText(data.get(position).getTitle());
                 holder.unit.setText(data.get(position).getWeight() + "");
@@ -103,15 +109,17 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
                 holder.amount.setText(data.get(position).getAmount() + "");
                 onClicks(holder, position);
-            }
-            else {
-                if(data.get(position).getCategoryId().matches(Order.item))
-                {
+            } else {
+                if (data.get(position).getCategoryId().matches(Order.item)) {
                     holder.orderlistlayout.setVisibility(View.VISIBLE);
                     //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
-                    if (data.get(position).getQuantity() > 0)
+                    if (data.get(position).getQuantity() > 0) {
+                        total_count++;
+                        total_amount += data.get(position).getAmount();
+                        total_products.setText("Total Products - " + total_count);
+                        grandtotal.setText("Rs " + total_amount + "");
                         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.accentcolor));
-                    else
+                    } else
                         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
                     holder.name.setText(data.get(position).getTitle());
                     holder.unit.setText(data.get(position).getWeight() + "");
@@ -120,8 +128,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                     data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
                     holder.amount.setText(data.get(position).getAmount() + "");
                     onClicks(holder, position);
-                }
-                else holder.orderlistlayout.setVisibility(View.GONE);
+                } else holder.orderlistlayout.setVisibility(View.GONE);
             }
         }
     }
@@ -240,7 +247,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, unit, qty, price, amount;
-        ImageView plusincrement,minusincrement;
+        ImageView plusincrement, minusincrement;
         LinearLayout orderlistlayout;
 
         public ViewHolder(View v) {
@@ -250,8 +257,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             qty = (TextView) v.findViewById(R.id.qty);
             price = (TextView) v.findViewById(R.id.price);
             amount = (TextView) v.findViewById(R.id.amount);
-            plusincrement=(ImageView)v.findViewById(R.id.plusincrement);
-            minusincrement=(ImageView)v.findViewById(R.id.minusincrement);
+            plusincrement = (ImageView) v.findViewById(R.id.plusincrement);
+            minusincrement = (ImageView) v.findViewById(R.id.minusincrement);
             orderlistlayout = (LinearLayout) v.findViewById(R.id.orderlistlayout);
         }
     }
