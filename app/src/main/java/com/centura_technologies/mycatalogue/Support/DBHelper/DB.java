@@ -14,36 +14,33 @@ import java.util.ArrayList;
  * Created by Centura User1 on 10-08-2016.
  */
 public class DB {
-
     private static InitialModel initialModel = new InitialModel();
+    private static LeadsModel leadmodel = new LeadsModel();
+    private static ArrayList<LeadsModel> leads = new ArrayList<LeadsModel>();
+    private static ActivitiesModel activitymodel = new ActivitiesModel();
+    private static ArrayList<ActivitiesModel> activities = new ArrayList<ActivitiesModel>();
+    private static Sections sectionmodel = new Sections();
+    private static ArrayList<Sections> sectionlist = new ArrayList<Sections>();
+    private static CategoryTree tree = new CategoryTree();
+    private static ArrayList<CategoryTree> treelist = new ArrayList<CategoryTree>();
+    private static BillingProducts billingProducts = new BillingProducts();
+    private static ArrayList<BillingProducts> billprodlist = new ArrayList<BillingProducts>();
+    private static Products shortlisted = new Products();
+    private static ArrayList<Products> shortlistedlist = new ArrayList<Products>();
 
-
-    private static LeadsModel leadmodel=new LeadsModel();
-    private static ArrayList<LeadsModel> leads=new ArrayList<LeadsModel>();
-    private static ActivitiesModel activitymodel=new ActivitiesModel();
-    private static ArrayList<ActivitiesModel> activities=new ArrayList<ActivitiesModel>();
-    private static Sections sectionmodel=new Sections();
-    private static ArrayList<Sections> sectionlist=new ArrayList<Sections>();
-    private static CategoryTree tree=new CategoryTree();
-    private static ArrayList<CategoryTree> treelist=new ArrayList<CategoryTree>();
-    private static BillingProducts billingProducts=new BillingProducts();
-    private static ArrayList<BillingProducts> billprodlist=new ArrayList<BillingProducts>();
-    private static Products shortlisted=new Products();
-    private static ArrayList<Products> shortlistedlist=new ArrayList<Products>();
 
     public static InitialModel getInitialModel() {
         return initialModel;
-    }
-
-    public static void setInitialModel(InitialModel initialModel) {
-        DB.initialModel = initialModel;
     }
 
     public static LeadsModel getLeadmodel() {
         return leadmodel;
     }
 
-    public static Sections getSectionmodel() {return sectionmodel;}
+    public static Sections getSectionmodel() {
+        return sectionmodel;
+    }
+
     public static void setLeadmodel(LeadsModel leadmodel) {
         DB.leadmodel = leadmodel;
     }
@@ -73,19 +70,33 @@ public class DB {
     }
 
 
-
     public static void setSectionmodel(Sections sectionmodel) {
         DB.sectionmodel = sectionmodel;
     }
+
     public static ArrayList<Sections> getSectionlist() {
         return sectionlist;
     }
-    public static void setSectionlist(ArrayList<Sections> sectionlist) {DB.sectionlist = sectionlist;}
 
-    public static Products getShortlisted() {return shortlisted;}
-    public static void setShortlisted(Products shortlisted) {DB.shortlisted = shortlisted;}
-    public static ArrayList<Products> getShortlistedlist() {return shortlistedlist;}
-    public static void setShortlistedlist(ArrayList<Products> shortlistedlist) {DB.shortlistedlist = shortlistedlist;}
+    public static void setSectionlist(ArrayList<Sections> sectionlist) {
+        DB.sectionlist = sectionlist;
+    }
+
+    public static Products getShortlisted() {
+        return shortlisted;
+    }
+
+    public static void setShortlisted(Products shortlisted) {
+        DB.shortlisted = shortlisted;
+    }
+
+    public static ArrayList<Products> getShortlistedlist() {
+        return shortlistedlist;
+    }
+
+    public static void setShortlistedlist(ArrayList<Products> shortlistedlist) {
+        DB.shortlistedlist = shortlistedlist;
+    }
 
     public static CategoryTree getTree() {
         return tree;
@@ -139,4 +150,7 @@ public class DB {
         activities.add(editactivity);
     }
 
+    public static void setInitialModel(InitialModel initialModel) {
+        DB.initialModel = initialModel;
+    }
 }

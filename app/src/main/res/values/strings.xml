@@ -16,5 +16,6 @@
     <string name="ic_add">&#xe006;</string>
     <string name="title_activity_temp_filter">TempFilter</string>
     <string name="title_activity_syncronise">Syncronise</string>
+    <string name="title_activity_orders_list">OrdersList</string>
 
 </resources>

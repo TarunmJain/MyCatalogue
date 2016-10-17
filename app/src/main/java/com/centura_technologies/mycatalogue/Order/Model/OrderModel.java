@@ -8,8 +8,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.CustomerModel;
 public class OrderModel {
     CustomerModel customer = new CustomerModel();
     BillingProducts billingProducts = new BillingProducts();
+    SalesmanModel salesman = new SalesmanModel();
     String BillDate;
     String BillNumber;
-    SalesmanModel salesman = new SalesmanModel();
-
 }

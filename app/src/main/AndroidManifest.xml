@@ -89,13 +89,22 @@
         <activity
             android:name=".Settings.Controller.Settings"
             android:screenOrientation="landscape" />
-        <activity android:name=".Sync.Controller.SyncClass"
-            android:screenOrientation="landscape"/>
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <activity
+            android:name=".Sync.Controller.SyncClass"
+            android:screenOrientation="landscape" />
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".Order.Controller.OrdersList"
+            android:label="@string/title_activity_orders_list"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
