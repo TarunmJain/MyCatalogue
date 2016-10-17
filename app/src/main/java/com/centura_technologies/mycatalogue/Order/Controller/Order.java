@@ -3,7 +3,6 @@ package com.centura_technologies.mycatalogue.Order.Controller;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,16 +25,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
-import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
-import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
-import com.centura_technologies.mycatalogue.Order.View.OrderListAdapter;
+import com.centura_technologies.mycatalogue.Order.View.OrderProductsAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
-import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -275,7 +269,7 @@ public class Order extends AppCompatActivity {
         int viewHeight = GenericData.convertDpToPixels(72, context);
         viewHeight = viewHeight * ((DB.getBillprodlist().size()));
         //orderlist_recyclerview.getLayoutParams().height = viewHeight;
-        orderlist_recyclerview.setAdapter(new OrderListAdapter(context));
+        orderlist_recyclerview.setAdapter(new OrderProductsAdapter(context));
     }
 
     @Override

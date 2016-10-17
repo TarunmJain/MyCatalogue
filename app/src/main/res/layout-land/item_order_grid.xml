@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:layout_margin="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mrl_rippleAlpha="0.1"
+        app:mrl_rippleColor="#000000"
+        app:mrl_rippleDelayClick="true"
+        app:mrl_rippleDimension="10dp"
+        app:mrl_rippleDuration="10"
+        app:mrl_rippleFadeDuration="75"
+        app:mrl_rippleHover="true"
+        app:mrl_rippleOverlay="true"
+        app:mrl_ripplePersistent="false">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/collectionpane"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/customername"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:textSize="22sp"
+                    android:text="Customer Name"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/customernumber"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="15dp"
+                    android:text="7676858714"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/customeremail"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="15dp"
+                    android:text="mail@gmail.com"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_margin="4dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/white_light_gray"
+                    android:layout_height="1dp"/>
+                <TextView
+                    android:id="@+id/oredernumber"
+                    android:layout_width="match_parent"
+                    android:padding="15dp"
+                    android:text="Order Number: #516865968543498"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/orderdate"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="15dp"
+                    android:text="Order Date : 20-2-2016"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/productcount"
+                    android:layout_width="match_parent"
+                    android:paddingLeft="15dp"
+                    android:text="72 Items"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/grandtotal"
+                    android:gravity="right"
+                    android:layout_width="match_parent"
+                    android:padding="15dp"
+                    android:textColor="@color/accentcolor"
+                    android:textStyle="bold"
+                    android:text="Grand Total : Rs 68724 /-"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+    </com.balysv.materialripple.MaterialRippleLayout>
+</RelativeLayout>
+
