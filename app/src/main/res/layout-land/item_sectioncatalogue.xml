@@ -53,22 +53,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_gravity="bottom"
-                android:background="@drawable/corner_rounded"
+                android:background="@drawable/corner_rounded4"
                 android:gravity="center"
                 android:padding="2dp"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/backlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="BACK"
-                android:textColor="@color/white"
-                android:textSize="50sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
+
         </RelativeLayout>
     </com.balysv.materialripple.MaterialRippleLayout>
 </RelativeLayout>

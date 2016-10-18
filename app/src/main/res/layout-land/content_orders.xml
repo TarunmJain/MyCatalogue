@@ -49,7 +49,8 @@
                                 android:textSize="16sp" />
 
                             <EditText
-
+                                android:editable="false"
+                                android:enabled="false"
                                 android:id="@+id/billno"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -145,7 +146,6 @@
                                 android:textSize="16sp" />
 
                             <EditText
-
                                 android:id="@+id/custname"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -182,7 +182,8 @@
                             <EditText
                                 android:id="@+id/salespersonname"
                                 android:layout_width="0dp"
-
+                                android:editable="false"
+                                android:enabled="false"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_weight="7"
@@ -293,15 +294,7 @@
                             android:text="Cancel Bill"
                             android:textColor="@color/material_grey_600" />
 
-                        <Button
-                            android:id="@+id/save"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:background="@android:color/transparent"
-                            android:padding="4dp"
-                            android:text="Save Bill"
-                            android:textColor="@color/accentcolor" />
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -351,7 +344,7 @@
                             android:layout_weight="1"
                             android:background="@color/white"
                             android:gravity="center"
-                            android:text="Qty"
+                            android:text="Price"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -362,7 +355,7 @@
                             android:layout_weight="1"
                             android:background="@color/white"
                             android:gravity="center"
-                            android:text="Price"
+                            android:text="Amount"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -372,7 +365,7 @@
                             android:layout_weight="1"
                             android:background="@color/white"
                             android:gravity="center"
-                            android:text="Amount"
+                            android:text="Qty"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -387,40 +380,32 @@
 
     </LinearLayout>
     <RelativeLayout
+        android:gravity="center"
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
         android:layout_alignParentBottom="true">
+
         <TextView
-            android:id="@+id/total_products"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="18sp"
-            android:layout_marginLeft="20dp"
-            android:padding="10dp"
-            android:textColor="@color/white"/>
-        <TextView
-            android:layout_below="@+id/total_products"
             android:id="@+id/grandtotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginLeft="20dp"
+            android:text=" "
             android:textSize="18sp"
             android:padding="10dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/accentcolor"
+            android:layout_centerVertical="true" />
 
         <Button
             android:id="@+id/placeorder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PLACE ORDER"
+            android:text="SAVE BILL"
             android:textColor="@color/white"
             android:background="@color/accentcolor"
             android:padding="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_margin="1dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
 

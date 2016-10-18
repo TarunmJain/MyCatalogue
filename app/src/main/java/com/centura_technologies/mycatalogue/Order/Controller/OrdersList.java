@@ -34,4 +34,9 @@ public class OrdersList extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        OrdersList.setAdapter(new OrderListAdapter(OrdersList.this));
+    }
 }

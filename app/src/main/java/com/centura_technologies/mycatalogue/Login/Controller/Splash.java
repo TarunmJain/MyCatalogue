@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.ApiData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -33,6 +34,7 @@ public class Splash extends Activity {
         setContentView(R.layout.activity_splash);
         info = (TextView) findViewById(R.id.info);
         db=new DbHelper(Splash.this);
+        ApiData.renderCustomers();
         sharedPreferences = this.getSharedPreferences(GenericData.MyPref, this.MODE_PRIVATE);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 

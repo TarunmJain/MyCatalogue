@@ -8,4 +8,7 @@ public class SalesmanModel {
     public String Name;
     public String Username;
     public String Role;
+    public String Phone;
+    public String Email;
+
 }

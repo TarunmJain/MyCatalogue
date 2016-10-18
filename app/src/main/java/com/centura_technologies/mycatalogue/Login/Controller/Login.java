@@ -107,6 +107,7 @@ public class Login extends Activity {
                                     GenericData.ShowDialog(Login.this, "Loading...", false);
                                     if (GenericData.sucess(response, Login.this)) {
                                         Sync.SyncSectionList(Login.this);
+
                                         // SyncClass.syncFilters(Login.this);
                                         // SyncClass.syncproducts(Login.this);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -115,7 +116,10 @@ public class Login extends Activity {
                                         editor.putString(GenericData.Sp_StoreCode, companyid.getText().toString());
                                         StaticData.CurrentSalesMan.Id=username.getText().toString();
                                         StaticData.CurrentSalesMan.Username=username.getText().toString();
-                                        StaticData.CurrentSalesMan.Name=username.getText().toString();
+                                        StaticData.CurrentSalesMan.Name=response.optJSONObject("Data").optString("UserName");
+                                        StaticData.CurrentSalesMan.Phone=response.optJSONObject("Data").optString("UserPhone");
+                                        StaticData.CurrentSalesMan.Email=response.optJSONObject("Data").optString("UserEmail");
+
                                         editor.putString(GenericData.Sp_Status, "LoggedIn");
                                         editor.commit();
                                         StaticData.Options = "Catalogue";

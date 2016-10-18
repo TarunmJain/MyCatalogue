@@ -31,18 +31,17 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     ImageView qtydecrement, qtyincrement;
     Button apply, cancel;
     EditText qtytext;
-    TextView total_products,grandtotal;
+    public static TextView grandtotal;
     Activity a;
-    int total_count=0;
-    Double total_amount=0.0;
+    public static Double total_amount = 0.0;
     int viewHeight;
 
     public OrderProductsAdapter(Context context) {
         this.mContext = context;
-        a=(Activity)mContext;
+        a = (Activity) mContext;
         this.data = DB.getBillprodlist();
-        total_products=(TextView)a.findViewById(R.id.total_products);
-        grandtotal=(TextView)a.findViewById(R.id.grandtotal);
+        grandtotal = (TextView) a.findViewById(R.id.grandtotal);
+        grandtotal.setText("Rs " + total_amount + "");
        /* if (Order.shortlistedorders)
             this.data = Order.shorlistedmodel;
         else if (Order.selectedcategories) {
@@ -50,6 +49,11 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             Order.selectedcategories = false;
         } else
             this.data = DB.getBillprodlist();*/
+    }
+
+    public static void clearBill() {
+        total_amount = 0.0;
+        grandtotal.setText("Rs " + total_amount + "");
     }
 
     @Override
@@ -62,10 +66,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     @Override
     public void onBindViewHolder(final OrderProductsAdapter.ViewHolder holder, final int position) {
         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-        if(Order.shortlistedorders)
-        {
-            if(data.get(position).getQuantity()>0)
-            {
+        if (Order.shortlistedorders) {
+            if (data.get(position).getQuantity() > 0) {
                 holder.orderlistlayout.setVisibility(View.VISIBLE);
                 //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
                 holder.name.setText(data.get(position).getTitle());
@@ -75,22 +77,14 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                 data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
                 holder.amount.setText(data.get(position).getAmount() + "");
                 onClicks(holder, position);
-            }
-            else holder.orderlistlayout.setVisibility(View.GONE);
-        }
-        else {
-            if(Order.item.matches("-1"))
-            {
+            } else holder.orderlistlayout.setVisibility(View.GONE);
+        } else {
+            if (Order.item.matches("-1")) {
                 holder.orderlistlayout.setVisibility(View.VISIBLE);
                 //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
-                if (data.get(position).getQuantity() > 0){
-                    total_count++;
-                    total_amount+=data.get(position).getAmount();
-                    total_products.setText("Total Products - "+total_count);
-                    grandtotal.setText("Rs "+total_amount+"");
-                    holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.accentcolor));
-                }
-                else
+                if (data.get(position).getQuantity() > 0) {
+                    holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
+                } else
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
                 holder.name.setText(data.get(position).getTitle());
                 holder.unit.setText(data.get(position).getWeight() + "");
@@ -99,14 +93,12 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                 data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
                 holder.amount.setText(data.get(position).getAmount() + "");
                 onClicks(holder, position);
-            }
-            else {
-                if(data.get(position).getCategoryId().matches(Order.item))
-                {
+            } else {
+                if (data.get(position).getCategoryId().matches(Order.item)) {
                     holder.orderlistlayout.setVisibility(View.VISIBLE);
                     //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
                     if (data.get(position).getQuantity() > 0)
-                        holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.accentcolor));
+                        holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
                     else
                         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
                     holder.name.setText(data.get(position).getTitle());
@@ -116,10 +108,19 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                     data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
                     holder.amount.setText(data.get(position).getAmount() + "");
                     onClicks(holder, position);
-                }
-                else holder.orderlistlayout.setVisibility(View.GONE);
+                } else holder.orderlistlayout.setVisibility(View.GONE);
             }
         }
+    }
+
+    private void increment(int position) {
+        total_amount += data.get(position).getPrice();
+        grandtotal.setText("Rs " + total_amount + "");
+    }
+
+    private void decrement(int position) {
+        total_amount -= data.get(position).getPrice();
+        grandtotal.setText("Rs " + total_amount + "");
     }
 
     private void onClicks(final ViewHolder holder, final int position) {
@@ -127,8 +128,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             @Override
             public void onClick(View v) {
                 data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                increment(position);
                 notifyDataSetChanged();
-                Order.InitializeAdapter(mContext);
             }
         });
 
@@ -136,8 +137,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             @Override
             public void onClick(View v) {
                 data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                increment(position);
                 notifyDataSetChanged();
-                Order.InitializeAdapter(mContext);
             }
         });
 
@@ -158,8 +159,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                     @Override
                     public void onClick(View v) {
                         if (data.get(position).getQuantity() != 0) {
-                            data.get(position).setQuantity(data.get(position).getQuantity() - 1);
-                            qtytext.setText(data.get(position).getQuantity() + "");
+                            qtytext.setText((Integer.parseInt(qtytext.getText().toString()) - 1) + "");
                         } else
                             Toast.makeText(mContext, "Min Count is 0", Toast.LENGTH_SHORT).show();
                     }
@@ -167,17 +167,16 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                 qtyincrement.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        data.get(position).setQuantity(data.get(position).getQuantity() + 1);
-                        qtytext.setText(data.get(position).getQuantity() + "");
+                        qtytext.setText((Integer.parseInt(qtytext.getText().toString()) + 1) + "");
                     }
                 });
                 apply.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        data.get(position).setQuantity(Integer.parseInt(qtytext.getText().toString()));
+                        //data.get(position).setQuantity(Integer.parseInt(qtytext.getText().toString()));
+                        increment(position, Integer.parseInt(qtytext.getText().toString()));
                         dialog.cancel();
                         notifyDataSetChanged();
-                        Order.InitializeAdapter(mContext);
                     }
                 });
                 cancel.setOnClickListener(new View.OnClickListener() {
@@ -193,8 +192,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             @Override
             public void onClick(View v) {
                 data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                increment(position);
                 notifyDataSetChanged();
-                Order.InitializeAdapter(mContext);
             }
         });
 
@@ -203,8 +202,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             public void onClick(View v) {
                 if (data.get(position).getQuantity() != 0) {
                     data.get(position).setQuantity(data.get(position).getQuantity() - 1);
+                    decrement(position);
                     notifyDataSetChanged();
-                    Order.InitializeAdapter(mContext);
                 } else
                     Toast.makeText(mContext, "Min Count is 0", Toast.LENGTH_SHORT).show();
             }
@@ -214,8 +213,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             @Override
             public void onClick(View v) {
                 data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                increment(position);
                 notifyDataSetChanged();
-                Order.InitializeAdapter(mContext);
             }
         });
 
@@ -223,10 +222,23 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             @Override
             public void onClick(View v) {
                 data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                increment(position);
                 notifyDataSetChanged();
-                Order.InitializeAdapter(mContext);
             }
         });
+    }
+
+    private void increment(int position, int qty) {
+        int actualqty = qty;
+        if (data.get(position).getQuantity() > qty) {
+            qty = qty - data.get(position).getQuantity();
+            total_amount += data.get(position).getPrice() * qty;
+        } else {
+            qty = data.get(position).getQuantity() - qty;
+            total_amount -= data.get(position).getPrice() * qty;
+        }
+        data.get(position).setQuantity(actualqty);
+        grandtotal.setText("Rs " + total_amount + "");
     }
 
     @Override
@@ -236,7 +248,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, unit, qty, price, amount;
-        ImageView plusincrement,minusincrement;
+        TextView plusincrement, minusincrement;
         LinearLayout orderlistlayout;
 
         public ViewHolder(View v) {
@@ -246,8 +258,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             qty = (TextView) v.findViewById(R.id.qty);
             price = (TextView) v.findViewById(R.id.price);
             amount = (TextView) v.findViewById(R.id.amount);
-            plusincrement=(ImageView)v.findViewById(R.id.plusincrement);
-            minusincrement=(ImageView)v.findViewById(R.id.minusincrement);
+            plusincrement = (TextView) v.findViewById(R.id.plusincrement);
+            minusincrement = (TextView) v.findViewById(R.id.minusincrement);
             orderlistlayout = (LinearLayout) v.findViewById(R.id.orderlistlayout);
         }
     }

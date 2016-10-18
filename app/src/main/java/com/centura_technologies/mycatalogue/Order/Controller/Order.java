@@ -3,6 +3,7 @@ package com.centura_technologies.mycatalogue.Order.Controller;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,15 +27,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
+import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
 import com.centura_technologies.mycatalogue.Order.View.OrderProductsAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
+import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
+import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.UUID;
 
 /**
  * Created by Centura User1 on 24-09-2016.
@@ -45,12 +50,12 @@ public class Order extends AppCompatActivity {
     public static ArrayList<BillingProducts> shorlistedmodel;
     RelativeLayout billdatelayout;
     EditText billno, custname, salespersonname;
-    TextView billdate,total_products,grandtotal;
+    TextView billdate;
     Spinner spinner;
     CardView billdetailheader;
     ImageView checked;
     LinearLayout shortlistedorder,filterpane;
-    Button clearBill, saveBIll;
+    Button clearBill,placeorder;
     TextView  Cancel;
 
     int mYear, mMonth, mDay;
@@ -79,6 +84,7 @@ public class Order extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         billdatelayout = (RelativeLayout) findViewById(R.id.billdatelayout);
         billno = (EditText) findViewById(R.id.billno);
+        billno.setText(UUID.randomUUID().toString());
         billdate = (TextView) findViewById(R.id.billdate);
         custname = (EditText) findViewById(R.id.custname);
         salespersonname = (EditText) findViewById(R.id.salespersonname);
@@ -89,7 +95,7 @@ public class Order extends AppCompatActivity {
         shortlistedorder = (LinearLayout) findViewById(R.id.shortlistedorder);
         clearBill = (Button) findViewById(R.id.clear);
         filterpane= (LinearLayout) findViewById(R.id.filterpane);
-        saveBIll = (Button) findViewById(R.id.save);
+        placeorder= (Button) findViewById(R.id.placeorder);
         Cancel= (TextView) findViewById(R.id.cancel);
         orderlist_recyclerview.setLayoutManager(new LinearLayoutManager(Order.this, LinearLayoutManager.VERTICAL, false));
         categories = new ArrayList<String>();
@@ -125,24 +131,13 @@ public class Order extends AppCompatActivity {
         shortlistedorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shorlistedmodel = new ArrayList<BillingProducts>();
                 if (shortlistedorders) {
                     shortlistedorders = false;
                     checked.setImageResource(R.mipmap.checking);
                     InitializeAdapter(Order.this);
                 } else {
-                    for (BillingProducts temp : DB.getBillprodlist()) {
-                        if (temp.getQuantity() > 0) {
-                            shorlistedmodel.add(temp);
-                        }
-                    }
-                    if (shorlistedmodel.size() != 0) {
-                        checked.setImageResource(R.mipmap.checked);
-                        shortlistedorders = true;
-                    } else {
-                        shortlistedorders = false;
-                        Toast.makeText(Order.this, "Please Select the Item", Toast.LENGTH_SHORT).show();
-                    }
+                    checked.setImageResource(R.drawable.checkcircle);
+                    shortlistedorders = true;
                     InitializeAdapter(Order.this);
                 }
                 /*if (StaticData.shortlistedorders) {
@@ -157,14 +152,6 @@ public class Order extends AppCompatActivity {
             }
         });
 
-        saveBIll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                billdetailheader.setVisibility(View.VISIBLE);
-                filterpane.setVisibility(View.GONE);
-            }
-        });
-
         clearBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,6 +161,7 @@ public class Order extends AppCompatActivity {
                     }
                 }
                 InitializeAdapter(Order.this);
+                OrderProductsAdapter.clearBill();
             }
         });
 
@@ -182,6 +170,47 @@ public class Order extends AppCompatActivity {
             public void onClick(View v) {
                 billdetailheader.setVisibility(View.GONE);
                 filterpane.setVisibility(View.VISIBLE);
+                placeorder.setText("SAVE BILL");
+            }
+        });
+
+        placeorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(placeorder.getText().toString().matches("SAVE BILL"))
+                {
+                    billdetailheader.setVisibility(View.VISIBLE);
+                    filterpane.setVisibility(View.GONE);
+                    salespersonname.setText(StaticData.CurrentSalesMan.Name);
+                    placeorder.setText("PLACE ORDER");
+                }
+                else
+                {
+                    placeorder.setText("SAVE BILL");
+                    shorlistedmodel = new ArrayList<BillingProducts>();
+                    for (BillingProducts temp : DB.getBillprodlist()) {
+                        if (temp.getQuantity() > 0) {
+                            shorlistedmodel.add(temp);
+                        }
+                    }
+                    if(shorlistedmodel.size()>0)
+                    {
+                        OrderModel temporder=new OrderModel();
+                        temporder.billingProducts= (ArrayList<BillingProducts>) shorlistedmodel.clone();
+                        temporder.Amount=OrderProductsAdapter.total_amount;
+                        temporder.customer=StaticData.Customers.get(0);
+                        temporder.OrderDate=billdate.getText().toString();
+                        temporder.OrderNumber=billno.getText().toString();
+                        temporder.salesman= StaticData.CurrentSalesMan;
+                        StaticData.orders.add(temporder);
+                        clearBill.performClick();
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(Order.this,"No Products Selected",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
             }
         });
 
@@ -229,9 +258,8 @@ public class Order extends AppCompatActivity {
         return null;
     }
 
-    public static void InitializeAdapter(Context context) {
+    public static void  InitializeAdapter(Context context) {
         if (selectedcategories) {
-
             billingProductsArrayList = new ArrayList<BillingProducts>();
             if (item.matches("-1"))
                 billingProductsArrayList = DB.getBillprodlist();
@@ -302,4 +330,44 @@ public class Order extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+
+  /*  @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Order Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.centura_technologies.mycatalogue.Order.Controller/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Order Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.centura_technologies.mycatalogue.Order.Controller/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }*/
 }

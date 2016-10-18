@@ -7,6 +7,7 @@
     <color name="secondarycolor">#D3D3D3</color>
     <color name="primarycolordark">#000000</color>
     <color name="accentcolor">#f37021</color>
+    <color name="selectedcolor">#fff0e6</color>
     <color name="whitecolor">#FFFFFF</color>
     <color name="blackcolor">#000000</color>
     <color name="view">#dde3ec</color>

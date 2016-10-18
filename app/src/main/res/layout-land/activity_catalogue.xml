@@ -80,23 +80,22 @@
                     android:orientation="horizontal">
 
                     <TextView
+
+                        android:textSize="16sp"
                         android:id="@+id/filtericon"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
                         android:text="Filter"
                         android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/categoryicon"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:layout_toRightOf="@+id/filtericon"
                         android:gravity="center"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+                        android:textSize="16sp"
                         android:text="Category"
                         android:textColor="@color/white"
                         android:visibility="visible" />
@@ -126,19 +125,20 @@
                          android:layout_height="match_parent" />
                          </LinearLayout>-->
                     <LinearLayout
+                        android:layout_margin="6dp"
                         android:id="@+id/search"
+                        android:background="@drawable/whiterounded"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:paddingRight="5dp">
+                        android:layout_centerInParent="true">
 
                         <ImageView
                             android:id="@+id/searchicon"
                             android:layout_width="50dp"
+                            android:padding="10dp"
                             android:layout_height="match_parent"
                             android:layout_alignParentRight="true"
-                            android:padding="10dp"
-                            android:src="@drawable/abc_ic_search_api_mtrl_alpha" />
+                            android:src="@drawable/search100" />
 
                         <EditText
                             android:id="@+id/editsearch"
@@ -164,8 +164,8 @@
                         android:id="@+id/spinner"
                         android:layout_width="150dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/search"></Spinner>
+                        android:layout_toLeftOf="@+id/listicon"
+                        android:layout_toStartOf="@+id/listicon"></Spinner>
 
                     <ImageView
                         android:id="@+id/gridicon"
@@ -183,6 +183,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
+                        android:layout_marginLeft="50dp"
                         android:padding="15dp"
                         android:src="@drawable/ic_format_list_bulleted_white_24dp" />
 

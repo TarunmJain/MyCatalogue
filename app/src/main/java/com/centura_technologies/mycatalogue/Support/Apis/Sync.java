@@ -66,7 +66,7 @@ public class Sync {
         ArrayList<Sections> model = new ArrayList<Sections>();
         RequestQueue queue = Volley.newRequestQueue(context);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("StoreCode", "92sc93");
+        params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
         //GenericData.ShowDialog(context, "Loading...", true);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.Initial, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
@@ -137,7 +137,7 @@ public class Sync {
 
         RequestQueue queue = Volley.newRequestQueue(mContext);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("StoreCode", "92sc93");
+        params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.SectionList, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -534,5 +534,4 @@ public class Sync {
         }
         DB.setBillprodlist(billprodlist);
     }
-
 }

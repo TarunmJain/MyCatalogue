@@ -1,5 +1,7 @@
 package com.centura_technologies.mycatalogue.Catalogue.Model;
 
+import java.util.UUID;
+
 /**
  * Created by Centura User1 on 23-08-2016.
  */
@@ -23,12 +25,12 @@ public class CustomerModel {
     }
 
     public CustomerModel(String name){
-        Id="";
-        Name=name;
-        Gender="";
+        Id= UUID.randomUUID().toString();
+        Name="Customer"+name;
+        Gender="Male";
         DOB="";
-        Phone="";
-        Email="";
+        Phone="123456781"+name;
+        Email="email"+name+"@gmail.com";
         Address="";
     }
 

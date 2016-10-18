@@ -10,7 +10,7 @@ public class ApiData {
 
     public static void renderCustomers(){
         for (int x=1;x<21;x++)
-            StaticData.Customers.add(new CustomerModel("customer no "+x));
+            StaticData.Customers.add(new CustomerModel(""+x));
     }
 }
 

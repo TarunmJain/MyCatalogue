@@ -165,6 +165,8 @@ public class Catalogue extends AppCompatActivity {
         StaticData.ProductsInList = false;
         productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         InitializeAdapter(Catalogue.this);
+        InitialzationSectionAdapter(Catalogue.this);
+        InitialzationCategoryAdapter(Catalogue.this, null);
     }
 
     public static void productslist() {
@@ -219,7 +221,6 @@ public class Catalogue extends AppCompatActivity {
                 searchlayout.setVisibility(View.GONE);
                 drawer.openDrawer(leftdrawer);
                 drawer.closeDrawer(rightdrawer);
-                InitialzationSectionAdapter(Catalogue.this);
                 InitialzationSectionAdapter(Catalogue.this);
                 InitialzationCategoryAdapter(Catalogue.this, null);
             }

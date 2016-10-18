@@ -33,39 +33,7 @@
             android:text="Unit"
             android:singleLine="true"
             android:textColor="@color/black" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:weightSum="3"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-            <ImageView
-                android:id="@+id/minusincrement"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:padding="5dp"
-                android:src="@drawable/ic_minus_circle_outline_grey600_24dp"/>
-            <TextView
-                android:id="@+id/qty"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="Qty"
-                android:gravity="center"
-                android:singleLine="true"
-                android:textColor="@color/black" />
-            <ImageView
-                android:id="@+id/plusincrement"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:padding="5dp"
-                android:src="@drawable/ic_plus_circle_outline_grey600_24dp"/>
 
-        </LinearLayout>
 
         <TextView
             android:id="@+id/price"
@@ -85,6 +53,43 @@
             android:text="Amount"
             android:singleLine="true"
             android:textColor="@color/black" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+                <TextView
+                    android:id="@+id/minusincrement"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/accentcolor"
+                    android:text="-"/>
+                <TextView
+                    android:id="@+id/qty"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Qty"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/plusincrement"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:textColor="@color/accentcolor"
+                    android:text="+"/>
+
+            </LinearLayout>
     </LinearLayout>
         <View
             android:layout_width="match_parent"
