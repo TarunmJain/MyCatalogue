@@ -11,6 +11,8 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,9 +30,11 @@ import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
+import com.centura_technologies.mycatalogue.Order.View.OrderProductSearchAdapter;
 import com.centura_technologies.mycatalogue.Order.View.OrderProductsAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.google.android.gms.appindexing.Action;
@@ -50,14 +54,14 @@ public class Order extends AppCompatActivity {
     public static ArrayList<BillingProducts> shorlistedmodel;
     RelativeLayout billdatelayout;
     EditText billno, custname, salespersonname;
-    TextView billdate;
+    TextView billdate,toolbar_title;
     Spinner spinner;
     CardView billdetailheader;
     ImageView checked;
-    LinearLayout shortlistedorder,filterpane;
-    Button clearBill,placeorder;
-    TextView  Cancel;
-
+    LinearLayout shortlistedorder, filterpane;
+    Button clearBill, placeorder;
+    TextView Cancel;
+    public static EditText serachorderlist;
     int mYear, mMonth, mDay;
     static final int DATE_DIALOG_ID = 0;
     public static boolean shortlistedorders = false;
@@ -79,13 +83,15 @@ public class Order extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        toolbar.setTitle("Orders");
+        toolbar_title= (TextView) findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Orders");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         billdatelayout = (RelativeLayout) findViewById(R.id.billdatelayout);
         billno = (EditText) findViewById(R.id.billno);
         billno.setText(UUID.randomUUID().toString());
         billdate = (TextView) findViewById(R.id.billdate);
+        serachorderlist = (EditText) findViewById(R.id.serachorderlist);
         custname = (EditText) findViewById(R.id.custname);
         salespersonname = (EditText) findViewById(R.id.salespersonname);
         checked = (ImageView) findViewById(R.id.checked);
@@ -94,9 +100,9 @@ public class Order extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spinner);
         shortlistedorder = (LinearLayout) findViewById(R.id.shortlistedorder);
         clearBill = (Button) findViewById(R.id.clear);
-        filterpane= (LinearLayout) findViewById(R.id.filterpane);
-        placeorder= (Button) findViewById(R.id.placeorder);
-        Cancel= (TextView) findViewById(R.id.cancel);
+        filterpane = (LinearLayout) findViewById(R.id.filterpane);
+        placeorder = (Button) findViewById(R.id.placeorder);
+        Cancel = (TextView) findViewById(R.id.cancel);
         orderlist_recyclerview.setLayoutManager(new LinearLayoutManager(Order.this, LinearLayoutManager.VERTICAL, false));
         categories = new ArrayList<String>();
         categoryids = new ArrayList<String>();
@@ -121,6 +127,31 @@ public class Order extends AppCompatActivity {
     }
 
     private void onClicks() {
+
+
+        serachorderlist.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (s != null)
+                    if (!s.toString().toLowerCase().matches(""))
+                        orderlist_recyclerview.setAdapter(new OrderProductSearchAdapter(Order.this));
+                    else
+                        InitializeAdapter(Order.this);
+                else
+                    InitializeAdapter(Order.this);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         billdatelayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,15 +208,12 @@ public class Order extends AppCompatActivity {
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(placeorder.getText().toString().matches("SAVE BILL"))
-                {
+                if (placeorder.getText().toString().matches("SAVE BILL")) {
                     billdetailheader.setVisibility(View.VISIBLE);
                     filterpane.setVisibility(View.GONE);
                     salespersonname.setText(StaticData.CurrentSalesMan.Name);
                     placeorder.setText("PLACE ORDER");
-                }
-                else
-                {
+                } else {
                     placeorder.setText("SAVE BILL");
                     shorlistedmodel = new ArrayList<BillingProducts>();
                     for (BillingProducts temp : DB.getBillprodlist()) {
@@ -193,21 +221,21 @@ public class Order extends AppCompatActivity {
                             shorlistedmodel.add(temp);
                         }
                     }
-                    if(shorlistedmodel.size()>0)
-                    {
-                        OrderModel temporder=new OrderModel();
-                        temporder.billingProducts= (ArrayList<BillingProducts>) shorlistedmodel.clone();
-                        temporder.Amount=OrderProductsAdapter.total_amount;
-                        temporder.customer=StaticData.Customers.get(0);
-                        temporder.OrderDate=billdate.getText().toString();
-                        temporder.OrderNumber=billno.getText().toString();
-                        temporder.salesman= StaticData.CurrentSalesMan;
+                    if (shorlistedmodel.size() > 0) {
+                        OrderModel temporder = new OrderModel();
+                        temporder.billingProducts = (ArrayList<BillingProducts>) shorlistedmodel.clone();
+                        temporder.Amount = OrderProductsAdapter.total_amount;
+                        temporder.customer = StaticData.Customers.get(0);
+                        temporder.OrderDate = billdate.getText().toString();
+                        temporder.OrderNumber = billno.getText().toString();
+                        temporder.salesman = StaticData.CurrentSalesMan;
                         StaticData.orders.add(temporder);
+                        DbHelper dbHelper = new DbHelper(Order.this);
+                        dbHelper.saveOrders();
                         clearBill.performClick();
                         finish();
-                    }
-                    else {
-                        Toast.makeText(Order.this,"No Products Selected",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Order.this, "No Products Selected", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -258,7 +286,7 @@ public class Order extends AppCompatActivity {
         return null;
     }
 
-    public static void  InitializeAdapter(Context context) {
+    public static void InitializeAdapter(Context context) {
         if (selectedcategories) {
             billingProductsArrayList = new ArrayList<BillingProducts>();
             if (item.matches("-1"))
@@ -294,9 +322,6 @@ public class Order extends AppCompatActivity {
                     }
                 }
         }
-        int viewHeight = GenericData.convertDpToPixels(72, context);
-        viewHeight = viewHeight * ((DB.getBillprodlist().size()));
-        //orderlist_recyclerview.getLayoutParams().height = viewHeight;
         orderlist_recyclerview.setAdapter(new OrderProductsAdapter(context));
     }
 

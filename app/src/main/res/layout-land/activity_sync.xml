@@ -28,6 +28,18 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:text=""
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:gravity="right|center_horizontal"
                 android:layout_height="match_parent">
                 <TextView
@@ -41,7 +53,6 @@
                     android:text="CANCEL"
                     android:textStyle="bold"
                     android:layout_height="match_parent" />
-
                 <TextView
                     android:id="@+id/appysync"
                     android:gravity="center"
@@ -52,6 +63,7 @@
                     android:text="SAVE"
                     android:textStyle="bold"
                     android:layout_height="match_parent" />
+                </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 

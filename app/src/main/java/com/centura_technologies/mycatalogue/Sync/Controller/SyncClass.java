@@ -21,7 +21,7 @@ import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
 public class SyncClass extends AppCompatActivity {
     Toolbar toolbar;
     RecyclerView sync_list;
-    TextView appysync, cancel;
+    TextView appysync, cancel,toolbar_title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,9 +30,11 @@ public class SyncClass extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         appysync = (TextView) findViewById(R.id.appysync);
         cancel = (TextView) findViewById(R.id.cancel_sync);
-        toolbar.setTitle("Sync");
+        toolbar_title= (TextView) findViewById(R.id.toolbar_title);
+        toolbar_title.setText("Orders");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         sync_list = (RecyclerView) findViewById(R.id.sync_list);
         sync_list.setLayoutManager(new GridLayoutManager(SyncClass.this, 3));
         sync_list.setAdapter(new SyncAdapter(SyncClass.this));

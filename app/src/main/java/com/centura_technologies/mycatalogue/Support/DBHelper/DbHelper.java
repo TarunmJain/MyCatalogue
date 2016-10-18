@@ -14,6 +14,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
+import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.ApplicationClass;
 import com.centura_technologies.mycatalogue.Support.GenericData;
@@ -116,7 +117,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues = new ContentValues();
         contentValues.put(this.TableName, "Sections");
         contentValues.put(this.Data, gson.toJsonTree(DB.getInitialModel().getSections()).getAsJsonArray().toString());
-        db.delete(this.InitialData,"TableName=?",new String[]{"Sections"});
+        db.delete(this.InitialData, "TableName=?", new String[]{"Sections"});
         db.insert(this.InitialData, null, contentValues);
 
     }
@@ -243,6 +244,7 @@ public class DbHelper extends SQLiteOpenHelper {
         DB.setInitialModel(initialModel);
         loadsectionlist();
         Sync.BillingProducts();
+        loadOrders();
 
         ArrayList<CategoryTree> temptree=new ArrayList<CategoryTree>();
         CategoryTree model;
@@ -266,5 +268,27 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     public void loadsectionlist(){
         loadSections();
+    }
+
+    public void saveOrders(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        contentValues = new ContentValues();
+        contentValues.put(this.TableName, "Orders");
+        contentValues.put(this.Data, gson.toJsonTree(StaticData.orders).getAsJsonArray().toString());
+        db.delete(this.InitialData,"TableName=?",new String[]{"Orders"});
+        db.insert(this.InitialData, null, contentValues);
+    }
+
+    public void loadOrders(){
+        SQLiteDatabase db = DbHelper.this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from InitialData where "+this.TableName+"=?",new String[]{"Orders"});
+        res.moveToFirst();
+        while (res.isAfterLast() == false) {
+            //initialModel.setSections(gson.fromJson(res.getString(res.getColumnIndex("Data")).toString(), ArrayList.class));
+            Type listType = new TypeToken<ArrayList<OrderModel>>(){}.getType();
+            StaticData.orders=new ArrayList<OrderModel>();
+            StaticData.orders=gson.fromJson(res.getString(res.getColumnIndex("Data")).toString(),listType);
+            res.moveToNext();
+        }
     }
 }

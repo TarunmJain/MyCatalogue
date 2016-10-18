@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by Centura User1 on 24-09-2016.
  */
-public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdapter.ViewHolder> {
+public class OrderProductSearchAdapter extends RecyclerView.Adapter<OrderProductSearchAdapter.ViewHolder> {
     Context mContext;
     ArrayList<BillingProducts> data;
     ImageView qtydecrement, qtyincrement;
@@ -36,7 +36,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     public static Double total_amount = 0.0;
     int viewHeight;
 
-    public OrderProductsAdapter(Context context) {
+    public OrderProductSearchAdapter(Context context) {
         this.mContext = context;
         a = (Activity) mContext;
         this.data = DB.getBillprodlist();
@@ -57,61 +57,30 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     }
 
     @Override
-    public OrderProductsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public OrderProductSearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_orderlist, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(final OrderProductsAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final OrderProductSearchAdapter.ViewHolder holder, final int position) {
         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-        if (Order.shortlistedorders) {
+        if (data.get(position).getTitle().toLowerCase().contains(Order.serachorderlist.getText().toString().toLowerCase())) {
+            holder.orderlistlayout.setVisibility(View.VISIBLE);
+            //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
             if (data.get(position).getQuantity() > 0) {
-                holder.orderlistlayout.setVisibility(View.VISIBLE);
-                //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
-                holder.name.setText(data.get(position).getTitle());
-                holder.unit.setText(data.get(position).getWeight() + "");
-                holder.qty.setText(data.get(position).getQuantity() + "");
-                holder.price.setText(data.get(position).getPrice() + "");
-                data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
-                holder.amount.setText(data.get(position).getAmount() + "");
-                onClicks(holder, position);
-            } else holder.orderlistlayout.setVisibility(View.GONE);
-        } else {
-            if (Order.item.matches("-1")) {
-                //all products
-                holder.orderlistlayout.setVisibility(View.VISIBLE);
-                //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
-                if (data.get(position).getQuantity() > 0) {
-                    holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
-                } else
-                    holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-                holder.name.setText(data.get(position).getTitle());
-                holder.unit.setText(data.get(position).getWeight() + "");
-                holder.qty.setText(data.get(position).getQuantity() + "");
-                holder.price.setText(data.get(position).getPrice() + "");
-                data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
-                holder.amount.setText(data.get(position).getAmount() + "");
-                onClicks(holder, position);
-            } else {
-                if (data.get(position).getCategoryId().matches(Order.item)) {
-                    holder.orderlistlayout.setVisibility(View.VISIBLE);
-                    //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
-                    if (data.get(position).getQuantity() > 0)
-                        holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
-                    else
-                        holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-                    holder.name.setText(data.get(position).getTitle());
-                    holder.unit.setText(data.get(position).getWeight() + "");
-                    holder.qty.setText(data.get(position).getQuantity() + "");
-                    holder.price.setText(data.get(position).getPrice() + "");
-                    data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
-                    holder.amount.setText(data.get(position).getAmount() + "");
-                    onClicks(holder, position);
-                } else holder.orderlistlayout.setVisibility(View.GONE);
-            }
-        }
+                holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
+            } else
+                holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+            holder.name.setText(data.get(position).getTitle());
+            holder.unit.setText(data.get(position).getWeight() + "");
+            holder.qty.setText(data.get(position).getQuantity() + "");
+            holder.price.setText(data.get(position).getPrice() + "");
+            data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
+            holder.amount.setText(data.get(position).getAmount() + "");
+            onClicks(holder, position);
+        } else holder.orderlistlayout.setVisibility(View.GONE);
     }
 
     private void increment(int position) {

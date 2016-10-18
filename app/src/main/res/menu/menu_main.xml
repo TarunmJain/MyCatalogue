@@ -20,6 +20,13 @@
         android:icon="@drawable/ic_slideshow_white_24dp"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
+    <item
+        android:visible="false"
+        android:id="@+id/search"
+        android:title="SlideShow"
+        android:icon="@drawable/search100"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
 
     <!--<item
         android:id="@+id/Seacrh"
