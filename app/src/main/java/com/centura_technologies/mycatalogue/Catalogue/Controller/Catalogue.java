@@ -391,9 +391,10 @@ public class Catalogue extends AppCompatActivity {
                     adapter1.notifyDataSetChanged();
                     SearchProductsAdapter.data = new ArrayList<Products>();
                     adapter.notifyDataSetChanged();
-                    recyclerview.setVisibility(View.GONE);
-                    nocategory.setVisibility(View.VISIBLE);
-                    searchlayout.setVisibility(View.VISIBLE);
+                    recyclerview.setVisibility(View.VISIBLE);
+                    nocategory.setVisibility(View.GONE);
+                    searchlayout.setVisibility(View.GONE);
+                    searchicon.performClick();
                 }
             }
 
@@ -416,7 +417,6 @@ public class Catalogue extends AppCompatActivity {
     private void SearchApi(final Context context) {
         SearchString = editsearch.getText().toString();
         SearchPageNumber = 0;
-        editsearch.setText("");
         SearchProductsAdapter.data = new ArrayList<Products>();
         Products model = new Products();
         for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
