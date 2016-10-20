@@ -52,6 +52,7 @@ import com.centura_technologies.mycatalogue.Order.Controller.Order;
 import com.centura_technologies.mycatalogue.Order.Controller.OrdersList;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
+import com.centura_technologies.mycatalogue.Shortlist.Controller.CustomerShortlist;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
@@ -454,7 +455,7 @@ public class GenericData {
         shortlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                a.startActivity(new Intent(context, Shortlist.class));
+                a.startActivity(new Intent(context, CustomerShortlist.class));
                 Drawer.closeDrawer(Gravity.LEFT);
             }
         });

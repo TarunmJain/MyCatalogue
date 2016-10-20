@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.example.centura.catalogue.Product_details.Controller.ProductDetails">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <include
             android:id="@+id/tool_bar"
             layout="@layout/toolbar"></include>
@@ -18,68 +20,202 @@
             xmlns:fab="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/drawer"
-            android:layout_below="@+id/tool_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tool_bar">
+
             <RelativeLayout
-                android:id="@+id/empty_shortlist"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:visibility="gone">
-                <ImageView
-                    android:id="@+id/emptycart"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:src="@drawable/favorite7"
-                    android:gravity="center"/>
-                <TextView
-                    android:id="@+id/text"
-                    android:layout_below="@+id/emptycart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="No Products are Shortlisted"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:layout_marginTop="5dp"/>
-                <!--<TextView
-                    android:id="@+id/text1"
-                    android:layout_below="@+id/text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Shortlist now??"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="5dp"/>-->
+                android:layout_height="match_parent">
+
                 <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/empty_shortlist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/text"
                     android:gravity="center"
-                    android:layout_marginTop="5dp">
-                    <Button
-                        android:id="@+id/shortlist"
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:id="@+id/emptycart"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:src="@drawable/favorite7" />
+
+                    <TextView
+                        android:id="@+id/text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/emptycart"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:text="No Products are Shortlisted"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+                    <!--<TextView
+                        android:id="@+id/text1"
+                        android:layout_below="@+id/text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Shortlist now??"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="5dp"/>-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/shortlist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/accentcolor"
+                            android:padding="10dp"
+                            android:text="Shortlist now"
+                            android:textColor="@color/white" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/details"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    android:background="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:weightSum="10"
+                                android:background="@color/white">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3"
+                                    android:gravity="center"
+                                    android:text="Sales Person Name:"
+                                    android:textColor="@color/greytext"
+                                    android:textSize="16sp" />
+
+                                <EditText
+                                    android:id="@+id/salespersonname"
+                                    android:editable="false"
+                                    android:enabled="false"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_weight="7"
+                                    android:background="@drawable/transparentsquarebutton"
+                                    android:padding="4dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:weightSum="10"
+                                android:background="@color/white">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3"
+                                    android:gravity="center"
+                                    android:text="Customer Name : "
+                                    android:textColor="@color/greytext"
+                                    android:textSize="16sp" />
+
+                                <EditText
+                                    android:id="@+id/customername"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="7"
+                                    android:background="@drawable/transparentsquarebutton"
+                                    android:padding="4dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/shortlistrecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/details"
+                    android:background="#ededed">
+
+                </android.support.v7.widget.RecyclerView>
+                <RelativeLayout
+                    android:gravity="center"
+                    android:id="@+id/footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/black"
+                    android:layout_alignParentBottom="true"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/totalproducts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Shortlist now"
+                        android:text=" "
+                        android:textSize="18sp"
                         android:padding="10dp"
+                        android:textColor="@color/accentcolor"
+                        android:layout_centerVertical="true" />
+                    <Button
+                        android:id="@+id/clear"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_toLeftOf="@+id/save"
                         android:background="@color/accentcolor"
-                        android:textColor="@color/white"/>
+                        android:padding="10dp"
+                        android:text="CLEAR"
+                        android:textColor="@color/white"
+                        android:layout_centerVertical="true" />
+
+                    <Button
+                        android:id="@+id/save"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:text="SAVE"
+                        android:textColor="@color/white"
+                        android:background="@color/accentcolor"
+                        android:padding="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+
                 </RelativeLayout>
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/shortlistrecyclerview">
-
-            </android.support.v7.widget.RecyclerView>
-
         </android.support.v4.widget.DrawerLayout>
     </RelativeLayout>
-
 
 
 </android.support.design.widget.CoordinatorLayout>

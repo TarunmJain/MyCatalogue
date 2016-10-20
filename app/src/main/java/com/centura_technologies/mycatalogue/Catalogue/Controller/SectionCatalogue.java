@@ -205,7 +205,11 @@ public class SectionCatalogue extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        for (int k = 0; k < DB.getInitialModel().getCollections().size(); k++) {
+            collectionmodel.add(DB.getInitialModel().getCollections().get(k));
+        }
         InitializationCollectionAdapter(SectionCatalogue.this);
         InitialzationSectionAdapter(SectionCatalogue.this);
     }
+
 }

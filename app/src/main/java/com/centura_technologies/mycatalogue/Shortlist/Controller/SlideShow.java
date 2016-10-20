@@ -12,6 +12,7 @@ import android.widget.ViewFlipper;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
@@ -37,7 +38,7 @@ public class SlideShow extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //product_title=(TextView)findViewById(R.id.product_title);
         model=new ArrayList<Products>();
-        model= StaticData.wishlistData;
+        model= DB.getShortlistedlist();
         images=new ArrayList<String>();
         for(int j=0;j<model.size();j++){
             images.add(model.get(j).getImageUrl());

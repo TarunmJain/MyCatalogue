@@ -93,7 +93,8 @@ public class Catalogue extends AppCompatActivity {
     static public String SearchString = "";
     static int SearchPageNumber = 0;
     static String item = "";
-    TextView slashbreadcrumb, catagorybreadcrumb, sectionbreadcrumb, filtericon, categoryicon;
+    TextView   filtericon, categoryicon;
+    public static TextView catagorybreadcrumb, sectionbreadcrumb,slashbreadcrumb;
     public  static TextView nocategorytext;
     public static boolean grid_to_listflag = false;
 
@@ -525,5 +526,11 @@ public class Catalogue extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        InitializeAdapter(Catalogue.this);
     }
 }

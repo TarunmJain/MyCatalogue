@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
@@ -54,13 +55,14 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final SectionlistAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final SectionlistAdapter.ViewHolder holder, final int position) {
         GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
         holder.text.setText(data.get(position).getTitle());
         final int finalPosition1 = position;
         holder.layview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BreadCrumb.Section=data.get(position).getTitle();
                 Catalogue.category = data.get(finalPosition1).getCategories();
                 Catalogue.InitialzationCategoryAdapter(mContext, data.get(finalPosition1));
             }

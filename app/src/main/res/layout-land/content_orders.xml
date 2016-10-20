@@ -192,7 +192,7 @@
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:gravity="right"
@@ -204,7 +204,7 @@
                         android:padding="25dp"
                         android:textSize="16sp"
                         android:layout_height="wrap_content" />
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -213,23 +213,22 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/filterpane"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:orientation="horizontal"
-                    android:weightSum="10">
+                    android:padding="5dp"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="1dp"
-                        android:layout_weight="4"
                         android:background="@color/white"
                         android:gravity="center"
+                        android:layout_marginLeft="16dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -242,32 +241,36 @@
                             android:textStyle="bold"/>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="50dp"
                             android:background="@drawable/transparentsquarebutton">
 
                             <Spinner
                                 android:id="@+id/spinner"
-                                android:layout_width="match_parent"
+                                android:layout_width="250dp"
                                 android:layout_height="match_parent"></Spinner>
                         </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/shortlistedorder"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:background="@color/white"
+                        android:padding="5dp"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:padding="2dp"
-                            android:text="Selected"
+                            android:padding="5dp"
+                            android:text="SHORTLISTED"
+                            android:textAllCaps="true"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -275,29 +278,11 @@
                             android:id="@+id/checked"
                             android:layout_width="30dp"
                             android:layout_height="35dp"
-                            android:src="@mipmap/checking" />
+                            android:padding="2dp"
+                            android:src="@drawable/uncheck" />
                     </LinearLayout>
 
-
-                    <LinearLayout
-                        android:gravity="right|center_vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="3"
-                        android:layout_height="wrap_content">
-                        <Button
-                            android:id="@+id/clear"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:background="@android:color/transparent"
-                            android:padding="4dp"
-                            android:text="Cancel Bill"
-                            android:textColor="@color/material_grey_600" />
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
+                </RelativeLayout>
 
 
                 <LinearLayout
@@ -385,7 +370,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/grandtotal"
@@ -396,16 +382,26 @@
             android:padding="10dp"
             android:textColor="@color/accentcolor"
             android:layout_centerVertical="true" />
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/placeorder"
+            android:background="@color/accentcolor"
+            android:padding="10dp"
+            android:text="Clear Bill"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true" />
 
         <Button
             android:id="@+id/placeorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
             android:text="SAVE BILL"
             android:textColor="@color/white"
             android:background="@color/accentcolor"
             android:padding="10dp"
-            android:layout_margin="1dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
 

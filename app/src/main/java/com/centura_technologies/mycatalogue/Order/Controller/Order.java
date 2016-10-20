@@ -1,11 +1,20 @@
 package com.centura_technologies.mycatalogue.Order.Controller;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,13 +61,13 @@ public class Order extends AppCompatActivity {
     Toolbar toolbar;
     public static RecyclerView orderlist_recyclerview;
     public static ArrayList<BillingProducts> shorlistedmodel;
-    RelativeLayout billdatelayout;
+    RelativeLayout billdatelayout,filterpane;
     EditText billno, custname, salespersonname;
-    TextView billdate,toolbar_title;
+    TextView billdate, toolbar_title;
     Spinner spinner;
     CardView billdetailheader;
     ImageView checked;
-    LinearLayout shortlistedorder, filterpane;
+    LinearLayout shortlistedorder ;
     Button clearBill, placeorder;
     TextView Cancel;
     public static EditText serachorderlist;
@@ -72,6 +81,7 @@ public class Order extends AppCompatActivity {
     public static String item = "-1";
     static BillingProducts billingProducts;
     public static ArrayList<BillingProducts> billingProductsArrayList;
+    static Double latitude, longitude;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -83,7 +93,7 @@ public class Order extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        toolbar_title= (TextView) findViewById(R.id.toolbar_title);
+        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
         toolbar_title.setText("Orders");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -100,9 +110,9 @@ public class Order extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spinner);
         shortlistedorder = (LinearLayout) findViewById(R.id.shortlistedorder);
         clearBill = (Button) findViewById(R.id.clear);
-        filterpane = (LinearLayout) findViewById(R.id.filterpane);
+        filterpane = (RelativeLayout) findViewById(R.id.filterpane);
         placeorder = (Button) findViewById(R.id.placeorder);
-        Cancel = (TextView) findViewById(R.id.cancel);
+        //Cancel = (TextView) findViewById(R.id.cancel);
         orderlist_recyclerview.setLayoutManager(new LinearLayoutManager(Order.this, LinearLayoutManager.VERTICAL, false));
         categories = new ArrayList<String>();
         categoryids = new ArrayList<String>();
@@ -164,7 +174,7 @@ public class Order extends AppCompatActivity {
             public void onClick(View v) {
                 if (shortlistedorders) {
                     shortlistedorders = false;
-                    checked.setImageResource(R.mipmap.checking);
+                    checked.setImageResource(R.drawable.uncheck);
                     InitializeAdapter(Order.this);
                 } else {
                     checked.setImageResource(R.drawable.checkcircle);
@@ -186,35 +196,49 @@ public class Order extends AppCompatActivity {
         clearBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (BillingProducts prod : DB.getBillprodlist()) {
-                    if (prod.getQuantity() > 0) {
-                        prod.setQuantity(0);
+                if (clearBill.getText().toString().matches("CANCEL")) {
+                    clearBill.setText("CLEAR BILL");
+                    placeorder.setText("SAVE BILL");
+                    shortlistedorders=true;
+                    shortlistedorder.performClick();
+                    billdetailheader.setVisibility(View.GONE);
+                    filterpane.setVisibility(View.VISIBLE);
+                } else {
+                    shortlistedorders=false;
+                    for (BillingProducts prod : DB.getBillprodlist()) {
+                        if (prod.getQuantity() > 0) {
+                            prod.setQuantity(0);
+                        }
                     }
+                    InitializeAdapter(Order.this);
+                    OrderProductsAdapter.clearBill();
                 }
-                InitializeAdapter(Order.this);
-                OrderProductsAdapter.clearBill();
             }
         });
 
-        Cancel.setOnClickListener(new View.OnClickListener() {
+       /* Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 billdetailheader.setVisibility(View.GONE);
                 filterpane.setVisibility(View.VISIBLE);
                 placeorder.setText("SAVE BILL");
             }
-        });
+        });*/
 
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (placeorder.getText().toString().matches("SAVE BILL")) {
+                    shortlistedorder.performClick();
                     billdetailheader.setVisibility(View.VISIBLE);
                     filterpane.setVisibility(View.GONE);
                     salespersonname.setText(StaticData.CurrentSalesMan.Name);
                     placeorder.setText("PLACE ORDER");
+                    clearBill.setText("CANCEL");
                 } else {
                     placeorder.setText("SAVE BILL");
+                    clearBill.setText("CLEAR BILL");
+                    setLocation(Order.this);
                     shorlistedmodel = new ArrayList<BillingProducts>();
                     for (BillingProducts temp : DB.getBillprodlist()) {
                         if (temp.getQuantity() > 0) {
@@ -256,6 +280,41 @@ public class Order extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
+
+    private static void setLocation(final Context context) {
+        //info.setText("Searching for Location!");
+        final LocationManager locationManager;
+        LocationListener locationListener;
+        locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                locationManager.removeUpdates(this);
+                //info.setText("Location Recorder!");
+                //checkversion(context);
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                ((Activity) context).startActivity(intent);
+            }
+        };
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
     private void updateDisplay() {

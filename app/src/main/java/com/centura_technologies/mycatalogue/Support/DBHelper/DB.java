@@ -7,6 +7,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.Leads.Model.LeadsModel;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
+import com.centura_technologies.mycatalogue.Shortlist.Model.ShortlistModel;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,8 @@ public class DB {
     private static ArrayList<BillingProducts> billprodlist = new ArrayList<BillingProducts>();
     private static Products shortlisted = new Products();
     private static ArrayList<Products> shortlistedlist = new ArrayList<Products>();
+    private static ShortlistModel shortlistModel=new ShortlistModel();
+    private static ArrayList<ShortlistModel> shortlistModels=new ArrayList<ShortlistModel>();
 
 
     public static InitialModel getInitialModel() {
@@ -128,6 +131,22 @@ public class DB {
 
     public static void setBillprodlist(ArrayList<BillingProducts> billprodlist) {
         DB.billprodlist = billprodlist;
+    }
+
+    public static ShortlistModel getShortlistModel() {
+        return shortlistModel;
+    }
+
+    public static void setShortlistModel(ShortlistModel shortlistModel) {
+        DB.shortlistModel = shortlistModel;
+    }
+
+    public static ArrayList<ShortlistModel> getShortlistModels() {
+        return shortlistModels;
+    }
+
+    public static void setShortlistModels(ArrayList<ShortlistModel> shortlistModels) {
+        DB.shortlistModels = shortlistModels;
     }
 
     public static void AddLead(LeadsModel newlead) {

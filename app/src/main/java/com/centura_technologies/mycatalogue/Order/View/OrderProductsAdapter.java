@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdapter.ViewHolder> {
     Context mContext;
     ArrayList<BillingProducts> data;
-    ImageView qtydecrement, qtyincrement;
+    TextView qtydecrement, qtyincrement;
     Button apply, cancel;
     EditText qtytext;
     public static TextView grandtotal;
@@ -128,18 +128,30 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         holder.name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.get(position).setQuantity(data.get(position).getQuantity() + 1);
-                increment(position);
-                notifyDataSetChanged();
+                if(data.get(position).getQuantity()>0){
+                    increment(position,0);
+                    holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                    notifyDataSetChanged();
+                }else {
+                    data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                    increment(position);
+                    notifyDataSetChanged();
+                }
             }
         });
 
         holder.unit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.get(position).setQuantity(data.get(position).getQuantity() + 1);
-                increment(position);
-                notifyDataSetChanged();
+                if(data.get(position).getQuantity()>0){
+                    increment(position,0);
+                    holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                    notifyDataSetChanged();
+                }else {
+                    data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                    increment(position);
+                    notifyDataSetChanged();
+                }
             }
         });
 
@@ -149,28 +161,29 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                 final Dialog dialog = new Dialog(mContext);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_quantity);
-                qtydecrement = (ImageView) dialog.findViewById(R.id.qtydecrement);
-                qtyincrement = (ImageView) dialog.findViewById(R.id.qtyincrement);
+                qtydecrement = (TextView) dialog.findViewById(R.id.qtydecrement);
+                qtyincrement = (TextView) dialog.findViewById(R.id.qtyincrement);
                 qtytext = (EditText) dialog.findViewById(R.id.qtytext);
                 apply = (Button) dialog.findViewById(R.id.apply);
                 cancel = (Button) dialog.findViewById(R.id.cancel);
                 qtytext.setText(data.get(position).getQuantity() + "");
                 dialog.show();
-                qtydecrement.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (data.get(position).getQuantity() != 0) {
-                            qtytext.setText((Integer.parseInt(qtytext.getText().toString()) - 1) + "");
-                        } else
-                            Toast.makeText(mContext, "Min Count is 0", Toast.LENGTH_SHORT).show();
-                    }
-                });
                 qtyincrement.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         qtytext.setText((Integer.parseInt(qtytext.getText().toString()) + 1) + "");
                     }
                 });
+                qtydecrement.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if ((Integer.parseInt(qtytext.getText().toString()))!= 0) {
+                            qtytext.setText((Integer.parseInt(qtytext.getText().toString()) - 1) + "");
+                        } else
+                            Toast.makeText(mContext, "Min Count is 0", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 apply.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -213,18 +226,30 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         holder.price.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.get(position).setQuantity(data.get(position).getQuantity() + 1);
-                increment(position);
-                notifyDataSetChanged();
+                if(data.get(position).getQuantity()>0){
+                    increment(position,0);
+                    holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                    notifyDataSetChanged();
+                }else {
+                    data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                    increment(position);
+                    notifyDataSetChanged();
+                }
             }
         });
 
         holder.amount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.get(position).setQuantity(data.get(position).getQuantity() + 1);
-                increment(position);
-                notifyDataSetChanged();
+                if(data.get(position).getQuantity()>0){
+                    increment(position,0);
+                    holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                    notifyDataSetChanged();
+                }else {
+                    data.get(position).setQuantity(data.get(position).getQuantity() + 1);
+                    increment(position);
+                    notifyDataSetChanged();
+                }
             }
         });
     }

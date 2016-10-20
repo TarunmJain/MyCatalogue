@@ -105,6 +105,8 @@
             android:label="@string/title_activity_orders_list"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme"></activity>
+        <activity android:name=".Shortlist.Controller.CustomerShortlist"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
