@@ -157,6 +157,7 @@ public class Shortlist extends AppCompatActivity {
                     DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
                     InitializeAdapter(Shortlist.this);
                 } else {
+
                     clear.setText("CLEAR");
                     save.setText("SAVE");
                     details.setVisibility(View.GONE);
