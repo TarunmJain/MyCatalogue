@@ -166,6 +166,7 @@
                     android:id="@+id/shortlistrecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_above="@+id/footer"
                     android:layout_below="@+id/details"
                     android:background="#ededed">
 

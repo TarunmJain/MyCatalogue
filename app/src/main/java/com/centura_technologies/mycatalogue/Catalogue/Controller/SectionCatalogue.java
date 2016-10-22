@@ -205,6 +205,7 @@ public class SectionCatalogue extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        collectionmodel=new ArrayList<CollectionModel>();
         for (int k = 0; k < DB.getInitialModel().getCollections().size(); k++) {
             collectionmodel.add(DB.getInitialModel().getCollections().get(k));
         }

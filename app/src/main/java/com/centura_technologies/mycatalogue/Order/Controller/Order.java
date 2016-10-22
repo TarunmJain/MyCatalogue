@@ -199,12 +199,12 @@ public class Order extends AppCompatActivity {
                 if (clearBill.getText().toString().matches("CANCEL")) {
                     clearBill.setText("CLEAR BILL");
                     placeorder.setText("SAVE BILL");
-                    shortlistedorders=true;
-                    shortlistedorder.performClick();
+                    shortlistedorders=false;
                     billdetailheader.setVisibility(View.GONE);
                     filterpane.setVisibility(View.VISIBLE);
                 } else {
-                    shortlistedorders=false;
+                    shortlistedorders=true;
+                    shortlistedorder.performClick();
                     for (BillingProducts prod : DB.getBillprodlist()) {
                         if (prod.getQuantity() > 0) {
                             prod.setQuantity(0);
@@ -257,6 +257,7 @@ public class Order extends AppCompatActivity {
                         DbHelper dbHelper = new DbHelper(Order.this);
                         dbHelper.saveOrders();
                         clearBill.performClick();
+                        OrdersList.InitializeAdapter(Order.this);
                         finish();
                     } else {
                         Toast.makeText(Order.this, "No Products Selected", Toast.LENGTH_SHORT).show();

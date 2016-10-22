@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Model.ShortlistModel;
 import com.centura_technologies.mycatalogue.Shortlist.View.ShortlistAdapter;
@@ -89,8 +91,13 @@ public class Shortlist extends AppCompatActivity {
             shortlistnow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((Activity) context).startActivity(new Intent(context, Catalogue.class));
-                    ((Activity) context).finish();
+                    BreadCrumb.Section = "All Products";
+                    StaticData.SelectedCategoryId = "-1";
+                    BreadCrumb.Category = "";
+                    if (DB.getInitialModel().getProducts().size() != -0) {
+                        ((Activity) context).finish();
+                    } else Toast.makeText(context, "No Products", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
@@ -108,7 +115,7 @@ public class Shortlist extends AppCompatActivity {
                     save.setText("SAVE");
                     details.setVisibility(View.GONE);
                     list = new ArrayList<ShortlistModel>();
-                    list=DB.getShortlistModels();
+                    list = DB.getShortlistModels();
                     if (DB.getShortlistedlist().size() != 0) {
                         model = new ShortlistModel();
                         model.setShortlistNumber(UUID.randomUUID().toString());
@@ -121,6 +128,7 @@ public class Shortlist extends AppCompatActivity {
                         DB.setShortlistModels(list);
                         db = new DbHelper(Shortlist.this);
                         db.saveShortlisted();
+                        DB.setShortlistedlist(new ArrayList<Products>());
                         Toast.makeText(Shortlist.this, "Successfully Added", Toast.LENGTH_SHORT).show();
                         finish();
                     } else
@@ -131,10 +139,10 @@ public class Shortlist extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(clear.getText().toString().matches("CLEAR")){
+                if (clear.getText().toString().matches("CLEAR")) {
                     DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
                     InitializeAdapter(Shortlist.this);
-                }else {
+                } else {
                     clear.setText("CLEAR");
                     save.setText("SAVE");
                     details.setVisibility(View.GONE);
@@ -153,6 +161,10 @@ public class Shortlist extends AppCompatActivity {
         register.setVisible(false);
         MenuItem register2 = menu.findItem(R.id.shortlist);
         register2.setVisible(false);
+        if (DB.getShortlistedlist().size() != 0) {
+            MenuItem register3 = menu.findItem(R.id.slideshow);
+            register3.setVisible(false);
+        }
         return true;
     }
 

@@ -18,7 +18,12 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Locale;
 
 /**
  * Created by Centura User1 on 23-08-2016.
@@ -34,7 +39,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
 
     public CatalogueAdapter(Context context, ArrayList<Products> model) {
         products = new ArrayList<Products>();
-        shortlist=new ArrayList<Products>();
+        shortlist = new ArrayList<Products>();
         products = model;
         this.mContext = context;
         activity = (Activity) mContext;
@@ -127,6 +132,13 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
 
     @Override
     public int getItemCount() {
+        Collections.sort(products, new Comparator<Products>() {
+            public int compare(Products v1, Products v2) {
+                if (v1.getTitle() == v2.getTitle())
+                    return 0;
+                return v1.getTitle().compareTo(v2.getTitle());
+            }
+        });
         return products.size();
     }
 

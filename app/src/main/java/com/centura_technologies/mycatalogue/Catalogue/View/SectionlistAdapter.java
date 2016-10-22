@@ -22,6 +22,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogu
 import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.Anims;
@@ -30,6 +31,8 @@ import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Centura User1 on 31-08-2016.
@@ -71,6 +74,13 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
 
     @Override
     public int getItemCount() {
+        Collections.sort(data, new Comparator<CategoryTree>() {
+            public int compare(CategoryTree v1, CategoryTree v2) {
+                if (v1.getTitle() == v2.getTitle())
+                    return 0;
+                return v1.getTitle().compareTo(v2.getTitle());
+            }
+        });
         return data.size();
     }
 

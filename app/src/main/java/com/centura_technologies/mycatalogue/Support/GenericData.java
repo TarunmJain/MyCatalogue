@@ -45,6 +45,7 @@ import com.centura_technologies.mycatalogue.AboutUs.Controller.AboutUs;
 import com.centura_technologies.mycatalogue.Activity.Controller.ActivityList;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.Leads.Controller.LeadsList;
 import com.centura_technologies.mycatalogue.Login.Controller.Login;
@@ -62,6 +63,8 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 import static android.support.v4.app.ActivityCompat.requestPermissions;
@@ -488,6 +491,4 @@ public class GenericData {
             }
         });
     }
-
-
 }

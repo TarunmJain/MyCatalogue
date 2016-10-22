@@ -1,5 +1,6 @@
 package com.centura_technologies.mycatalogue.Order.Controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,7 +13,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
@@ -24,10 +28,14 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import java.util.ArrayList;
 
 public class OrdersList extends AppCompatActivity {
-    ArrayList<OrderModel> LocalOrders=new ArrayList<OrderModel>();
+    static ArrayList<OrderModel> LocalOrders=new ArrayList<OrderModel>();
     EditText serachorder;
-    RecyclerView OrdersList;
+    static RecyclerView orderslist;
     TextView toolbar_title;
+    static LinearLayout search;
+    static RelativeLayout empty_shortlist;
+    Button ordernow;
+    static FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,19 +45,48 @@ public class OrdersList extends AppCompatActivity {
         toolbar_title.setText("Orders");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        search=(LinearLayout)findViewById(R.id.search);
+        empty_shortlist=(RelativeLayout)findViewById(R.id.empty_shortlist);
+        ordernow=(Button)findViewById(R.id.ordernow);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         serachorder= (EditText) findViewById(R.id.serachorder);
-        OrdersList = (RecyclerView) findViewById(R.id.orderslist);
-        OrdersList.setLayoutManager(new GridLayoutManager(OrdersList.this,3));
-        LocalOrders = (ArrayList<OrderModel>) StaticData.orders.clone();
-        OrdersList.setAdapter(new OrderListAdapter(OrdersList.this));
+        orderslist = (RecyclerView) findViewById(R.id.orderslist);
+        orderslist.setLayoutManager(new GridLayoutManager(OrdersList.this, 3));
+        InitializeAdapter(OrdersList.this);
+        SearchLogic();
+        OnClicks();
+    }
+
+    private void OnClicks() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(OrdersList.this, Order.class));
             }
         });
-        SearchLogic();
+
+        ordernow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OrdersList.this,Order.class));
+            }
+        });
+    }
+
+    public static void InitializeAdapter(Context context) {
+        LocalOrders = (ArrayList<OrderModel>) StaticData.orders.clone();
+        if(LocalOrders.size()!=0){
+            fab.setVisibility(View.VISIBLE);
+            orderslist.setVisibility(View.VISIBLE);
+            search.setVisibility(View.VISIBLE);
+            empty_shortlist.setVisibility(View.VISIBLE);
+            orderslist.setAdapter(new OrderListAdapter(context));
+        }else {
+            fab.setVisibility(View.GONE);
+            orderslist.setVisibility(View.GONE);
+            search.setVisibility(View.GONE);
+            empty_shortlist.setVisibility(View.VISIBLE);
+        }
     }
 
     private void SearchLogic() {
@@ -64,7 +101,7 @@ public class OrdersList extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.toString().matches(""))
                 {
-                    OrdersList.setAdapter(new OrderListAdapter(OrdersList.this));
+                    orderslist.setAdapter(new OrderListAdapter(OrdersList.this));
                 }
                 else {
                     StaticData.orders=new ArrayList<OrderModel>();
@@ -79,7 +116,7 @@ public class OrdersList extends AppCompatActivity {
                         if(matched)
                             StaticData.orders.add(temporder);
                     }
-                    OrdersList.setAdapter(new OrderListAdapter(OrdersList.this));
+                    orderslist.setAdapter(new OrderListAdapter(OrdersList.this));
                 }
             }
 
@@ -100,8 +137,7 @@ public class OrdersList extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LocalOrders = (ArrayList<OrderModel>) StaticData.orders.clone();
-        OrdersList.setAdapter(new OrderListAdapter(OrdersList.this));
+        InitializeAdapter(OrdersList.this);
     }
     @Override
     public void onBackPressed() {

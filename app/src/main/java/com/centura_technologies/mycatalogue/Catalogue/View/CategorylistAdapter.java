@@ -16,6 +16,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -23,6 +24,8 @@ import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Centura User1 on 31-08-2016.
@@ -71,6 +74,13 @@ public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapte
 
     @Override
     public int getItemCount() {
+        Collections.sort(currentTree.getCategories(), new Comparator<Categories>() {
+            public int compare(Categories v1, Categories v2) {
+                if (v1.getTitle() == v2.getTitle())
+                    return 0;
+                return v1.getTitle().compareTo(v2.getTitle());
+            }
+        });
         if (currentTree.getCategories().size() == 0){
             Catalogue.nocategorytext.setVisibility(View.VISIBLE);
             Catalogue.nocategorytext.setText("There are no Categories Under the "+currentTree.getTitle()+" Section ");

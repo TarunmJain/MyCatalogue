@@ -451,8 +451,6 @@ public class Catalogue extends AppCompatActivity {
         searchlayout.setVisibility(View.GONE);
         productlayout.setVisibility(View.VISIBLE);
         if (item.matches("Price low-high")) {
-            ArrayList<Products> sortedproducts = new ArrayList<Products>();
-            sortedproducts = new ArrayList<Products>();
             Collections.sort(products, new Comparator<Products>() {
                 public int compare(Products p1, Products p2) {
                     if (p1.getSellingPrice() == p2.getSellingPrice())
@@ -461,8 +459,6 @@ public class Catalogue extends AppCompatActivity {
                 }
             });
         } else {
-            ArrayList<Products> sortedproducts = new ArrayList<Products>();
-            sortedproducts = new ArrayList<Products>();
             Collections.sort(products, new Comparator<Products>() {
                 public int compare(Products p1, Products p2) {
                     if (p1.getSellingPrice() == p2.getSellingPrice())
@@ -517,7 +513,7 @@ public class Catalogue extends AppCompatActivity {
             startActivity(new Intent(Catalogue.this, Shortlist.class));
         }
         if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
-            finish();
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }

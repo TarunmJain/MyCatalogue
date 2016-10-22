@@ -23,6 +23,8 @@ import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Centura User1 on 25-08-2016.
@@ -68,6 +70,13 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
 
     @Override
     public int getItemCount() {
+        Collections.sort(model, new Comparator<Products>() {
+            public int compare(Products v1, Products v2) {
+                if (v1.getTitle() == v2.getTitle())
+                    return 0;
+                return v1.getTitle().compareTo(v2.getTitle());
+            }
+        });
         return model.size();
     }
 

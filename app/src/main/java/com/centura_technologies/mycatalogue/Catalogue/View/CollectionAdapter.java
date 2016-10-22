@@ -97,9 +97,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             setFadeAnimation(holder.itemView, position);
         else
             holder.itemView.setVisibility(View.VISIBLE);
-
         if (position == 0) {
-
             holder.backlay.setText("All Products");
             holder.backlay.setVisibility(View.VISIBLE);
             holder.collectiontitle.setVisibility(View.GONE);
@@ -141,7 +139,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return data.size() + 1;
+        return data.size()+1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
