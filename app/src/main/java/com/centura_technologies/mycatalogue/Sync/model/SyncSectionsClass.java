@@ -1,4 +1,4 @@
-package com.centura_technologies.mycatalogue.Sync.Model;
+package com.centura_technologies.mycatalogue.Sync.model;
 
 import java.util.ArrayList;
 
