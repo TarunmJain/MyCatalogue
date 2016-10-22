@@ -15,6 +15,7 @@ public class Products {
     private String BarCode;
     private String ImageUrl;
     private ArrayList<String> ProductImages;
+    private ArrayList<String> Attachments;
     private String VideoUrl;
     private String PdfUrl;
     private Double MRP;

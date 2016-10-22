@@ -139,7 +139,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return data.size()+1;
+        return data.size() + 1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

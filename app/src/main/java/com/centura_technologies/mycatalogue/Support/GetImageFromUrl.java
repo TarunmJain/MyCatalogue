@@ -3,11 +3,8 @@ package com.centura_technologies.mycatalogue.Support;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.StrictMode;
-
-
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
