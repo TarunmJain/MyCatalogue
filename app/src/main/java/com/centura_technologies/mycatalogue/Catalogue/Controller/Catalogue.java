@@ -93,9 +93,9 @@ public class Catalogue extends AppCompatActivity {
     static public String SearchString = "";
     static int SearchPageNumber = 0;
     static String item = "";
-    TextView   filtericon, categoryicon;
-    public static TextView catagorybreadcrumb, sectionbreadcrumb,slashbreadcrumb;
-    public  static TextView nocategorytext;
+    TextView filtericon, categoryicon;
+    public static TextView catagorybreadcrumb, sectionbreadcrumb, slashbreadcrumb;
+    public static TextView nocategorytext;
     public static boolean grid_to_listflag = false;
 
 
@@ -117,7 +117,7 @@ public class Catalogue extends AppCompatActivity {
         leftdrawer = (LinearLayout) findViewById(R.id.leftdrawer);
         rightdrawer = (LinearLayout) findViewById(R.id.rightdrawer);
         filtericon = (TextView) findViewById(R.id.filtericon);
-        nocategorytext= (TextView) findViewById(R.id.nocategorytext);
+        nocategorytext = (TextView) findViewById(R.id.nocategorytext);
         categoryicon = (TextView) findViewById(R.id.categoryicon);
         listicon = (ImageView) findViewById(R.id.listicon);
         cat_filterlist = (RecyclerView) findViewById(R.id.cat_filterlist);
@@ -205,6 +205,9 @@ public class Catalogue extends AppCompatActivity {
     }
 
     private void OnClicks() {
+
+
+
         filtericon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -512,8 +515,13 @@ public class Catalogue extends AppCompatActivity {
         if (item.getItemId() == R.id.shortlist) {
             startActivity(new Intent(Catalogue.this, Shortlist.class));
         }
-        if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
-            onBackPressed();
+        if (item.getItemId() == android.R.id.home) {
+            if (drawer.isDrawerOpen(leftdrawer))//On Back Arrow pressed
+                drawer.closeDrawer(leftdrawer);
+            else if (drawer.isDrawerOpen(rightdrawer))
+                drawer.closeDrawer(rightdrawer);
+            else
+                onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }

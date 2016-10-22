@@ -134,9 +134,9 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
     public int getItemCount() {
         Collections.sort(products, new Comparator<Products>() {
             public int compare(Products v1, Products v2) {
-                if (v1.getTitle() == v2.getTitle())
+                if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
                     return 0;
-                return v1.getTitle().compareTo(v2.getTitle());
+                return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
             }
         });
         return products.size();

@@ -229,6 +229,7 @@ public class Order extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (placeorder.getText().toString().matches("SAVE BILL")) {
+                    shortlistedorders=false;
                     shortlistedorder.performClick();
                     billdetailheader.setVisibility(View.VISIBLE);
                     filterpane.setVisibility(View.GONE);

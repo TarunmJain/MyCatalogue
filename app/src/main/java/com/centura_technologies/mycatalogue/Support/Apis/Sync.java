@@ -26,7 +26,7 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.GetImageFromUrl;
 import com.centura_technologies.mycatalogue.Support.ImageCache;
-import com.centura_technologies.mycatalogue.Sync.Model.SyncSectionsClass;
+import com.centura_technologies.mycatalogue.Sync.model.SyncSectionsClass;
 import com.google.gson.Gson;
 
 

@@ -76,9 +76,9 @@ public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapte
     public int getItemCount() {
         Collections.sort(currentTree.getCategories(), new Comparator<Categories>() {
             public int compare(Categories v1, Categories v2) {
-                if (v1.getTitle() == v2.getTitle())
+                if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
                     return 0;
-                return v1.getTitle().compareTo(v2.getTitle());
+                return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
             }
         });
         if (currentTree.getCategories().size() == 0){

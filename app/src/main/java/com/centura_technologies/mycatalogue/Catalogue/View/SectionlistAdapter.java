@@ -76,9 +76,9 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
     public int getItemCount() {
         Collections.sort(data, new Comparator<CategoryTree>() {
             public int compare(CategoryTree v1, CategoryTree v2) {
-                if (v1.getTitle() == v2.getTitle())
+                if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
                     return 0;
-                return v1.getTitle().compareTo(v2.getTitle());
+                return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
             }
         });
         return data.size();
