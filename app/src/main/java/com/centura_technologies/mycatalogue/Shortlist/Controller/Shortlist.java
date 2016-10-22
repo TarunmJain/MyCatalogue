@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,6 +25,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Model.ShortlistModel;
+import com.centura_technologies.mycatalogue.Shortlist.View.CustomerShortlistViewAdapter;
 import com.centura_technologies.mycatalogue.Shortlist.View.ShortlistAdapter;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
@@ -47,6 +49,7 @@ public class Shortlist extends AppCompatActivity {
     static RelativeLayout emptyshortlist, footer;
     static Button shortlistnow;
     static CardView details;
+    static FloatingActionButton fab;
     ArrayList<ShortlistModel> list;
     ShortlistModel model;
     DbHelper db;
@@ -63,6 +66,7 @@ public class Shortlist extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         df = new SimpleDateFormat("dd/MM/yy");
         dateobj = new Date();
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         emptyshortlist = (RelativeLayout) findViewById(R.id.empty_shortlist);
         footer = (RelativeLayout) findViewById(R.id.footer);
         shortlistnow = (Button) findViewById(R.id.shortlist);
@@ -81,25 +85,35 @@ public class Shortlist extends AppCompatActivity {
     }
 
     public static void InitializeAdapter(final Context context) {
-        if (DB.getShortlistedlist().size() != 0) {
-            shortlistrecyclerview.setAdapter(new ShortlistAdapter(context));
-        } else {
-            shortlistrecyclerview.setVisibility(View.GONE);
+        if (StaticData.customershortlistedview) {
             footer.setVisibility(View.GONE);
             details.setVisibility(View.GONE);
-            emptyshortlist.setVisibility(View.VISIBLE);
-            shortlistnow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    BreadCrumb.Section = "All Products";
-                    StaticData.SelectedCategoryId = "-1";
-                    BreadCrumb.Category = "";
-                    if (DB.getInitialModel().getProducts().size() != -0) {
-                        ((Activity) context).finish();
-                    } else Toast.makeText(context, "No Products", Toast.LENGTH_SHORT).show();
+            emptyshortlist.setVisibility(View.GONE);
+            fab.setVisibility(View.VISIBLE);
+            StaticData.customershortlistedview = false;
+            shortlistrecyclerview.setAdapter(new CustomerShortlistViewAdapter(context));
+        } else {
+            fab.setVisibility(View.GONE);
+            if (DB.getShortlistedlist().size() != 0) {
+                shortlistrecyclerview.setAdapter(new ShortlistAdapter(context));
+            } else {
+                shortlistrecyclerview.setVisibility(View.GONE);
+                footer.setVisibility(View.GONE);
+                details.setVisibility(View.GONE);
+                emptyshortlist.setVisibility(View.VISIBLE);
+                shortlistnow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BreadCrumb.Section = "All Products";
+                        StaticData.SelectedCategoryId = "-1";
+                        BreadCrumb.Category = "";
+                        if (DB.getInitialModel().getProducts().size() != -0) {
+                            ((Activity) context).finish();
+                        } else Toast.makeText(context, "No Products", Toast.LENGTH_SHORT).show();
 
-                }
-            });
+                    }
+                });
+            }
         }
     }
 
@@ -150,6 +164,12 @@ public class Shortlist extends AppCompatActivity {
             }
         });
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Shortlist.this,"Coming Soon",Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

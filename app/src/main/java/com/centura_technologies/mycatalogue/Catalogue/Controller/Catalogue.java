@@ -470,6 +470,7 @@ public class Catalogue extends AppCompatActivity {
                 }
             });
         }
+        productsrecyclerview.setNestedScrollingEnabled(false);
         productsrecyclerview.setAdapter(new CatalogueAdapter(context, products));
         Sync.syncFilters(context, products);
         if (StaticData.filtermodel.getItem() != null)

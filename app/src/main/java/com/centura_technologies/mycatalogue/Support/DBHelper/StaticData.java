@@ -42,6 +42,8 @@ public class StaticData {
     public static boolean ClickedProduct=false;
     public static boolean SelectedCollection=false;
     public static boolean Shortlisted=false;
+    public static boolean customershortlistedview=false;
+    public static int customershortlistpos=0;
     public static boolean vieworder =false;
     public static String Options="";
 

@@ -20,7 +20,7 @@
         app:mrl_ripplePersistent="false">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/collectionpane"
+            android:id="@+id/customershortlistpane"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
