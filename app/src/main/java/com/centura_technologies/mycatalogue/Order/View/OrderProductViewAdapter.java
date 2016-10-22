@@ -19,6 +19,8 @@ import com.centura_technologies.mycatalogue.Order.Controller.Order;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
+import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Created by Centura User1 on 24-09-2016.
  */
-public class OrderProductSearchAdapter extends RecyclerView.Adapter<OrderProductSearchAdapter.ViewHolder> {
+public class OrderProductViewAdapter extends RecyclerView.Adapter<OrderProductViewAdapter.ViewHolder> {
     Context mContext;
     ArrayList<BillingProducts> data;
     TextView qtydecrement, qtyincrement;
@@ -37,12 +39,14 @@ public class OrderProductSearchAdapter extends RecyclerView.Adapter<OrderProduct
     public static Double total_amount = 0.0;
     int viewHeight;
 
-    public OrderProductSearchAdapter(Context context) {
+    public OrderProductViewAdapter(Context context) {
         this.mContext = context;
         a = (Activity) mContext;
-        this.data = DB.getBillprodlist();
-        grandtotal = (TextView) a.findViewById(R.id.grandtotal);
-        grandtotal.setText("Rs " + total_amount + "");
+        DbHelper dbHelper = new DbHelper(context);
+        dbHelper.loadOrders();
+        this.data = StaticData.orders.get(StaticData.ViewPosition).billingProducts;
+        grandtotal = (TextView) a.findViewById(R.id.orderviewamount);
+        grandtotal.setText("Total Amount: Rs." + StaticData.orders.get(StaticData.ViewPosition).Amount + "");
        /* if (Order.shortlistedorders)
             this.data = Order.shorlistedmodel;
         else if (Order.selectedcategories) {
@@ -58,32 +62,27 @@ public class OrderProductSearchAdapter extends RecyclerView.Adapter<OrderProduct
     }
 
     @Override
-    public OrderProductSearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public OrderProductViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_orderlist, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(final OrderProductSearchAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final OrderProductViewAdapter.ViewHolder holder, final int position) {
         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-        if (data.get(position).getTitle().toLowerCase().contains(Order.serachorderlist.getText().toString().toLowerCase())) {
-            holder.orderlistlayout.setVisibility(View.VISIBLE);
-            //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
-            if (data.get(position).getQuantity() > 0) {
-                holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
-            } else
-                holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
-
-            GenericData.setImage(data.get(position).getImageUrl(), holder.productimage, mContext);
-            holder.name.setText(data.get(position).getTitle());
-            holder.unit.setText(data.get(position).getWeight() + "");
-            holder.qty.setText(data.get(position).getQuantity() + "");
-            holder.price.setText(data.get(position).getPrice() + "");
-            data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
-            holder.amount.setText(data.get(position).getAmount() + "");
-            onClicks(holder, position);
-        } else holder.orderlistlayout.setVisibility(View.GONE);
+        holder.orderlistlayout.setVisibility(View.VISIBLE);
+        holder.plusincrement.setVisibility(View.INVISIBLE);
+        holder.minusincrement.setVisibility(View.INVISIBLE);
+        //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
+        holder.name.setText(data.get(position).getTitle());
+        holder.unit.setText(data.get(position).getWeight() + "");
+        holder.qty.setText(data.get(position).getQuantity() + "");
+        holder.price.setText(data.get(position).getPrice() + "");
+        GenericData.setImage(data.get(position).getImageUrl(), holder.productimage, mContext);
+        data.get(position).setAmount(data.get(position).getSellingPrice() * Double.parseDouble(data.get(position).getQuantity() + ""));
+        holder.amount.setText(data.get(position).getAmount() + "");
+        //onClicks(holder, position);
     }
 
     private void increment(int position) {
@@ -224,6 +223,7 @@ public class OrderProductSearchAdapter extends RecyclerView.Adapter<OrderProduct
         TextView plusincrement, minusincrement;
         LinearLayout orderlistlayout;
         ImageView productimage;
+
         public ViewHolder(View v) {
             super(v);
             name = (TextView) v.findViewById(R.id.name);

@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/footer"
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
@@ -304,11 +305,12 @@
                     android:orientation="horizontal"
                     android:padding="1dp"
                     android:weightSum="5.5">
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="0.5"
-                        android:background="@color/white"/>
+                        android:background="@color/white" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -380,43 +382,71 @@
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/black"
-        android:gravity="center"
-        android:padding="10dp">
+        android:layout_alignParentBottom="true">
 
-        <TextView
-            android:id="@+id/grandtotal"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/editfooter"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:text=" "
-            android:textColor="@color/accentcolor"
-            android:textSize="18sp" />
+            android:background="@color/black"
+            android:gravity="center"
+            android:padding="10dp">
 
-        <Button
-            android:id="@+id/clear"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/placeorder"
-            android:background="@color/accentcolor"
-            android:padding="10dp"
-            android:text="Clear Bill"
-            android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/grandtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:text=" "
+                android:textColor="@color/accentcolor"
+                android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/placeorder"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@color/accentcolor"
-            android:padding="10dp"
-            android:text="SAVE BILL"
-            android:textColor="@color/white" />
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/placeorder"
+                android:background="@color/accentcolor"
+                android:padding="10dp"
+                android:text="Clear Bill"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/placeorder"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/accentcolor"
+                android:padding="10dp"
+                android:text="SAVE BILL"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/viewfooter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+            <TextView
+                android:id="@+id/orderviewamount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:text=""
+                android:textColor="@color/accentcolor" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
+
+
 </RelativeLayout>

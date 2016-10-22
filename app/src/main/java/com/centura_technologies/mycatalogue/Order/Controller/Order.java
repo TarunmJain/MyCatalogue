@@ -40,6 +40,7 @@ import android.widget.Toast;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
 import com.centura_technologies.mycatalogue.Order.View.OrderProductSearchAdapter;
+import com.centura_technologies.mycatalogue.Order.View.OrderProductViewAdapter;
 import com.centura_technologies.mycatalogue.Order.View.OrderProductsAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
@@ -61,16 +62,18 @@ public class Order extends AppCompatActivity {
     Toolbar toolbar;
     public static RecyclerView orderlist_recyclerview;
     public static ArrayList<BillingProducts> shorlistedmodel;
-    RelativeLayout billdatelayout,filterpane;
+    RelativeLayout billdatelayout;
+    static RelativeLayout filterpane;
     EditText billno, custname, salespersonname;
     TextView billdate, toolbar_title;
     Spinner spinner;
-    CardView billdetailheader;
+    static CardView billdetailheader;
     ImageView checked;
-    LinearLayout shortlistedorder ;
+    LinearLayout shortlistedorder;
     Button clearBill, placeorder;
     TextView Cancel;
     public static EditText serachorderlist;
+    static RelativeLayout editfooter, viewfooter;
     int mYear, mMonth, mDay;
     static final int DATE_DIALOG_ID = 0;
     public static boolean shortlistedorders = false;
@@ -112,6 +115,8 @@ public class Order extends AppCompatActivity {
         clearBill = (Button) findViewById(R.id.clear);
         filterpane = (RelativeLayout) findViewById(R.id.filterpane);
         placeorder = (Button) findViewById(R.id.placeorder);
+        editfooter = (RelativeLayout) findViewById(R.id.editfooter);
+        viewfooter = (RelativeLayout) findViewById(R.id.viewfooter);
         //Cancel = (TextView) findViewById(R.id.cancel);
         orderlist_recyclerview.setLayoutManager(new LinearLayoutManager(Order.this, LinearLayoutManager.VERTICAL, false));
         categories = new ArrayList<String>();
@@ -199,11 +204,11 @@ public class Order extends AppCompatActivity {
                 if (clearBill.getText().toString().matches("CANCEL")) {
                     clearBill.setText("CLEAR BILL");
                     placeorder.setText("SAVE BILL");
-                    shortlistedorders=false;
+                    shortlistedorders = false;
                     billdetailheader.setVisibility(View.GONE);
                     filterpane.setVisibility(View.VISIBLE);
                 } else {
-                    shortlistedorders=true;
+                    shortlistedorders = true;
                     shortlistedorder.performClick();
                     for (BillingProducts prod : DB.getBillprodlist()) {
                         if (prod.getQuantity() > 0) {
@@ -229,7 +234,7 @@ public class Order extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (placeorder.getText().toString().matches("SAVE BILL")) {
-                    shortlistedorders=false;
+                    shortlistedorders = false;
                     shortlistedorder.performClick();
                     billdetailheader.setVisibility(View.VISIBLE);
                     filterpane.setVisibility(View.GONE);
@@ -345,45 +350,59 @@ public class Order extends AppCompatActivity {
                 return new DatePickerDialog(this, mDateSetListener, mYear, mMonth, mDay);
         }
         return null;
+
     }
 
     public static void InitializeAdapter(Context context) {
-        if (selectedcategories) {
-            billingProductsArrayList = new ArrayList<BillingProducts>();
-            if (item.matches("-1"))
-                billingProductsArrayList = DB.getBillprodlist();
-            else
-                for (int j = 0; j < DB.getInitialModel().getProducts().size(); j++) {
-                    if (DB.getInitialModel().getProducts().get(j).getCategoryId().matches(item)) {
-                        billingProducts = new BillingProducts();
-                        billingProducts.setId(DB.getInitialModel().getProducts().get(j).getId());
-                        billingProducts.setTitle(DB.getInitialModel().getProducts().get(j).getTitle());
-                        billingProducts.setDescription(DB.getInitialModel().getProducts().get(j).getDescription());
-                        billingProducts.setSectionId(DB.getInitialModel().getProducts().get(j).getSectionId());
-                        billingProducts.setCategoryId(DB.getInitialModel().getProducts().get(j).getCategoryId());
-                        billingProducts.setSKU(DB.getInitialModel().getProducts().get(j).getSKU());
-                        billingProducts.setBarCode(DB.getInitialModel().getProducts().get(j).getBarCode());
-                        billingProducts.setImageUrl(DB.getInitialModel().getProducts().get(j).getImageUrl());
-                        billingProducts.setVideoUrl(DB.getInitialModel().getProducts().get(j).getVideoUrl());
-                        billingProducts.setPdfUrl(DB.getInitialModel().getProducts().get(j).getPdfUrl());
-                        billingProducts.setMRP(DB.getInitialModel().getProducts().get(j).getMRP());
-                        billingProducts.setAmount(0.0);
-                        billingProducts.setQuantity(0);
-                        billingProducts.setPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
-                        billingProducts.setSellingPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
-                        billingProducts.setTags(DB.getInitialModel().getProducts().get(j).getTags());
-                        billingProducts.setStatus(DB.getInitialModel().getProducts().get(j).getStatus());
-                        billingProducts.setWeight(DB.getInitialModel().getProducts().get(j).getWeight());
-                        billingProducts.setWishList(DB.getInitialModel().getProducts().get(j).isWishList());
-                        billingProducts.setSelectedVarient(DB.getInitialModel().getProducts().get(j).getSelectedVarient());
-                        billingProducts.setProductImages(DB.getInitialModel().getProducts().get(j).getProductImages());
-                        billingProducts.setAttributes(DB.getInitialModel().getProducts().get(j).getAttributes());
-                        billingProducts.setVariants(DB.getInitialModel().getProducts().get(j).getVariants());
-                        billingProductsArrayList.add(billingProducts);
+        if (StaticData.vieworder) {
+
+            billdetailheader.setVisibility(View.VISIBLE);
+            editfooter.setVisibility(View.GONE);
+            viewfooter.setVisibility(View.VISIBLE);
+            filterpane.setVisibility(View.GONE);
+            serachorderlist.setVisibility(View.GONE);
+            orderlist_recyclerview.setAdapter(new OrderProductViewAdapter(context));
+        } else {
+            editfooter.setVisibility(View.VISIBLE);
+            viewfooter.setVisibility(View.GONE);
+            serachorderlist.setVisibility(View.VISIBLE);
+            if (selectedcategories) {
+                billingProductsArrayList = new ArrayList<BillingProducts>();
+                if (item.matches("-1"))
+                    billingProductsArrayList = DB.getBillprodlist();
+                else
+                    for (int j = 0; j < DB.getInitialModel().getProducts().size(); j++) {
+                        if (DB.getInitialModel().getProducts().get(j).getCategoryId().matches(item)) {
+                            billingProducts = new BillingProducts();
+                            billingProducts.setId(DB.getInitialModel().getProducts().get(j).getId());
+                            billingProducts.setTitle(DB.getInitialModel().getProducts().get(j).getTitle());
+                            billingProducts.setDescription(DB.getInitialModel().getProducts().get(j).getDescription());
+                            billingProducts.setSectionId(DB.getInitialModel().getProducts().get(j).getSectionId());
+                            billingProducts.setCategoryId(DB.getInitialModel().getProducts().get(j).getCategoryId());
+                            billingProducts.setSKU(DB.getInitialModel().getProducts().get(j).getSKU());
+                            billingProducts.setBarCode(DB.getInitialModel().getProducts().get(j).getBarCode());
+                            billingProducts.setImageUrl(DB.getInitialModel().getProducts().get(j).getImageUrl());
+                            billingProducts.setVideoUrl(DB.getInitialModel().getProducts().get(j).getVideoUrl());
+                            billingProducts.setPdfUrl(DB.getInitialModel().getProducts().get(j).getPdfUrl());
+                            billingProducts.setMRP(DB.getInitialModel().getProducts().get(j).getMRP());
+                            billingProducts.setAmount(0.0);
+                            billingProducts.setQuantity(0);
+                            billingProducts.setPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                            billingProducts.setSellingPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                            billingProducts.setTags(DB.getInitialModel().getProducts().get(j).getTags());
+                            billingProducts.setStatus(DB.getInitialModel().getProducts().get(j).getStatus());
+                            billingProducts.setWeight(DB.getInitialModel().getProducts().get(j).getWeight());
+                            billingProducts.setWishList(DB.getInitialModel().getProducts().get(j).isWishList());
+                            billingProducts.setSelectedVarient(DB.getInitialModel().getProducts().get(j).getSelectedVarient());
+                            billingProducts.setProductImages(DB.getInitialModel().getProducts().get(j).getProductImages());
+                            billingProducts.setAttributes(DB.getInitialModel().getProducts().get(j).getAttributes());
+                            billingProducts.setVariants(DB.getInitialModel().getProducts().get(j).getVariants());
+                            billingProductsArrayList.add(billingProducts);
+                        }
                     }
-                }
+            }
+            orderlist_recyclerview.setAdapter(new OrderProductsAdapter(context));
         }
-        orderlist_recyclerview.setAdapter(new OrderProductsAdapter(context));
     }
 
     @Override
@@ -416,44 +435,4 @@ public class Order extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
-
-  /*  @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Order Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.centura_technologies.mycatalogue.Order.Controller/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Order Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.centura_technologies.mycatalogue.Order.Controller/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }*/
 }

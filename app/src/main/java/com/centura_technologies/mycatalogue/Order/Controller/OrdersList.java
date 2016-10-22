@@ -61,6 +61,7 @@ public class OrdersList extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                StaticData.vieworder=false;
                 startActivity(new Intent(OrdersList.this, Order.class));
             }
         });
@@ -68,6 +69,8 @@ public class OrdersList extends AppCompatActivity {
         ordernow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                StaticData.vieworder=false;
                 startActivity(new Intent(OrdersList.this,Order.class));
             }
         });
