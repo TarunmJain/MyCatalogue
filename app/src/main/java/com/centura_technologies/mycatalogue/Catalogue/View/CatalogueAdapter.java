@@ -65,6 +65,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
 
     @Override
     public void onBindViewHolder(final CatalogueAdapter.ViewHolder holder, final int position) {
+
         GenericData.setImage(products.get(position).getImageUrl(), holder.image, mContext);
         holder.title.setText(products.get(position).getTitle());
         if (StaticData.ProductsInList) {
@@ -98,14 +99,18 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                 }
             });
         }
-
-
         for (Products model : DB.getShortlistedlist()) {
             if (model.getId().matches(products.get(position).getId())) {
-                holder.wishlist.setImageResource(R.drawable.heart374);
+                holder.wishlist.setImageResource(R.drawable.shortlistedaccentstar);
                 break;
+            }else {
+                holder.wishlist.setImageResource(R.drawable.shortliststar);
             }
         }
+
+
+
+
 
         holder.wishlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +118,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                 boolean found = false;
                 for (Products model : DB.getShortlistedlist()) {
                     if (model.getId().matches(products.get(position).getId())) {
-                        holder.wishlist.setImageResource(R.drawable.favorite7);
+                        holder.wishlist.setImageResource(R.drawable.shortliststar);
                         DB.getShortlistedlist().remove(model);
                         found = true;
                         break;
@@ -121,25 +126,26 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                 }
 
                 if (!found) {
-                    holder.wishlist.setImageResource(R.drawable.heart374);
+                    holder.wishlist.setImageResource(R.drawable.shortlistedaccentstar);
                     StaticData.Shortlisted = true;
                     shortlist.add(products.get(position));
                     DB.setShortlistedlist(shortlist);
                 }
             }
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        Collections.sort(products, new Comparator<Products>() {
+        /*Collections.sort(products, new Comparator<Products>() {
             public int compare(Products v1, Products v2) {
                 if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
                     return 0;
                 return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
             }
-        });
+        });*/
+    }
+
+    @Override
+    public int getItemCount() {
         return products.size();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

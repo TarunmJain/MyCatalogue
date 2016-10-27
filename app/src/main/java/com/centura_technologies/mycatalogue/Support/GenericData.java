@@ -94,10 +94,10 @@ public class GenericData {
     public static SharedPreferences sharedPreferences;
     public static TextView maintext, subtext;
     static LinearLayout catalogues, products, shortlist, order, sync, aboutus, logout;
-    static TextView dashboardtext;
+    static TextView productstext;
     static DrawerLayout Drawer;
     static boolean downloadAlive = false;
-
+    static DbHelper db;
     static ProgressDialog pDialog;
 
     public static void ShowdownloadingDialog(Context context, Boolean flag) {
@@ -287,7 +287,7 @@ public class GenericData {
                 url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
                 Bitmap bitmap = BitmapFactory.decodeFile(url);
                 if (bitmap != null) {
-                    image.setImageBitmap(roundCornerImage(bitmap,50));
+                    image.setImageBitmap(roundCornerImage(bitmap, 50));
                 }
             } else image.setImageResource(R.drawable.noimage);
         else image.setImageResource(R.drawable.noimage);
@@ -400,6 +400,7 @@ public class GenericData {
 
     public static void logout(final Context context) {
         a = ((Activity) context);
+        db=new DbHelper(context);
         sharedPreferences = a.getSharedPreferences(GenericData.MyPref, a.MODE_PRIVATE);
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -416,6 +417,9 @@ public class GenericData {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 context.startActivity(new Intent(context, Login.class));
                 //StaticData.clearcachedata();
+                StaticData.ClearAllStaticData();
+                DB.ClearAllDBData();
+                db.ClearAllData();
                 editor.clear().commit();
                 a.finish();
             }
@@ -440,6 +444,7 @@ public class GenericData {
         aboutus = (LinearLayout) a.findViewById(R.id.aboutus);
         logout = (LinearLayout) a.findViewById(R.id.logout);
         Drawer = (DrawerLayout) a.findViewById(R.id.drawer);
+        productstext = (TextView) a.findViewById(R.id.productstext);
 
         /*catalogues.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -450,9 +455,16 @@ public class GenericData {
         products.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StaticData.SelectedCategoryId = "-1";
-                a.startActivity(new Intent(context, SectionCatalogue.class));
-                Drawer.closeDrawer(Gravity.LEFT);
+                if(StaticData.DrawerTextDisable.matches("Catalogue")){
+                    productstext.setTextColor(context.getResources().getColor(R.color.viewcolor));
+                    Drawer.closeDrawer(Gravity.LEFT);
+                }else {
+                    StaticData.SelectedCategoryId = "-1";
+                    a.startActivity(new Intent(context, SectionCatalogue.class));
+                    Drawer.closeDrawer(Gravity.LEFT);
+                }
+
+
             }
         });
         shortlist.setOnClickListener(new View.OnClickListener() {

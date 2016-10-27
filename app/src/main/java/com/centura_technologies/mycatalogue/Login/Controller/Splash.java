@@ -33,7 +33,7 @@ public class Splash extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         info = (TextView) findViewById(R.id.info);
-        db=new DbHelper(Splash.this);
+        db = new DbHelper(Splash.this);
         ApiData.renderCustomers();
         sharedPreferences = this.getSharedPreferences(GenericData.MyPref, this.MODE_PRIVATE);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -42,9 +42,10 @@ public class Splash extends Activity {
             @Override
             public void run() {
                 if (sharedPreferences.getString(GenericData.Sp_Status, "").matches("LoggedIn")) {
-                  db.loadinitialmodel();
-                   // SyncClass.syncFilters(Splash.this);
-                    StaticData.Options="Catalogue";
+                    db.loadinitialmodel();
+                    // SyncClass.syncFilters(Splash.this);
+                    StaticData.Options = "Catalogue";
+                    StaticData.DrawerTextDisable = "Catalogue";
                     startActivity(new Intent(Splash.this, SectionCatalogue.class));
                     finish();
                 } else {

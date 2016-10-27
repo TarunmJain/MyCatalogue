@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -97,6 +98,8 @@ public class Catalogue extends AppCompatActivity {
     public static TextView catagorybreadcrumb, sectionbreadcrumb, slashbreadcrumb;
     public static TextView nocategorytext;
     public static boolean grid_to_listflag = false;
+    ActionBarDrawerToggle mDrawerToggle;
+
 
 
     @Override
@@ -154,6 +157,8 @@ public class Catalogue extends AppCompatActivity {
 
         sortby.add("Price low-high");
         sortby.add("Price high-low");
+        sortby.add("A to Z");
+        sortby.add("Z to A");
 
         productslist();
         categorylist();
@@ -165,9 +170,14 @@ public class Catalogue extends AppCompatActivity {
         StaticData.ProductsInGrid = true;
         StaticData.ProductsInList = false;
         productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
+        productsrecyclerview.setNestedScrollingEnabled(false);
         InitializeAdapter(Catalogue.this);
         InitialzationSectionAdapter(Catalogue.this);
         InitialzationCategoryAdapter(Catalogue.this, null);
+        if(drawer.isDrawerOpen(leftdrawer)){
+            InitialzationSectionAdapter(Catalogue.this);
+            InitialzationCategoryAdapter(Catalogue.this, null);
+        }
     }
 
     public static void productslist() {
@@ -461,7 +471,7 @@ public class Catalogue extends AppCompatActivity {
                     return p1.getSellingPrice() < p2.getSellingPrice() ? -1 : 1;
                 }
             });
-        } else {
+        } else if(item.matches("Price high-low")){
             Collections.sort(products, new Comparator<Products>() {
                 public int compare(Products p1, Products p2) {
                     if (p1.getSellingPrice() == p2.getSellingPrice())
@@ -469,25 +479,29 @@ public class Catalogue extends AppCompatActivity {
                     return p1.getSellingPrice() > p2.getSellingPrice() ? -1 : 1;
                 }
             });
+        }else if(item.matches("A to Z")){
+            Collections.sort(products, new Comparator<Products>() {
+            public int compare(Products v1, Products v2) {
+                if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
+                    return 0;
+                return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
+            }
+        });
+        }else {
+            Collections.sort(products, new Comparator<Products>() {
+                public int compare(Products v1, Products v2) {
+                    if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
+                        return 0;
+                    return v2.getTitle().toLowerCase().compareTo(v1.getTitle().toLowerCase());
+                }
+            });
         }
+
         productsrecyclerview.setNestedScrollingEnabled(false);
         productsrecyclerview.setAdapter(new CatalogueAdapter(context, products));
         Sync.syncFilters(context, products);
         if (StaticData.filtermodel.getItem() != null)
             cat_filterlist.setAdapter(new TempFilterAdapter(context, StaticData.filtermodel.getItem()));
-    }
-
-   /* public static void InitializeCategoryAdapter(Context context) {
-        if (catagoriesrecyclerview != null)
-            catagoriesrecyclerview.setAdapter(new SectionlistAdapter(context, categories, layoutManager1));
-
-    }*/
-
-    void setspecificationsBelow() {
-        params.addRule(RelativeLayout.BELOW, R.id.leftlayout);
-        params.addRule(RelativeLayout.RIGHT_OF, 0);
-        specificationpane.setLayoutParams(params);
-
     }
 
     void setspecificationstoRight() {

@@ -40,6 +40,7 @@ public class Products {
         BarCode="";
         ImageUrl="";
         ProductImages=new ArrayList<String>();
+        Attachments=new ArrayList<String>();
         VideoUrl="";
         PdfUrl="";
         MRP=0.0;
@@ -123,6 +124,14 @@ public class Products {
 
     public void setProductImages(ArrayList<String> productImages) {
         ProductImages = productImages;
+    }
+
+    public ArrayList<String> getAttachments() {
+        return Attachments;
+    }
+
+    public void setAttachments(ArrayList<String> attachments) {
+        Attachments = attachments;
     }
 
     public String getVideoUrl() {

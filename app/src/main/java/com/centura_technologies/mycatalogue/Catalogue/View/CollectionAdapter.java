@@ -91,16 +91,13 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     @Override
     public void onBindViewHolder(final CollectionAdapter.ViewHolder holder, int position) {
-        holder.backlay.setVisibility(View.GONE);
         holder.itemView.setVisibility(View.GONE);
         if (position < 6)
             setFadeAnimation(holder.itemView, position);
         else
             holder.itemView.setVisibility(View.VISIBLE);
         if (position == 0) {
-            holder.backlay.setText("All Products");
-            holder.backlay.setVisibility(View.VISIBLE);
-            holder.collectiontitle.setVisibility(View.GONE);
+            holder.collectiontitle.setText("All Products");
             GenericData.setImage(data.get((position) % 4).getImageUrl(), holder.collectionimage, mContext);
             holder.collectionpane.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,7 +140,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView collectiontitle, backlay;
+        TextView collectiontitle;
         ImageView collectionimage;
         CardView collectionpane;
 
@@ -151,7 +148,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             super(v);
             collectiontitle = (TextView) v.findViewById(R.id.text);
             collectionimage = (ImageView) v.findViewById(R.id.image);
-            backlay = (TextView) v.findViewById(R.id.backlay);
             collectionpane = (CardView) v.findViewById(R.id.collectionpane);
         }
     }

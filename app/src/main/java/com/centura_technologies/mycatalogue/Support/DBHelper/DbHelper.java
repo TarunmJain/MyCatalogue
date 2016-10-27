@@ -316,4 +316,11 @@ public class DbHelper extends SQLiteOpenHelper {
             res.moveToNext();
         }
     }
+
+    public void ClearAllData(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.delete(this.InitialData, null, null);
+        db.delete(this.ImagesTable,null,null);
+        db.close();
+    }
 }

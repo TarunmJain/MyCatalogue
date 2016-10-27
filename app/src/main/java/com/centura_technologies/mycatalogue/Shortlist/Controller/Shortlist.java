@@ -23,6 +23,9 @@ import android.widget.Toast;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
+import com.centura_technologies.mycatalogue.Order.Controller.Order;
+import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
+import com.centura_technologies.mycatalogue.Order.View.OrderProductsAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Model.ShortlistModel;
 import com.centura_technologies.mycatalogue.Shortlist.View.CustomerShortlistViewAdapter;
@@ -44,13 +47,14 @@ public class Shortlist extends AppCompatActivity {
     Toolbar toolbar;
     static RecyclerView shortlistrecyclerview;
     EditText customername, salespersonname;
-    Button save, clear;
+    Button save, clear,bill;
     TextView totalproducts;
     static RelativeLayout emptyshortlist, footer;
     static Button shortlistnow;
     static CardView details;
     static FloatingActionButton fab;
     ArrayList<ShortlistModel> list;
+    BillingProducts billprod;
     ShortlistModel model;
     DbHelper db;
     DateFormat df;
@@ -75,6 +79,7 @@ public class Shortlist extends AppCompatActivity {
         salespersonname = (EditText) findViewById(R.id.salespersonname);
         save = (Button) findViewById(R.id.save);
         clear = (Button) findViewById(R.id.clear);
+        bill=(Button)findViewById(R.id.bill);
         totalproducts = (TextView) findViewById(R.id.totalproducts);
         shortlistrecyclerview = (RecyclerView) findViewById(R.id.shortlistrecyclerview);
         shortlistrecyclerview.setLayoutManager(new GridLayoutManager(Shortlist.this, 3));
@@ -101,18 +106,6 @@ public class Shortlist extends AppCompatActivity {
                 footer.setVisibility(View.GONE);
                 details.setVisibility(View.GONE);
                 emptyshortlist.setVisibility(View.VISIBLE);
-                shortlistnow.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        BreadCrumb.Section = "All Products";
-                        StaticData.SelectedCategoryId = "-1";
-                        BreadCrumb.Category = "";
-                        if (DB.getInitialModel().getProducts().size() != -0) {
-                            ((Activity) context).finish();
-                        } else Toast.makeText(context, "No Products", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
             }
         }
     }
@@ -121,12 +114,12 @@ public class Shortlist extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (save.getText().toString().matches("SAVE")) {
+                if (save.getText().toString().matches("SHORTLIST")) {
                     details.setVisibility(View.VISIBLE);
-                    save.setText("SHORTLIST");
+                    save.setText("SAVE");
                     clear.setText("CANCEL");
                 } else {
-                    save.setText("SAVE");
+                    save.setText("SHORTLIST");
                     details.setVisibility(View.GONE);
                     list = new ArrayList<ShortlistModel>();
                     list = DB.getShortlistModels();
@@ -155,9 +148,9 @@ public class Shortlist extends AppCompatActivity {
             public void onClick(View view) {
                 if (clear.getText().toString().matches("CLEAR")) {
                     DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
+                    DB.getBillprodlist().removeAll(DB.getBillprodlist());
                     InitializeAdapter(Shortlist.this);
                 } else {
-
                     clear.setText("CLEAR");
                     save.setText("SAVE");
                     details.setVisibility(View.GONE);
@@ -165,10 +158,61 @@ public class Shortlist extends AppCompatActivity {
             }
         });
 
+        shortlistnow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BreadCrumb.Section = "All Products";
+                StaticData.SelectedCategoryId = "-1";
+                BreadCrumb.Category = "";
+                if (DB.getInitialModel().getProducts().size() != -0) {
+                    finish();
+                } else Toast.makeText(Shortlist.this, "No Products", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        bill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<BillingProducts> model=new ArrayList<BillingProducts>();
+                for(int i=0;i<DB.getShortlistedlist().size();i++){
+                    billprod=new BillingProducts();
+                    billprod.setId(DB.getShortlistedlist().get(i).getId());
+                    billprod.setTitle(DB.getShortlistedlist().get(i).getTitle());
+                    billprod.setDescription(DB.getShortlistedlist().get(i).getDescription());
+                    billprod.setSectionId(DB.getShortlistedlist().get(i).getSectionId());
+                    billprod.setCategoryId(DB.getShortlistedlist().get(i).getCategoryId());
+                    billprod.setSKU(DB.getShortlistedlist().get(i).getSKU());
+                    billprod.setBarCode(DB.getShortlistedlist().get(i).getBarCode());
+                    billprod.setImageUrl(DB.getShortlistedlist().get(i).getImageUrl());
+                    billprod.setVideoUrl(DB.getShortlistedlist().get(i).getVideoUrl());
+                    billprod.setPdfUrl(DB.getShortlistedlist().get(i).getPdfUrl());
+                    billprod.setMRP(DB.getShortlistedlist().get(i).getMRP());
+                    billprod.setQuantity(0);
+                    billprod.setAmount(0.0);
+                    billprod.setPrice(DB.getShortlistedlist().get(i).getSellingPrice());
+                    billprod.setSellingPrice(DB.getShortlistedlist().get(i).getSellingPrice());
+                    billprod.setTags(DB.getShortlistedlist().get(i).getTags());
+                    billprod.setStatus(DB.getShortlistedlist().get(i).getStatus());
+                    billprod.setWeight(DB.getShortlistedlist().get(i).getWeight());
+                    billprod.setWishList(DB.getShortlistedlist().get(i).isWishList());
+                    billprod.setSelectedVarient(DB.getShortlistedlist().get(i).getSelectedVarient());
+                    billprod.setProductImages(DB.getShortlistedlist().get(i).getProductImages());
+                    billprod.setAttributes(DB.getShortlistedlist().get(i).getAttributes());
+                    billprod.setVariants(DB.getShortlistedlist().get(i).getVariants());
+                    model.add(billprod);
+                }
+                DB.setBillprodlist(model);
+                Order.shortlistedorders=false;
+                StaticData.ShortlistedOrder=true;
+                startActivity(new Intent(Shortlist.this, Order.class));
+            }
+        });
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Shortlist.this,"Coming Soon",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Shortlist.this, "Coming Soon", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -182,10 +226,6 @@ public class Shortlist extends AppCompatActivity {
         register.setVisible(false);
         MenuItem register2 = menu.findItem(R.id.shortlist);
         register2.setVisible(false);
-        if (DB.getShortlistedlist().size() != 0) {
-            MenuItem register3 = menu.findItem(R.id.slideshow);
-            register3.setVisible(false);
-        }
         return true;
     }
 
@@ -203,7 +243,7 @@ public class Shortlist extends AppCompatActivity {
             }
         }
         if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
-            finish();
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -211,6 +251,7 @@ public class Shortlist extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        DB.getBillprodlist().removeAll(DB.getBillprodlist());
         finish();
     }
 

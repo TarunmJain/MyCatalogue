@@ -58,18 +58,38 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final SectionlistAdapter.ViewHolder holder, final int position) {
-        GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
-        holder.text.setText(data.get(position).getTitle());
-        final int finalPosition1 = position;
-        holder.layview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BreadCrumb.Section=data.get(position).getTitle();
-                Catalogue.category = data.get(finalPosition1).getCategories();
-                Catalogue.InitialzationCategoryAdapter(mContext, data.get(finalPosition1));
-            }
-        });
+    public void onBindViewHolder(final SectionlistAdapter.ViewHolder holder, int position) {
+        if(position==0){
+            holder.categoryImage.setImageResource(R.drawable.common);
+            holder.text.setText("All Products");
+            holder.layview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BreadCrumb.Section="All Products";
+                    StaticData.SelectedCategoryId = "-1";
+                    BreadCrumb.Category="";
+                    if (DB.getInitialModel().getProducts().size() != 0) {
+                        Catalogue.productslist();
+                        Catalogue.InitializeAdapter(mContext);
+                    } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
+                    Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
+                }
+            });
+        }else {
+            position -= 1;
+            GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
+            holder.text.setText(data.get(position).getTitle());
+            final int finalPosition = position;
+            holder.layview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BreadCrumb.Section=data.get(finalPosition).getTitle();
+                    Catalogue.category = data.get(finalPosition).getCategories();
+                    Catalogue.InitialzationCategoryAdapter(mContext, data.get(finalPosition));
+                }
+            });
+        }
+
     }
 
     @Override
@@ -81,7 +101,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
                 return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
             }
         });
-        return data.size();
+        return data.size()+1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

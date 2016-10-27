@@ -20,8 +20,6 @@ import com.centura_technologies.mycatalogue.Support.GenericData;
  */
 public class AboutUs extends AppCompatActivity {
     Toolbar toolbar;
-    DrawerLayout Drawer;
-    ActionBarDrawerToggle mDrawerToggle;
     TextView version;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,26 +29,8 @@ public class AboutUs extends AppCompatActivity {
         toolbar.setTitle("About Us");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Drawer = (DrawerLayout) findViewById(R.id.drawer);
         version=(TextView)findViewById(R.id.version);
         version.setText("VERSION "+ BuildConfig.VERSION_NAME);
-
-        mDrawerToggle = new ActionBarDrawerToggle(AboutUs.this, Drawer, toolbar, R.string.opendrawer, R.string.closedrawer) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                // code here will execute once the drawer is opened( As I dont want anything happened whe drawer is
-                // open I am not going to put anything here)
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                // Code here will execute once drawer is closed
-            }
-        }; // Drawer Toggle Object Made
-        Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
-        mDrawerToggle.syncState();
        // GenericData.DrawerOnClicks(AboutUs.this);
 
 

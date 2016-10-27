@@ -23,6 +23,7 @@ import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
 import com.centura_technologies.mycatalogue.Order.View.OrderListAdapter;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
+import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class OrdersList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 StaticData.vieworder=false;
+                Sync.BillingProducts();
+                StaticData.ShortlistedOrder=false;
                 startActivity(new Intent(OrdersList.this, Order.class));
             }
         });
@@ -69,9 +72,10 @@ public class OrdersList extends AppCompatActivity {
         ordernow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 StaticData.vieworder=false;
-                startActivity(new Intent(OrdersList.this,Order.class));
+                Sync.BillingProducts();
+                StaticData.ShortlistedOrder=false;
+                startActivity(new Intent(OrdersList.this, Order.class));
             }
         });
     }

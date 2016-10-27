@@ -98,7 +98,6 @@ public class Login extends Activity {
                             param.put("UserName", username.getText().toString().trim());
                             param.put("Password", password.getText().toString().replaceAll("\\s+", ""));
                             param.put("StoreCode", companyid.getText().toString().trim());
-                            //StaticData.StoreCode = companyid.getText().toString();
                             param.put("DevideId", DeviceId);
                             GenericData.ShowDialog(Login.this, "Loading...", true);
                             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.Login, new JSONObject(param), new Response.Listener<JSONObject>() {
@@ -106,10 +105,6 @@ public class Login extends Activity {
                                 public void onResponse(JSONObject response) {
                                     GenericData.ShowDialog(Login.this, "Loading...", false);
                                     if (GenericData.sucess(response, Login.this)) {
-                                        Sync.SyncSectionList(Login.this);
-
-                                        // SyncClass.syncFilters(Login.this);
-                                        // SyncClass.syncproducts(Login.this);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString(GenericData.Sp_Username, username.getText().toString());
                                         editor.putString(GenericData.Sp_Password, password.getText().toString());
@@ -119,14 +114,14 @@ public class Login extends Activity {
                                         StaticData.CurrentSalesMan.Name=response.optJSONObject("Data").optString("UserName");
                                         StaticData.CurrentSalesMan.Phone=response.optJSONObject("Data").optString("UserPhone");
                                         StaticData.CurrentSalesMan.Email=response.optJSONObject("Data").optString("UserEmail");
-
                                         editor.putString(GenericData.Sp_Status, "LoggedIn");
                                         editor.commit();
                                         StaticData.Options = "Catalogue";
+                                        StaticData.DrawerTextDisable="Catalogue";
+                                        Sync.SyncSectionList(Login.this);
                                         startActivity(new Intent(Login.this, SectionCatalogue.class));
                                         finish();
                                     } else {
-                                        //username.setError("Username or password is wrong");
                                         companyid.setError(response.optString("Errors"));
                                     }
                                 }
@@ -147,8 +142,6 @@ public class Login extends Activity {
         });
 
     }
-
-
     public void loginslide() {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide);

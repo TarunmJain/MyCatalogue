@@ -30,6 +30,7 @@ import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
+import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
 
@@ -98,7 +99,7 @@ public class SectionCatalogue extends AppCompatActivity {
         }
         recyclerView.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3));
         category_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3));
-        collections_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,3, GridLayoutManager.VERTICAL, false));
+        collections_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this, 3, GridLayoutManager.VERTICAL, false));
         InitializationCollectionAdapter(SectionCatalogue.this);
         InitialzationSectionAdapter(SectionCatalogue.this);
 
@@ -107,8 +108,7 @@ public class SectionCatalogue extends AppCompatActivity {
         } else {
             InitialzationCategoryAdapter(SectionCatalogue.this, null);
         }
-
-
+        StaticData.DrawerTextDisable="Catalogue";
         GenericData.DrawerOnClicks(SectionCatalogue.this);
     }
 

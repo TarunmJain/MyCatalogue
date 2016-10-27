@@ -277,14 +277,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     private static void productClicks(final Products productdetail) {
-        for (Products model : DB.getShortlistedlist()) {
-            if (model.getId().matches(productdetail.getId())) {
-                if (StaticData.Shortlisted) {
-                    shortlist.setImageResource(R.drawable.heart374);
-                    break;
-                }
-            }
-        }
         shortlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

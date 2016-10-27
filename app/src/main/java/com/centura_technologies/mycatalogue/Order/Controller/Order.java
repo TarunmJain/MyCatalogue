@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,6 +45,7 @@ import com.centura_technologies.mycatalogue.Order.View.OrderProductSearchAdapter
 import com.centura_technologies.mycatalogue.Order.View.OrderProductViewAdapter;
 import com.centura_technologies.mycatalogue.Order.View.OrderProductsAdapter;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -69,7 +72,8 @@ public class Order extends AppCompatActivity {
     Spinner spinner;
     static CardView billdetailheader;
     ImageView checked;
-    LinearLayout shortlistedorder;
+    static LinearLayout shortlistedorder;
+    public static LinearLayout category;
     Button clearBill, placeorder;
     TextView Cancel;
     public static EditText serachorderlist;
@@ -112,6 +116,7 @@ public class Order extends AppCompatActivity {
         orderlist_recyclerview = (RecyclerView) findViewById(R.id.orderlist_recyclerview);
         spinner = (Spinner) findViewById(R.id.spinner);
         shortlistedorder = (LinearLayout) findViewById(R.id.shortlistedorder);
+        category=(LinearLayout)findViewById(R.id.category);
         clearBill = (Button) findViewById(R.id.clear);
         filterpane = (RelativeLayout) findViewById(R.id.filterpane);
         placeorder = (Button) findViewById(R.id.placeorder);
@@ -126,6 +131,13 @@ public class Order extends AppCompatActivity {
         for (int i = 0; i < DB.getInitialModel().getCategories().size(); i++) {
             categoryids.add(DB.getInitialModel().getCategories().get(i).getId());
             categories.add(DB.getInitialModel().getCategories().get(i).getTitle());
+        }
+        if(StaticData.ShortlistedOrder){
+            Order.category.setVisibility(View.GONE);
+            StaticData.ShortlistedOrder=false;
+        }else {
+            Order.category.setVisibility(View.VISIBLE);
+            StaticData.ShortlistedOrder=true;
         }
         InitializeAdapter(Order.this);
         onClicks();
@@ -142,14 +154,11 @@ public class Order extends AppCompatActivity {
     }
 
     private void onClicks() {
-
-
         serachorderlist.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
@@ -186,15 +195,6 @@ public class Order extends AppCompatActivity {
                     shortlistedorders = true;
                     InitializeAdapter(Order.this);
                 }
-                /*if (StaticData.shortlistedorders) {
-                    checked.setImageResource(R.mipmap.checked);
-                    StaticData.shortlistedorders = false;
-                }else{
-                    checked.setImageResource(R.mipmap.checking);
-                    StaticData.shortlistedorders = true;
-                }
-                Dashboard.BillingProducts();
-                InitializeAdapter(Order.this);*/
             }
         });
 
@@ -263,7 +263,8 @@ public class Order extends AppCompatActivity {
                         DbHelper dbHelper = new DbHelper(Order.this);
                         dbHelper.saveOrders();
                         clearBill.performClick();
-                        OrdersList.InitializeAdapter(Order.this);
+                        DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
+                        Shortlist.InitializeAdapter(Order.this);
                         finish();
                     } else {
                         Toast.makeText(Order.this, "No Products Selected", Toast.LENGTH_SHORT).show();
@@ -355,7 +356,6 @@ public class Order extends AppCompatActivity {
 
     public static void InitializeAdapter(Context context) {
         if (StaticData.vieworder) {
-
             billdetailheader.setVisibility(View.VISIBLE);
             editfooter.setVisibility(View.GONE);
             viewfooter.setVisibility(View.VISIBLE);

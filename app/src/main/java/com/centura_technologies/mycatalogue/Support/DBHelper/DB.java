@@ -28,8 +28,8 @@ public class DB {
     private static ArrayList<BillingProducts> billprodlist = new ArrayList<BillingProducts>();
     private static Products shortlisted = new Products();
     private static ArrayList<Products> shortlistedlist = new ArrayList<Products>();
-    private static ShortlistModel shortlistModel=new ShortlistModel();
-    private static ArrayList<ShortlistModel> shortlistModels=new ArrayList<ShortlistModel>();
+    private static ShortlistModel shortlistModel = new ShortlistModel();
+    private static ArrayList<ShortlistModel> shortlistModels = new ArrayList<ShortlistModel>();
 
 
     public static InitialModel getInitialModel() {
@@ -171,5 +171,23 @@ public class DB {
 
     public static void setInitialModel(InitialModel initialModel) {
         DB.initialModel = initialModel;
+    }
+
+    public static void ClearAllDBData() {
+        initialModel = new InitialModel();
+        leadmodel = new LeadsModel();
+        leads = new ArrayList<LeadsModel>();
+        activitymodel = new ActivitiesModel();
+        activities = new ArrayList<ActivitiesModel>();
+        sectionmodel = new Sections();
+        sectionlist = new ArrayList<Sections>();
+        tree = new CategoryTree();
+        treelist = new ArrayList<CategoryTree>();
+        billingProducts = new BillingProducts();
+        billprodlist = new ArrayList<BillingProducts>();
+        shortlisted = new Products();
+        shortlistedlist = new ArrayList<Products>();
+        shortlistModel = new ShortlistModel();
+        shortlistModels = new ArrayList<ShortlistModel>();
     }
 }

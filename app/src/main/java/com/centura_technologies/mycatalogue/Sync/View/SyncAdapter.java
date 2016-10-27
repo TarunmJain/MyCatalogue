@@ -38,7 +38,6 @@ public class SyncAdapter extends RecyclerView.Adapter<SyncAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
         holder.textdown.setVisibility(View.GONE);
         if (position == 0) {
             holder.categoryImage.setImageResource(R.drawable.common);

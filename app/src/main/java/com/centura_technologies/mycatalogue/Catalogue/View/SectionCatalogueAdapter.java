@@ -58,8 +58,10 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
         holder.backlay.setVisibility(View.GONE);
         if (SectionCatalogue.Section_to_Category) {
             if (position == 0) {
-                holder.backlay.setVisibility(View.VISIBLE);
-                holder.backlay.setText("All Products");
+                holder.text.setText("All Products");
+                holder.text.setVisibility(View.VISIBLE);
+                //holder.backlay.setVisibility(View.VISIBLE);
+                //holder.backlay.setText("All Products");
                 holder.categoryImage.setImageResource(R.drawable.common);
                 final int finalPosition1 = position;
                 holder.categoryImage.setOnClickListener(new View.OnClickListener() {

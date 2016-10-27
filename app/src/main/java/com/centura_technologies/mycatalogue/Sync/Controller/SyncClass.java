@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
 
 /**
@@ -31,7 +32,7 @@ public class SyncClass extends AppCompatActivity {
         appysync = (TextView) findViewById(R.id.appysync);
         cancel = (TextView) findViewById(R.id.cancel_sync);
         toolbar_title= (TextView) findViewById(R.id.toolbar_title);
-        toolbar_title.setText("Orders");
+        toolbar_title.setText("Sync");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -45,10 +46,10 @@ public class SyncClass extends AppCompatActivity {
         appysync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (com.centura_technologies.mycatalogue.Support.Apis.Sync.SyncCollections)
-                    com.centura_technologies.mycatalogue.Support.Apis.Sync.syncroniseCollections(SyncClass.this);
+                if (Sync.SyncCollections)
+                    Sync.syncroniseCollections(SyncClass.this);
                 else
-                    com.centura_technologies.mycatalogue.Support.Apis.Sync.syncroniseSections(SyncClass.this);
+                    Sync.syncroniseSections(SyncClass.this);
 
             }
         });

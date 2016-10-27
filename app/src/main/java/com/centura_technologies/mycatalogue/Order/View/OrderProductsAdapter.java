@@ -1,9 +1,14 @@
 package com.centura_technologies.mycatalogue.Order.View;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +36,7 @@ import java.util.Comparator;
  * Created by Centura User1 on 24-09-2016.
  */
 public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdapter.ViewHolder> {
+    private static final int DEFAULT_KEYS_DIALER = 0;
     Context mContext;
     ArrayList<BillingProducts> data;
     TextView qtydecrement, qtyincrement;
@@ -41,6 +47,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     public static Double total_amount = 0.0;
     int viewHeight;
     int selected_position = 0;
+    Double Quantity=0.0;
+    private int TYPE_NUMBER_FLAG_DECIMAL=0;
 
     public OrderProductsAdapter(Context context) {
         this.mContext = context;
@@ -95,8 +103,10 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                     holder.name.setSelected(true);
                     holder.name.setSingleLine(true);
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
-                } else
+                } else{
+                    holder.name.setEllipsize(TextUtils.TruncateAt.END);
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                }
                 GenericData.setImage(data.get(position).getImageUrl(),holder.productimage,mContext);
                 holder.name.setText(data.get(position).getTitle());
                 holder.unit.setText(data.get(position).getWeight() + "");
@@ -114,8 +124,10 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                         holder.name.setSelected(true);
                         holder.name.setSingleLine(true);
                         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
-                    } else
+                    } else{
+                        holder.name.setEllipsize(TextUtils.TruncateAt.END);
                         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+                    }
                     GenericData.setImage(data.get(position).getImageUrl(),holder.productimage,mContext);
                     holder.name.setText(data.get(position).getTitle());
                     holder.unit.setText(data.get(position).getWeight() + "");
@@ -211,7 +223,6 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                             Toast.makeText(mContext, "Min Count is 0", Toast.LENGTH_SHORT).show();
                     }
                 });
-
                 apply.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -227,6 +238,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                         dialog.cancel();
                     }
                 });
+
+
             }
         });
 
@@ -281,6 +294,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             }
         });
     }
+
 
     private void increment(int position, int qty) {
         int actualqty = qty;

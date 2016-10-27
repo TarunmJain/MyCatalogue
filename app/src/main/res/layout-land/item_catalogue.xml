@@ -37,7 +37,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_margin="5dp"
                 android:padding="5dp"
-                android:src="@drawable/favorite7" />
+                android:src="@drawable/shortliststar" />
 
             <ImageView
                 android:id="@+id/image"

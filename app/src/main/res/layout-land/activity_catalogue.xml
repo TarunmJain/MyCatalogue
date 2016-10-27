@@ -81,13 +81,13 @@
 
                     <TextView
 
-                        android:textSize="16sp"
                         android:id="@+id/filtericon"
                         android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="Filter"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/categoryicon"
@@ -95,9 +95,9 @@
                         android:layout_height="match_parent"
                         android:layout_toRightOf="@+id/filtericon"
                         android:gravity="center"
-                        android:textSize="16sp"
                         android:text="Category"
                         android:textColor="@color/white"
+                        android:textSize="16sp"
                         android:visibility="visible" />
                     <!-- <LinearLayout
                          android:id="@+id/search"
@@ -125,19 +125,19 @@
                          android:layout_height="match_parent" />
                          </LinearLayout>-->
                     <LinearLayout
-                        android:layout_margin="6dp"
                         android:id="@+id/search"
-                        android:background="@drawable/whiterounded"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_centerInParent="true">
+                        android:layout_centerInParent="true"
+                        android:layout_margin="6dp"
+                        android:background="@drawable/whiterounded">
 
                         <ImageView
                             android:id="@+id/searchicon"
                             android:layout_width="50dp"
-                            android:padding="10dp"
                             android:layout_height="match_parent"
                             android:layout_alignParentRight="true"
+                            android:padding="10dp"
                             android:src="@drawable/search100" />
 
                         <EditText
@@ -182,8 +182,8 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
                         android:layout_marginLeft="50dp"
+                        android:layout_marginRight="10dp"
                         android:padding="15dp"
                         android:src="@drawable/ic_format_list_bulleted_white_24dp" />
 
@@ -229,9 +229,6 @@
                         android:background="@android:color/transparent"></android.support.v7.widget.RecyclerView>
                 </LinearLayout>
 
-
-
-
                 <LinearLayout
                     android:id="@+id/productlayout"
                     android:layout_width="match_parent"
@@ -239,11 +236,10 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/productsrecyclerview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#ededed"></android.support.v7.widget.RecyclerView>
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/productsrecyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
 
                     <ScrollView
                         android:layout_width="match_parent"
@@ -254,7 +250,6 @@
                             android:layout_height="match_parent"
                             app:cardCornerRadius="5dp"
                             app:cardElevation="10dp">
-
                             <RelativeLayout
                                 android:id="@+id/quickview"
                                 android:layout_width="match_parent"
@@ -359,8 +354,8 @@
                 android:id="@+id/leftdrawer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="-64dp"
                 android:layout_gravity="start"
+                android:layout_marginLeft="-64dp"
                 android:orientation="vertical">
 
 
@@ -372,26 +367,30 @@
                     android:background="@color/material_grey_300"
                     android:orientation="horizontal"
                     android:weightSum="10">
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/sectionrecycler"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="2.5" />
+
                     <RelativeLayout
                         android:layout_width="0dp"
-                        android:layout_weight="7.5"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_weight="7.5">
+
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/categoryrecycler"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
+
                         <TextView
-                            android:gravity="center"
-                            android:visibility="gone"
                             android:id="@+id/nocategorytext"
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
                             android:text="No Categories Found for this Section"
-                            android:layout_height="match_parent" />
+                            android:visibility="gone" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -400,10 +399,10 @@
             <LinearLayout
                 android:id="@+id/rightdrawer"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:layout_marginLeft="-64dp"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
+                android:orientation="vertical">
                 <!-- filter layout-->
                 <LinearLayout
                     android:id="@+id/filterlayout"
@@ -423,9 +422,9 @@
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:padding="10dp"
-                            android:textSize="18sp"
+                            android:text="Filter Products"
                             android:textColor="@color/white"
-                            android:text="Filter Products" />
+                            android:textSize="18sp" />
 
                         <LinearLayout
                             android:id="@+id/footer"
@@ -443,13 +442,12 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:paddingLeft="20dp"
-                                android:textSize="18sp"
-                                android:textColor="@color/white"
                                 android:paddingRight="20dp"
-                                android:text="Clear" />
+                                android:text="Clear"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
 
                             <TextView
-                                android:textSize="18sp"
                                 android:id="@+id/applyfilter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
@@ -457,7 +455,8 @@
                                 android:paddingLeft="20dp"
                                 android:paddingRight="20dp"
                                 android:text="Apply"
-                                android:textColor="@color/accentcolor" />
+                                android:textColor="@color/accentcolor"
+                                android:textSize="18sp" />
                         </LinearLayout>
                     </RelativeLayout>
 
