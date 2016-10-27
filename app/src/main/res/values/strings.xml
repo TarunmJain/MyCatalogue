@@ -17,5 +17,6 @@
     <string name="title_activity_temp_filter">TempFilter</string>
     <string name="title_activity_syncronise">Syncronise</string>
     <string name="title_activity_orders_list">OrdersList</string>
+    <string name="title_activity_catalogue_details_new">CatalogueDetailsNew</string>
 
 </resources>

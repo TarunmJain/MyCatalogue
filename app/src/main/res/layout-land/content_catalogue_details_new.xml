@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.centura_technologies.mycatalogue.Catalogue.Controller.CatalogueDetailsNew"
+    tools:showIn="@layout/activity_catalogue_details_new">
+
+    <android.support.v7.widget.RecyclerView
+        android:padding="5dp"
+        android:id="@+id/menulyaout"
+        android:layout_width="80dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/dataloyout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/menulyaout"
+        android:layout_toRightOf="@+id/menulyaout"
+        android:orientation="vertical">
+
+        //Image
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/imagelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/imageicon"
+                android:id="@+id/productDetailImageview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        //vedio
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/vediolayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <VideoView
+                android:id="@+id/productDetailvedio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        //html
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/weblayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <WebView
+                android:id="@+id/productDetailwebview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        //pdf
+        <LinearLayout
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:id="@+id/pdflayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+
+        //ppt
+        <LinearLayout
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/pptlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </LinearLayout>
+
+
+        //info
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/infolayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include layout="@layout/content_productdeatils" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+</RelativeLayout>

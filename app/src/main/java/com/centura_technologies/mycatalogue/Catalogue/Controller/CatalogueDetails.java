@@ -1,8 +1,10 @@
 package com.centura_technologies.mycatalogue.Catalogue.Controller;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
@@ -15,14 +17,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
+import com.centura_technologies.mycatalogue.Catalogue.Model.DescriptionMenuClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.VarientModel;
 import com.centura_technologies.mycatalogue.Catalogue.View.DescriptionAdapter;
+import com.centura_technologies.mycatalogue.Catalogue.View.DetailMenuAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.DrawerItemsAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.IndividualProdImageAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.VarientsAdapter;
@@ -30,6 +37,8 @@ import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
+
+import net.sf.andpdf.pdfviewer.PdfViewerActivity;
 
 import java.util.ArrayList;
 
@@ -56,6 +65,16 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     public static String videourl="";
     public static String pdfurl="";
     static ArrayList<Products> shortlisted;
+    static RecyclerView menulyaout;
+    static ImageView productImage;
+    static VideoView productDetailvedio;
+    static WebView productDetailwebview;
+    static LinearLayout imagelayout;
+    static LinearLayout vediolayout;
+    static LinearLayout weblayout;
+    static LinearLayout pdflayout;
+    static LinearLayout pptlayout;
+    static LinearLayout infolayout;
 
 
     @Override
@@ -64,29 +83,12 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         setContentView(R.layout.activity_cataloguedetails);
         Title = (TextView) findViewById(R.id.AppbarTittle);
         Title.setText("Product Details");
-
         hamburger = (ImageView) findViewById(R.id.hamburger);
         logff = (ImageView) findViewById(R.id.logoff);
         logff.setVisibility(View.GONE);
         context = CatalogueDetails.this;
         allproducts = new ArrayList<Products>();
         shortlisted=new ArrayList<Products>();
-        // allproducts = EventBus.getDefault().removeStickyEvent(ArrayList.class);
-        if (StaticData.ClickedProduct) {
-            for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
-                if (DB.getInitialModel().getProducts().get(i).getSectionId().matches(StaticData.SelectedSectionId)) {
-                    allproducts.add(DB.getInitialModel().getProducts().get(i));
-                }
-            }
-        } else {
-            /*for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
-                if (DB.getInitialModel().getProducts().get(i).getCategoryId().matches(StaticData.SelectedCategoryId)) {
-                    allproducts.add(DB.getInitialModel().getProducts().get(i));
-                }
-            }*/
-            allproducts=Catalogue.products;
-        }
-
         productdetaillist = (RecyclerView) findViewById(R.id.productdetaillist);
         individual_product_images = (RecyclerView) findViewById(R.id.individual_product_images);
         drawer_items_recycler = (RecyclerView) findViewById(R.id.drawer_items_recycler1);
@@ -103,6 +105,32 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         mediatext = (TextView) findViewById(R.id.mediatext);
         media = (ImageView) findViewById(R.id.media);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
+        menulyaout= (RecyclerView) findViewById(R.id.menulyaout);
+        imagelayout= (LinearLayout) findViewById(R.id.imagelayout);
+        vediolayout= (LinearLayout) findViewById(R.id.vediolayout);
+        weblayout= (LinearLayout) findViewById(R.id.weblayout);
+        pdflayout= (LinearLayout) findViewById(R.id.pdflayout);
+        pptlayout= (LinearLayout) findViewById(R.id.pptlayout);
+        infolayout= (LinearLayout) findViewById(R.id.infolayout);
+        productImage= (ImageView) findViewById(R.id.productDetailImageview);
+        productDetailvedio= (VideoView) findViewById(R.id.productDetailvedio);
+        productDetailwebview= (WebView) findViewById(R.id.productDetailwebview);
+        menulyaout.setLayoutManager(new LinearLayoutManager(CatalogueDetails.this));
+
+
+
+        if (StaticData.ClickedProduct) {
+            for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
+                if (DB.getInitialModel().getProducts().get(i).getSectionId().matches(StaticData.SelectedSectionId)) {
+                    allproducts.add(DB.getInitialModel().getProducts().get(i));
+                }
+            }
+        } else {
+            allproducts=Catalogue.products;
+        }
+
+
+
         if (allproducts != null)
             if (allproducts.size() > 0)
                 RenderProduct(allproducts.get(StaticData.productposition));
@@ -225,6 +253,12 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void RenderProduct(final Products productdetail) {
+        LoadInfo();
+        ArrayList<DescriptionMenuClass> menudata=new ArrayList<DescriptionMenuClass>();
+        for (String imagedata: productdetail.getProductImages()) {
+            menudata.add(new DescriptionMenuClass(imagedata,-1));
+        }
+        menulyaout.setAdapter(new DetailMenuAdapter(context,menudata));
         productModel = productdetail;
         image = new ArrayList<String>();
         for (int i = 0; i < productModel.getProductImages().size(); i++)
@@ -392,5 +426,62 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    public static void LoadInfo(){
+        imagelayout.setVisibility(View.GONE);
+        vediolayout.setVisibility(View.GONE);
+        weblayout.setVisibility(View.GONE);
+        pdflayout.setVisibility(View.GONE);
+        pptlayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.VISIBLE);
+    }
+
+    public static void LoadHTML(String url){
+        imagelayout.setVisibility(View.GONE);
+        vediolayout.setVisibility(View.GONE);
+        weblayout.setVisibility(View.VISIBLE);
+        pdflayout.setVisibility(View.GONE);
+        pptlayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.GONE);
+        productDetailwebview.getSettings().setJavaScriptEnabled(true);
+        productDetailwebview.loadUrl(url);
+    }
+
+    public static void LoadVedio(Context context,String url){
+        imagelayout.setVisibility(View.GONE);
+        vediolayout.setVisibility(View.VISIBLE);
+        weblayout.setVisibility(View.GONE);
+        pdflayout.setVisibility(View.GONE);
+        pptlayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.GONE);
+        Uri vidUri = Uri.parse(url);
+        productDetailvedio.setVideoURI(vidUri);
+        productDetailvedio.start();
+        MediaController vidControl = new MediaController(context);
+        vidControl.setAnchorView(productDetailvedio);
+        productDetailvedio.setMediaController(vidControl);
+    }
+
+    public static void LoadPDF(Context context,String url){
+        imagelayout.setVisibility(View.GONE);
+        vediolayout.setVisibility(View.GONE);
+        weblayout.setVisibility(View.GONE);
+        pdflayout.setVisibility(View.VISIBLE);
+        pptlayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.GONE);
+        Intent intent = new Intent(context, PdfView.class);
+        intent.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, url);
+        ((Activity)context).startActivity(intent);
+    }
+
+    public static void LoadImage(Context context,String url){
+        imagelayout.setVisibility(View.VISIBLE);
+        vediolayout.setVisibility(View.GONE);
+        weblayout.setVisibility(View.GONE);
+        pdflayout.setVisibility(View.GONE);
+        pptlayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.GONE);
+        GenericData.setImage(url,productImage,context);
     }
 }

@@ -21,7 +21,7 @@
         android:layout_below="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/content_productdeatils" />
+        <include layout="@layout/content_catalogue_details_new" />
         <include
             layout="@layout/nav_menu"
             android:layout_width="300dp"

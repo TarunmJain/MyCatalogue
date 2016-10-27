@@ -17,10 +17,6 @@ public class Urls {
 
 
 
-
-
-
-
     public static String PROJECT_NUMBER = "501699062498";
     //public static String parentIP = "http://192.168.0.144";
     //public static String Parent = "http://192.168.0.144/api/webview/";
