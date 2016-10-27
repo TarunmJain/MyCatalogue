@@ -10,8 +10,8 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/shortlist"
-        android:title="shortlist"
-        android:icon="@drawable/shortlistwhite"
+        android:title="Cart"
+        android:icon="@drawable/ic_cart_white_24dp"
         android:orderInCategory="200"
         app:showAsAction="always|withText" />
     <item

@@ -101,10 +101,10 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
         }
         for (Products model : DB.getShortlistedlist()) {
             if (model.getId().matches(products.get(position).getId())) {
-                holder.wishlist.setImageResource(R.drawable.shortlistedaccentstar);
+                holder.wishlist.setImageResource(R.drawable.ic_cart_fill);
                 break;
             }else {
-                holder.wishlist.setImageResource(R.drawable.shortliststar);
+                holder.wishlist.setImageResource(R.drawable.ic_cart_outline_grey600_24dp);
             }
         }
 
@@ -118,7 +118,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                 boolean found = false;
                 for (Products model : DB.getShortlistedlist()) {
                     if (model.getId().matches(products.get(position).getId())) {
-                        holder.wishlist.setImageResource(R.drawable.shortliststar);
+                        holder.wishlist.setImageResource(R.drawable.ic_cart_outline_grey600_24dp);
                         DB.getShortlistedlist().remove(model);
                         found = true;
                         break;
@@ -126,7 +126,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                 }
 
                 if (!found) {
-                    holder.wishlist.setImageResource(R.drawable.shortlistedaccentstar);
+                    holder.wishlist.setImageResource(R.drawable.ic_cart_fill);
                     StaticData.Shortlisted = true;
                     shortlist.add(products.get(position));
                     DB.setShortlistedlist(shortlist);

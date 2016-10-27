@@ -37,7 +37,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_margin="5dp"
                 android:padding="5dp"
-                android:src="@drawable/shortliststar" />
+                android:src="@drawable/ic_cart_outline_grey600_24dp" />
 
             <ImageView
                 android:id="@+id/image"
