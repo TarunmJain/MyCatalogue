@@ -1,5 +1,6 @@
 package com.centura_technologies.mycatalogue.Catalogue.Controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,22 +15,27 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextSwitcher;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
+import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
 import com.centura_technologies.mycatalogue.Catalogue.View.CollectionAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.CollectionnewAdapter;
-import com.centura_technologies.mycatalogue.Catalogue.View.SectionCatalogueAdapter;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
@@ -37,6 +43,7 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
+import com.centura_technologies.mycatalogue.test.CoverFlowAdapternew;
 
 import java.util.ArrayList;
 
@@ -49,13 +56,10 @@ public class SectionCatalogue extends AppCompatActivity {
     static Toolbar toolbar;
     DrawerLayout Drawer;
     ActionBarDrawerToggle mDrawerToggle;
+    static FeatureCoverFlow coverFlow;
+    private static TextSwitcher mTitle;
     SharedPreferences sharedPreferences;
-    static LinearLayout collectionlay, collection_cardview;
-    static RecyclerView collections_recyclerview;
-    public static ArrayList<CategoryTree> categories;
-    public static ArrayList<Categories> category = new ArrayList<Categories>();
     public static ArrayList<CollectionModel> collectionmodel;
-    public static boolean Section_to_Category = false;
 
 
     @Override
@@ -65,11 +69,24 @@ public class SectionCatalogue extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setTitle("Collections");
         setSupportActionBar(toolbar);
+        coverFlow = (FeatureCoverFlow) findViewById(R.id.coverflow);
         Drawer = (DrawerLayout) findViewById(R.id.drawer);
-        sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
-        collectionlay = (LinearLayout) findViewById(R.id.collectionlay);
-        collection_cardview = (LinearLayout) findViewById(R.id.collection_cardview);
+        mTitle = (TextSwitcher) findViewById(R.id.title);
+        mTitle.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                LayoutInflater inflater = LayoutInflater.from(SectionCatalogue.this);
+                TextView textView = (TextView) inflater.inflate(R.layout.item_title, null);
+                return textView;
+            }
+        });
+        Animation in = AnimationUtils.loadAnimation(this, R.anim.slide_in_top);
+        Animation out = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
+        mTitle.setInAnimation(in);
+        mTitle.setOutAnimation(out);
 
+
+        sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
         mDrawerToggle = new ActionBarDrawerToggle(SectionCatalogue.this, Drawer, toolbar, R.string.opendrawer, R.string.closedrawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -87,38 +104,61 @@ public class SectionCatalogue extends AppCompatActivity {
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();
 
-        recyclerView = (RecyclerView) findViewById(R.id.section_recyclerview);
-        category_recyclerview = (RecyclerView) findViewById(R.id.category_recyclerview);
-        collections_recyclerview = (RecyclerView) findViewById(R.id.collections_recyclerview);
-        //UiManuplation();
-        categories = new ArrayList<CategoryTree>();
-        for (int i = 0; i < DB.getTreelist().size(); i++) {
-            categories.add(DB.getTreelist().get(i));
-        }
-        collectionmodel = new ArrayList<CollectionModel>();
-        for (int k = 0; k < DB.getInitialModel().getCollections().size(); k++) {
-            collectionmodel.add(DB.getInitialModel().getCollections().get(k));
-        }*/
-        collections_recyclerview.setLayoutManager(new GridLayoutManager(SectionCatalogue.this,3, GridLayoutManager.VERTICAL, false));
+
         InitializationCollectionAdapter(SectionCatalogue.this);
 
         StaticData.DrawerTextDisable = "Catalogue";
         GenericData.DrawerOnClicks(SectionCatalogue.this);
     }
 
-    public static void InitializationCollectionAdapter(Context context) {
+    public static void InitializationCollectionAdapter(final Context context) {
         collectionmodel = new ArrayList<CollectionModel>();
         for (int k = 0; k < DB.getInitialModel().getCollections().size(); k++) {
             collectionmodel.add(DB.getInitialModel().getCollections().get(k));
         }
         if (collectionmodel.size() != 0) {
-            collection_cardview.setVisibility(View.VISIBLE);
-            collections_recyclerview.setAdapter(new CollectionAdapter(context, collectionmodel));
-        } else {
-            collection_cardview.setVisibility(View.GONE);
+            coverFlow.setAdapter(new CoverFlowAdapternew(context, collectionmodel));
         }
-    }
 
+        coverFlow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    BreadCrumb.Section = "All Products";
+                    StaticData.SelectedCategoryId = "-1";
+                    BreadCrumb.Category = "";
+                    if (DB.getInitialModel().getProducts().size() != -0) {
+                        Intent i = new Intent(context, Catalogue.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        ((Activity) context).startActivity(i);
+                    } else Toast.makeText(context, "No Products", Toast.LENGTH_SHORT).show();
+                } else {
+                    BreadCrumb.Section = collectionmodel.get(position - 1).getTitle();
+                    BreadCrumb.Category = "";
+                    StaticData.SelectedCollectionProducts = new ArrayList<String>();
+                    StaticData.SelectedCollection = true;
+                    StaticData.SelectedCollectionProducts = collectionmodel.get(position - 1).getProductIds();
+                    ((Activity) context).startActivity(new Intent(context, Catalogue.class));
+                }
+            }
+        });
+
+        coverFlow.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
+            @Override
+            public void onScrolledToPosition(int position) {
+                if (position == 0)
+                    mTitle.setText("ALL PRODUCTS");
+                else
+                    mTitle.setText(collectionmodel.get(position - 1).getTitle().toUpperCase());
+            }
+
+            @Override
+            public void onScrolling() {
+                mTitle.setText("");
+            }
+        });
+
+    }
 
 
     @Override
