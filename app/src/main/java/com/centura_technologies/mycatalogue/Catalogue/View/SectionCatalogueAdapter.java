@@ -55,7 +55,7 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
 
     @Override
     public void onBindViewHolder(SectionCatalogueAdapter.ViewHolder holder, int position) {
-        holder.backlay.setVisibility(View.GONE);
+        /*holder.backlay.setVisibility(View.GONE);
         if (SectionCatalogue.Section_to_Category) {
             if (position == 0) {
                 holder.text.setText("All Products");
@@ -128,7 +128,7 @@ public class SectionCatalogueAdapter extends RecyclerView.Adapter<SectionCatalog
                     }
                 });
             }
-        }
+        }*/
 
     }
 

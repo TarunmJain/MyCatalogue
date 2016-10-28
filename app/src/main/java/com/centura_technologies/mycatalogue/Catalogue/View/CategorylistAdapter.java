@@ -50,26 +50,32 @@ public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapte
     }
 
     @Override
-    public void onBindViewHolder(CategorylistAdapter.ViewHolder holder, final int position) {
-        GenericData.setImage(currentTree.getCategories().get(position).getImageUrl(), holder.categoryImage, mContext);
-        holder.text.setText(currentTree.getCategories().get(position).getTitle());
-        final int finalPosition = position;
-        holder.categoryImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BreadCrumb.Category=currentTree.getCategories().get(position).getTitle();
-                Catalogue.sectionbreadcrumb.setText(BreadCrumb.Section);
-                Catalogue.catagorybreadcrumb.setText(BreadCrumb.Category);
-                Catalogue.slashbreadcrumb.setVisibility(View.VISIBLE);
-                StaticData.SelectedCategoryId = currentTree.getCategories().get(finalPosition).getId();
-                StaticData.position = finalPosition;
-                if (DB.getInitialModel().getProducts().size() != 0) {
-                    Catalogue.productslist();
-                    Catalogue.InitializeAdapter(mContext);
-                } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
-                Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
-            }
-        });
+    public void onBindViewHolder(CategorylistAdapter.ViewHolder holder, int position) {
+        if(position==0){
+            Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
+        }else {
+            position -= 1;
+            GenericData.setImage(currentTree.getCategories().get(position).getImageUrl(), holder.categoryImage, mContext);
+            holder.text.setText(currentTree.getCategories().get(position).getTitle());
+            final int finalPosition = position;
+            holder.categoryImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BreadCrumb.Category=currentTree.getCategories().get(finalPosition).getTitle();
+                    Catalogue.sectionbreadcrumb.setText(BreadCrumb.Section);
+                    Catalogue.catagorybreadcrumb.setText(BreadCrumb.Category);
+                    Catalogue.slashbreadcrumb.setVisibility(View.VISIBLE);
+                    StaticData.SelectedCategoryId = currentTree.getCategories().get(finalPosition).getId();
+                    StaticData.position = finalPosition;
+                    if (DB.getInitialModel().getProducts().size() != 0) {
+                        Catalogue.productslist();
+                        Catalogue.InitializeAdapter(mContext);
+                    } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
+                    Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
+                }
+            });
+        }
+
     }
 
     @Override

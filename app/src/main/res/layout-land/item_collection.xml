@@ -5,9 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="335dp"
     android:orientation="vertical">
-
-    android:orientation="vertical"
-    android:id="@+id/container">
     <com.balysv.materialripple.MaterialRippleLayout
 
         android:layout_margin="20dp"

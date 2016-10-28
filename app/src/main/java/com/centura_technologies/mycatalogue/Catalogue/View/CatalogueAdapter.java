@@ -65,7 +65,6 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
 
     @Override
     public void onBindViewHolder(final CatalogueAdapter.ViewHolder holder, final int position) {
-
         GenericData.setImage(products.get(position).getImageUrl(), holder.image, mContext);
         holder.title.setText(products.get(position).getTitle());
         if (StaticData.ProductsInList) {
@@ -101,16 +100,12 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
         }
         for (Products model : DB.getShortlistedlist()) {
             if (model.getId().matches(products.get(position).getId())) {
-                holder.wishlist.setImageResource(R.drawable.ic_cart_fill);
+                holder.wishlist.setImageResource(R.drawable.ic_cartnew);
                 break;
             }else {
-                holder.wishlist.setImageResource(R.drawable.ic_cart_outline_grey600_24dp);
+                holder.wishlist.setImageResource(R.drawable.ic_cartoutline);
             }
         }
-
-
-
-
 
         holder.wishlist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,20 +121,13 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                 }
 
                 if (!found) {
-                    holder.wishlist.setImageResource(R.drawable.ic_cart_fill);
+                    holder.wishlist.setImageResource(R.drawable.ic_cartnew);
                     StaticData.Shortlisted = true;
                     shortlist.add(products.get(position));
                     DB.setShortlistedlist(shortlist);
                 }
             }
         });
-        /*Collections.sort(products, new Comparator<Products>() {
-            public int compare(Products v1, Products v2) {
-                if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
-                    return 0;
-                return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
-            }
-        });*/
     }
 
     @Override
@@ -147,7 +135,6 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
         return products.size();
 
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView image, wishlist;

@@ -36,7 +36,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="5dp"
-                android:padding="5dp"
+                android:padding="8dp"
                 android:src="@drawable/ic_cart_outline_grey600_24dp" />
 
             <ImageView
