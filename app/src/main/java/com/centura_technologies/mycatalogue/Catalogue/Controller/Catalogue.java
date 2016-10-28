@@ -43,7 +43,6 @@ import com.centura_technologies.mycatalogue.Catalogue.View.CategorylistAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.FilterAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SearchAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SearchProductsAdapter;
-import com.centura_technologies.mycatalogue.Catalogue.View.SectionCatalogueAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SectionlistAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.TempFilterAdapter;
 import com.centura_technologies.mycatalogue.R;

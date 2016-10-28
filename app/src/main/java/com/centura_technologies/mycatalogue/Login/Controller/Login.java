@@ -25,10 +25,12 @@ import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogu
 import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.GCMClientManager;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
+import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
 
 import org.json.JSONObject;
 
@@ -119,7 +121,7 @@ public class Login extends Activity {
                                         StaticData.Options = "Catalogue";
                                         StaticData.DrawerTextDisable="Catalogue";
                                         Sync.SyncSectionList(Login.this);
-                                        startActivity(new Intent(Login.this, SectionCatalogue.class));
+                                        startActivity(new Intent(Login.this, Settings.class));
                                         finish();
                                     } else {
                                         companyid.setError(response.optString("Errors"));

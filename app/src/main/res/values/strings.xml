@@ -18,5 +18,6 @@
     <string name="title_activity_syncronise">Syncronise</string>
     <string name="title_activity_orders_list">OrdersList</string>
     <string name="title_activity_catalogue_details_new">CatalogueDetailsNew</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

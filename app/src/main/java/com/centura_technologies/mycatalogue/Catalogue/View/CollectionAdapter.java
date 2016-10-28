@@ -80,11 +80,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
     @Override
     public void onBindViewHolder(final CollectionAdapter.ViewHolder holder, int position) {
-        holder.itemView.setVisibility(View.GONE);
-        if (position < 6)
-            setFadeAnimation(holder.itemView, position);
-        else
-            holder.itemView.setVisibility(View.VISIBLE);
+
         if (position == 0) {
             holder.collectiontitle.setText("All Products");
             GenericData.setImage(data.get((position) % 4).getImageUrl(), holder.collectionimage, mContext);

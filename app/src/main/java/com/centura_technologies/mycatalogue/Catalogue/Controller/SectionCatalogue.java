@@ -86,8 +86,16 @@ public class SectionCatalogue extends AppCompatActivity {
         }; // Drawer Toggle Object Made
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();
+
+        recyclerView = (RecyclerView) findViewById(R.id.section_recyclerview);
+        category_recyclerview = (RecyclerView) findViewById(R.id.category_recyclerview);
         collections_recyclerview = (RecyclerView) findViewById(R.id.collections_recyclerview);
-       /* collectionmodel = new ArrayList<CollectionModel>();
+        //UiManuplation();
+        categories = new ArrayList<CategoryTree>();
+        for (int i = 0; i < DB.getTreelist().size(); i++) {
+            categories.add(DB.getTreelist().get(i));
+        }
+        collectionmodel = new ArrayList<CollectionModel>();
         for (int k = 0; k < DB.getInitialModel().getCollections().size(); k++) {
             collectionmodel.add(DB.getInitialModel().getCollections().get(k));
         }*/

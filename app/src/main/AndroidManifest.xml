@@ -111,7 +111,13 @@
         <activity
             android:name=".Catalogue.Controller.CatalogueDetailsNew"
             android:label="@string/title_activity_catalogue_details_new"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".test.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme">
+
+        </activity>
     </application>
 
 </manifest>

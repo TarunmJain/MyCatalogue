@@ -11,10 +11,14 @@ import android.widget.TextView;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Support.ApiData;
+import com.centura_technologies.mycatalogue.Support.Apis.Sync;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
+import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
 
 /**
  * Created by Centura User1 on 06-08-2016.
@@ -34,6 +38,7 @@ public class Splash extends Activity {
         setContentView(R.layout.activity_splash);
         info = (TextView) findViewById(R.id.info);
         db = new DbHelper(Splash.this);
+        db.loadinitialmodel();
         ApiData.renderCustomers();
         sharedPreferences = this.getSharedPreferences(GenericData.MyPref, this.MODE_PRIVATE);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -42,11 +47,13 @@ public class Splash extends Activity {
             @Override
             public void run() {
                 if (sharedPreferences.getString(GenericData.Sp_Status, "").matches("LoggedIn")) {
-                    db.loadinitialmodel();
                     // SyncClass.syncFilters(Splash.this);
                     StaticData.Options = "Catalogue";
                     StaticData.DrawerTextDisable = "Catalogue";
-                    startActivity(new Intent(Splash.this, SectionCatalogue.class));
+                    if (DB.getInitialModel().getCollections().size() > 0)
+                        startActivity(new Intent(Splash.this, SectionCatalogue.class));
+                    else
+                        startActivity(new Intent(Splash.this, Settings.class));
                     finish();
                 } else {
                     Intent intent = new Intent(Splash.this, Login.class);
