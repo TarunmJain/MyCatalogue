@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -43,7 +44,7 @@ public class CustomerShortlist extends AppCompatActivity {
     static FloatingActionButton fab;
     TextView toolbar_title;
     EditText serachorder;
-    static LinearLayout search;
+    static LinearLayout search,shortlistlayout;
     static RelativeLayout empty_shortlist;
     Button shortlistnow;
     ArrayList<ShortlistModel> list;
@@ -58,12 +59,13 @@ public class CustomerShortlist extends AppCompatActivity {
         toolbar_title=(TextView)findViewById(R.id.toolbar_title);
         toolbar_title.setText("Customer Shortlist");
         search=(LinearLayout)findViewById(R.id.search);
+        shortlistlayout=(LinearLayout)findViewById(R.id.shortlistlayout);
         empty_shortlist=(RelativeLayout)findViewById(R.id.empty_shortlist);
         shortlistnow=(Button)findViewById(R.id.shortlistnow);
         serachorder= (EditText) findViewById(R.id.serachorder);
         recyclerView=(RecyclerView)findViewById(R.id.recyclerview);
         fab=(FloatingActionButton)findViewById(R.id.fab);
-        recyclerView.setLayoutManager(new GridLayoutManager(CustomerShortlist.this,3));
+        recyclerView.setLayoutManager(new LinearLayoutManager(CustomerShortlist.this,LinearLayoutManager.VERTICAL,false));
         Localshortlist= (ArrayList<ShortlistModel>) DB.getShortlistModels().clone();
         InitializationAdapter(CustomerShortlist.this);
 
@@ -75,12 +77,14 @@ public class CustomerShortlist extends AppCompatActivity {
         if(DB.getShortlistModels().size()!=0){
             fab.setVisibility(View.VISIBLE);
             search.setVisibility(View.VISIBLE);
+            shortlistlayout.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
             empty_shortlist.setVisibility(View.GONE);
             recyclerView.setAdapter(new CustomerShortlistAdapter(context));
         }else {
             fab.setVisibility(View.GONE);
             search.setVisibility(View.GONE);
+            shortlistlayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
             empty_shortlist.setVisibility(View.VISIBLE);
         }

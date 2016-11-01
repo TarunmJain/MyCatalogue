@@ -160,6 +160,71 @@
                         </LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
+                <LinearLayout
+                    android:layout_below="@+id/appbar"
+                    android:id="@+id/shortlistlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/material_grey_300"
+                        android:orientation="horizontal"
+                        android:padding="1dp"
+                        android:weightSum="4.5">
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="0.5"
+                            android:background="@color/white" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:text="Product Name"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:text="Section"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:text="Category"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:text="Price"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
 
 
                 <android.support.v7.widget.RecyclerView
@@ -167,9 +232,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/footer"
-                    android:layout_below="@+id/details"
-                    android:background="#ededed">
-
+                    android:layout_below="@+id/shortlistlayout"
+                    android:background="@color/white">
                 </android.support.v7.widget.RecyclerView>
                 <RelativeLayout
                     android:gravity="center"

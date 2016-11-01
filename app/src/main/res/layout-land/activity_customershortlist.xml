@@ -117,11 +117,100 @@ tools:context="com.centura_technologies.mycatalogue.Order.Controller.OrdersList"
                     android:textColor="@color/white" />
             </RelativeLayout>
         </RelativeLayout>
-        <android.support.v7.widget.RecyclerView
+        <LinearLayout
             android:layout_below="@+id/appbar"
+            android:id="@+id/shortlistlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:weightSum="6.5"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Customer Name"
+                    android:paddingLeft="5dp"
+                    android:background="@drawable/transparentsquarebutton"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/customernumber"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Customer Number"
+                    android:background="@drawable/transparentsquarebutton"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/customeremail"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Customer Email"
+                    android:background="@drawable/transparentsquarebutton"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/shortlistnumber"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Shortlist Number"
+                    android:background="@drawable/transparentsquarebutton"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/productcount"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Total Product"
+                    android:background="@drawable/transparentsquarebutton"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/shortlistdate"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Shortlist Date"
+                    android:background="@drawable/transparentsquarebutton"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/transparentsquarebutton">
+                    <ImageView
+                        android:id="@+id/deleteshortlist"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:src="@drawable/ic_delete_grey600_24dp"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_below="@+id/shortlistlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recyclerview" />
+            android:id="@+id/recyclerview"
+            android:background="@color/white"/>
     </RelativeLayout>
 
 <android.support.design.widget.FloatingActionButton

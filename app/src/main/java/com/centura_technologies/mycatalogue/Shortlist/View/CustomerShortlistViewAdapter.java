@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.CatalogueDetails;
@@ -46,6 +47,18 @@ public class CustomerShortlistViewAdapter extends RecyclerView.Adapter<CustomerS
     public void onBindViewHolder(CustomerShortlistViewAdapter.ViewHolder holder, final int position) {
         GenericData.setImage(model.get(position).getImageUrl(), holder.image, mContext);
         holder.text.setText(model.get(position).getTitle());
+        for(int i=0;i<DB.getInitialModel().getSections().size();i++){
+            if(DB.getInitialModel().getSections().get(i).getId().matches(model.get(position).getSectionId())){
+                holder.section.setText(DB.getInitialModel().getSections().get(i).getTitle());
+            }
+        }
+        for(int j=0;j<DB.getInitialModel().getCategories().size();j++){
+            if(DB.getInitialModel().getCategories().get(j).getId().matches(model.get(position).getCategoryId())){
+                holder.category.setText(DB.getInitialModel().getCategories().get(j).getTitle());
+            }
+        }
+        holder.price.setText(model.get(position).getSellingPrice()+"");
+
     }
 
     @Override
@@ -54,14 +67,17 @@ public class CustomerShortlistViewAdapter extends RecyclerView.Adapter<CustomerS
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView text;
+        TextView text,section,category,price;
         ImageView image;
-        CardView pane;
+        LinearLayout pane;
         public ViewHolder(View itemView) {
             super(itemView);
             text=(TextView)itemView.findViewById(R.id.title);
+            section=(TextView)itemView.findViewById(R.id.section);
+            category=(TextView)itemView.findViewById(R.id.category);
+            price=(TextView)itemView.findViewById(R.id.price);
             image=(ImageView)itemView.findViewById(R.id.image);
-            pane=(CardView)itemView.findViewById(R.id.pane);
+            pane=(LinearLayout)itemView.findViewById(R.id.pane);
         }
     }
 }

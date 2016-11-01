@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +52,7 @@ public class Shortlist extends AppCompatActivity {
     Button save, clear,bill;
     TextView totalproducts;
     static RelativeLayout emptyshortlist, footer;
+    static LinearLayout shortlistlayout;
     static Button shortlistnow;
     static CardView details;
     static FloatingActionButton fab;
@@ -65,7 +68,7 @@ public class Shortlist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shortlist);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        toolbar.setTitle("Shortlist");
+        toolbar.setTitle("Cart");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         df = new SimpleDateFormat("dd/MM/yy");
@@ -77,12 +80,13 @@ public class Shortlist extends AppCompatActivity {
         details = (CardView) findViewById(R.id.details);
         customername = (EditText) findViewById(R.id.customername);
         salespersonname = (EditText) findViewById(R.id.salespersonname);
+        shortlistlayout=(LinearLayout)findViewById(R.id.shortlistlayout);
         save = (Button) findViewById(R.id.save);
         clear = (Button) findViewById(R.id.clear);
         bill=(Button)findViewById(R.id.bill);
         totalproducts = (TextView) findViewById(R.id.totalproducts);
         shortlistrecyclerview = (RecyclerView) findViewById(R.id.shortlistrecyclerview);
-        shortlistrecyclerview.setLayoutManager(new GridLayoutManager(Shortlist.this, 3));
+        shortlistrecyclerview.setLayoutManager(new LinearLayoutManager(Shortlist.this, LinearLayoutManager.VERTICAL,false));
         totalproducts.setText("Total Products - " + DB.getShortlistedlist().size() + "");
         OnClicks();
         InitializeAdapter(Shortlist.this);
@@ -103,6 +107,7 @@ public class Shortlist extends AppCompatActivity {
                 shortlistrecyclerview.setAdapter(new ShortlistAdapter(context));
             } else {
                 shortlistrecyclerview.setVisibility(View.GONE);
+                shortlistlayout.setVisibility(View.GONE);
                 footer.setVisibility(View.GONE);
                 details.setVisibility(View.GONE);
                 emptyshortlist.setVisibility(View.VISIBLE);

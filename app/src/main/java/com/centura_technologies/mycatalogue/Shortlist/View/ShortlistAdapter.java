@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,7 +50,18 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
     public void onBindViewHolder(ShortlistAdapter.ViewHolder holder, final int position) {
         GenericData.setImage(model.get(position).getImageUrl(), holder.image, mContext);
         holder.text.setText(model.get(position).getTitle());
-        holder.delete.setOnClickListener(new View.OnClickListener() {
+        for(int i=0;i<DB.getInitialModel().getSections().size();i++){
+            if(DB.getInitialModel().getSections().get(i).getId().matches(model.get(position).getSectionId())){
+                holder.section.setText(DB.getInitialModel().getSections().get(i).getTitle());
+            }
+        }
+        for(int j=0;j<DB.getInitialModel().getCategories().size();j++){
+            if(DB.getInitialModel().getCategories().get(j).getId().matches(model.get(position).getCategoryId())){
+                holder.category.setText(DB.getInitialModel().getCategories().get(j).getTitle());
+            }
+        }
+        holder.price.setText(model.get(position).getSellingPrice()+"");
+        holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DB.getShortlistedlist().remove(position);
@@ -81,15 +93,17 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView text;
-        ImageView image,delete;
-        CardView pane;
+        TextView text,section,category,price;
+        ImageView image;
+        LinearLayout pane;
         public ViewHolder(View itemView) {
             super(itemView);
             text=(TextView)itemView.findViewById(R.id.title);
+            section=(TextView)itemView.findViewById(R.id.section);
+            category=(TextView)itemView.findViewById(R.id.category);
+            price=(TextView)itemView.findViewById(R.id.price);
             image=(ImageView)itemView.findViewById(R.id.image);
-            delete= (ImageView) itemView.findViewById(R.id.delete);
-            pane=(CardView)itemView.findViewById(R.id.pane);
+            pane=(LinearLayout)itemView.findViewById(R.id.pane);
         }
     }
 }

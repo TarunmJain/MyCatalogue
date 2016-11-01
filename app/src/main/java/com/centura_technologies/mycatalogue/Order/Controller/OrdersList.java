@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -33,7 +34,7 @@ public class OrdersList extends AppCompatActivity {
     EditText serachorder;
     static RecyclerView orderslist;
     TextView toolbar_title;
-    static LinearLayout search;
+    static LinearLayout search,orderlisttitle;
     static RelativeLayout empty_shortlist;
     Button ordernow;
     static FloatingActionButton fab;
@@ -47,12 +48,13 @@ public class OrdersList extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         search=(LinearLayout)findViewById(R.id.search);
+        orderlisttitle=(LinearLayout)findViewById(R.id.orderlisttitle);
         empty_shortlist=(RelativeLayout)findViewById(R.id.empty_shortlist);
         ordernow=(Button)findViewById(R.id.ordernow);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         serachorder= (EditText) findViewById(R.id.serachorder);
         orderslist = (RecyclerView) findViewById(R.id.orderslist);
-        orderslist.setLayoutManager(new GridLayoutManager(OrdersList.this, 3));
+        orderslist.setLayoutManager(new LinearLayoutManager(OrdersList.this, LinearLayoutManager.VERTICAL,false));
         InitializeAdapter(OrdersList.this);
         SearchLogic();
         OnClicks();
@@ -84,12 +86,14 @@ public class OrdersList extends AppCompatActivity {
         LocalOrders = (ArrayList<OrderModel>) StaticData.orders.clone();
         if(LocalOrders.size()!=0){
             fab.setVisibility(View.VISIBLE);
+            orderlisttitle.setVisibility(View.VISIBLE);
             orderslist.setVisibility(View.VISIBLE);
             search.setVisibility(View.VISIBLE);
             empty_shortlist.setVisibility(View.VISIBLE);
             orderslist.setAdapter(new OrderListAdapter(context));
         }else {
             fab.setVisibility(View.GONE);
+            orderlisttitle.setVisibility(View.GONE);
             orderslist.setVisibility(View.GONE);
             search.setVisibility(View.GONE);
             empty_shortlist.setVisibility(View.VISIBLE);

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.R;
@@ -72,7 +73,7 @@ public class CustomerShortlistAdapter extends RecyclerView.Adapter<CustomerShort
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView CustomerName, CustomerNumber, CustomerEmail, shortlistNumber, ProductCount, shortlistDate;
         ImageView deleteshortlist;
-        CardView customershortlistpane;
+        LinearLayout customershortlistpane;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -83,7 +84,7 @@ public class CustomerShortlistAdapter extends RecyclerView.Adapter<CustomerShort
             ProductCount = (TextView) itemView.findViewById(R.id.productcount);
             shortlistDate = (TextView) itemView.findViewById(R.id.shortlistdate);
             deleteshortlist = (ImageView) itemView.findViewById(R.id.deleteshortlist);
-            customershortlistpane = (CardView) itemView.findViewById(R.id.customershortlistpane);
+            customershortlistpane = (LinearLayout) itemView.findViewById(R.id.customershortlistpane);
         }
     }
 }

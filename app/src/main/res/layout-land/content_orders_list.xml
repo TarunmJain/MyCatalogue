@@ -51,7 +51,6 @@
             android:layout_below="@+id/text"
             android:layout_marginTop="5dp"
             android:gravity="center">
-
             <Button
                 android:id="@+id/ordernow"
                 android:layout_width="wrap_content"
@@ -62,10 +61,94 @@
                 android:textColor="@color/white" />
         </RelativeLayout>
     </RelativeLayout>
-
+    <LinearLayout
+        android:id="@+id/orderlisttitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:weightSum="7.5"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="Customer Name"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/transparentsquarebutton"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="Customer Number"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/transparentsquarebutton"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="Customer Email"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/transparentsquarebutton"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="Order Number"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/transparentsquarebutton"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="Order Date"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/transparentsquarebutton"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="Total Items"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/transparentsquarebutton"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:text="Grand Total"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@drawable/transparentsquarebutton"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="70dp"
+            android:background="@drawable/transparentsquarebutton">
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/orderdelete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:src="@drawable/ic_delete_grey600_24dp"/>
+        </RelativeLayout>
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/orderslist"
+        android:layout_below="@+id/orderlisttitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/material_grey_100"/>
+        android:background="@color/white"/>
 </RelativeLayout>

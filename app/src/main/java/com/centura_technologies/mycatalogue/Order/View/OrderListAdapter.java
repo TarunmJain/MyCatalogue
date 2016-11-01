@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Order.Controller.Order;
@@ -86,12 +87,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
         TextView CustomerName,CustomerNumber,CustomerEmail,OrderNumber,ProductCount,GrandTotal,OrderDate;
         ImageView orderdelete;
-        CardView orderpane;
+        LinearLayout orderpane;
         public ViewHolder(View itemView) {
             super(itemView);
             CustomerName = (TextView) itemView.findViewById(R.id.customername);
             CustomerNumber = (TextView) itemView.findViewById(R.id.customernumber);
-            orderpane= (CardView) itemView.findViewById(R.id.orderpane);
+            orderpane= (LinearLayout) itemView.findViewById(R.id.orderpane);
             CustomerEmail = (TextView) itemView.findViewById(R.id.customeremail);
             OrderNumber = (TextView) itemView.findViewById(R.id.oredernumber);
             ProductCount = (TextView) itemView.findViewById(R.id.productcount);

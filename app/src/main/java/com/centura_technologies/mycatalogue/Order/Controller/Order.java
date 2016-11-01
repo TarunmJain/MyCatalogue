@@ -264,7 +264,7 @@ public class Order extends AppCompatActivity {
                         dbHelper.saveOrders();
                         clearBill.performClick();
                         DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
-                        Shortlist.InitializeAdapter(Order.this);
+                        //Shortlist.InitializeAdapter(Order.this);
                         finish();
                     } else {
                         Toast.makeText(Order.this, "No Products Selected", Toast.LENGTH_SHORT).show();
