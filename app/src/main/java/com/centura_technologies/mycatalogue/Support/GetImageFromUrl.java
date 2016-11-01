@@ -3,6 +3,8 @@ package com.centura_technologies.mycatalogue.Support;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.StrictMode;
+
+import com.centura_technologies.mycatalogue.Catalogue.Model.DescriptionMenuClass;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import java.io.BufferedInputStream;
@@ -48,6 +50,7 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
 
     private InputStream downloadImage(ImageCache result) {
         try {
+            String loaclurl="";
             result.strean = getHttpConnection(result.fileURL);
             File folderDir = Environment.getExternalStoragePublicDirectory("/MyCatalogueLocalData");
             File file = new File(folderDir, result.fName);
@@ -59,15 +62,38 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
                     BufferedInputStream bufferedInputStream = null;
                     bufferedInputStream = new BufferedInputStream(result.strean,
                             1024 * 5);
-                    FileOutputStream fileOutputStream = new FileOutputStream(
-                            folderDir + "/" + result.fName);
+                    FileOutputStream fileOutputStream = null;
+
+                       String MimeString = DescriptionMenuClass.getMimeType(result.fileURL);
+                    loaclurl=result.fName;
+                    if (MimeString != null)
+                        if (!MimeString.matches("")) {
+                            if (MimeString.toLowerCase().contains("image"))
+                                loaclurl+="";
+
+                            if (MimeString.toLowerCase().contains("video"))
+                                loaclurl+=".mp4";
+
+                            if (MimeString.toLowerCase().contains("web"))
+                                loaclurl+=".html";
+
+                            if (MimeString.toLowerCase().contains("pdf"))
+                                loaclurl+=".pdf";
+
+
+                            if (MimeString.toLowerCase().contains("ppt"))
+                                loaclurl+=".ppt";
+
+                        }
+                    fileOutputStream = new FileOutputStream(
+                            folderDir + "/" + loaclurl);
                     byte[] buffer = new byte[1024];
                     int len1 = 0;
                     while ((len1 = result.strean.read(buffer)) != -1) {
                         fileOutputStream.write(buffer, 0, len1);
                     }
                     DbHelper db = new DbHelper(result.context);
-                    db.saveImage(result.fileURL, "/MyCatalogueLocalData/" + result.fName);
+                    db.saveImage(result.fileURL, "/MyCatalogueLocalData/" + loaclurl);
                     bufferedInputStream.close();
                     fileOutputStream.close();
                     result.strean.close();

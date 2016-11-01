@@ -63,42 +63,16 @@ public class CoverFlowAdapternew extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if (position == 0) {
-            GenericData.setImage(data.get(position).getImageUrl(), viewHolder.gameImage, activity);
-            viewHolder.gameName.setText("All Products");
+            viewHolder.gameName.setVisibility(View.VISIBLE);
         } else {
+            viewHolder.gameName.setVisibility(View.GONE);
             GenericData.setImage(data.get(position-1).getImageUrl(), viewHolder.gameImage, activity);
             viewHolder.gameName.setText(data.get(position-1).getTitle());
         }
-        convertView.setOnClickListener(onClickListener(position));
         return convertView;
     }
 
-    private View.OnClickListener onClickListener(final int position) {
-        return new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if(position==0)
-                {
-                    BreadCrumb.Section = "All Products";
-                    StaticData.SelectedCategoryId = "-1";
-                    BreadCrumb.Category = "";
-                    if (DB.getInitialModel().getProducts().size() != -0) {
-                        Intent i = new Intent(activity, Catalogue.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        ((Activity)activity).startActivity(i);
-                    } else Toast.makeText(activity, "No Products", Toast.LENGTH_SHORT).show();
-                }else {
-                    BreadCrumb.Section = data.get(position-1).getTitle();
-                    BreadCrumb.Category = "";
-                    StaticData.SelectedCollectionProducts = new ArrayList<String>();
-                    StaticData.SelectedCollection = true;
-                    StaticData.SelectedCollectionProducts = data.get(position-1).getProductIds();
-                    ((Activity)activity).startActivity(new Intent(activity, Catalogue.class));
-                }
-            }
-        };
-    }
 
 
     private static class ViewHolder {

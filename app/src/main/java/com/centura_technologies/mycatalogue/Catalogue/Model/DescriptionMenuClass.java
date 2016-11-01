@@ -15,23 +15,30 @@ public class DescriptionMenuClass {
     public String MimeString;
     public int MediaType;
 
-    public DescriptionMenuClass(String url, int mediatype) {
-        URL = url;
-        MimeString = getMimeType(URL);
-        if (MimeString.toLowerCase().contains("image"))
-            MediaType = TYPE_IMAGE;
+    public DescriptionMenuClass(String url) {
+        if (url != null)
+            if (!url.matches("")) {
+                URL = url;
+                MimeString = getMimeType(URL);
+                if (MimeString != null)
+                    if (!MimeString.matches("")) {
+                        if (MimeString.toLowerCase().contains("image"))
+                            MediaType = TYPE_IMAGE;
 
-        if (MimeString.toLowerCase().contains("video"))
-            MediaType = TYPE_VEDIO;
+                        if (MimeString.toLowerCase().contains("video"))
+                            MediaType = TYPE_VEDIO;
 
-        if (MimeString.toLowerCase().contains("web"))
-            MediaType = TYPE_WEB;
+                        if (MimeString.toLowerCase().contains("web"))
+                            MediaType = TYPE_WEB;
 
-        if (MimeString.toLowerCase().contains("pdf"))
-            MediaType = TYPE_PDF;
+                        if (MimeString.toLowerCase().contains("pdf"))
+                            MediaType = TYPE_PDF;
 
-        if (MimeString.toLowerCase().contains("ppt"))
-            MediaType = TYPE_PPT;
+                        if (MimeString.toLowerCase().contains("ppt"))
+                            MediaType = TYPE_PPT;
+                    }
+
+            }
     }
 
     public static String getMimeType(String url) {

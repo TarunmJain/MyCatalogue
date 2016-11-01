@@ -6,21 +6,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -54,7 +58,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static ImageView openimage, next, previous, shortlist, media, arrow;
     static TextView title, description, amount, mediatext, variencetext;
     static LinearLayout varients;
-    LinearLayout images,videos,pdfs,ppts;
+    LinearLayout images, videos, pdfs, ppts;
     static Context context;
     static Products productModel;
     static Dialog dialog;
@@ -62,12 +66,13 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     DrawerLayout drawer;
     public static ArrayList<String> image;
     ScrollView scrollView;
-    public static String videourl="";
-    public static String pdfurl="";
+    public static String videourl = "";
+    public static String pdfurl = "";
     static ArrayList<Products> shortlisted;
     static RecyclerView menulyaout;
     static ImageView productImage;
     static VideoView productDetailvedio;
+    RelativeLayout toppane;
     static WebView productDetailwebview;
     static LinearLayout imagelayout;
     static LinearLayout vediolayout;
@@ -75,6 +80,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static LinearLayout pdflayout;
     static LinearLayout pptlayout;
     static LinearLayout infolayout;
+    private int screenhight;
 
 
     @Override
@@ -88,7 +94,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         logff.setVisibility(View.GONE);
         context = CatalogueDetails.this;
         allproducts = new ArrayList<Products>();
-        shortlisted=new ArrayList<Products>();
+        shortlisted = new ArrayList<Products>();
         productdetaillist = (RecyclerView) findViewById(R.id.productdetaillist);
         individual_product_images = (RecyclerView) findViewById(R.id.individual_product_images);
         drawer_items_recycler = (RecyclerView) findViewById(R.id.drawer_items_recycler1);
@@ -105,19 +111,19 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         mediatext = (TextView) findViewById(R.id.mediatext);
         media = (ImageView) findViewById(R.id.media);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
-        menulyaout= (RecyclerView) findViewById(R.id.menulyaout);
-        imagelayout= (LinearLayout) findViewById(R.id.imagelayout);
-        vediolayout= (LinearLayout) findViewById(R.id.vediolayout);
-        weblayout= (LinearLayout) findViewById(R.id.weblayout);
-        pdflayout= (LinearLayout) findViewById(R.id.pdflayout);
-        pptlayout= (LinearLayout) findViewById(R.id.pptlayout);
-        infolayout= (LinearLayout) findViewById(R.id.infolayout);
-        productImage= (ImageView) findViewById(R.id.productDetailImageview);
-        productDetailvedio= (VideoView) findViewById(R.id.productDetailvedio);
-        productDetailwebview= (WebView) findViewById(R.id.productDetailwebview);
+        toppane= (RelativeLayout) findViewById(R.id.toppane);
+        menulyaout = (RecyclerView) findViewById(R.id.menulyaout);
+        imagelayout = (LinearLayout) findViewById(R.id.imagelayout);
+        vediolayout = (LinearLayout) findViewById(R.id.vediolayout);
+        weblayout = (LinearLayout) findViewById(R.id.weblayout);
+        pdflayout = (LinearLayout) findViewById(R.id.pdflayout);
+        pptlayout = (LinearLayout) findViewById(R.id.pptlayout);
+        infolayout = (LinearLayout) findViewById(R.id.infolayout);
+        productImage = (ImageView) findViewById(R.id.productDetailImageview);
+        productDetailvedio = (VideoView) findViewById(R.id.productDetailvedio);
+        productDetailwebview = (WebView) findViewById(R.id.productDetailwebview);
         menulyaout.setLayoutManager(new LinearLayoutManager(CatalogueDetails.this));
-
-
+        UiManuplation();
 
         if (StaticData.ClickedProduct) {
             for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
@@ -126,9 +132,8 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 }
             }
         } else {
-            allproducts=Catalogue.products;
+            allproducts = Catalogue.products;
         }
-
 
 
         if (allproducts != null)
@@ -202,10 +207,10 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 Dialog dialog = new Dialog(CatalogueDetails.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.media);
-                images=(LinearLayout)dialog.findViewById(R.id.image);
-                videos=(LinearLayout)dialog.findViewById(R.id.video);
-                pdfs=(LinearLayout)dialog.findViewById(R.id.pdf);
-                ppts=(LinearLayout)dialog.findViewById(R.id.ppt);
+                images = (LinearLayout) dialog.findViewById(R.id.image);
+                videos = (LinearLayout) dialog.findViewById(R.id.video);
+                pdfs = (LinearLayout) dialog.findViewById(R.id.pdf);
+                ppts = (LinearLayout) dialog.findViewById(R.id.ppt);
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(dialog.getWindow().getAttributes());
                /* lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -223,15 +228,15 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 videos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        videourl=allproducts.get(StaticData.position).getVideoUrl();
-                        startActivity(new Intent(CatalogueDetails.this,VideoActivity.class));
+                        videourl = allproducts.get(StaticData.position).getVideoUrl();
+                        startActivity(new Intent(CatalogueDetails.this, VideoActivity.class));
                     }
                 });
                 pdfs.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        pdfurl=allproducts.get(StaticData.position).getPdfUrl();
-                        startActivity(new Intent(CatalogueDetails.this,PdfActivity.class));
+                        pdfurl = allproducts.get(StaticData.position).getPdfUrl();
+                        startActivity(new Intent(CatalogueDetails.this, PdfActivity.class));
                     }
                 });
                 ppts.setOnClickListener(new View.OnClickListener() {
@@ -254,11 +259,19 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
 
     public static void RenderProduct(final Products productdetail) {
         LoadInfo();
-        ArrayList<DescriptionMenuClass> menudata=new ArrayList<DescriptionMenuClass>();
-        for (String imagedata: productdetail.getProductImages()) {
-            menudata.add(new DescriptionMenuClass(imagedata,-1));
+        ArrayList<DescriptionMenuClass> menudata = new ArrayList<DescriptionMenuClass>();
+        for (String imagedata : productdetail.getProductImages()) {
+            if (imagedata != null)
+                if (!imagedata.matches(""))
+                    menudata.add(new DescriptionMenuClass(imagedata));
         }
-        menulyaout.setAdapter(new DetailMenuAdapter(context,menudata));
+        for (String imagedata : productdetail.getAttachments()) {
+            if (imagedata != null)
+                if (!imagedata.matches(""))
+                    menudata.add(new DescriptionMenuClass(imagedata));
+        }
+
+        menulyaout.setAdapter(new DetailMenuAdapter(context, menudata));
         productModel = productdetail;
         image = new ArrayList<String>();
         for (int i = 0; i < productModel.getProductImages().size(); i++)
@@ -428,7 +441,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         finish();
     }
 
-    public static void LoadInfo(){
+    public static void LoadInfo() {
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
@@ -437,7 +450,8 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         infolayout.setVisibility(View.VISIBLE);
     }
 
-    public static void LoadHTML(String url){
+    public static void LoadHTML(String url) {
+        url= Environment.getExternalStorageDirectory().getAbsolutePath() +url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.VISIBLE);
@@ -448,7 +462,8 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         productDetailwebview.loadUrl(url);
     }
 
-    public static void LoadVedio(Context context,String url){
+    public static void LoadVedio(Context context, String url) {
+        url= Environment.getExternalStorageDirectory().getAbsolutePath() +url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.VISIBLE);
         weblayout.setVisibility(View.GONE);
@@ -463,7 +478,8 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         productDetailvedio.setMediaController(vidControl);
     }
 
-    public static void LoadPDF(Context context,String url){
+    public static void LoadPDF(Context context, String url) {
+        url= Environment.getExternalStorageDirectory().getAbsolutePath() +url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
@@ -472,16 +488,30 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         infolayout.setVisibility(View.GONE);
         Intent intent = new Intent(context, PdfView.class);
         intent.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, url);
-        ((Activity)context).startActivity(intent);
+        ((Activity) context).startActivity(intent);
     }
 
-    public static void LoadImage(Context context,String url){
+    public static void LoadImage(Context context, String url) {
         imagelayout.setVisibility(View.VISIBLE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.GONE);
         pptlayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.GONE);
-        GenericData.setImage(url,productImage,context);
+        GenericData.setImage(url, productImage, context);
+    }
+
+    private void UiManuplation() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        screenhight = metrics.heightPixels;
+        ViewTreeObserver vto1 = toppane.getViewTreeObserver();
+        vto1.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                toppane.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                toppane.getLayoutParams().height = screenhight-GenericData.convertDpToPixels(68,context);
+            }
+        });
     }
 }

@@ -21,18 +21,21 @@
 
                 <ImageView
                     android:id="@+id/openimage"
+                    android:scaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_toLeftOf="@+id/rightpane"
                     android:src="@drawable/loginscreen" />
 
                 <RelativeLayout
+                    android:padding="16dp"
+                    android:background="#90ffffff"
+                    android:gravity="bottom"
                     android:id="@+id/rightpane"
                     android:layout_width="350dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_alignParentEnd="true">
 
                     <TextView
                         android:id="@+id/title"
@@ -118,6 +121,31 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/pricelayout"
                         android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+                    <LinearLayout
+                        android:layout_below="@+id/pricelayout"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Description"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:padding="5dp"
+                            android:text="Chet's code deletes an item immediately. I improved on this by making it function more like Gmail where swiping reveals a bottom view that indicates that the item is deleted but provides an Undo button where the user has the possibility to undo the deletion. Chet's code also has a bug in it. If you have less items in the listview than the height of the listview is and you delete the last item, the last item appears to not be deleted. This was fixed in my code. "
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+                    </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -129,24 +157,7 @@
                 android:layout_margin="5dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Description"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:padding="5dp"
-                    android:text="Chet's code deletes an item immediately. I improved on this by making it function more like Gmail where swiping reveals a bottom view that indicates that the item is deleted but provides an Undo button where the user has the possibility to undo the deletion. Chet's code also has a bug in it. If you have less items in the listview than the height of the listview is and you delete the last item, the last item appears to not be deleted. This was fixed in my code. "
-                    android:textColor="@color/black"
-                    android:textSize="14dp" />
 
                 <TextView
                     android:layout_width="match_parent"

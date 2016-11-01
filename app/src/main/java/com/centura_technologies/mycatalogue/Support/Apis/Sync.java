@@ -86,6 +86,11 @@ public class Sync {
                                 getImageFromUrl = new GetImageFromUrl();
                                 getImageFromUrl.execute(param);
                             }
+                            for (int d = 0; d < temp.getProducts().get(i).getAttachments().size(); d++) {
+                                param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d), temp.getProducts().get(i).getId() +"attachment"+d + "", context);
+                                getImageFromUrl = new GetImageFromUrl();
+                                getImageFromUrl.execute(param);
+                            }
                         }
                         for (int i = 0; i < temp.getSections().size(); i++) {
                             ImageCache param1 = new ImageCache(temp.getSections().get(i).getImageUrl(), temp.getSections().get(i).getId(), context);
@@ -326,6 +331,11 @@ public class Sync {
                                 getImageFromUrl = new GetImageFromUrl();
                                 getImageFromUrl.execute(param);
                             }
+                            for (int d = 0; d < temp.getProducts().get(i).getAttachments().size(); d++) {
+                                param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d), temp.getProducts().get(i).getId() +"attachment"+d + "", context);
+                                getImageFromUrl = new GetImageFromUrl();
+                                getImageFromUrl.execute(param);
+                            }
                         }
 
                         for (int i = 0; i < temp.getCategories().size(); i++) {
@@ -404,6 +414,11 @@ public class Sync {
                             getImageFromUrl.execute(param);
                             for (int d = 0; d < temp.getProducts().get(i).getProductImages().size(); d++) {
                                 param = new ImageCache(temp.getProducts().get(i).getProductImages().get(d), temp.getProducts().get(i).getId() + d + "", context);
+                                getImageFromUrl = new GetImageFromUrl();
+                                getImageFromUrl.execute(param);
+                            }
+                            for (int d = 0; d < temp.getProducts().get(i).getAttachments().size(); d++) {
+                                param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d), temp.getProducts().get(i).getId() +"attachment"+d + "", context);
                                 getImageFromUrl = new GetImageFromUrl();
                                 getImageFromUrl.execute(param);
                             }

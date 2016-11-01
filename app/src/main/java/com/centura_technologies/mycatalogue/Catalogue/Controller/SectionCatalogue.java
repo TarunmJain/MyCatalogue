@@ -36,8 +36,11 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
 import com.centura_technologies.mycatalogue.Catalogue.View.CollectionAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.CollectionnewAdapter;
+import com.centura_technologies.mycatalogue.Order.Controller.OrdersList;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
+import com.centura_technologies.mycatalogue.Shortlist.Controller.CustomerShortlist;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -60,8 +63,15 @@ public class SectionCatalogue extends AppCompatActivity {
     private static TextSwitcher mTitle;
     SharedPreferences sharedPreferences;
     public static ArrayList<CollectionModel> collectionmodel;
+    TextView catalogtext,shortlisttext,ordertext,settingstext,logouttext;
 
-
+   public void animate(View view, final int position) {
+            view.setVisibility(View.VISIBLE);
+            view.animate().cancel();
+            view.setTranslationY(100);
+            view.setAlpha(0);
+            view.animate().alpha(1.0f).translationY(0).setDuration(1000);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +80,11 @@ public class SectionCatalogue extends AppCompatActivity {
         toolbar.setTitle("Collections");
         setSupportActionBar(toolbar);
         coverFlow = (FeatureCoverFlow) findViewById(R.id.coverflow);
+        catalogtext= (TextView) findViewById(R.id.catalogtext);
+        shortlisttext=(TextView) findViewById(R.id.shortlisttext);
+        ordertext=(TextView) findViewById(R.id.ordertext);
+        settingstext=(TextView) findViewById(R.id.settingstext);
+        logouttext=(TextView) findViewById(R.id.logouttext);
         Drawer = (DrawerLayout) findViewById(R.id.drawer);
         mTitle = (TextSwitcher) findViewById(R.id.title);
         mTitle.setFactory(new ViewSwitcher.ViewFactory() {
@@ -84,6 +99,11 @@ public class SectionCatalogue extends AppCompatActivity {
         Animation out = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
         mTitle.setInAnimation(in);
         mTitle.setOutAnimation(out);
+        animate(catalogtext, 1);
+        animate(shortlisttext,1);
+        animate(ordertext,1);
+        animate(settingstext,1);
+        animate(logouttext,1);
 
 
         sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
@@ -109,6 +129,38 @@ public class SectionCatalogue extends AppCompatActivity {
 
         StaticData.DrawerTextDisable = "Catalogue";
         GenericData.DrawerOnClicks(SectionCatalogue.this);
+
+        catalogtext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StaticData.SelectedCategoryId = "-1";
+                startActivity(new Intent(SectionCatalogue.this, SectionCatalogue.class));
+            }
+        });
+        ordertext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SectionCatalogue.this, OrdersList.class));
+            }
+        });
+        settingstext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SectionCatalogue.this, Settings.class));
+            }
+        });
+        shortlisttext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SectionCatalogue.this, CustomerShortlist.class));
+            }
+        });
+        logouttext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GenericData.logout(SectionCatalogue.this);
+            }
+        });
     }
 
     public static void InitializationCollectionAdapter(final Context context) {
@@ -123,7 +175,7 @@ public class SectionCatalogue extends AppCompatActivity {
         coverFlow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
+                if (position == collectionmodel.size()+1 || position==0) {
                     BreadCrumb.Section = "All Products";
                     StaticData.SelectedCategoryId = "-1";
                     BreadCrumb.Category = "";

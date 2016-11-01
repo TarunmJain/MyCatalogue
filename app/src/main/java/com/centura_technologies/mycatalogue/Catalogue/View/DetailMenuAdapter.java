@@ -73,7 +73,7 @@ public class DetailMenuAdapter extends RecyclerView.Adapter<DetailMenuAdapter.Vi
                 else {
                     DbHelper dbHelper = new DbHelper(context);
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_IMAGE) {
-                        CatalogueDetails.LoadImage(context,descriptionMenuClasses.get(finalPosition).URL);
+                        CatalogueDetails.LoadImage(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
                     }
 
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_PDF) {

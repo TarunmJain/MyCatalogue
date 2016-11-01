@@ -230,12 +230,11 @@ public class Catalogue extends AppCompatActivity {
         categoryicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawer.openDrawer(Gravity.LEFT);
                 searchlayout.setVisibility(View.GONE);
-                drawer.openDrawer(leftdrawer);
                 drawer.closeDrawer(rightdrawer);
+                drawer.openDrawer(leftdrawer);
                 InitialzationSectionAdapter(Catalogue.this);
-                InitialzationCategoryAdapter(Catalogue.this, null);
+                //InitialzationCategoryAdapter(Catalogue.this, null);
             }
         });
 

@@ -463,8 +463,6 @@ public class GenericData {
                     a.startActivity(new Intent(context, SectionCatalogue.class));
                     Drawer.closeDrawer(Gravity.LEFT);
                 }
-
-
             }
         });
         shortlist.setOnClickListener(new View.OnClickListener() {

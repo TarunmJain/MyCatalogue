@@ -4,10 +4,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <include
-        android:id="@+id/tool_bar"
-        layout="@layout/toolbar"></include>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/toolbar"></include>
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@color/primarycolor"
+        android:layout_height="64dp">
+        <TextView
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:id="@+id/catalogtext"
+            android:text="Catalouge"
+            android:textColor="@color/accentcolor"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <View
+            android:background="@color/white"
+            android:layout_width="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="20dp"/>
+        <TextView
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:paddingRight="5dp"
+            android:id="@+id/shortlisttext"
+            android:text="Shortlist"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <View
+            android:background="@color/white"
+            android:layout_width="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="20dp"/>
+        <TextView
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:paddingRight="5dp"
+            android:id="@+id/ordertext"
+            android:text="Order"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <View
+            android:background="@color/white"
+            android:layout_width="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="20dp"/>
+        <TextView
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:paddingRight="5dp"
+            android:id="@+id/settingstext"
+            android:text="Settings"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <View
+            android:background="@color/white"
+            android:layout_width="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_height="20dp"/>
+        <TextView
+            android:visibility="gone"
+            android:textSize="20sp"
+            android:paddingRight="5dp"
+            android:id="@+id/logouttext"
+            android:text="Logout"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
     <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:fab="http://schemas.android.com/apk/res-auto"
@@ -20,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:background="@color/white_light_gray"
+                android:background="@color/primarycolor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
@@ -31,7 +122,7 @@
                     coverflow:reflectionGap="0px"
                     coverflow:rotationThreshold="0.5"
                     coverflow:scalingThreshold="0.5"
-                    coverflow:spacing=".65"
+                    coverflow:spacing=".6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
