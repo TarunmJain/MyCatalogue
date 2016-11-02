@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
     Context mContext;
     ArrayList<CategoryTree> data;
     CategoryTree currentTree;
+    int categoriesView = -1;
     ArrayList<Categories> model;
 
     public SectionlistAdapter(Context context, CategoryTree tree) {
@@ -59,6 +61,8 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
 
     @Override
     public void onBindViewHolder(final SectionlistAdapter.ViewHolder holder, int position) {
+        holder.SubCatagorieslist.setVisibility(View.GONE);
+        holder.SubCatagorieslist.setLayoutManager(new LinearLayoutManager(mContext));
         if (position == 0) {
             holder.categoryImage.setImageResource(R.drawable.common);
             holder.text.setText("All Products");
@@ -80,12 +84,27 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
             GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
             holder.text.setText(data.get(position).getTitle());
             final int finalPosition = position;
+            if (categoriesView == finalPosition)
+            {
+                holder.SubCatagorieslist.setVisibility(View.VISIBLE);
+                holder.SubCatagorieslist.setAdapter(new CategorylistAdapter(mContext, data.get(finalPosition)));
+            }
+            else
+                holder.SubCatagorieslist.setVisibility(View.GONE);
             holder.layview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     BreadCrumb.Section = data.get(finalPosition).getTitle();
                     Catalogue.category = data.get(finalPosition).getCategories();
-                    Catalogue.InitialzationCategoryAdapter(mContext, data.get(finalPosition));
+                    //Catalogue.InitialzationCategoryAdapter(mContext, data.get(finalPosition));
+                    if (data.get(finalPosition).getCategories().size() > 0) {
+                        holder.SubCatagorieslist.setAdapter(new CategorylistAdapter(mContext, data.get(finalPosition)));
+                        int viewHeight = GenericData.convertDpToPixels(35, mContext);
+                        viewHeight = viewHeight * (data.get(finalPosition).getCategories().size());
+                        holder.SubCatagorieslist.getLayoutParams().height = viewHeight;
+                        categoriesView=finalPosition;
+                        notifyDataSetChanged();
+                    }
                 }
             });
         }
@@ -106,6 +125,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView categoryImage;
         TextView text;
+        RecyclerView SubCatagorieslist;
         LinearLayout layview;
 
         public ViewHolder(View v) {
@@ -113,6 +133,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
             categoryImage = (ImageView) v.findViewById(R.id.image);
             text = (TextView) v.findViewById(R.id.text);
             layview = (LinearLayout) v.findViewById(R.id.layview);
+            SubCatagorieslist = (RecyclerView) v.findViewById(R.id.SubCatagorieslist);
         }
     }
 }

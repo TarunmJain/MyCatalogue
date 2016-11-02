@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginTop="1dp"
-    android:id="@+id/layview"
-    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="6dp"
-    android:gravity="center_vertical"
+    android:id="@+id/layview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="6dp">
+
     <com.joooonho.SelectableRoundedImageView
         android:id="@+id/image"
-        android:src="@drawable/test"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_above="@+id/text"
         android:scaleType="centerCrop"
+        android:src="@drawable/test"
+        android:visibility="gone"
         app:sriv_border_width="0dp"
         app:sriv_left_bottom_corner_radius="50dp"
         app:sriv_left_top_corner_radius="50dp"
         app:sriv_right_bottom_corner_radius="50dp"
         app:sriv_right_top_corner_radius="50dp" />
+
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:padding="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_height="match_parent" />
+        android:padding="6dp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/viewcolor" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/SubCatagorieslist"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

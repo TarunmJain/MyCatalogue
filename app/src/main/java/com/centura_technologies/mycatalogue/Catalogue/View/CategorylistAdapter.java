@@ -55,7 +55,7 @@ public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapte
             GenericData.setImage(currentTree.getCategories().get(position).getImageUrl(), holder.categoryImage, mContext);
             holder.text.setText(currentTree.getCategories().get(position).getTitle());
             final int finalPosition = position;
-            holder.categoryImage.setOnClickListener(new View.OnClickListener() {
+            holder.text.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     BreadCrumb.Category=currentTree.getCategories().get(finalPosition).getTitle();

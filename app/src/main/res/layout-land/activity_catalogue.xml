@@ -63,292 +63,330 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/drawer"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tool_bar">
             <!-- main content-->
             <LinearLayout
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:weightSum="10">
+<LinearLayout
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:paddingTop="30dp"
+    android:layout_width="0dp"
+    android:layout_weight="3"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:text="Browse Categories"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content" />
+        <android.support.v7.widget.RecyclerView
+        android:id="@+id/sectionrecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/fabpane"
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:background="@color/primarycolor"
-                    android:orientation="horizontal">
 
-                    <TextView
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:orientation="vertical">
 
-                        android:id="@+id/filtericon"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="Filter"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/fabpane"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:background="@color/primarycolor"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/categoryicon"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_toRightOf="@+id/filtericon"
-                        android:gravity="center"
-                        android:text="Category"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:visibility="visible" />
-                    <!-- <LinearLayout
-                         android:id="@+id/search"
-                         android:layout_width="wrap_content"
-                         android:layout_height="match_parent"
-                         android:orientation="horizontal"
-                         android:layout_centerInParent="true">
-                     <ImageView
-                         android:id="@+id/seachicon"
-                         android:layout_width="50dp"
-                         android:layout_height="match_parent"
-                         android:padding="15dp"
-                         android:src="@drawable/ic_magnify_white_24dp" />
-                     <EditText
-                         android:background="@android:color/transparent"
-                         android:id="@+id/editsearch"
-                         android:padding="10dp"
-                         android:textSize="12dp"
-                         android:layout_width="200dp"
-                         android:hint="Search"
-                         android:inputType="text"
-                         android:layout_centerVertical="true"
-                         android:textColor="@color/white"
-                         android:textColorHint="@color/white"
-                         android:layout_height="match_parent" />
-                         </LinearLayout>-->
-                    <LinearLayout
-                        android:id="@+id/search"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:layout_margin="6dp"
-                        android:background="@drawable/whiterounded">
+                        <TextView
+
+                            android:id="@+id/filtericon"
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Filter"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/categoryicon"
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@+id/filtericon"
+                            android:gravity="center"
+                            android:text="Category"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:visibility="visible" />
+                        <!-- <LinearLayout
+                             android:id="@+id/search"
+                             android:layout_width="wrap_content"
+                             android:layout_height="match_parent"
+                             android:orientation="horizontal"
+                             android:layout_centerInParent="true">
+                         <ImageView
+                             android:id="@+id/seachicon"
+                             android:layout_width="50dp"
+                             android:layout_height="match_parent"
+                             android:padding="15dp"
+                             android:src="@drawable/ic_magnify_white_24dp" />
+                         <EditText
+                             android:background="@android:color/transparent"
+                             android:id="@+id/editsearch"
+                             android:padding="10dp"
+                             android:textSize="12dp"
+                             android:layout_width="200dp"
+                             android:hint="Search"
+                             android:inputType="text"
+                             android:layout_centerVertical="true"
+                             android:textColor="@color/white"
+                             android:textColorHint="@color/white"
+                             android:layout_height="match_parent" />
+                             </LinearLayout>-->
+                        <LinearLayout
+                            android:id="@+id/search"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="6dp"
+                            android:background="@drawable/whiterounded">
+
+                            <ImageView
+                                android:id="@+id/searchicon"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:padding="10dp"
+                                android:src="@drawable/search100" />
+
+                            <EditText
+                                android:id="@+id/editsearch"
+                                android:layout_width="200dp"
+                                android:layout_height="match_parent"
+                                android:background="@android:color/transparent"
+                                android:hint="Search Product"
+                                android:imeOptions="actionDone"
+                                android:paddingLeft="15dp"
+                                android:singleLine="true"
+                                android:textColor="@color/white"
+                                android:textColorHint="@color/white"
+                                android:textSize="14sp" />
+
+
+                        </LinearLayout>
+                        <!--<View
+                               android:layout_below="@+id/search"
+                               android:layout_width="200dp"
+                               android:layout_height="1dp"
+                               android:background="@color/viewcolor"/>-->
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="150dp"
+                            android:layout_height="match_parent"
+                            android:layout_toLeftOf="@+id/listicon"
+                            android:layout_toStartOf="@+id/listicon"></Spinner>
 
                         <ImageView
-                            android:id="@+id/searchicon"
+                            android:id="@+id/gridicon"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            android:layout_toLeftOf="@+id/listicon"
+                            android:padding="15dp"
+                            android:src="@drawable/ic_view_grid_white_24dp"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/listicon"
                             android:layout_width="50dp"
                             android:layout_height="match_parent"
                             android:layout_alignParentRight="true"
-                            android:padding="10dp"
-                            android:src="@drawable/search100" />
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginRight="10dp"
+                            android:padding="15dp"
+                            android:src="@drawable/ic_format_list_bulleted_white_24dp" />
 
-                        <EditText
-                            android:id="@+id/editsearch"
-                            android:layout_width="200dp"
-                            android:layout_height="match_parent"
-                            android:background="@android:color/transparent"
-                            android:hint="Search Product"
-                            android:imeOptions="actionDone"
-                            android:paddingLeft="15dp"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/white"
-                            android:textSize="14sp" />
+                    </RelativeLayout>
 
-
-                    </LinearLayout>
-                    <!--<View
-                           android:layout_below="@+id/search"
-                           android:layout_width="200dp"
-                           android:layout_height="1dp"
-                           android:background="@color/viewcolor"/>-->
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_toLeftOf="@+id/listicon"
-                        android:layout_toStartOf="@+id/listicon"></Spinner>
-
-                    <ImageView
-                        android:id="@+id/gridicon"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="10dp"
-                        android:layout_toLeftOf="@+id/listicon"
-                        android:padding="15dp"
-                        android:src="@drawable/ic_view_grid_white_24dp"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/listicon"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginRight="10dp"
-                        android:padding="15dp"
-                        android:src="@drawable/ic_format_list_bulleted_white_24dp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/nocategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:visibility="gone">
-
-
-                    <TextView
-                        android:id="@+id/text1"
+                    <RelativeLayout
+                        android:id="@+id/nocategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/image"
                         android:gravity="center"
-                        android:text="No Products Found !"
-                        android:textColor="@color/greytext"
-                        android:textSize="18sp" />
+                        android:visibility="gone">
 
-                </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/searchlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                        <TextView
+                            android:id="@+id/text1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/image"
+                            android:gravity="center"
+                            android:text="No Products Found !"
+                            android:textColor="@color/greytext"
+                            android:textSize="18sp" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerview"
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/searchlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"></android.support.v7.widget.RecyclerView>
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerview1"
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone"></android.support.v7.widget.RecyclerView>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerview1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/white"></android.support.v7.widget.RecyclerView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/productlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@android:color/transparent"></android.support.v7.widget.RecyclerView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/productlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/productsrecyclerview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <android.support.v7.widget.CardView
+                        <ScrollView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="10dp">
-                            <RelativeLayout
-                                android:id="@+id/quickview"
+                            android:layout_height="match_parent">
+
+                            <android.support.v7.widget.CardView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:padding="16dp"
-                                android:visibility="gone">
-
-                                <LinearLayout
-                                    android:id="@+id/leftlayout"
-                                    android:layout_width="300dp"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:id="@+id/product_image"
-                                        android:layout_width="300dp"
-                                        android:layout_height="300dp"
-                                        android:src="@drawable/loginscreen" />
-
-                                    <TextView
-                                        android:id="@+id/product_title"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Title"
-                                        android:textSize="25sp" />
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content">
-
-                                        <TextView
-                                            android:id="@+id/price"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="5dp"
-                                            android:text="Price: "
-                                            android:textColor="#85000000"
-                                            android:textSize="18sp" />
-
-                                        <TextView
-                                            android:id="@+id/amount"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="5dp"
-                                            android:text="amount"
-                                            android:textColor="#85000000"
-                                            android:textSize="18sp" />
-
-                                    </LinearLayout>
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="20dp"
-                                        android:text="Description"
-                                        android:textSize="25sp" />
-
-                                    <TextView
-                                        android:id="@+id/product_description"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:padding="5dp"
-                                        android:text="Chet's code deletes an item immediately. I improved on this by making it function more like Gmail where swiping reveals a bottom view that indicates that the item is deleted but provides an Undo button where the user has the possibility to undo the deletion. Chet's code also has a bug in it. If you have less items in the listview than the height of the listview is and you delete the last item, the last item appears to not be deleted. This was fixed in my code. " />
-                                </LinearLayout>
-
+                                app:cardCornerRadius="5dp"
+                                app:cardElevation="10dp">
                                 <RelativeLayout
-                                    android:id="@+id/specificationpane"
+                                    android:id="@+id/quickview"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:padding="15dp">
+                                    android:padding="16dp"
+                                    android:visibility="gone">
 
-                                    <TextView
-                                        android:id="@+id/specificationtitile"
-                                        android:layout_width="wrap_content"
+                                    <LinearLayout
+                                        android:id="@+id/leftlayout"
+                                        android:layout_width="300dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_above="@+id/productdetaillist"
-                                        android:layout_alignLeft="@+id/productdetaillist"
-                                        android:layout_alignStart="@+id/productdetaillist"
-                                        android:layout_centerHorizontal="true"
-                                        android:layout_marginBottom="10dp"
-                                        android:layout_marginLeft="173dp"
-                                        android:layout_marginStart="173dp"
-                                        android:text="Specifications"
-                                        android:textSize="20sp" />
+                                        android:orientation="vertical">
 
-                                    <android.support.v7.widget.RecyclerView
-                                        android:id="@+id/product_specification"
-                                        android:layout_width="500dp"
-                                        android:layout_height="500dp"
-                                        android:layout_below="@+id/specificationtitile"
-                                        android:layout_centerHorizontal="true"
-                                        android:layout_margin="15dp"
-                                        android:background="#ededed" />
+                                        <ImageView
+                                            android:id="@+id/product_image"
+                                            android:layout_width="300dp"
+                                            android:layout_height="300dp"
+                                            android:src="@drawable/loginscreen" />
+
+                                        <TextView
+                                            android:id="@+id/product_title"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Title"
+                                            android:textSize="25sp" />
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content">
+
+                                            <TextView
+                                                android:id="@+id/price"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:text="Price: "
+                                                android:textColor="#85000000"
+                                                android:textSize="18sp" />
+
+                                            <TextView
+                                                android:id="@+id/amount"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:text="amount"
+                                                android:textColor="#85000000"
+                                                android:textSize="18sp" />
+
+                                        </LinearLayout>
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="20dp"
+                                            android:text="Description"
+                                            android:textSize="25sp" />
+
+                                        <TextView
+                                            android:id="@+id/product_description"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:padding="5dp"
+                                            android:text="Chet's code deletes an item immediately. I improved on this by making it function more like Gmail where swiping reveals a bottom view that indicates that the item is deleted but provides an Undo button where the user has the possibility to undo the deletion. Chet's code also has a bug in it. If you have less items in the listview than the height of the listview is and you delete the last item, the last item appears to not be deleted. This was fixed in my code. " />
+                                    </LinearLayout>
+
+                                    <RelativeLayout
+                                        android:id="@+id/specificationpane"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:padding="15dp">
+
+                                        <TextView
+                                            android:id="@+id/specificationtitile"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_above="@+id/productdetaillist"
+                                            android:layout_alignLeft="@+id/productdetaillist"
+                                            android:layout_alignStart="@+id/productdetaillist"
+                                            android:layout_centerHorizontal="true"
+                                            android:layout_marginBottom="10dp"
+                                            android:layout_marginLeft="173dp"
+                                            android:layout_marginStart="173dp"
+                                            android:text="Specifications"
+                                            android:textSize="20sp" />
+
+                                        <android.support.v7.widget.RecyclerView
+                                            android:id="@+id/product_specification"
+                                            android:layout_width="500dp"
+                                            android:layout_height="500dp"
+                                            android:layout_below="@+id/specificationtitile"
+                                            android:layout_centerHorizontal="true"
+                                            android:layout_margin="15dp"
+                                            android:background="#ededed" />
+                                    </RelativeLayout>
                                 </RelativeLayout>
-                            </RelativeLayout>
-                        </android.support.v7.widget.CardView>
-                    </ScrollView>
+                            </android.support.v7.widget.CardView>
+                        </ScrollView>
+                    </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
+
             <!-- left drawer-->
             <LinearLayout
                 android:id="@+id/leftdrawer"
@@ -361,18 +399,15 @@
 
                 <!-- filter layout-->
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/categorylayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/material_grey_300"
+                    android:background="@color/white"
                     android:orientation="horizontal"
                     android:weightSum="10">
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/sectionrecycler"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="2.5" />
+
 
                     <RelativeLayout
                         android:layout_width="0dp"

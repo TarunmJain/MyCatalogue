@@ -494,6 +494,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     public static void LoadImage(Context context, String url) {
         imagelayout.setVisibility(View.VISIBLE);
         vediolayout.setVisibility(View.GONE);
+
         weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.GONE);
         pptlayout.setVisibility(View.GONE);
