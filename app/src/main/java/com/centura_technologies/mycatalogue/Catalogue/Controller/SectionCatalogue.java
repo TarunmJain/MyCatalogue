@@ -57,8 +57,8 @@ import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
  */
 public class SectionCatalogue extends AppCompatActivity {
     static Toolbar toolbar;
-    DrawerLayout Drawer;
-    ActionBarDrawerToggle mDrawerToggle;
+    //DrawerLayout Drawer;
+    //ActionBarDrawerToggle mDrawerToggle;
     static FeatureCoverFlow coverFlow;
     private static TextSwitcher mTitle;
     SharedPreferences sharedPreferences;
@@ -86,7 +86,7 @@ public class SectionCatalogue extends AppCompatActivity {
         ordertext=(TextView) findViewById(R.id.ordertext);
         settingstext=(TextView) findViewById(R.id.settingstext);
         logouttext=(TextView) findViewById(R.id.logouttext);*/
-        Drawer = (DrawerLayout) findViewById(R.id.drawer);
+        //Drawer = (DrawerLayout) findViewById(R.id.drawer);
         mTitle = (TextSwitcher) findViewById(R.id.title);
         mTitle.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
@@ -108,7 +108,7 @@ public class SectionCatalogue extends AppCompatActivity {
 
 
         sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
-        mDrawerToggle = new ActionBarDrawerToggle(SectionCatalogue.this, Drawer, toolbar, R.string.opendrawer, R.string.closedrawer) {
+        /*mDrawerToggle = new ActionBarDrawerToggle(SectionCatalogue.this, Drawer, toolbar, R.string.opendrawer, R.string.closedrawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -123,13 +123,13 @@ public class SectionCatalogue extends AppCompatActivity {
             }
         }; // Drawer Toggle Object Made
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
-        mDrawerToggle.syncState();
+        mDrawerToggle.syncState();*/
 
 
         InitializationCollectionAdapter(SectionCatalogue.this);
 
         StaticData.DrawerTextDisable = "Catalogue";
-        GenericData.DrawerOnClicks(SectionCatalogue.this);
+        //GenericData.DrawerOnClicks(SectionCatalogue.this);
 
         /*catalogtext.setOnClickListener(new View.OnClickListener() {
             @Override
