@@ -77,6 +77,8 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
                         Catalogue.InitializeAdapter(mContext);
                     } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
                     Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
+                    categoriesView = -1;
+                    notifyDataSetChanged();
                 }
             });
         } else {
@@ -84,25 +86,30 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
             GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
             holder.text.setText(data.get(position).getTitle());
             final int finalPosition = position;
-            if (categoriesView == finalPosition)
-            {
+            if (categoriesView == finalPosition) {
                 holder.SubCatagorieslist.setVisibility(View.VISIBLE);
                 holder.SubCatagorieslist.setAdapter(new CategorylistAdapter(mContext, data.get(finalPosition)));
-            }
-            else
+                int viewHeight = GenericData.convertDpToPixels(45, mContext);
+                viewHeight = viewHeight * (data.get(finalPosition).getCategories().size());
+                holder.SubCatagorieslist.getLayoutParams().height = viewHeight;
+            } else
                 holder.SubCatagorieslist.setVisibility(View.GONE);
             holder.layview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     BreadCrumb.Section = data.get(finalPosition).getTitle();
                     Catalogue.category = data.get(finalPosition).getCategories();
+                    if (finalPosition == categoriesView) {
+                        categoriesView = -1;
+                        notifyDataSetChanged();
+                    }
                     //Catalogue.InitialzationCategoryAdapter(mContext, data.get(finalPosition));
-                    if (data.get(finalPosition).getCategories().size() > 0) {
-                        holder.SubCatagorieslist.setAdapter(new CategorylistAdapter(mContext, data.get(finalPosition)));
-                        int viewHeight = GenericData.convertDpToPixels(35, mContext);
+                    else if (data.get(finalPosition).getCategories().size() > 0) {
+                      /*  holder.SubCatagorieslist.setAdapter(new CategorylistAdapter(mContext, data.get(finalPosition)));
+                        int viewHeight = GenericData.convertDpToPixels(45, mContext);
                         viewHeight = viewHeight * (data.get(finalPosition).getCategories().size());
-                        holder.SubCatagorieslist.getLayoutParams().height = viewHeight;
-                        categoriesView=finalPosition;
+                        holder.SubCatagorieslist.getLayoutParams().height = viewHeight;*/
+                        categoriesView = finalPosition;
                         notifyDataSetChanged();
                     }
                 }

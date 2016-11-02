@@ -63,14 +63,28 @@
 
         //pdf
         <LinearLayout
-            android:visibility="gone"
             android:orientation="vertical"
             android:id="@+id/pdflayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.github.barteksc.pdfviewer.PDFView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/pdfView"
+                    android:layout_toLeftOf="@+id/scrollBar"
+                    />
+                <com.github.barteksc.pdfviewer.ScrollBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/scrollBar"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    />
+            </RelativeLayout>
         </LinearLayout>
-
         //ppt
         <LinearLayout
             android:orientation="vertical"

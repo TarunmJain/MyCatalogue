@@ -70,7 +70,7 @@ public class Catalogue extends AppCompatActivity {
     RelativeLayout nocategory;
     RelativeLayout quickview;
     static RelativeLayout fabpane;
-    static LinearLayout searchlayout, filterlayout, categorylayout, productlayout;
+    static LinearLayout searchlayout, filterlayout, categorylayout, productlayout,filtericon;
     public static LinearLayout leftdrawer, rightdrawer;
     public static EditText editsearch;
     Spinner spinner;
@@ -93,7 +93,7 @@ public class Catalogue extends AppCompatActivity {
     static public String SearchString = "";
     static int SearchPageNumber = 0;
     static String item = "";
-    TextView filtericon, categoryicon;
+    TextView categoryicon;
     public static TextView catagorybreadcrumb, sectionbreadcrumb, slashbreadcrumb;
     public static TextView nocategorytext;
     public static boolean grid_to_listflag = false;
@@ -118,7 +118,7 @@ public class Catalogue extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         leftdrawer = (LinearLayout) findViewById(R.id.leftdrawer);
         rightdrawer = (LinearLayout) findViewById(R.id.rightdrawer);
-        filtericon = (TextView) findViewById(R.id.filtericon);
+        filtericon = (LinearLayout) findViewById(R.id.filtericon);
         nocategorytext = (TextView) findViewById(R.id.nocategorytext);
         categoryicon = (TextView) findViewById(R.id.categoryicon);
         listicon = (ImageView) findViewById(R.id.listicon);
@@ -355,7 +355,7 @@ public class Catalogue extends AppCompatActivity {
             }
         });
         Drawable spinnerDrawable = spinner.getBackground().getConstantState().newDrawable();
-        spinnerDrawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        spinnerDrawable.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             spinner.setBackground(spinnerDrawable);
         } else {

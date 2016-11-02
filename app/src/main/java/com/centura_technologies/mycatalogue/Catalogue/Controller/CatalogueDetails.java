@@ -27,6 +27,7 @@ import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.DescriptionMenuClass;
@@ -41,9 +42,13 @@ import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
+import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.ScrollBar;
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 
 import net.sf.andpdf.pdfviewer.PdfViewerActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -80,6 +85,8 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static LinearLayout pdflayout;
     static LinearLayout pptlayout;
     static LinearLayout infolayout;
+    static PDFView pdfView;
+    static ScrollBar scrollBar;
     private int screenhight;
 
 
@@ -111,13 +118,15 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         mediatext = (TextView) findViewById(R.id.mediatext);
         media = (ImageView) findViewById(R.id.media);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
-        toppane= (RelativeLayout) findViewById(R.id.toppane);
+        toppane = (RelativeLayout) findViewById(R.id.toppane);
         menulyaout = (RecyclerView) findViewById(R.id.menulyaout);
         imagelayout = (LinearLayout) findViewById(R.id.imagelayout);
         vediolayout = (LinearLayout) findViewById(R.id.vediolayout);
         weblayout = (LinearLayout) findViewById(R.id.weblayout);
         pdflayout = (LinearLayout) findViewById(R.id.pdflayout);
         pptlayout = (LinearLayout) findViewById(R.id.pptlayout);
+        pdfView = (PDFView) findViewById(R.id.pdfView);
+        scrollBar = (ScrollBar) findViewById(R.id.scrollBar);
         infolayout = (LinearLayout) findViewById(R.id.infolayout);
         productImage = (ImageView) findViewById(R.id.productDetailImageview);
         productDetailvedio = (VideoView) findViewById(R.id.productDetailvedio);
@@ -155,20 +164,22 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
 
     @Override
     protected void previous() {
-        if (Draweropen == 0) {
-            if (StaticData.productposition > 0)
-                RenderProduct(allproducts.get(--StaticData.productposition));
-        } else
-            drawer.openDrawer(Gravity.LEFT);
+        if (pdflayout.getVisibility() == View.GONE)
+            if (Draweropen == 0) {
+                if (StaticData.productposition > 0)
+                    RenderProduct(allproducts.get(--StaticData.productposition));
+            } else
+                drawer.openDrawer(Gravity.LEFT);
     }
 
     @Override
     protected void next() {
-        if (Draweropen == 0) {
-            if (StaticData.productposition < allproducts.size() - 1)
-                RenderProduct(allproducts.get(++StaticData.productposition));
-        } else
-            drawer.closeDrawer(Gravity.LEFT);
+        if (pdflayout.getVisibility() == View.GONE)
+            if (Draweropen == 0) {
+                if (StaticData.productposition < allproducts.size() - 1)
+                    RenderProduct(allproducts.get(++StaticData.productposition));
+            } else
+                drawer.closeDrawer(Gravity.LEFT);
     }
 
     private void setOnClicks() {
@@ -451,7 +462,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void LoadHTML(String url) {
-        url= Environment.getExternalStorageDirectory().getAbsolutePath() +url;
+        url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.VISIBLE);
@@ -463,7 +474,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void LoadVedio(Context context, String url) {
-        url= Environment.getExternalStorageDirectory().getAbsolutePath() +url;
+        url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.VISIBLE);
         weblayout.setVisibility(View.GONE);
@@ -478,23 +489,34 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         productDetailvedio.setMediaController(vidControl);
     }
 
-    public static void LoadPDF(Context context, String url) {
-        url= Environment.getExternalStorageDirectory().getAbsolutePath() +url;
+    public static void LoadPDF(final Context context, String url) {
+        url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.VISIBLE);
         pptlayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.GONE);
-        Intent intent = new Intent(context, PdfView.class);
+        pdfView.setScrollBar(scrollBar);
+        scrollBar.setHorizontal(false);
+        pdfView.useBestQuality(true);
+        File file = new File(url);
+        if (file.canRead()) {
+            pdfView.fromFile(file).defaultPage(1).onLoad(new OnLoadCompleteListener() {
+                @Override
+                public void loadComplete(int nbPages) {
+                    Toast.makeText(context, String.valueOf(nbPages), Toast.LENGTH_LONG).show();
+                }
+            }).load();
+        }
+        /*Intent intent = new Intent(context, PdfView.class);
         intent.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, url);
-        ((Activity) context).startActivity(intent);
+        ((Activity) context).startActivity(intent);*/
     }
 
     public static void LoadImage(Context context, String url) {
         imagelayout.setVisibility(View.VISIBLE);
         vediolayout.setVisibility(View.GONE);
-
         weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.GONE);
         pptlayout.setVisibility(View.GONE);
@@ -511,7 +533,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
             @Override
             public void onGlobalLayout() {
                 toppane.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                toppane.getLayoutParams().height = screenhight-GenericData.convertDpToPixels(68,context);
+                toppane.getLayoutParams().height = screenhight - GenericData.convertDpToPixels(68, context);
             }
         });
     }
