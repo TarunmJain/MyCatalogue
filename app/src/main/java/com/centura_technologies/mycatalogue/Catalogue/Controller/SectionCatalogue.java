@@ -236,7 +236,16 @@ public class SectionCatalogue extends AppCompatActivity {
             GenericData.logout(SectionCatalogue.this);
             return true;
         }
+        if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
+            onBackPressed();
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
