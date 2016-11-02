@@ -63,7 +63,7 @@ public class SectionCatalogue extends AppCompatActivity {
     private static TextSwitcher mTitle;
     SharedPreferences sharedPreferences;
     public static ArrayList<CollectionModel> collectionmodel;
-    TextView catalogtext,shortlisttext,ordertext,settingstext,logouttext;
+    //TextView catalogtext,shortlisttext,ordertext,settingstext,logouttext;
 
    public void animate(View view, final int position) {
             view.setVisibility(View.VISIBLE);
@@ -77,14 +77,15 @@ public class SectionCatalogue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sectioncatalogue);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        toolbar.setTitle("Collections");
+        toolbar.setTitle("Catalogue");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         coverFlow = (FeatureCoverFlow) findViewById(R.id.coverflow);
-        catalogtext= (TextView) findViewById(R.id.catalogtext);
+        /*catalogtext= (TextView) findViewById(R.id.catalogtext);
         shortlisttext=(TextView) findViewById(R.id.shortlisttext);
         ordertext=(TextView) findViewById(R.id.ordertext);
         settingstext=(TextView) findViewById(R.id.settingstext);
-        logouttext=(TextView) findViewById(R.id.logouttext);
+        logouttext=(TextView) findViewById(R.id.logouttext);*/
         Drawer = (DrawerLayout) findViewById(R.id.drawer);
         mTitle = (TextSwitcher) findViewById(R.id.title);
         mTitle.setFactory(new ViewSwitcher.ViewFactory() {
@@ -99,11 +100,11 @@ public class SectionCatalogue extends AppCompatActivity {
         Animation out = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
         mTitle.setInAnimation(in);
         mTitle.setOutAnimation(out);
-        animate(catalogtext, 1);
+        /*animate(catalogtext, 1);
         animate(shortlisttext,1);
         animate(ordertext,1);
         animate(settingstext,1);
-        animate(logouttext,1);
+        animate(logouttext,1);*/
 
 
         sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
@@ -130,7 +131,7 @@ public class SectionCatalogue extends AppCompatActivity {
         StaticData.DrawerTextDisable = "Catalogue";
         GenericData.DrawerOnClicks(SectionCatalogue.this);
 
-        catalogtext.setOnClickListener(new View.OnClickListener() {
+        /*catalogtext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StaticData.SelectedCategoryId = "-1";
@@ -160,7 +161,7 @@ public class SectionCatalogue extends AppCompatActivity {
             public void onClick(View v) {
                 GenericData.logout(SectionCatalogue.this);
             }
-        });
+        });*/
     }
 
     public static void InitializationCollectionAdapter(final Context context) {

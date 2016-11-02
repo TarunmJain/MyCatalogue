@@ -51,7 +51,7 @@ public class Splash extends Activity {
                     StaticData.Options = "Catalogue";
                     StaticData.DrawerTextDisable = "Catalogue";
                     if (DB.getInitialModel().getCollections().size() > 0)
-                        startActivity(new Intent(Splash.this, SectionCatalogue.class));
+                        startActivity(new Intent(Splash.this, IntroductionClass.class));
                     else
                         startActivity(new Intent(Splash.this, Settings.class));
                     finish();
