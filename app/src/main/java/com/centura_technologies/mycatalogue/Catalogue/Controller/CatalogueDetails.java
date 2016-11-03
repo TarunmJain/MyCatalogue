@@ -45,8 +45,8 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.ScrollBar;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
-
-import net.sf.andpdf.pdfviewer.PdfViewerActivity;
+import com.panoramagl.PLImage;
+import com.panoramagl.PLManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,6 +56,7 @@ import java.util.ArrayList;
  */
 public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.ClickListner, DrawerLayout.DrawerListener {
     Toolbar toolbar;
+    static PLManager plManager;
     ImageView hamburger, logff;
     TextView Title;
     static RecyclerView productdetaillist, drawer_items_recycler, individual_product_images;
@@ -63,7 +64,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static ImageView openimage, next, previous, shortlist, media, arrow;
     static TextView title, description, amount, mediatext, variencetext;
     static LinearLayout varients;
-    LinearLayout images, videos, pdfs, ppts;
+    LinearLayout images, videos, pdfs, panorama;
     static Context context;
     static Products productModel;
     static Dialog dialog;
@@ -83,10 +84,8 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static LinearLayout vediolayout;
     static LinearLayout weblayout;
     static LinearLayout pdflayout;
-    static LinearLayout pptlayout;
+    static LinearLayout panoramalayout;
     static LinearLayout infolayout;
-    static PDFView pdfView;
-    static ScrollBar scrollBar;
     private int screenhight;
 
 
@@ -124,9 +123,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         vediolayout = (LinearLayout) findViewById(R.id.vediolayout);
         weblayout = (LinearLayout) findViewById(R.id.weblayout);
         pdflayout = (LinearLayout) findViewById(R.id.pdflayout);
-        pptlayout = (LinearLayout) findViewById(R.id.pptlayout);
-        pdfView = (PDFView) findViewById(R.id.pdfView);
-        scrollBar = (ScrollBar) findViewById(R.id.scrollBar);
+        panoramalayout = (LinearLayout) findViewById(R.id.pptlayout);
         infolayout = (LinearLayout) findViewById(R.id.infolayout);
         productImage = (ImageView) findViewById(R.id.productDetailImageview);
         productDetailvedio = (VideoView) findViewById(R.id.productDetailvedio);
@@ -164,7 +161,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
 
     @Override
     protected void previous() {
-        if (pdflayout.getVisibility() == View.GONE)
             if (Draweropen == 0) {
                 if (StaticData.productposition > 0)
                     RenderProduct(allproducts.get(--StaticData.productposition));
@@ -174,7 +170,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
 
     @Override
     protected void next() {
-        if (pdflayout.getVisibility() == View.GONE)
             if (Draweropen == 0) {
                 if (StaticData.productposition < allproducts.size() - 1)
                     RenderProduct(allproducts.get(++StaticData.productposition));
@@ -221,7 +216,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 images = (LinearLayout) dialog.findViewById(R.id.image);
                 videos = (LinearLayout) dialog.findViewById(R.id.video);
                 pdfs = (LinearLayout) dialog.findViewById(R.id.pdf);
-                ppts = (LinearLayout) dialog.findViewById(R.id.ppt);
+                panorama = (LinearLayout) dialog.findViewById(R.id.ppt);
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(dialog.getWindow().getAttributes());
                /* lp.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -250,7 +245,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                         startActivity(new Intent(CatalogueDetails.this, PdfActivity.class));
                     }
                 });
-                ppts.setOnClickListener(new View.OnClickListener() {
+                panorama.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
@@ -457,7 +452,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.GONE);
-        pptlayout.setVisibility(View.GONE);
+        panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.VISIBLE);
     }
 
@@ -467,7 +462,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.VISIBLE);
         pdflayout.setVisibility(View.GONE);
-        pptlayout.setVisibility(View.GONE);
+        panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.GONE);
         productDetailwebview.getSettings().setJavaScriptEnabled(true);
         productDetailwebview.loadUrl(url);
@@ -479,7 +474,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         vediolayout.setVisibility(View.VISIBLE);
         weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.GONE);
-        pptlayout.setVisibility(View.GONE);
+        panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.GONE);
         Uri vidUri = Uri.parse(url);
         productDetailvedio.setVideoURI(vidUri);
@@ -494,24 +489,12 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
-        pdflayout.setVisibility(View.VISIBLE);
-        pptlayout.setVisibility(View.GONE);
-        infolayout.setVisibility(View.GONE);
-        pdfView.setScrollBar(scrollBar);
-        scrollBar.setHorizontal(false);
-        pdfView.useBestQuality(true);
-        File file = new File(url);
-        if (file.canRead()) {
-            pdfView.fromFile(file).defaultPage(1).onLoad(new OnLoadCompleteListener() {
-                @Override
-                public void loadComplete(int nbPages) {
-                    Toast.makeText(context, String.valueOf(nbPages), Toast.LENGTH_LONG).show();
-                }
-            }).load();
-        }
-        /*Intent intent = new Intent(context, PdfView.class);
-        intent.putExtra(PdfViewerActivity.EXTRA_PDFFILENAME, url);
-        ((Activity) context).startActivity(intent);*/
+        pdflayout.setVisibility(View.GONE);
+        panoramalayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(context, PdfActivity.class);
+        intent.putExtra("url",url);
+        ((Activity) context).startActivity(intent);
     }
 
     public static void LoadImage(Context context, String url) {
@@ -519,9 +502,22 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.GONE);
-        pptlayout.setVisibility(View.GONE);
+        panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.GONE);
         GenericData.setImage(url, productImage, context);
+    }
+
+    public static void LoadPanorama(Context context, String url) {
+        url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
+        imagelayout.setVisibility(View.GONE);
+        vediolayout.setVisibility(View.GONE);
+        weblayout.setVisibility(View.GONE);
+        pdflayout.setVisibility(View.GONE);
+        panoramalayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.VISIBLE);
+        Intent i = new Intent(context,Panorama.class);
+        i.putExtra("url",url);
+        ((Activity)context).startActivity(i);
     }
 
     private void UiManuplation() {
@@ -537,4 +533,5 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
             }
         });
     }
+
 }

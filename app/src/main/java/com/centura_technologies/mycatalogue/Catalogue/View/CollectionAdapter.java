@@ -106,8 +106,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             holder.collectionpane.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BreadCrumb.Section = data.get(finalPosition).getTitle();
-                    BreadCrumb.Category = "";
+                    BreadCrumb.Category = data.get(finalPosition).getTitle();
                     StaticData.SelectedCollectionProducts = new ArrayList<String>();
                     StaticData.SelectedCollection = true;
                     StaticData.SelectedCollectionProducts = data.get(finalPosition).getProductIds();

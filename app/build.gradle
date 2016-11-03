@@ -45,6 +45,6 @@ dependencies {
     compile 'com.edmodo:rangebar:1.0.0'
     compile 'com.github.johnkil.print:print:1.2.2'
     compile 'com.joooonho:selectableroundedimageview:1.0.1'
-    compile 'com.github.moondroid.coverflow:library:1.0'
     compile 'com.github.barteksc:android-pdf-viewer:1.4.0'
+    compile project(path: ':library')
 }

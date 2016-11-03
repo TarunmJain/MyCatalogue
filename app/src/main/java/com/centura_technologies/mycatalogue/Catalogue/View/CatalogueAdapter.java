@@ -107,9 +107,10 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
             }
         }
 
-        holder.wishlist.setOnClickListener(new View.OnClickListener() {
+        holder.image.setLongClickable(true);
+        holder.image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 boolean found = false;
                 for (Products model : DB.getShortlistedlist()) {
                     if (model.getId().matches(products.get(position).getId())) {
@@ -126,6 +127,14 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                     shortlist.add(products.get(position));
                     DB.setShortlistedlist(shortlist);
                 }
+                return true;
+            }
+        });
+
+        holder.wishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

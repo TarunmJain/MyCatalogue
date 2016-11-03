@@ -114,10 +114,15 @@
         <activity
             android:name=".Catalogue.Controller.CatalogueDetailsNew"
             android:label="@string/title_activity_catalogue_details_new"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".Login.Controller.IntroductionClass"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Login.Controller.IntroductionClass"
+            android:screenOrientation="landscape" />
+        <activity android:name=".Catalogue.Controller.Panorama"></activity>
+        <activity
+            android:name=".Catalogue.Controller.PdfActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

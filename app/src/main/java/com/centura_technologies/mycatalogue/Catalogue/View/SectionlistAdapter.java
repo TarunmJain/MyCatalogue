@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
@@ -72,6 +73,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
                     BreadCrumb.Section = "All Products";
                     StaticData.SelectedCategoryId = "-1";
                     BreadCrumb.Category = "";
+                    Catalogue.toolbar.setTitle("All Products");
                     if (DB.getInitialModel().getProducts().size() != 0) {
                         Catalogue.productslist();
                         Catalogue.InitializeAdapter(mContext);
@@ -133,13 +135,13 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
         ImageView categoryImage;
         TextView text;
         RecyclerView SubCatagorieslist;
-        LinearLayout layview;
+        MaterialRippleLayout layview;
 
         public ViewHolder(View v) {
             super(v);
             categoryImage = (ImageView) v.findViewById(R.id.image);
             text = (TextView) v.findViewById(R.id.text);
-            layview = (LinearLayout) v.findViewById(R.id.layview);
+            layview = (MaterialRippleLayout) v.findViewById(R.id.layview);
             SubCatagorieslist = (RecyclerView) v.findViewById(R.id.SubCatagorieslist);
         }
     }

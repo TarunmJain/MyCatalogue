@@ -1,9 +1,12 @@
 package com.centura_technologies.mycatalogue.Catalogue.Controller;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +25,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -51,6 +55,10 @@ import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,7 +70,7 @@ import java.util.List;
  * Created by Centura User1 on 19-09-2016.
  */
 public class Catalogue extends AppCompatActivity {
-    Toolbar toolbar;
+    public static Toolbar toolbar;
     static RecyclerView cat_filterlist;
     ImageView listicon;
     public static DrawerLayout drawer;
@@ -70,7 +78,7 @@ public class Catalogue extends AppCompatActivity {
     RelativeLayout nocategory;
     RelativeLayout quickview;
     static RelativeLayout fabpane;
-    static LinearLayout searchlayout, filterlayout, categorylayout, productlayout,filtericon;
+    static LinearLayout searchlayout, filterlayout, categorylayout, productlayout, filtericon, sortlay;
     public static LinearLayout leftdrawer, rightdrawer;
     public static EditText editsearch;
     Spinner spinner;
@@ -94,11 +102,15 @@ public class Catalogue extends AppCompatActivity {
     static int SearchPageNumber = 0;
     static String item = "";
     TextView categoryicon;
-    public static TextView catagorybreadcrumb, sectionbreadcrumb, slashbreadcrumb;
+    public static TextView sectionbreadcrumb;
     public static TextView nocategorytext;
     public static boolean grid_to_listflag = false;
     ActionBarDrawerToggle mDrawerToggle;
-
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -106,19 +118,12 @@ public class Catalogue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalogue);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        slashbreadcrumb = (TextView) findViewById(R.id.slashbreadcrumb);
-        catagorybreadcrumb = (TextView) findViewById(R.id.categorybreadcrumb);
-        sectionbreadcrumb = (TextView) findViewById(R.id.sectionbreadcrumb);
-        toolbar.setTitle("");
-        sectionbreadcrumb.setText(BreadCrumb.Section);
-        catagorybreadcrumb.setText(BreadCrumb.Category);
-        if (BreadCrumb.Category.matches(""))
-            slashbreadcrumb.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         leftdrawer = (LinearLayout) findViewById(R.id.leftdrawer);
         rightdrawer = (LinearLayout) findViewById(R.id.rightdrawer);
         filtericon = (LinearLayout) findViewById(R.id.filtericon);
+        sortlay = (LinearLayout) findViewById(R.id.sortlay);
         nocategorytext = (TextView) findViewById(R.id.nocategorytext);
         categoryicon = (TextView) findViewById(R.id.categoryicon);
         listicon = (ImageView) findViewById(R.id.listicon);
@@ -173,10 +178,13 @@ public class Catalogue extends AppCompatActivity {
         InitializeAdapter(Catalogue.this);
         InitialzationSectionAdapter(Catalogue.this);
         InitialzationCategoryAdapter(Catalogue.this, null);
-        if(drawer.isDrawerOpen(leftdrawer)){
+        if (drawer.isDrawerOpen(leftdrawer)) {
             InitialzationSectionAdapter(Catalogue.this);
             InitialzationCategoryAdapter(Catalogue.this, null);
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     public static void productslist() {
@@ -216,7 +224,6 @@ public class Catalogue extends AppCompatActivity {
     private void OnClicks() {
 
 
-
         filtericon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +231,67 @@ public class Catalogue extends AppCompatActivity {
                 drawer.closeDrawer(leftdrawer);
                 cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
                 searchlayout.setVisibility(View.GONE);
+            }
+        });
+
+        sortlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(Catalogue.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_sort);
+                TextView lowtohigh, hightolow, atoz, ztoa;
+                lowtohigh = (TextView) dialog.findViewById(R.id.lowtohigh);
+                hightolow = (TextView) dialog.findViewById(R.id.hightolow);
+                atoz = (TextView) dialog.findViewById(R.id.atoz);
+                ztoa = (TextView) dialog.findViewById(R.id.ztoa);
+                switch (item) {
+                    case "Price low-high":
+                        lowtohigh.setTextColor(Color.parseColor("#f37021"));
+                        break;
+                    case "Price high-low":
+                        hightolow.setTextColor(Color.parseColor("#f37021"));
+                        break;
+                    case "A to Z":
+                        atoz.setTextColor(Color.parseColor("#f37021"));
+                        break;
+                    case "Z to A":
+                        ztoa.setTextColor(Color.parseColor("#f37021"));
+                        break;
+                }
+                lowtohigh.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        item = "Price low-high";
+                        dialog.cancel();
+                        InitializeAdapter(Catalogue.this);
+                    }
+                });
+                hightolow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        item = "Price high-low";
+                        dialog.cancel();
+                        InitializeAdapter(Catalogue.this);
+                    }
+                });
+                atoz.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        item = "A to Z";
+                        dialog.cancel();
+                        InitializeAdapter(Catalogue.this);
+                    }
+                });
+                ztoa.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        item = "Z to A";
+                        dialog.cancel();
+                        InitializeAdapter(Catalogue.this);
+                    }
+                });
+                dialog.show();
             }
         });
 
@@ -356,7 +424,7 @@ public class Catalogue extends AppCompatActivity {
         });
         Drawable spinnerDrawable = spinner.getBackground().getConstantState().newDrawable();
         spinnerDrawable.setColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_ATOP);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             spinner.setBackground(spinnerDrawable);
         } else {
             spinner.setBackgroundDrawable(spinnerDrawable);
@@ -448,9 +516,7 @@ public class Catalogue extends AppCompatActivity {
     }
 
     public static void InitialzationCategoryAdapter(Context context, CategoryTree categoryTree) {
-        if (categoryTree == null)
-            categoryrecycler.setAdapter(new CategorylistAdapter(context, Catalogue.categories.get(0)));
-        else
+        if (categoryTree != null)
             categoryrecycler.setAdapter(new CategorylistAdapter(context, categoryTree));
     }
 
@@ -469,7 +535,7 @@ public class Catalogue extends AppCompatActivity {
                     return p1.getSellingPrice() < p2.getSellingPrice() ? -1 : 1;
                 }
             });
-        } else if(item.matches("Price high-low")){
+        } else if (item.matches("Price high-low")) {
             Collections.sort(products, new Comparator<Products>() {
                 public int compare(Products p1, Products p2) {
                     if (p1.getSellingPrice() == p2.getSellingPrice())
@@ -477,15 +543,15 @@ public class Catalogue extends AppCompatActivity {
                     return p1.getSellingPrice() > p2.getSellingPrice() ? -1 : 1;
                 }
             });
-        }else if(item.matches("A to Z")){
+        } else if (item.matches("A to Z")) {
             Collections.sort(products, new Comparator<Products>() {
-            public int compare(Products v1, Products v2) {
-                if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
-                    return 0;
-                return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
-            }
-        });
-        }else {
+                public int compare(Products v1, Products v2) {
+                    if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
+                        return 0;
+                    return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
+                }
+            });
+        } else {
             Collections.sort(products, new Comparator<Products>() {
                 public int compare(Products v1, Products v2) {
                     if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
@@ -549,5 +615,41 @@ public class Catalogue extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         InitializeAdapter(Catalogue.this);
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Catalogue Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }
