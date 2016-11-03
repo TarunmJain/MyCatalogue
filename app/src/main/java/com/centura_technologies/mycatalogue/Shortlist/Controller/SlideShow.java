@@ -7,7 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
@@ -21,12 +25,18 @@ import java.util.ArrayList;
 /**
  * Created by Centura User1 on 08-09-2016.
  */
-public class SlideShow extends AppCompatActivity {
+public class SlideShow extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener{
     Toolbar toolbar;
     ViewFlipper myViewFlipper;
     float initialXPoint, finalx;
     ArrayList<Products> model;
     ArrayList<String> images;
+    Button play;
+    SeekBar seekBar1;
+    private boolean isTouchEnable;
+    boolean playing;
+    int SpeedTime=3000;
+    ArrayList<Integer> myImageList;
     //TextView product_title;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +46,14 @@ public class SlideShow extends AppCompatActivity {
         toolbar.setTitle("SlideShow");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        play=(Button)findViewById(R.id.play);
+        seekBar1=(SeekBar)findViewById(R.id.seekBar1);
+        myViewFlipper = (ViewFlipper) findViewById(R.id.myflipper);
+        seekBar1.setProgress(3000);
+        seekBar1.setOnSeekBarChangeListener(this);
+        playing=true;
+        play.setBackgroundResource(R.drawable.ic_media_pause);
+        play.performClick();
         //product_title=(TextView)findViewById(R.id.product_title);
         model=new ArrayList<Products>();
         model= DB.getShortlistedlist();
@@ -50,29 +68,89 @@ public class SlideShow extends AppCompatActivity {
             GenericData.setImage(images.get(i), imageView, SlideShow.this);
             myViewFlipper.addView(imageView);
         }
-        myViewFlipper.setAutoStart(true);
+       /* myImageList = new ArrayList<>();
+        myImageList.add(R.drawable.background_1);
+        myImageList.add(R.drawable.background_2);
+        myImageList.add(R.drawable.background_3);
+        myImageList.add(R.drawable.background_4);
+        myImageList.add(R.drawable.background_5);
+        myImageList.add(R.drawable.background_6);
+        myImageList.add(R.drawable.background_7);
+        for (int i = 0; i < myImageList.size(); i++) {
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(myImageList.get(i));
+            myViewFlipper.addView(imageView);
+        }*/
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(playing){
+                    myViewFlipper.setAutoStart(true);
+                    myViewFlipper.setFlipInterval(SpeedTime);
+                    myViewFlipper.startFlipping();
+                    playing=false;
+                    play.setBackgroundResource(R.drawable.ic_media_pause);
+                    setTouchEnable(false);
+                }else {
+                    myViewFlipper.stopFlipping();
+                    playing=true;
+                    play.setBackgroundResource(R.drawable.ic_media_play);
+                    setTouchEnable(true);
+                }
+
+            }
+        });
+        /*myViewFlipper.setAutoStart(true);
         myViewFlipper.setFlipInterval(5000);
-        myViewFlipper.startFlipping();
+        myViewFlipper.startFlipping();*/
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress,
+                                  boolean fromUser) {
+        SpeedTime=progress;
+        //Toast.makeText(getApplicationContext(),"seekbar progress: "+progress, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        //Toast.makeText(getApplicationContext(),"seekbar touch started!", Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        SpeedTime=seekBar.getMax();
+        //Toast.makeText(getApplicationContext(),"seekbar touch stopped!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void setTouchEnable(boolean isTouchEnable) {
+        this.isTouchEnable = isTouchEnable;
+    }
+
+    public boolean isTouchEnable() {
+        return isTouchEnable;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                initialXPoint = event.getX();
-                break;
-            case MotionEvent.ACTION_UP:
-                finalx = event.getX();
-                if (initialXPoint > finalx) {
-                    if (myViewFlipper.getDisplayedChild() == images.size())
-                        break;
-                    myViewFlipper.showNext();
-                } else {
-                    if (myViewFlipper.getDisplayedChild() == 0)
-                        break;
-                    myViewFlipper.showPrevious();
-                }
-                break;
+        if(isTouchEnable){
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    initialXPoint = event.getX();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    finalx = event.getX();
+                    if (initialXPoint > finalx) {
+                        if (myViewFlipper.getDisplayedChild() == images.size())
+                            break;
+                        myViewFlipper.showNext();
+                    } else {
+                        if (myViewFlipper.getDisplayedChild() == 0)
+                            break;
+                        myViewFlipper.showPrevious();
+                    }
+                    break;
+            }
+        }else {
+            return false;
         }
         return false;
     }
