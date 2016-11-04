@@ -12,11 +12,12 @@ public class DescriptionMenuClass {
     public static int TYPE_PDF = 3;
     public static int TYPE_PPT = 4;
     public static int TYPE_Panorama = 5;
+    public boolean isAttachment;
     public String URL;
     public String MimeString;
     public int MediaType;
 
-    public DescriptionMenuClass(String url) {
+    public DescriptionMenuClass(String url, boolean attchment) {
         if (url != null)
             if (!url.matches("")) {
                 URL = url;
@@ -24,8 +25,10 @@ public class DescriptionMenuClass {
                 if (MimeString != null)
                     if (!MimeString.matches("")) {
                         if (MimeString.toLowerCase().contains("image"))
-                            MediaType = TYPE_IMAGE;
-
+                            if (attchment)
+                                MediaType = TYPE_Panorama;
+                            else
+                                MediaType = TYPE_IMAGE;
                         if (MimeString.toLowerCase().contains("video"))
                             MediaType = TYPE_VEDIO;
 

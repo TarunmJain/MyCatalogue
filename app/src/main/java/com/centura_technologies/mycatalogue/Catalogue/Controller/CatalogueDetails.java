@@ -279,12 +279,12 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         for (String imagedata : productdetail.getProductImages()) {
             if (imagedata != null)
                 if (!imagedata.matches(""))
-                    menudata.add(new DescriptionMenuClass(imagedata));
+                    menudata.add(new DescriptionMenuClass(imagedata,false));
         }
         for (String imagedata : productdetail.getAttachments()) {
             if (imagedata != null)
                 if (!imagedata.matches(""))
-                    menudata.add(new DescriptionMenuClass(imagedata));
+                    menudata.add(new DescriptionMenuClass(imagedata,true));
         }
 
         menulyaout.setAdapter(new DetailMenuAdapter(context, menudata));
@@ -464,6 +464,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         pdflayout.setVisibility(View.GONE);
         panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.VISIBLE);
+        productDetailvedio.stopPlayback();
     }
 
     public static void LoadHTML(String url) {
@@ -476,6 +477,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         infolayout.setVisibility(View.GONE);
         productDetailwebview.getSettings().setJavaScriptEnabled(true);
         productDetailwebview.loadUrl(url);
+        productDetailvedio.stopPlayback();
     }
 
     public static void LoadVedio(Context context, String url) {
@@ -504,6 +506,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         infolayout.setVisibility(View.VISIBLE);
         Intent intent = new Intent(context, PdfActivity.class);
         intent.putExtra("url",url);
+        productDetailvedio.stopPlayback();
         ((Activity) context).startActivity(intent);
     }
 
@@ -514,6 +517,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         pdflayout.setVisibility(View.GONE);
         panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.GONE);
+        productDetailvedio.stopPlayback();
         GenericData.setImage(url, productImage, context);
     }
 
@@ -525,6 +529,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         pdflayout.setVisibility(View.GONE);
         panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.VISIBLE);
+        productDetailvedio.stopPlayback();
         Intent i = new Intent(context,Panorama.class);
         i.putExtra("url",url);
         ((Activity)context).startActivity(i);

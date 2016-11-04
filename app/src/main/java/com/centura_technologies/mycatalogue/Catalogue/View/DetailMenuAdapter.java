@@ -43,26 +43,36 @@ public class DetailMenuAdapter extends RecyclerView.Adapter<DetailMenuAdapter.Vi
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final int finalPosition = position-1;
         if (position == 0)
+        {
             holder.srcimage.setImageResource(R.drawable.ic_infoicon);
+            holder.attachmenttext.setText("Info");
+        }
         else {
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_IMAGE) {
-                holder.srcimage.setImageResource(R.drawable.ic_imageicon);
+                {
+                    holder.attachmenttext.setText("Image");
+                    holder.srcimage.setImageResource(R.drawable.ic_imageicon);
+                }
             }
 
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_PDF) {
                 holder.srcimage.setImageResource(R.drawable.ic_pdficon);
+                holder.attachmenttext.setText("Pdf");
             }
 
-            if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_PPT) {
+            if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_Panorama) {
                 holder.srcimage.setImageResource(R.drawable.ic_ppticon);
+                holder.attachmenttext.setText("360 View");
             }
 
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_VEDIO) {
                 holder.srcimage.setImageResource(R.drawable.ic_vedioicon);
+                holder.attachmenttext.setText("Vedio");
             }
 
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_WEB) {
                 holder.srcimage.setImageResource(R.drawable.ic_webicon);
+                holder.attachmenttext.setText("Web");
             }
         }
 
@@ -72,21 +82,24 @@ public class DetailMenuAdapter extends RecyclerView.Adapter<DetailMenuAdapter.Vi
                 if(finalPosition ==-1)
                 {
                     CatalogueDetails.LoadInfo();
-                    holder.attachmenttext.setText("Info");
                 }
                 else {
                     DbHelper dbHelper = new DbHelper(context);
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_IMAGE) {
                         {
-                            CatalogueDetails.LoadImage(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
-                            holder.attachmenttext.setText("Image");
+                            CatalogueDetails.LoadImage(context,descriptionMenuClasses.get(finalPosition).URL);
+                        }
+                    }
+
+                    if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_Panorama) {
+                        {
+                            CatalogueDetails.LoadPanorama(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
                         }
                     }
 
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_PDF) {
                         {
                             CatalogueDetails.LoadPDF(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
-                            holder.attachmenttext.setText("Pdf");
                         }
                     }
 
@@ -97,14 +110,12 @@ public class DetailMenuAdapter extends RecyclerView.Adapter<DetailMenuAdapter.Vi
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_VEDIO) {
                         {
                             CatalogueDetails.LoadVedio(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
-                            holder.attachmenttext.setText("Vedio");
                         }
                     }
 
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_WEB) {
                         {
                             CatalogueDetails.LoadHTML(dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
-                            holder.attachmenttext.setText("Web");
                         }
                     }
                 }
