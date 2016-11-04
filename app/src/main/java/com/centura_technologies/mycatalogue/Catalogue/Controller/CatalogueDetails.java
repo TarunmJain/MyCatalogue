@@ -13,13 +13,19 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,6 +74,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static Context context;
     static Products productModel;
     static Dialog dialog;
+    private static ViewGroup mRootView;
     float Draweropen = 0;
     DrawerLayout drawer;
     public static ArrayList<String> image;
@@ -94,11 +101,13 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cataloguedetails);
         Title = (TextView) findViewById(R.id.AppbarTittle);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         Title.setText("Product Details");
         hamburger = (ImageView) findViewById(R.id.hamburger);
         logff = (ImageView) findViewById(R.id.logoff);
         logff.setVisibility(View.GONE);
         context = CatalogueDetails.this;
+        mRootView = (ViewGroup) findViewById(R.id.fulllay);
         allproducts = new ArrayList<Products>();
         shortlisted = new ArrayList<Products>();
         productdetaillist = (RecyclerView) findViewById(R.id.productdetaillist);
@@ -264,6 +273,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void RenderProduct(final Products productdetail) {
+        mRootView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fadein));
         LoadInfo();
         ArrayList<DescriptionMenuClass> menudata = new ArrayList<DescriptionMenuClass>();
         for (String imagedata : productdetail.getProductImages()) {
@@ -534,4 +544,9 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
 }

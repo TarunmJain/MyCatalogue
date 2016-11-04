@@ -12,7 +12,6 @@ import com.centura_technologies.mycatalogue.R;
 import com.panoramagl.PLImage;
 import com.panoramagl.PLManager;
 import com.panoramagl.PLSphericalPanorama;
-import com.panoramagl.utils.PLUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +35,14 @@ public class Panorama extends AppCompatActivity {
         plManager.setPanorama(panorama);
 
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onBackPressed() {
