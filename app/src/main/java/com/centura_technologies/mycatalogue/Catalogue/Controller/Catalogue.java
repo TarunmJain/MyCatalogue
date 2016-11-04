@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -78,7 +79,7 @@ public class Catalogue extends AppCompatActivity {
     RelativeLayout nocategory;
     RelativeLayout quickview;
     static RelativeLayout fabpane;
-    static LinearLayout searchlayout, filterlayout, categorylayout, productlayout, filtericon, sortlay;
+    static LinearLayout searchlayout, filterlayout, categorylayout, productlayout, filtericon, sortlay,fulllay;
     public static LinearLayout leftdrawer, rightdrawer;
     public static EditText editsearch;
     Spinner spinner;
@@ -118,6 +119,7 @@ public class Catalogue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalogue);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         leftdrawer = (LinearLayout) findViewById(R.id.leftdrawer);
@@ -126,6 +128,7 @@ public class Catalogue extends AppCompatActivity {
         sortlay = (LinearLayout) findViewById(R.id.sortlay);
         nocategorytext = (TextView) findViewById(R.id.nocategorytext);
         categoryicon = (TextView) findViewById(R.id.categoryicon);
+        fulllay= (LinearLayout) findViewById(R.id.fulllay);
         listicon = (ImageView) findViewById(R.id.listicon);
         cat_filterlist = (RecyclerView) findViewById(R.id.cat_filterlist);
         searchicon = (ImageView) findViewById(R.id.searchicon);
@@ -525,6 +528,7 @@ public class Catalogue extends AppCompatActivity {
     }
 
     public static void InitializeAdapter(Context context) {
+        productsrecyclerview.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fadein));
         searchlayout.setVisibility(View.GONE);
         productlayout.setVisibility(View.VISIBLE);
         if (item.matches("Price low-high")) {
@@ -615,6 +619,7 @@ public class Catalogue extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         InitializeAdapter(Catalogue.this);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     /**

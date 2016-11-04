@@ -91,7 +91,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
             if (categoriesView == finalPosition) {
                 holder.SubCatagorieslist.setVisibility(View.VISIBLE);
                 holder.SubCatagorieslist.setAdapter(new CategorylistAdapter(mContext, data.get(finalPosition)));
-                int viewHeight = GenericData.convertDpToPixels(45, mContext);
+                int viewHeight = GenericData.convertDpToPixels(37, mContext);
                 viewHeight = viewHeight * (data.get(finalPosition).getCategories().size());
                 holder.SubCatagorieslist.getLayoutParams().height = viewHeight;
             } else

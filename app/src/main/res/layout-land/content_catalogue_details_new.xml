@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fulllay"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +13,7 @@
     <android.support.v7.widget.RecyclerView
         android:padding="5dp"
         android:id="@+id/menulyaout"
-        android:layout_width="80dp"
+        android:layout_width="120dp"
         android:layout_height="match_parent" />
 
     <LinearLayout

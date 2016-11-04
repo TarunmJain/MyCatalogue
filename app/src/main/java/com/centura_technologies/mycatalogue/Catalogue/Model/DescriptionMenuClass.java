@@ -11,6 +11,7 @@ public class DescriptionMenuClass {
     public static int TYPE_WEB = 2;
     public static int TYPE_PDF = 3;
     public static int TYPE_PPT = 4;
+    public static int TYPE_Panorama = 5;
     public String URL;
     public String MimeString;
     public int MediaType;

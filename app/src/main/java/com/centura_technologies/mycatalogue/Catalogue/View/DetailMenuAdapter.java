@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.CatalogueDetails;
@@ -69,26 +70,42 @@ public class DetailMenuAdapter extends RecyclerView.Adapter<DetailMenuAdapter.Vi
             @Override
             public void onClick(View v) {
                 if(finalPosition ==-1)
+                {
                     CatalogueDetails.LoadInfo();
+                    holder.attachmenttext.setText("Info");
+                }
                 else {
                     DbHelper dbHelper = new DbHelper(context);
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_IMAGE) {
-                        CatalogueDetails.LoadImage(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
+                        {
+                            CatalogueDetails.LoadImage(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
+                            holder.attachmenttext.setText("Image");
+                        }
                     }
 
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_PDF) {
-                        CatalogueDetails.LoadPDF(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
+                        {
+                            CatalogueDetails.LoadPDF(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
+                            holder.attachmenttext.setText("Pdf");
+                        }
                     }
 
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_PPT) {
+
                     }
 
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_VEDIO) {
-                        CatalogueDetails.LoadVedio(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
+                        {
+                            CatalogueDetails.LoadVedio(context,dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
+                            holder.attachmenttext.setText("Vedio");
+                        }
                     }
 
                     if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_WEB) {
-                        CatalogueDetails.LoadHTML(dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
+                        {
+                            CatalogueDetails.LoadHTML(dbHelper.returnImage(Urls.parentIP + descriptionMenuClasses.get(finalPosition).URL));
+                            holder.attachmenttext.setText("Web");
+                        }
                     }
                 }
             }
@@ -103,10 +120,11 @@ public class DetailMenuAdapter extends RecyclerView.Adapter<DetailMenuAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView srcimage;
-
+        TextView attachmenttext;
         public ViewHolder(View itemView) {
             super(itemView);
             srcimage = (ImageView) itemView.findViewById(R.id.srcimage);
+            attachmenttext= (TextView) itemView.findViewById(R.id.attachmenttext);
         }
     }
 }

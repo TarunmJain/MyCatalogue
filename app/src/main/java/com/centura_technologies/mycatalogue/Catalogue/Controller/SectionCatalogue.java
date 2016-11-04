@@ -76,6 +76,8 @@ public class SectionCatalogue extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sectioncatalogue);
+
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setTitle("Catalogue");
         setSupportActionBar(toolbar);
@@ -252,6 +254,7 @@ public class SectionCatalogue extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         InitializationCollectionAdapter(SectionCatalogue.this);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
 }
