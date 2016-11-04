@@ -92,6 +92,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(this.LocalURL, path);
         db.delete(this.ImagesTable, "ImageURL=?", new String[]{image});
         db.insert(this.ImagesTable, null, contentValues);
+        db.close();
     }
 
     public String returnImage(String imagepath) {
@@ -111,6 +112,7 @@ public class DbHelper extends SQLiteOpenHelper {
             data=res.getString(res.getColumnIndex(this.LocalURL)).toString();
             res.moveToNext();
         }
+        db.close();
         return data;
     }
     private void saveSections(){
@@ -120,7 +122,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(this.Data, gson.toJsonTree(DB.getInitialModel().getSections()).getAsJsonArray().toString());
         db.delete(this.InitialData, "TableName=?", new String[]{"Sections"});
         db.insert(this.InitialData, null, contentValues);
-
+        db.close();
     }
     private void saveCategories(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -129,6 +131,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(this.Data, gson.toJsonTree(DB.getInitialModel().getCategories()).getAsJsonArray().toString());
         db.delete(this.InitialData, "TableName=?", new String[]{"Categories"});
         db.insert(this.InitialData, null, contentValues);
+        db.close();
     }
     private void saveproducts(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -137,6 +140,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(this.Data, gson.toJsonTree(DB.getInitialModel().getProducts()).getAsJsonArray().toString());
         db.delete(this.InitialData,"TableName=?",new String[]{"Products"});
         db.insert(this.InitialData, null, contentValues);
+        db.close();
     }
      private void savecollections(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -145,6 +149,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(this.Data, gson.toJsonTree(DB.getInitialModel().getCollections()).getAsJsonArray().toString());
         db.delete(this.InitialData,"TableName=?",new String[]{"Collections"});
         db.insert(this.InitialData, null, contentValues);
+         db.close();
     }
 
     private void saveSectionList() {
@@ -154,6 +159,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(this.Data, gson.toJsonTree(DB.getSectionlist()).getAsJsonArray().toString());
         db.delete(this.InitialData, "TableName=?", new String[]{"SectionsList"});
         db.insert(this.InitialData, null, contentValues);
+        db.close();
     }
 
     public void saveinitialmodel() {
@@ -180,6 +186,7 @@ public class DbHelper extends SQLiteOpenHelper {
             initialModel.setSections(sec);
             res.moveToNext();
         }
+        db.close();
     }
     private void loadCategories(InitialModel initialModel){
         SQLiteDatabase db = DbHelper.this.getReadableDatabase();
@@ -193,6 +200,7 @@ public class DbHelper extends SQLiteOpenHelper {
             initialModel.setCategories(cat);
             res.moveToNext();
         }
+        db.close();
     }
     private void loadproducts(InitialModel initialModel){
         SQLiteDatabase db = DbHelper.this.getReadableDatabase();
@@ -206,6 +214,7 @@ public class DbHelper extends SQLiteOpenHelper {
            //String test=initialModel.getProducts().get(0).getTitle();
             res.moveToNext();
         }
+        db.close();
     }
 
     private void loadcollections(InitialModel initialModel){
@@ -220,6 +229,7 @@ public class DbHelper extends SQLiteOpenHelper {
             //String test=initialModel.getProducts().get(0).getTitle();
             res.moveToNext();
         }
+        db.close();
     }
 
     private void loadSections(){
@@ -234,6 +244,7 @@ public class DbHelper extends SQLiteOpenHelper {
             DB.setSectionlist(sec);
             res.moveToNext();
         }
+        db.close();
     }
 
     public  void loadinitialmodel() {
@@ -279,6 +290,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(this.Data, gson.toJsonTree(StaticData.orders).getAsJsonArray().toString());
         db.delete(this.InitialData,"TableName=?",new String[]{"Orders"});
         db.insert(this.InitialData, null, contentValues);
+        db.close();
     }
 
     public void saveShortlisted(){
@@ -288,6 +300,7 @@ public class DbHelper extends SQLiteOpenHelper {
         contentValues.put(this.Data,gson.toJsonTree(DB.getShortlistModels()).getAsJsonArray().toString());
         db.delete(this.InitialData, "TableName=?", new String[]{"Shortlists"});
         db.insert(this.InitialData, null, contentValues);
+        db.close();
     }
 
     public void loadOrders(){
@@ -301,6 +314,7 @@ public class DbHelper extends SQLiteOpenHelper {
             StaticData.orders=gson.fromJson(res.getString(res.getColumnIndex("Data")).toString(),listType);
             res.moveToNext();
         }
+        db.close();
     }
 
     public void loadCustomerShortlist(){
@@ -315,6 +329,7 @@ public class DbHelper extends SQLiteOpenHelper {
             DB.setShortlistModels(shortlistModelArrayList);
             res.moveToNext();
         }
+        db.close();
     }
 
     public void ClearAllData(){

@@ -61,7 +61,7 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
             }
         }
         holder.price.setText(model.get(position).getSellingPrice()+"");
-        holder.image.setOnClickListener(new View.OnClickListener() {
+        holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DB.getShortlistedlist().remove(position);
@@ -94,7 +94,7 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView text,section,category,price;
-        ImageView image;
+        ImageView image,delete;
         LinearLayout pane;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -103,6 +103,7 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
             category=(TextView)itemView.findViewById(R.id.category);
             price=(TextView)itemView.findViewById(R.id.price);
             image=(ImageView)itemView.findViewById(R.id.image);
+            delete=(ImageView)itemView.findViewById(R.id.delete);
             pane=(LinearLayout)itemView.findViewById(R.id.pane);
         }
     }

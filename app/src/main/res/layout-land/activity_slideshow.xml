@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#000000"
+            android:gravity="center"
             android:layout_alignParentBottom="true">
             <Button
                 android:id="@+id/play"
@@ -37,12 +38,10 @@
                 android:id="@+id/seekBar1"
                 android:layout_toRightOf="@+id/play"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:padding="10dp"
+                android:layout_height="wrap_content"
                 android:max="6000"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp" />
+                android:thumb="@drawable/thumb_image"
+                android:layout_centerVertical="true" />
         </RelativeLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

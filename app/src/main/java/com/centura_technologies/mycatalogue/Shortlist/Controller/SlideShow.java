@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by Centura User1 on 08-09-2016.
  */
-public class SlideShow extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener{
+public class SlideShow extends AppCompatActivity{
     Toolbar toolbar;
     ViewFlipper myViewFlipper;
     float initialXPoint, finalx;
@@ -36,7 +36,7 @@ public class SlideShow extends AppCompatActivity implements SeekBar.OnSeekBarCha
     private boolean isTouchEnable;
     boolean playing;
     int SpeedTime=3000;
-    ArrayList<Integer> myImageList;
+    //ArrayList<Integer> myImageList;
     //TextView product_title;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,11 +49,7 @@ public class SlideShow extends AppCompatActivity implements SeekBar.OnSeekBarCha
         play=(Button)findViewById(R.id.play);
         seekBar1=(SeekBar)findViewById(R.id.seekBar1);
         myViewFlipper = (ViewFlipper) findViewById(R.id.myflipper);
-        seekBar1.setProgress(3000);
-        seekBar1.setOnSeekBarChangeListener(this);
-        playing=true;
-        play.setBackgroundResource(R.drawable.ic_media_pause);
-        play.performClick();
+
         //product_title=(TextView)findViewById(R.id.product_title);
         model=new ArrayList<Products>();
         model= DB.getShortlistedlist();
@@ -68,6 +64,31 @@ public class SlideShow extends AppCompatActivity implements SeekBar.OnSeekBarCha
             GenericData.setImage(images.get(i), imageView, SlideShow.this);
             myViewFlipper.addView(imageView);
         }
+        seekBar1.setProgress(SpeedTime);
+        playing=true;
+        play.setBackgroundResource(R.drawable.ic_media_pause);
+        seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
+                SpeedTime = progresValue;
+                playing=true;
+                play.setBackgroundResource(R.drawable.ic_media_pause);
+                play.performClick();
+                //Toast.makeText(getApplicationContext(), "Changing seekbar's progress", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                //Toast.makeText(getApplicationContext(), "Started tracking seekbar", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                SpeedTime=seekBar.getMax();
+
+                //textView.setText("Covered: " + progress + "/" + seekBar.getMax());
+               // Toast.makeText(getApplicationContext(), "Stopped tracking seekbar", Toast.LENGTH_SHORT).show();
+            }
+        });
+
        /* myImageList = new ArrayList<>();
         myImageList.add(R.drawable.background_1);
         myImageList.add(R.drawable.background_2);
@@ -100,14 +121,15 @@ public class SlideShow extends AppCompatActivity implements SeekBar.OnSeekBarCha
 
             }
         });
+        play.performClick();
+
         /*myViewFlipper.setAutoStart(true);
         myViewFlipper.setFlipInterval(5000);
         myViewFlipper.startFlipping();*/
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress,
-                                  boolean fromUser) {
+   /* @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         SpeedTime=progress;
         //Toast.makeText(getApplicationContext(),"seekbar progress: "+progress, Toast.LENGTH_SHORT).show();
     }
@@ -119,7 +141,7 @@ public class SlideShow extends AppCompatActivity implements SeekBar.OnSeekBarCha
     public void onStopTrackingTouch(SeekBar seekBar) {
         SpeedTime=seekBar.getMax();
         //Toast.makeText(getApplicationContext(),"seekbar touch stopped!", Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
     public void setTouchEnable(boolean isTouchEnable) {
         this.isTouchEnable = isTouchEnable;
