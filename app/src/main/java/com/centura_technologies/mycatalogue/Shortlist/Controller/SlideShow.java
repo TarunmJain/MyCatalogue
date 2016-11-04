@@ -122,8 +122,6 @@ public class SlideShow extends AppCompatActivity{
             }
         });
         play.performClick();
-
-
         /*myViewFlipper.setAutoStart(true);
         myViewFlipper.setFlipInterval(5000);
         myViewFlipper.startFlipping();*/

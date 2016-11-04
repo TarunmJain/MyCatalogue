@@ -8,6 +8,7 @@
         <item name="colorAccent">#E65100</item>
         <item name="android:actionMenuTextColor">@color/white</item>
         <item name="drawerArrowStyle">@style/WhiteDrawerIconStyle</item>
+        <!--<item name="android:soundEffectsEnabled">false</item>-->
     </style>
 
     <style name="WhiteDrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
