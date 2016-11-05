@@ -49,8 +49,7 @@
                         android:layout_below="@+id/emptycart"
                         android:layout_marginTop="5dp"
                         android:gravity="center"
-                        android:text="No Products are added in Cart"
-                        android:textSize="20sp" />
+                        android:text="No Products are added in Cart" />
                     <!--<TextView
                         android:id="@+id/text1"
                         android:layout_below="@+id/text"
@@ -74,6 +73,7 @@
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
                             android:padding="10dp"
+                            android:textSize="16sp"
                             android:text="Shortlist now"
                             android:layout_marginTop="10dp"
                             android:textColor="@color/accentcolor" />
