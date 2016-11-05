@@ -177,7 +177,6 @@ public class Catalogue extends AppCompatActivity {
         StaticData.ProductsInGrid = true;
         StaticData.ProductsInList = false;
         productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
-        productsrecyclerview.setNestedScrollingEnabled(false);
         InitializeAdapter(Catalogue.this);
         InitialzationSectionAdapter(Catalogue.this);
         InitialzationCategoryAdapter(Catalogue.this, null);

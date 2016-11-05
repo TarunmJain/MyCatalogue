@@ -87,12 +87,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static VideoView productDetailvedio;
     RelativeLayout toppane;
     static WebView productDetailwebview;
-    static LinearLayout imagelayout;
-    static LinearLayout vediolayout;
-    static LinearLayout weblayout;
-    static LinearLayout pdflayout;
-    static LinearLayout panoramalayout;
-    static LinearLayout infolayout;
+    static LinearLayout imagelayout,vediolayout,weblayout,pdflayout,panoramalayout,infolayout;
     private int screenhight;
 
 

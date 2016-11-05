@@ -18,12 +18,29 @@
                 android:id="@+id/toppane"
                 android:layout_width="match_parent"
                 android:layout_height="550dp">
-
                 <ImageView
                     android:id="@+id/openimage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/loginscreen" />
+                <ImageView
+                    android:id="@+id/next"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/arrowright"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:background="@drawable/whitebackground"/>
+                <ImageView
+                    android:id="@+id/previous"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/arrowleft"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:background="@drawable/whitebackground"/>
 
                 <RelativeLayout
                     android:padding="16dp"
@@ -120,31 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/pricelayout"
                         android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
-                    <LinearLayout
-                        android:layout_below="@+id/pricelayout"
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="5dp"
-                            android:text="Description"
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
 
-                        <TextView
-                            android:id="@+id/description"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:padding="5dp"
-                            android:text="Chet's code deletes an item immediately. I improved on this by making it function more like Gmail where swiping reveals a bottom view that indicates that the item is deleted but provides an Undo button where the user has the possibility to undo the deletion. Chet's code also has a bug in it. If you have less items in the listview than the height of the listview is and you delete the last item, the last item appears to not be deleted. This was fixed in my code. "
-                            android:textColor="@color/black"
-                            android:textSize="14dp" />
-                    </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -156,7 +149,30 @@
                 android:layout_margin="5dp"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Description"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
 
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="5dp"
+                        android:text="Chet's code deletes an item immediately. I improved on this by making it function more like Gmail where swiping reveals a bottom view that indicates that the item is deleted but provides an Undo button where the user has the possibility to undo the deletion. Chet's code also has a bug in it. If you have less items in the listview than the height of the listview is and you delete the last item, the last item appears to not be deleted. This was fixed in my code. "
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -183,32 +199,6 @@
                 android:layout_below="@+id/scrollview"
                 android:padding="10dp"
                 android:paddingBottom="20dp">
-
-                <RelativeLayout
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/mediapane"
-                    android:layout_marginTop="10dp">
-
-                    <ImageView
-                        android:id="@+id/previous"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="100dp"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_arrow_left_drop_circle_outline_grey600_24dp" />
-
-                    <ImageView
-                        android:id="@+id/next"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="100dp"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_arrow_right_drop_circle_outline_grey600_24dp" />
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:visibility="gone"

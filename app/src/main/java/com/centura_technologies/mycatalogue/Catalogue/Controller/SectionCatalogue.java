@@ -65,13 +65,14 @@ public class SectionCatalogue extends AppCompatActivity {
     public static ArrayList<CollectionModel> collectionmodel;
     //TextView catalogtext,shortlisttext,ordertext,settingstext,logouttext;
 
-   public void animate(View view, final int position) {
-            view.setVisibility(View.VISIBLE);
-            view.animate().cancel();
-            view.setTranslationY(100);
-            view.setAlpha(0);
-            view.animate().alpha(1.0f).translationY(0).setDuration(1000);
+    public void animate(View view, final int position) {
+        view.setVisibility(View.VISIBLE);
+        view.animate().cancel();
+        view.setTranslationY(100);
+        view.setAlpha(0);
+        view.animate().alpha(1.0f).translationY(0).setDuration(1000);
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,12 +84,6 @@ public class SectionCatalogue extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         coverFlow = (FeatureCoverFlow) findViewById(R.id.coverflow);
-        /*catalogtext= (TextView) findViewById(R.id.catalogtext);
-        shortlisttext=(TextView) findViewById(R.id.shortlisttext);
-        ordertext=(TextView) findViewById(R.id.ordertext);
-        settingstext=(TextView) findViewById(R.id.settingstext);
-        logouttext=(TextView) findViewById(R.id.logouttext);*/
-        //Drawer = (DrawerLayout) findViewById(R.id.drawer);
         mTitle = (TextSwitcher) findViewById(R.id.title);
         mTitle.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
@@ -107,63 +102,9 @@ public class SectionCatalogue extends AppCompatActivity {
         animate(ordertext,1);
         animate(settingstext,1);
         animate(logouttext,1);*/
-
-
         sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
-        /*mDrawerToggle = new ActionBarDrawerToggle(SectionCatalogue.this, Drawer, toolbar, R.string.opendrawer, R.string.closedrawer) {
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                // code here will execute once the drawer is opened( As I dont want anything happened whe drawer is
-                // open I am not going to put anything here)
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                // Code here will execute once drawer is closed
-            }
-        }; // Drawer Toggle Object Made
-        Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
-        mDrawerToggle.syncState();*/
-
-
         InitializationCollectionAdapter(SectionCatalogue.this);
-
         StaticData.DrawerTextDisable = "Catalogue";
-        //GenericData.DrawerOnClicks(SectionCatalogue.this);
-
-        /*catalogtext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StaticData.SelectedCategoryId = "-1";
-                startActivity(new Intent(SectionCatalogue.this, SectionCatalogue.class));
-            }
-        });
-        ordertext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SectionCatalogue.this, OrdersList.class));
-            }
-        });
-        settingstext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SectionCatalogue.this, Settings.class));
-            }
-        });
-        shortlisttext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SectionCatalogue.this, CustomerShortlist.class));
-            }
-        });
-        logouttext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GenericData.logout(SectionCatalogue.this);
-            }
-        });*/
     }
 
     public static void InitializationCollectionAdapter(final Context context) {
@@ -178,7 +119,7 @@ public class SectionCatalogue extends AppCompatActivity {
         coverFlow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == collectionmodel.size()+1 || position==0) {
+                if (position == collectionmodel.size() + 1 || position == 0) {
                     BreadCrumb.Section = "All Products";
                     StaticData.SelectedCategoryId = "-1";
                     BreadCrumb.Category = "";
@@ -212,9 +153,7 @@ public class SectionCatalogue extends AppCompatActivity {
                 mTitle.setText("");
             }
         });
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
