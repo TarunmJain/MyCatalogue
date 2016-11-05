@@ -135,6 +135,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         menulyaout.setLayoutManager(new LinearLayoutManager(CatalogueDetails.this));
         UiManuplation();
 
+
         if (StaticData.ClickedProduct) {
             for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
                 if (DB.getInitialModel().getProducts().get(i).getSectionId().matches(StaticData.SelectedSectionId)) {
