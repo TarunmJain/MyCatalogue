@@ -18,22 +18,20 @@
         android:gravity="center"
         android:layout_centerInParent="true">
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/emptyorderlist"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center"
-            android:src="@drawable/ic_alert_circle_outline_grey600_24dp" />
+            android:src="@drawable/ic_alert_circle_outline_grey600_24dp" />-->
 
         <TextView
             android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/emptyorderlist"
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="Orders are empty!!!"
-            android:textColor="@color/black"
             android:textSize="20sp" />
         <!--<TextView
             android:id="@+id/text1"
@@ -55,10 +53,11 @@
                 android:id="@+id/ordernow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/accentcolor"
+                android:background="@android:color/transparent"
                 android:padding="10dp"
+                android:layout_marginTop="10dp"
                 android:text="Order Now!!!"
-                android:textColor="@color/white" />
+                android:textColor="@color/accentcolor" />
         </RelativeLayout>
     </RelativeLayout>
     <LinearLayout

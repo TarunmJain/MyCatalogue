@@ -40,7 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:gravity="center"
-                        android:src="@drawable/favorite7" />
+                        android:src="@drawable/ic_cart_outline_grey600_24dp" />
 
                     <TextView
                         android:id="@+id/text"
@@ -49,8 +49,7 @@
                         android:layout_below="@+id/emptycart"
                         android:layout_marginTop="5dp"
                         android:gravity="center"
-                        android:text="No Products are Shortlisted"
-                        android:textColor="@color/black"
+                        android:text="No Products are added in Cart"
                         android:textSize="20sp" />
                     <!--<TextView
                         android:id="@+id/text1"
@@ -73,10 +72,11 @@
                             android:id="@+id/shortlist"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@color/accentcolor"
+                            android:background="@android:color/transparent"
                             android:padding="10dp"
                             android:text="Shortlist now"
-                            android:textColor="@color/white" />
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/accentcolor" />
                     </RelativeLayout>
                 </RelativeLayout>
 

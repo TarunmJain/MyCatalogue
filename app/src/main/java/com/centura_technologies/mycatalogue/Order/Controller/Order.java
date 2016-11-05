@@ -242,9 +242,6 @@ public class Order extends AppCompatActivity {
                     placeorder.setText("PLACE ORDER");
                     clearBill.setText("CANCEL");
                 } else {
-                    placeorder.setText("SAVE BILL");
-                    clearBill.setText("CLEAR BILL");
-                    setLocation(Order.this);
                     shorlistedmodel = new ArrayList<BillingProducts>();
                     for (BillingProducts temp : DB.getBillprodlist()) {
                         if (temp.getQuantity() > 0) {
@@ -252,6 +249,9 @@ public class Order extends AppCompatActivity {
                         }
                     }
                     if (shorlistedmodel.size() > 0) {
+                        placeorder.setText("SAVE BILL");
+                        clearBill.setText("CLEAR BILL");
+                        setLocation(Order.this);
                         OrderModel temporder = new OrderModel();
                         temporder.billingProducts = (ArrayList<BillingProducts>) shorlistedmodel.clone();
                         temporder.Amount = OrderProductsAdapter.total_amount;
