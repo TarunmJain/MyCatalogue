@@ -35,11 +35,10 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
     ImageView product_image;
     TextView product_title, product_description;
     ArrayList<Products> products;
-    ArrayList<Products> shortlist;
+    //ArrayList<Products> shortlist;
 
     public CatalogueAdapter(Context context, ArrayList<Products> model) {
         products = new ArrayList<Products>();
-        shortlist = new ArrayList<Products>();
         products = model;
         this.mContext = context;
         activity = (Activity) mContext;
@@ -124,8 +123,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                 if (!found) {
                     holder.wishlist.setImageResource(R.drawable.ic_cartnew);
                     StaticData.Shortlisted = true;
-                    shortlist.add(products.get(position));
-                    DB.setShortlistedlist(shortlist);
+                    DB.shortlistedlist.add(products.get(position));
                 }
                 return true;
             }

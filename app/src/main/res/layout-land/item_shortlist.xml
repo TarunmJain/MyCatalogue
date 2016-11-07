@@ -73,7 +73,7 @@
                 android:layout_height="70dp"
                 android:padding="20dp"
                 android:layout_weight="0.3"
-                android:src="@drawable/ic_delete_grey600_24dp" />
+                android:src="@drawable/places_ic_clear" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"

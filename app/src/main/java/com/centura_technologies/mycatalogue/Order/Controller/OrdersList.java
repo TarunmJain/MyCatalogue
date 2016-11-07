@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +37,7 @@ public class OrdersList extends AppCompatActivity {
     TextView toolbar_title;
     static LinearLayout search,orderlisttitle;
     static RelativeLayout empty_shortlist;
-    Button ordernow;
+    CardView ordernow;
     static FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class OrdersList extends AppCompatActivity {
         search=(LinearLayout)findViewById(R.id.search);
         orderlisttitle=(LinearLayout)findViewById(R.id.orderlisttitle);
         empty_shortlist=(RelativeLayout)findViewById(R.id.empty_shortlist);
-        ordernow=(Button)findViewById(R.id.ordernow);
+        ordernow=(CardView)findViewById(R.id.ordernow);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         serachorder= (EditText) findViewById(R.id.serachorder);
         orderslist = (RecyclerView) findViewById(R.id.orderslist);

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
@@ -22,6 +23,7 @@ import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -337,5 +339,14 @@ public class DbHelper extends SQLiteOpenHelper {
         db.delete(this.InitialData, null, null);
         db.delete(this.ImagesTable,null,null);
         db.close();
+        File dir =(Environment.getExternalStoragePublicDirectory("/MyCatalogueLocalData"));
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++)
+            {
+                new File(dir, children[i]).delete();
+            }
+        }
     }
 }

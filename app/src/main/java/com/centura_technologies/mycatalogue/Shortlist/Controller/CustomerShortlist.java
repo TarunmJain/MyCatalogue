@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,7 +47,7 @@ public class CustomerShortlist extends AppCompatActivity {
     EditText serachorder;
     static LinearLayout search,shortlistlayout;
     static RelativeLayout empty_shortlist;
-    Button shortlistnow;
+    CardView shortlistnow;
     ArrayList<ShortlistModel> list;
 
     @Override
@@ -61,7 +62,7 @@ public class CustomerShortlist extends AppCompatActivity {
         search=(LinearLayout)findViewById(R.id.search);
         shortlistlayout=(LinearLayout)findViewById(R.id.shortlistlayout);
         empty_shortlist=(RelativeLayout)findViewById(R.id.empty_shortlist);
-        shortlistnow=(Button)findViewById(R.id.shortlistnow);
+        shortlistnow=(CardView)findViewById(R.id.shortlistnow);
         serachorder= (EditText) findViewById(R.id.serachorder);
         recyclerView=(RecyclerView)findViewById(R.id.recyclerview);
         fab=(FloatingActionButton)findViewById(R.id.fab);
@@ -133,6 +134,8 @@ public class CustomerShortlist extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                StaticData.SelectedCategoryId="-1";
+                Catalogue.productslist();
                 startActivity(new Intent(CustomerShortlist.this, Catalogue.class));
                 finish();
             }

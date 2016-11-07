@@ -135,6 +135,7 @@ public class GenericData {
                 pDialog = new ProgressDialog(context);
                 pDialog.setMessage(message);
                 pDialog.setCanceledOnTouchOutside(false);
+                pDialog.setCancelable(false);
                 progressAlive = true;
                 pDialog.show();
             }
@@ -145,6 +146,31 @@ public class GenericData {
                 progressAlive = false;
             }
         }
+    }
+    public static void ShowDialogSync(Context context, String message, Boolean flag) {
+        if (flag) {
+            if (progressAlive) {
+                pDialog.cancel();
+                progressAlive = false;
+            }
+            {
+                pDialog = new ProgressDialog(context);
+                pDialog.setMessage(message);
+                pDialog.setCanceledOnTouchOutside(false);
+                pDialog.setCancelable(false);
+                progressAlive = true;
+                pDialog.show();
+            }
+        } else {
+            if (progressAlive) {
+                pDialog.dismiss();
+                pDialog.cancel();
+                progressAlive = false;
+            }
+        }
+    }
+    public static void SetDialogMessage(String message) {
+        pDialog.setMessage(message);
     }
 
     public static int convertDpToPixels(float dp, Context context) {

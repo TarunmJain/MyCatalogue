@@ -15,7 +15,7 @@ public class Products {
     private String BarCode;
     private String ImageUrl;
     private ArrayList<String> ProductImages;
-    private ArrayList<String> Attachments;
+    private ArrayList<AttchmentClass> Attachments;
     private String VideoUrl;
     private String PdfUrl;
     private Double MRP;
@@ -40,7 +40,7 @@ public class Products {
         BarCode="";
         ImageUrl="";
         ProductImages=new ArrayList<String>();
-        Attachments=new ArrayList<String>();
+        Attachments=new ArrayList<AttchmentClass>();
         VideoUrl="";
         PdfUrl="";
         MRP=0.0;
@@ -126,11 +126,11 @@ public class Products {
         ProductImages = productImages;
     }
 
-    public ArrayList<String> getAttachments() {
+    public ArrayList<AttchmentClass> getAttachments() {
         return Attachments;
     }
 
-    public void setAttachments(ArrayList<String> attachments) {
+    public void setAttachments(ArrayList<AttchmentClass> attachments) {
         Attachments = attachments;
     }
 

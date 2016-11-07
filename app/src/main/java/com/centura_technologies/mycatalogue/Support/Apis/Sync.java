@@ -1,7 +1,10 @@
 package com.centura_technologies.mycatalogue.Support.Apis;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,7 +22,11 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.Catalogue.Model.FilterItem;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Valuepair;
+import com.centura_technologies.mycatalogue.Login.Controller.IntroductionClass;
+import com.centura_technologies.mycatalogue.Login.Controller.Login;
+import com.centura_technologies.mycatalogue.Login.Controller.Splash;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
+import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -65,7 +72,7 @@ public class Sync {
         sharedPreferences = context.getSharedPreferences(GenericData.MyPref, context.MODE_PRIVATE);
         ArrayList<Sections> model = new ArrayList<Sections>();
         RequestQueue queue = Volley.newRequestQueue(context);
-        Map<String, String> params = new HashMap<String, String>();
+        final Map<String, String> params = new HashMap<String, String>();
         params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
         //GenericData.ShowDialog(context, "Loading...", true);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.Initial, new JSONObject(params), new Response.Listener<JSONObject>() {
@@ -74,38 +81,33 @@ public class Sync {
                 //GenericData.ShowDialog(context,"Loading...",false);
                 if (response.optString("IsSuccess").matches("true")) {
                     try {
+                        ArrayList<ImageCache> allMedia = new ArrayList<ImageCache>();
                         InitialModel temp = new InitialModel();
                         JSONObject jsonObject = response.getJSONObject("Data");
                         temp = gson.fromJson(jsonObject.toString(), InitialModel.class);
                         for (int i = 0; i < temp.getProducts().size(); i++) {
                             ImageCache param = new ImageCache(temp.getProducts().get(i).getImageUrl(), temp.getProducts().get(i).getId(), context);
-                            GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
-                            getImageFromUrl.execute(param);
+                            allMedia.add(param);
                             for (int d = 0; d < temp.getProducts().get(i).getProductImages().size(); d++) {
                                 param = new ImageCache(temp.getProducts().get(i).getProductImages().get(d), temp.getProducts().get(i).getId() + d + "", context);
-                                getImageFromUrl = new GetImageFromUrl();
-                                getImageFromUrl.execute(param);
+                                allMedia.add(param);
                             }
                             for (int d = 0; d < temp.getProducts().get(i).getAttachments().size(); d++) {
-                                param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d), temp.getProducts().get(i).getId() +"attachment"+d + "", context);
-                                getImageFromUrl = new GetImageFromUrl();
-                                getImageFromUrl.execute(param);
+                                param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d).AttachmentUrl, temp.getProducts().get(i).getId() + "attachment" + d + "", context);
+                                allMedia.add(param);
                             }
                         }
                         for (int i = 0; i < temp.getSections().size(); i++) {
-                            ImageCache param1 = new ImageCache(temp.getSections().get(i).getImageUrl(), temp.getSections().get(i).getId(), context);
-                            GetImageFromUrl getImageFromUrl1 = new GetImageFromUrl();
-                            getImageFromUrl1.execute(param1);
+                            ImageCache param = new ImageCache(temp.getSections().get(i).getImageUrl(), temp.getSections().get(i).getId(), context);
+                            allMedia.add(param);
                         }
                         for (int i = 0; i < temp.getCategories().size(); i++) {
-                            ImageCache param2 = new ImageCache(temp.getCategories().get(i).getImageUrl(), temp.getCategories().get(i).getId(), context);
-                            GetImageFromUrl getImageFromUrl2 = new GetImageFromUrl();
-                            getImageFromUrl2.execute(param2);
+                            ImageCache param = new ImageCache(temp.getCategories().get(i).getImageUrl(), temp.getCategories().get(i).getId(), context);
+                            allMedia.add(param);
                         }
                         for (int j = 0; j < temp.getCollections().size(); j++) {
-                            ImageCache param3 = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
-                            GetImageFromUrl getImageFromUrl3 = new GetImageFromUrl();
-                            getImageFromUrl3.execute(param3);
+                            ImageCache param = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
+                            allMedia.add(param);
                         }
                         GenericData.imagesChached = true;
                         DB.setInitialModel(temp);
@@ -122,6 +124,7 @@ public class Sync {
 
                         /*temp=gson.fromJson(jsonObject.toString(), Sections.class);
                         DB.getCategoryData().add(temp);*/
+                        LoadAsyncData(allMedia, context);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -137,6 +140,42 @@ public class Sync {
         queue.add(jsonObjectRequest);
     }
 
+    static int syncposition = 0;
+    static int syncSize = 0;
+
+    private static void LoadAsyncData(final ArrayList<ImageCache> allMedia, Context context) {
+        if (context != null)
+            GenericData.ShowDialog(context, "Loading Media", true);
+        syncposition = -1;
+        syncSize = allMedia.size();
+        final GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
+        loadnext(allMedia, getImageFromUrl, context);
+    }
+
+    private static void loadnext(final ArrayList<ImageCache> allMedia, GetImageFromUrl getImageFromUrl, final Context context) {
+        if (getImageFromUrl.getStatus() != AsyncTask.Status.RUNNING) {
+            if (syncSize - 1 > syncposition) {
+                syncposition++;
+                if (context != null)
+                    GenericData.SetDialogMessage("Loading " + syncposition + " out of " + syncSize);
+                getImageFromUrl = new GetImageFromUrl();
+                getImageFromUrl.execute(allMedia.get(syncposition));
+            } else {
+                if (context != null)
+                    GenericData.ShowDialog(context, "Loading Media", false);
+                return;
+            }
+        }
+        final GetImageFromUrl finalGetImageFromUrl = getImageFromUrl;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                    loadnext(allMedia, finalGetImageFromUrl, context);
+            }
+        }, 500);
+    }
+
+
     public static void SyncSectionList(final Context mContext) {
         sharedPreferences = mContext.getSharedPreferences(GenericData.MyPref, mContext.MODE_PRIVATE);
 
@@ -150,19 +189,21 @@ public class Sync {
                     ArrayList<Sections> model = new ArrayList<Sections>();
                     InitialModel temp = new InitialModel();
                     try {
+
+                        ArrayList<ImageCache> allMedia = new ArrayList<ImageCache>();
                         JSONObject jsonObject = response.getJSONObject("Data");
                         temp = gson.fromJson(jsonObject.toString(), InitialModel.class);
                         model = (temp.getSections());
                         for (int i = 0; i < model.size(); i++) {
-                            ImageCache param1 = new ImageCache(model.get(i).getImageUrl(), model.get(i).getId(), mContext);
-                            GetImageFromUrl getImageFromUrl1 = new GetImageFromUrl();
-                            getImageFromUrl1.execute(param1);
+                            ImageCache param = new ImageCache(model.get(i).getImageUrl(), model.get(i).getId(), mContext);
+                            allMedia.add(param);
                         }
                         GenericData.imagesChached = true;
                         DB.setSectionlist(model);
                         db = new DbHelper(mContext);
                         db.savesectionlist();
                         db.loadsectionlist();
+                        LoadAsyncData(allMedia, mContext);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -319,38 +360,35 @@ public class Sync {
                 //GenericData.ShowDialog(context,"Loading...",false);
                 if (response.optString("IsSuccess").matches("true")) {
                     try {
+                        ArrayList<ImageCache> allMedia = new ArrayList<ImageCache>();
                         InitialModel temp = new InitialModel();
                         JSONObject jsonObject = response.getJSONObject("Data");
                         temp = gson.fromJson(jsonObject.toString(), InitialModel.class);
                         for (int i = 0; i < temp.getProducts().size(); i++) {
                             ImageCache param = new ImageCache(temp.getProducts().get(i).getImageUrl(), temp.getProducts().get(i).getId(), context);
-                            GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
-                            getImageFromUrl.execute(param);
+                            allMedia.add(param);
                             for (int d = 0; d < temp.getProducts().get(i).getProductImages().size(); d++) {
                                 param = new ImageCache(temp.getProducts().get(i).getProductImages().get(d), temp.getProducts().get(i).getId() + d + "", context);
-                                getImageFromUrl = new GetImageFromUrl();
-                                getImageFromUrl.execute(param);
+                                allMedia.add(param);
                             }
                             for (int d = 0; d < temp.getProducts().get(i).getAttachments().size(); d++) {
-                                param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d), temp.getProducts().get(i).getId() +"attachment"+d + "", context);
-                                getImageFromUrl = new GetImageFromUrl();
-                                getImageFromUrl.execute(param);
+                                param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d).AttachmentUrl, temp.getProducts().get(i).getId() + "attachment" + d + "", context);
+                                allMedia.add(param);
                             }
                         }
 
                         for (int i = 0; i < temp.getCategories().size(); i++) {
                             ImageCache param = new ImageCache(temp.getCategories().get(i).getImageUrl(), temp.getCategories().get(i).getId(), context);
-                            GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
-                            getImageFromUrl.execute(param);
+                            allMedia.add(param);
                         }
 
                         for (int j = 0; j < temp.getCollections().size(); j++) {
-                            ImageCache param3 = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
-                            GetImageFromUrl getImageFromUrl3 = new GetImageFromUrl();
-                            getImageFromUrl3.execute(param3);
+                            ImageCache param = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
+                            allMedia.add(param);
                         }
                         GenericData.imagesChached = true;
                         updateInitialmodel(temp, context);
+                        LoadAsyncData(allMedia, context);
                         if (SelectedSectionSync.size() > 0)
                             syncroniseSections(context);
                     } catch (JSONException e) {
@@ -390,12 +428,13 @@ public class Sync {
                 //GenericData.ShowDialog(context,"Loading...",false);
                 if (response.optString("IsSuccess").matches("true")) {
                     try {
+                        ArrayList<ImageCache> allMedia = new ArrayList<ImageCache>();
                         InitialModel temp = new InitialModel();
                         JSONObject jsonObject = response.getJSONObject("Data");
                         temp = gson.fromJson(jsonObject.toString(), InitialModel.class);
                         for (String id : SelectedSectionSync) {
                             for (Sections section : DB.getSectionlist()) {
-                                if(section.getId().matches(id)){
+                                if (section.getId().matches(id)) {
                                     temp.getSections().add(section);
                                     break;
                                 }
@@ -404,33 +443,30 @@ public class Sync {
 
                         for (int i = 0; i < temp.getCategories().size(); i++) {
                             ImageCache param = new ImageCache(temp.getCategories().get(i).getImageUrl(), temp.getCategories().get(i).getId(), context);
-                            GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
-                            getImageFromUrl.execute(param);
+                            allMedia.add(param);
                         }
 
                         for (int i = 0; i < temp.getProducts().size(); i++) {
                             ImageCache param = new ImageCache(temp.getProducts().get(i).getImageUrl(), temp.getProducts().get(i).getId(), context);
-                            GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
-                            getImageFromUrl.execute(param);
+                            allMedia.add(param);
                             for (int d = 0; d < temp.getProducts().get(i).getProductImages().size(); d++) {
                                 param = new ImageCache(temp.getProducts().get(i).getProductImages().get(d), temp.getProducts().get(i).getId() + d + "", context);
-                                getImageFromUrl = new GetImageFromUrl();
-                                getImageFromUrl.execute(param);
+                                allMedia.add(param);
                             }
                             for (int d = 0; d < temp.getProducts().get(i).getAttachments().size(); d++) {
-                                param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d), temp.getProducts().get(i).getId() +"attachment"+d + "", context);
-                                getImageFromUrl = new GetImageFromUrl();
-                                getImageFromUrl.execute(param);
+                                param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d).AttachmentUrl, temp.getProducts().get(i).getId() + "attachment" + d + "", context);
+                                allMedia.add(param);
                             }
                         }
 
                         for (int j = 0; j < temp.getCollections().size(); j++) {
-                            ImageCache param3 = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
-                            GetImageFromUrl getImageFromUrl3 = new GetImageFromUrl();
-                            getImageFromUrl3.execute(param3);
+                            ImageCache param = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
+                            allMedia.add(param);
                         }
+                        LoadAsyncData(allMedia, context);
                         GenericData.imagesChached = true;
                         updateInitialmodel(temp, context);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -516,12 +552,12 @@ public class Sync {
         Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
     }
 
-    public static void BillingProducts(){
+    public static void BillingProducts() {
         ArrayList<BillingProducts> billprodlist;
         BillingProducts billprod;
-        billprodlist=new ArrayList<BillingProducts>();
-        for(int i=0;i<DB.getInitialModel().getProducts().size();i++){
-            billprod=new BillingProducts();
+        billprodlist = new ArrayList<BillingProducts>();
+        for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
+            billprod = new BillingProducts();
             billprod.setId(DB.getInitialModel().getProducts().get(i).getId());
             billprod.setTitle(DB.getInitialModel().getProducts().get(i).getTitle());
             billprod.setDescription(DB.getInitialModel().getProducts().get(i).getDescription());

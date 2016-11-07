@@ -27,7 +27,7 @@ public class DB {
     private static BillingProducts billingProducts = new BillingProducts();
     private static ArrayList<BillingProducts> billprodlist = new ArrayList<BillingProducts>();
     private static Products shortlisted = new Products();
-    private static ArrayList<Products> shortlistedlist = new ArrayList<Products>();
+    public static ArrayList<Products> shortlistedlist = new ArrayList<Products>();
     private static ShortlistModel shortlistModel = new ShortlistModel();
     private static ArrayList<ShortlistModel> shortlistModels = new ArrayList<ShortlistModel>();
 
@@ -97,9 +97,9 @@ public class DB {
         return shortlistedlist;
     }
 
-    public static void setShortlistedlist(ArrayList<Products> shortlistedlist) {
+  /*  public static void setShortlistedlist(ArrayList<Products> shortlistedlist) {
         DB.shortlistedlist = shortlistedlist;
-    }
+    }*/
 
     public static CategoryTree getTree() {
         return tree;

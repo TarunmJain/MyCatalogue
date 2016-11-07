@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.centura_technologies.mycatalogue.Login.Controller.Login;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
@@ -30,6 +31,7 @@ public class Settings extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setTitle("Settings");
         setSupportActionBar(toolbar);
+        Sync.SyncSectionList(Settings.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         syncall=(CardView)findViewById(R.id.syncall);
         syncsections=(CardView)findViewById(R.id.syncsections);

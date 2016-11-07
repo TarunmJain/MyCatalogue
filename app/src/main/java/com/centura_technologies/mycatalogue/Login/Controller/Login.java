@@ -120,7 +120,6 @@ public class Login extends Activity {
                                         editor.commit();
                                         StaticData.Options = "Catalogue";
                                         StaticData.DrawerTextDisable="Catalogue";
-                                        Sync.SyncSectionList(Login.this);
                                         startActivity(new Intent(Login.this, Settings.class));
                                         finish();
                                     } else {

@@ -12,7 +12,14 @@ public class CustomerModel {
     String DOB;
     String Phone;
     String Email;
-    String Address;
+    String UserName;
+    String ShippingAddress;
+    String Landmark;
+    String City;
+    String State;
+    String PinCode;
+    boolean IsActive;
+
 
     public CustomerModel(){
         Id="";
@@ -21,7 +28,13 @@ public class CustomerModel {
         DOB="";
         Phone="";
         Email="";
-        Address="";
+        UserName="";
+        ShippingAddress="";
+        Landmark="";
+        City="";
+        State="";
+        PinCode="";
+        IsActive=false;
     }
 
     public CustomerModel(String name){
@@ -31,7 +44,6 @@ public class CustomerModel {
         DOB="";
         Phone="123456781"+name;
         Email="email"+name+"@gmail.com";
-        Address="";
     }
 
     public String getId() {
@@ -82,11 +94,59 @@ public class CustomerModel {
         Email = email;
     }
 
-    public String getAddress() {
-        return Address;
+    public String getUserName() {
+        return UserName;
     }
 
-    public void setAddress(String address) {
-        Address = address;
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public String getShippingAddress() {
+        return ShippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        ShippingAddress = shippingAddress;
+    }
+
+    public String getLandmark() {
+        return Landmark;
+    }
+
+    public void setLandmark(String landmark) {
+        Landmark = landmark;
+    }
+
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String city) {
+        City = city;
+    }
+
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
+    }
+
+    public String getPinCode() {
+        return PinCode;
+    }
+
+    public void setPinCode(String pinCode) {
+        PinCode = pinCode;
+    }
+
+    public boolean isActive() {
+        return IsActive;
+    }
+
+    public void setActive(boolean active) {
+        IsActive = active;
     }
 }

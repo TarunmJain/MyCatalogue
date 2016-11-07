@@ -3,8 +3,10 @@ package com.centura_technologies.mycatalogue.Catalogue.Controller;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.opengl.GLES10;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
@@ -15,6 +17,8 @@ import com.panoramagl.PLSphericalPanorama;
 
 import java.io.IOException;
 import java.net.URL;
+
+import javax.microedition.khronos.opengles.GL10;
 
 public class Panorama extends AppCompatActivity {
     PLManager plManager;
@@ -28,7 +32,18 @@ public class Panorama extends AppCompatActivity {
         Intent i = getIntent();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        Bitmap bitmap = BitmapFactory.decodeFile(i.getStringExtra("url"), options);
+        String Url=i.getStringExtra("url");
+        Bitmap bitmap = BitmapFactory.decodeFile(Url, options);
+        /*
+        int[] maxSize = new int[1];
+         GLES10.glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE, maxSize, 0);*/
+        if(bitmap.getHeight()>=2048||bitmap.getWidth()>=2048){
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            int width = metrics.widthPixels;
+            int height = metrics.heightPixels;
+            bitmap =Bitmap.createScaledBitmap(bitmap, width, height, true);
+        }
         PLSphericalPanorama panorama = new PLSphericalPanorama();
         panorama.getCamera().lookAt(30.0f, 90.0f);
         panorama.setImage(new PLImage(bitmap, false));

@@ -49,11 +49,11 @@ public class Shortlist extends AppCompatActivity {
     Toolbar toolbar;
     static RecyclerView shortlistrecyclerview;
     EditText customername, salespersonname;
-    Button save, clear,bill;
+    Button save, clear, bill;
     TextView totalproducts;
     static RelativeLayout emptyshortlist, footer;
     static LinearLayout shortlistlayout;
-    static Button shortlistnow;
+    static CardView shortlistnow;
     static CardView details;
     static FloatingActionButton fab;
     ArrayList<ShortlistModel> list;
@@ -76,17 +76,17 @@ public class Shortlist extends AppCompatActivity {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         emptyshortlist = (RelativeLayout) findViewById(R.id.empty_shortlist);
         footer = (RelativeLayout) findViewById(R.id.footer);
-        shortlistnow = (Button) findViewById(R.id.shortlist);
+        shortlistnow = (CardView) findViewById(R.id.shortlist);
         details = (CardView) findViewById(R.id.details);
         customername = (EditText) findViewById(R.id.customername);
         salespersonname = (EditText) findViewById(R.id.salespersonname);
-        shortlistlayout=(LinearLayout)findViewById(R.id.shortlistlayout);
+        shortlistlayout = (LinearLayout) findViewById(R.id.shortlistlayout);
         save = (Button) findViewById(R.id.save);
         clear = (Button) findViewById(R.id.clear);
-        bill=(Button)findViewById(R.id.bill);
+        bill = (Button) findViewById(R.id.bill);
         totalproducts = (TextView) findViewById(R.id.totalproducts);
         shortlistrecyclerview = (RecyclerView) findViewById(R.id.shortlistrecyclerview);
-        shortlistrecyclerview.setLayoutManager(new LinearLayoutManager(Shortlist.this, LinearLayoutManager.VERTICAL,false));
+        shortlistrecyclerview.setLayoutManager(new LinearLayoutManager(Shortlist.this, LinearLayoutManager.VERTICAL, false));
         totalproducts.setText("Total Products - " + DB.getShortlistedlist().size() + "");
         OnClicks();
         InitializeAdapter(Shortlist.this);
@@ -96,7 +96,7 @@ public class Shortlist extends AppCompatActivity {
     public static void InitializeAdapter(final Context context) {
         if (StaticData.customershortlistedview) {
             footer.setVisibility(View.GONE);
-            details.setVisibility(View.GONE);
+            details.setVisibility(View.VISIBLE);
             emptyshortlist.setVisibility(View.GONE);
             fab.setVisibility(View.VISIBLE);
             StaticData.customershortlistedview = false;
@@ -119,13 +119,13 @@ public class Shortlist extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (save.getText().toString().matches("SHORTLIST")) {
+                if (save.getText().toString().matches("SHORTLIST NOW")) {
                     details.setVisibility(View.VISIBLE);
                     save.setText("SAVE");
                     clear.setText("CANCEL");
                 } else {
-                    save.setText("SHORTLIST");
-                    details.setVisibility(View.GONE);
+                    save.setText("SHORTLIST NOW");
+                    details.setVisibility(View.VISIBLE);
                     list = new ArrayList<ShortlistModel>();
                     list = DB.getShortlistModels();
                     if (DB.getShortlistedlist().size() != 0) {
@@ -140,7 +140,7 @@ public class Shortlist extends AppCompatActivity {
                         DB.setShortlistModels(list);
                         db = new DbHelper(Shortlist.this);
                         db.saveShortlisted();
-                        DB.setShortlistedlist(new ArrayList<Products>());
+                        DB.shortlistedlist = new ArrayList<Products>();
                         Toast.makeText(Shortlist.this, "Successfully Added", Toast.LENGTH_SHORT).show();
                         finish();
                     } else
@@ -158,7 +158,7 @@ public class Shortlist extends AppCompatActivity {
                 } else {
                     clear.setText("CLEAR");
                     save.setText("SAVE");
-                    details.setVisibility(View.GONE);
+                    details.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -179,9 +179,9 @@ public class Shortlist extends AppCompatActivity {
         bill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<BillingProducts> model=new ArrayList<BillingProducts>();
-                for(int i=0;i<DB.getShortlistedlist().size();i++){
-                    billprod=new BillingProducts();
+                ArrayList<BillingProducts> model = new ArrayList<BillingProducts>();
+                for (int i = 0; i < DB.getShortlistedlist().size(); i++) {
+                    billprod = new BillingProducts();
                     billprod.setId(DB.getShortlistedlist().get(i).getId());
                     billprod.setTitle(DB.getShortlistedlist().get(i).getTitle());
                     billprod.setDescription(DB.getShortlistedlist().get(i).getDescription());
@@ -208,8 +208,8 @@ public class Shortlist extends AppCompatActivity {
                     model.add(billprod);
                 }
                 DB.setBillprodlist(model);
-                Order.shortlistedorders=false;
-                StaticData.ShortlistedOrder=true;
+                Order.shortlistedorders = false;
+                StaticData.ShortlistedOrder = true;
                 startActivity(new Intent(Shortlist.this, Order.class));
             }
         });

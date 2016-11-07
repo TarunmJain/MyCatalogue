@@ -67,7 +67,7 @@ public class DetailMenuAdapter extends RecyclerView.Adapter<DetailMenuAdapter.Vi
 
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_VEDIO) {
                 holder.srcimage.setImageResource(R.drawable.ic_vedioicon);
-                holder.attachmenttext.setText("Vedio");
+                holder.attachmenttext.setText("Video");
             }
 
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_WEB) {

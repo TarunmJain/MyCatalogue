@@ -130,6 +130,8 @@ public class ImageViewer extends AppCompatActivity {
         register.setVisible(false);
         MenuItem register1 = menu.findItem(R.id.slideshow);
         register1.setVisible(false);
+        MenuItem register2 = menu.findItem(R.id.shortlist);
+        register2.setVisible(false);
         return true;
     }
 

@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.centura_technologies.mycatalogue.Catalogue.Model.AttchmentClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.DescriptionMenuClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.VarientModel;
@@ -65,9 +66,10 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static PLManager plManager;
     ImageView hamburger, logff;
     TextView Title;
+    static TextView shortlist;
     static RecyclerView productdetaillist, drawer_items_recycler, individual_product_images;
     public static ArrayList<Products> allproducts;
-    static ImageView openimage, next, previous, shortlist, media, arrow;
+    static ImageView openimage, next, previous, media, arrow;
     static TextView title, description, amount, mediatext, variencetext;
     static LinearLayout varients;
     LinearLayout images, videos, pdfs, panorama;
@@ -78,10 +80,10 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     float Draweropen = 0;
     DrawerLayout drawer;
     public static ArrayList<String> image;
-    ScrollView scrollView;
+    static ScrollView scrollView;
     public static String videourl = "";
     public static String pdfurl = "";
-    static ArrayList<Products> shortlisted;
+    //static ArrayList<Products> shortlisted;
     static RecyclerView menulyaout;
     static ImageView productImage;
     static VideoView productDetailvedio;
@@ -104,7 +106,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         context = CatalogueDetails.this;
         mRootView = (ViewGroup) findViewById(R.id.fulllay);
         allproducts = new ArrayList<Products>();
-        shortlisted = new ArrayList<Products>();
         productdetaillist = (RecyclerView) findViewById(R.id.productdetaillist);
         individual_product_images = (RecyclerView) findViewById(R.id.individual_product_images);
         drawer_items_recycler = (RecyclerView) findViewById(R.id.drawer_items_recycler1);
@@ -117,7 +118,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         amount = (TextView) findViewById(R.id.amount);
         varients = (LinearLayout) findViewById(R.id.varients);
         arrow = (ImageView) findViewById(R.id.arrow);
-        shortlist = (ImageView) findViewById(R.id.shortlist);
+        shortlist = (TextView) findViewById(R.id.shortlist);
         mediatext = (TextView) findViewById(R.id.mediatext);
         media = (ImageView) findViewById(R.id.media);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
@@ -196,7 +197,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
             @Override
             public void onClick(View v) {
                 if (StaticData.productposition < allproducts.size() - 1) {
-                    scrollView.pageScroll(View.FOCUS_UP);
                     RenderProduct(allproducts.get(++StaticData.productposition));
                 }
             }
@@ -206,7 +206,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
             @Override
             public void onClick(View v) {
                 if (StaticData.productposition > 0) {
-                    scrollView.pageScroll(View.FOCUS_UP);
                     RenderProduct(allproducts.get(--StaticData.productposition));
                 }
             }
@@ -269,6 +268,8 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void RenderProduct(final Products productdetail) {
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        checkshortlist(productdetail);
         mRootView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fadein));
         LoadInfo();
         ArrayList<DescriptionMenuClass> menudata = new ArrayList<DescriptionMenuClass>();
@@ -277,10 +278,10 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 if (!imagedata.matches(""))
                     menudata.add(new DescriptionMenuClass(imagedata,false));
         }
-        for (String imagedata : productdetail.getAttachments()) {
-            if (imagedata != null)
-                if (!imagedata.matches(""))
-                    menudata.add(new DescriptionMenuClass(imagedata,true));
+        for (AttchmentClass attachmentobject : productdetail.getAttachments()) {
+            if (attachmentobject.AttachmentUrl != null)
+                if (!attachmentobject.AttachmentUrl.matches(""))
+                    menudata.add(new DescriptionMenuClass(attachmentobject.AttachmentUrl,true));
         }
 
         menulyaout.setAdapter(new DetailMenuAdapter(context, menudata));
@@ -291,7 +292,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         if (productModel.getVariants().size() == 0) {
             varients.setVisibility(View.GONE);
         } else {
-            varients.setVisibility(View.VISIBLE);
+            varients.setVisibility(View.GONE);
             variencetext.setText(productModel.getSelectedVarient().toString());
         }
         varients.setOnClickListener(new View.OnClickListener() {
@@ -300,7 +301,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 if (productModel.getVariants().size() == 0) {
                     varients.setVisibility(View.GONE);
                 } else if (productModel.getVariants().size() == 1) {
-                    varients.setVisibility(View.VISIBLE);
+                    varients.setVisibility(View.GONE);
                     VarientsDialog(productModel.getVariants());
                     variencetext.setText(productModel.getSelectedVarient());
                 } else {
@@ -342,7 +343,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 boolean found = false;
                 for (Products model : DB.getShortlistedlist()) {
                     if (model.getId().matches(productdetail.getId())) {
-                        shortlist.setImageResource(R.drawable.favorite7);
+                        shortlist.setText("+ Add To Cart");
                         DB.getShortlistedlist().remove(model);
                         found = true;
                         break;
@@ -350,13 +351,23 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 }
 
                 if (!found) {
-                    shortlist.setImageResource(R.drawable.heart374);
-                    shortlisted.add(productdetail);
-                    DB.setShortlistedlist(shortlisted);
+                    shortlist.setText("- Remove Cart");
+                    DB.shortlistedlist.add(productdetail);
                     //StaticData.wishlistData.add(productdetail);
                 }
             }
         });
+    }
+
+    private static void checkshortlist(Products product){
+        for (Products shorlisted:DB.shortlistedlist) {
+            shortlist.setText("+ Add To Cart");
+            if(product.getId().matches(shorlisted.getId()))
+            {
+                shortlist.setText("- Remove Cart");
+                break;
+            }
+        }
     }
 
     private static void scrollchild() {
@@ -540,7 +551,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
             @Override
             public void onGlobalLayout() {
                 toppane.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                toppane.getLayoutParams().height = screenhight - GenericData.convertDpToPixels(68, context);
+                toppane.getLayoutParams().height = screenhight - GenericData.convertDpToPixels(90, context);
             }
         });
     }

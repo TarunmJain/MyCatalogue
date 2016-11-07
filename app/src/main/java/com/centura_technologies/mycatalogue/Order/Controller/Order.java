@@ -204,9 +204,10 @@ public class Order extends AppCompatActivity {
                 if (clearBill.getText().toString().matches("CANCEL")) {
                     clearBill.setText("CLEAR BILL");
                     placeorder.setText("SAVE BILL");
-                    shortlistedorders = false;
-                    billdetailheader.setVisibility(View.GONE);
+                    shortlistedorders = true;
+                    billdetailheader.setVisibility(View.VISIBLE);
                     filterpane.setVisibility(View.VISIBLE);
+                    InitializeAdapter(Order.this);
                 } else {
                     shortlistedorders = true;
                     shortlistedorder.performClick();
