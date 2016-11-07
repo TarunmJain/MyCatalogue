@@ -1,56 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.centura_technologies.mycatalogue.test.MyRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_image"
     android:layout_width="match_parent"
-    android:background="@color/viewcolor"
-    android:layout_height="200dp">
-    <ImageView
-        android:background="@color/white"
-        android:id="@+id/image"
+    android:layout_height="match_parent">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_marginRight="1dp"
-        android:layout_marginBottom="1dp"
-        android:src="@drawable/loginscreen" />
-
-    <android.support.v7.widget.CardView
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="4dp">
-
-        <RelativeLayout
+        android:layout_height="match_parent">
+        <ImageView
+            android:background="@color/white"
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:layout_centerInParent="true"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/loginscreen" />
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_toLeftOf="@+id/shortlist"
+        <android.support.v7.widget.CardView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="4dp">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="start"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:layout_margin="5dp"
-                android:text="Title" />
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/shortlist"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="5dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_cart_outline_grey600_24dp" />
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_toLeftOf="@+id/shortlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="start"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:layout_margin="5dp"
+                    android:text="Title" />
+
+                <ImageView
+                    android:id="@+id/shortlist"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="5dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_cart_outline_grey600_24dp" />
 
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+    </RelativeLayout>
+</com.centura_technologies.mycatalogue.test.MyRelativeLayout>
+

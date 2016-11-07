@@ -25,6 +25,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
@@ -32,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,6 +46,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.View.CatalogueAdapter;
+import com.centura_technologies.mycatalogue.Catalogue.View.CatalogueAdapterNew;
 import com.centura_technologies.mycatalogue.Catalogue.View.CategorylistAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.FilterAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.SearchAdapter;
@@ -85,7 +88,8 @@ public class Catalogue extends AppCompatActivity {
     Spinner spinner;
     //FloatingActionButton fab;
     TextView apply, clear;
-    static RecyclerView recyclerview, recyclerview1, sectionrecycler, categoryrecycler, productsrecyclerview;
+    static RecyclerView recyclerview, recyclerview1, sectionrecycler, categoryrecycler;
+    static GridView productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
     static LinearLayoutManager layoutManager1;
@@ -151,7 +155,7 @@ public class Catalogue extends AppCompatActivity {
         recyclerview1 = (RecyclerView) findViewById(R.id.recyclerview1);
         sectionrecycler = (RecyclerView) findViewById(R.id.sectionrecycler);
         categoryrecycler = (RecyclerView) findViewById(R.id.categoryrecycler);
-        productsrecyclerview = (RecyclerView) findViewById(R.id.productsrecyclerview);
+        productsrecyclerview = (GridView) findViewById(R.id.productsrecyclerview);
 
         sectionrecycler.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         categoryrecycler.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
@@ -176,7 +180,7 @@ public class Catalogue extends AppCompatActivity {
         Sync.syncFilters(Catalogue.this, products);
         StaticData.ProductsInGrid = true;
         StaticData.ProductsInList = false;
-        productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
+        //productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         InitializeAdapter(Catalogue.this);
         InitialzationSectionAdapter(Catalogue.this);
         InitialzationCategoryAdapter(Catalogue.this, null);
@@ -317,20 +321,20 @@ public class Catalogue extends AppCompatActivity {
                     quickview.setVisibility(View.GONE);
                     StaticData.ProductsInGrid = true;
                     StaticData.ProductsInList = false;
-                    productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
+                    //productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
                     listicon.setImageResource(R.drawable.ic_format_list_bulleted_white_24dp);
                     //product_recyclerview.setAdapter(new CatalogueAdapter(Catalogue.this, products));
-                    productsrecyclerview.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                    //productsrecyclerview.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
                     grid_to_listflag = false;
                 } else {
                     quickview.setVisibility(View.VISIBLE);
                     setspecificationstoRight();
                     StaticData.ProductsInGrid = false;
                     StaticData.ProductsInList = true;
-                    productsrecyclerview.setLayoutManager(new LinearLayoutManager(Catalogue.this, LinearLayoutManager.VERTICAL, false));
+                    //productsrecyclerview.setLayoutManager(new LinearLayoutManager(Catalogue.this, LinearLayoutManager.VERTICAL, false));
                     listicon.setImageResource(R.drawable.ic_view_grid_white_24dp);
                     // product_recyclerview.setAdapter(new CatalogueAdapter(Catalogue.this, products));
-                    productsrecyclerview.getLayoutParams().width = GenericData.convertDpToPixels(300, Catalogue.this);
+                    //productsrecyclerview.getLayoutParams().width = GenericData.convertDpToPixels(300, Catalogue.this);
                     grid_to_listflag = true;
                 }
                 InitializeAdapter(Catalogue.this);
@@ -564,8 +568,8 @@ public class Catalogue extends AppCompatActivity {
             });
         }
 
-        productsrecyclerview.setNestedScrollingEnabled(false);
-        productsrecyclerview.setAdapter(new CatalogueAdapter(context, products));
+        //productsrecyclerview.setNestedScrollingEnabled(false);
+        productsrecyclerview.setAdapter(new CatalogueAdapterNew(context, products));
         Sync.syncFilters(context, products);
         if (StaticData.filtermodel.getItem() != null)
             cat_filterlist.setAdapter(new TempFilterAdapter(context, StaticData.filtermodel.getItem()));

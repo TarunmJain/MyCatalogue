@@ -332,10 +332,20 @@
                         android:orientation="horizontal"
                         android:visibility="visible">
 
-                        <android.support.v7.widget.RecyclerView
+                        <!--<android.support.v7.widget.RecyclerView
                             android:id="@+id/productsrecyclerview"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent" />-->
+                        <GridView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/productsrecyclerview"
+                            android:scrollbars="none"
+                            android:adjustViewBounds="true"
+                            android:horizontalSpacing="0dp"
+                            android:verticalSpacing="0dp"
+                            android:numColumns="3"></GridView>
+
 
                         <ScrollView
                             android:layout_width="match_parent"

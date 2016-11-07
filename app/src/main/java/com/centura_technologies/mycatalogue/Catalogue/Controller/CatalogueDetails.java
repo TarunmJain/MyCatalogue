@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -91,13 +92,12 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static WebView productDetailwebview;
     static LinearLayout imagelayout,vediolayout,weblayout,pdflayout,panoramalayout,infolayout;
     private int screenhight;
+    private RelativeLayout.LayoutParams paramsNotFullscreen;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cataloguedetails);
         Title = (TextView) findViewById(R.id.AppbarTittle);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -165,6 +165,26 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         }
         setOnClicks();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) //To fullscreen
+        {
+            paramsNotFullscreen=(RelativeLayout.LayoutParams)productDetailvedio.getLayoutParams();
+            RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams(paramsNotFullscreen);
+            params.setMargins(0, 0, 0, 0);
+            params.height=ViewGroup.LayoutParams.MATCH_PARENT;
+            params.width=ViewGroup.LayoutParams.MATCH_PARENT;
+            params.addRule(RelativeLayout.CENTER_IN_PARENT);
+            productDetailvedio.setLayoutParams(params);
+        }
+        else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+            productDetailvedio.setLayoutParams(paramsNotFullscreen);
+        }
     }
 
     @Override

@@ -65,7 +65,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".Catalogue.Controller.CatalogueDetails"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:configChanges="screenLayout|screenSize|orientation"/>
         <activity
             android:name=".Catalogue.Controller.ImageViewer"
             android:screenOrientation="landscape" />
