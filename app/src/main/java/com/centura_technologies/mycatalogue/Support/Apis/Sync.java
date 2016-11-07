@@ -95,6 +95,7 @@ public class Sync {
                             for (int d = 0; d < temp.getProducts().get(i).getAttachments().size(); d++) {
                                 param = new ImageCache(temp.getProducts().get(i).getAttachments().get(d).AttachmentUrl, temp.getProducts().get(i).getId() + "attachment" + d + "", context);
                                 allMedia.add(param);
+
                             }
                         }
                         for (int i = 0; i < temp.getSections().size(); i++) {

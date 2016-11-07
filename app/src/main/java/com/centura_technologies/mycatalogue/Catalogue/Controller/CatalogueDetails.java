@@ -96,6 +96,8 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cataloguedetails);
         Title = (TextView) findViewById(R.id.AppbarTittle);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
