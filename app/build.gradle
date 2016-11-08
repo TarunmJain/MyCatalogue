@@ -47,4 +47,5 @@ dependencies {
     compile 'com.joooonho:selectableroundedimageview:1.0.1'
     compile 'com.github.barteksc:android-pdf-viewer:1.4.0'
     compile project(path: ':library')
+    compile 'me.everything:overscroll-decor-android:1.0.0'
 }

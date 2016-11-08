@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
@@ -80,7 +81,7 @@ public class SectionCatalogue extends AppCompatActivity {
 
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        toolbar.setTitle("Catalogue");
+        toolbar.setTitle("Collections");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         coverFlow = (FeatureCoverFlow) findViewById(R.id.coverflow);
@@ -90,6 +91,7 @@ public class SectionCatalogue extends AppCompatActivity {
             public View makeView() {
                 LayoutInflater inflater = LayoutInflater.from(SectionCatalogue.this);
                 TextView textView = (TextView) inflater.inflate(R.layout.item_title, null);
+                textView.setTextColor(Color.BLACK);
                 return textView;
             }
         });
@@ -115,37 +117,23 @@ public class SectionCatalogue extends AppCompatActivity {
         if (collectionmodel.size() != 0) {
             coverFlow.setAdapter(new CoverFlowAdapternew(context, collectionmodel));
         }
-
         coverFlow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == collectionmodel.size() + 1 || position == 0) {
-                    BreadCrumb.Section = "All Products";
-                    StaticData.SelectedCategoryId = "-1";
-                    BreadCrumb.Category = "";
-                    if (DB.getInitialModel().getProducts().size() != -0) {
-                        Intent i = new Intent(context, Catalogue.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        ((Activity) context).startActivity(i);
-                    } else Toast.makeText(context, "No Products", Toast.LENGTH_SHORT).show();
-                } else {
-                    BreadCrumb.Section = collectionmodel.get(position - 1).getTitle();
-                    BreadCrumb.Category = "";
-                    StaticData.SelectedCollectionProducts = new ArrayList<String>();
-                    StaticData.SelectedCollection = true;
-                    StaticData.SelectedCollectionProducts = collectionmodel.get(position - 1).getProductIds();
-                    ((Activity) context).startActivity(new Intent(context, Catalogue.class));
-                }
+                BreadCrumb.Section = collectionmodel.get(position).getTitle();
+                BreadCrumb.Category = "";
+                StaticData.SelectedCollectionProducts = new ArrayList<String>();
+                StaticData.SelectedCollection = true;
+                StaticData.SelectedCollectionProducts = collectionmodel.get(position).getProductIds();
+                ((Activity) context).startActivity(new Intent(context, Catalogue.class));
+
             }
         });
 
         coverFlow.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
             @Override
             public void onScrolledToPosition(int position) {
-                if (position == 0)
-                    mTitle.setText("ALL PRODUCTS");
-                else
-                    mTitle.setText(collectionmodel.get(position - 1).getTitle().toUpperCase());
+                mTitle.setText(collectionmodel.get(position).getTitle().toUpperCase());
             }
 
             @Override

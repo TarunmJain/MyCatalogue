@@ -13,25 +13,11 @@
         android:title="Cart"
         android:icon="@drawable/ic_cart_white_24dp"
         android:orderInCategory="200"
-        app:showAsAction="always|withText" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/slideshow"
         android:title="SlideShow"
         android:icon="@drawable/ic_slideshow_white_24dp"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
-    <item
-        android:visible="false"
-        android:id="@+id/search"
-        android:title="SlideShow"
-        android:icon="@drawable/search100"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom" />
-
-    <!--<item
-        android:id="@+id/Seacrh"
-        android:title="Seacrh"
-        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom" />-->
 </menu>

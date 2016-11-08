@@ -65,7 +65,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
         holder.SubCatagorieslist.setVisibility(View.GONE);
         holder.SubCatagorieslist.setLayoutManager(new LinearLayoutManager(mContext));
         if (position == 0) {
-            holder.categoryImage.setImageResource(R.drawable.common);
+            //holder.categoryImage.setImageResource(R.drawable.common);
             holder.text.setText("All Products");
             holder.layview.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -85,7 +85,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
             });
         } else {
             position -= 1;
-            GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
+            //GenericData.setImage(data.get(position).getImageUrl(), holder.categoryImage, mContext);
             holder.text.setText(data.get(position).getTitle());
             final int finalPosition = position;
             if (categoriesView == finalPosition) {
@@ -132,14 +132,14 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView categoryImage;
+        //ImageView categoryImage;
         TextView text;
         RecyclerView SubCatagorieslist;
         MaterialRippleLayout layview;
 
         public ViewHolder(View v) {
             super(v);
-            categoryImage = (ImageView) v.findViewById(R.id.image);
+            //categoryImage = (ImageView) v.findViewById(R.id.image);
             text = (TextView) v.findViewById(R.id.text);
             layview = (MaterialRippleLayout) v.findViewById(R.id.layview);
             SubCatagorieslist = (RecyclerView) v.findViewById(R.id.SubCatagorieslist);

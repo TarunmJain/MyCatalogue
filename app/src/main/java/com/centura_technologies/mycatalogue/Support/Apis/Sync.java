@@ -74,11 +74,11 @@ public class Sync {
         RequestQueue queue = Volley.newRequestQueue(context);
         final Map<String, String> params = new HashMap<String, String>();
         params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
-        //GenericData.ShowDialog(context, "Loading...", true);
+        GenericData.ShowDialog(context, "Loading...", true);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.Initial, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                //GenericData.ShowDialog(context,"Loading...",false);
+                GenericData.ShowDialog(context,"Loading...",false);
                 if (response.optString("IsSuccess").matches("true")) {
                     try {
                         ArrayList<ImageCache> allMedia = new ArrayList<ImageCache>();
@@ -134,7 +134,7 @@ public class Sync {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                //GenericData.ShowDialog(context,"Loading...",false);
+                GenericData.ShowDialog(context,"Loading...",false);
                 Log.d("Error", "Error");
             }
         });

@@ -70,6 +70,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
 /**
  * Created by Centura User1 on 19-09-2016.
  */
@@ -156,7 +158,7 @@ public class Catalogue extends AppCompatActivity {
         sectionrecycler = (RecyclerView) findViewById(R.id.sectionrecycler);
         categoryrecycler = (RecyclerView) findViewById(R.id.categoryrecycler);
         productsrecyclerview = (GridView) findViewById(R.id.productsrecyclerview);
-
+        OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview);
         sectionrecycler.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         categoryrecycler.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));

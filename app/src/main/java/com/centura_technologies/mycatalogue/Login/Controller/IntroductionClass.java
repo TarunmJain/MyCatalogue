@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Order.Controller.OrdersList;
 import com.centura_technologies.mycatalogue.R;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
  */
 
 public class IntroductionClass extends Activity {
-    TextView catalogtext, shortlisttext, ordertext, settingstext, logouttext;
+    TextView catalogtext, shortlisttext, ordertext, settingstext, logouttext,collectiontext;
     ViewFlipper myViewFlipper;
     ArrayList<Integer> myImageList;
 
@@ -45,6 +46,7 @@ public class IntroductionClass extends Activity {
         ordertext = (TextView) findViewById(R.id.orderstext);
         settingstext = (TextView) findViewById(R.id.settingstext);
         logouttext = (TextView) findViewById(R.id.logouttext);
+        collectiontext = (TextView) findViewById(R.id.collectiontext);
         myViewFlipper = (ViewFlipper) findViewById(R.id.myflipper);
         myImageList = new ArrayList<>();
         myImageList.add(R.drawable.background_1);
@@ -71,6 +73,12 @@ public class IntroductionClass extends Activity {
             @Override
             public void onClick(View v) {
                 StaticData.SelectedCategoryId = "-1";
+                startActivity(new Intent(IntroductionClass.this, Catalogue.class));
+            }
+        });
+        collectiontext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 startActivity(new Intent(IntroductionClass.this, SectionCatalogue.class));
             }
         });

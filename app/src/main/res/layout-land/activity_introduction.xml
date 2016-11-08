@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginBottom="50dp"
-        android:weightSum="5"
+        android:weightSum="6"
         android:background="#95000000">
         <TextView
             android:id="@+id/cataloguetext"
@@ -22,6 +22,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Catalogue"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:id="@+id/collectiontext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Collections"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:gravity="center"/>

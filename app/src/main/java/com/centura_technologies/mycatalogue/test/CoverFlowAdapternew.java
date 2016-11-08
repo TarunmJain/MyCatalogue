@@ -38,7 +38,7 @@ public class CoverFlowAdapternew extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data.size() + 1;
+        return data.size();
     }
 
     @Override
@@ -62,13 +62,9 @@ public class CoverFlowAdapternew extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if (position == 0) {
-            viewHolder.gameName.setVisibility(View.VISIBLE);
-        } else {
             viewHolder.gameName.setVisibility(View.GONE);
-            GenericData.setImage(data.get(position-1).getImageUrl(), viewHolder.gameImage, activity);
-            viewHolder.gameName.setText(data.get(position-1).getTitle());
-        }
+            GenericData.setImage(data.get(position).getImageUrl(), viewHolder.gameImage, activity);
+            viewHolder.gameName.setText(data.get(position).getTitle());
         return convertView;
     }
 
