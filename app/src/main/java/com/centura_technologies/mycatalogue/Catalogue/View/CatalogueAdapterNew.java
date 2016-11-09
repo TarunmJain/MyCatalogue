@@ -74,12 +74,14 @@ public class CatalogueAdapterNew extends BaseAdapter {
         View gridView;
         if (convertView == null) {
             gridView = new View(mContext);
+        } else {
+            gridView = (View) convertView;
+        }
             // get layout from mobile.xml
             gridView = inflater.inflate(R.layout.item_catalogue, null);
             TextView title = (TextView) gridView.findViewById(R.id.title);
             ImageView image = (ImageView) gridView.findViewById(R.id.image);
             final ImageView wishlist = (ImageView) gridView.findViewById(R.id.shortlist);
-
             GenericData.setImage(products.get(position).getImageUrl(), image, mContext);
             title.setText(products.get(position).getTitle());
             if (StaticData.ProductsInList) {
@@ -151,9 +153,7 @@ public class CatalogueAdapterNew extends BaseAdapter {
 
                 }
             });
-        } else {
-            gridView = (View) convertView;
-        }
+
 
         return gridView;
     }

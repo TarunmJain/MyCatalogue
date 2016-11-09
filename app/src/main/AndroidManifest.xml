@@ -24,8 +24,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/AppTheme"
-        android:soundEffectsEnabled="false">
+        android:soundEffectsEnabled="false"
+        android:theme="@style/AppTheme">
         <activity
             android:name=".Login.Controller.Splash"
             android:label="@string/app_name"
@@ -65,8 +65,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".Catalogue.Controller.CatalogueDetails"
-            android:screenOrientation="landscape"
-            android:configChanges="screenLayout|screenSize|orientation"/>
+            android:configChanges="screenLayout|screenSize|orientation"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Catalogue.Controller.ImageViewer"
             android:screenOrientation="landscape" />

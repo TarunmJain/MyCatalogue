@@ -332,11 +332,18 @@
                         android:orientation="horizontal"
                         android:visibility="visible">
 
+                        <!--<com.centura_technologies.mycatalogue.test.CustomRecyclerView
+                            android:id="@+id/productsrecyclerview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </com.centura_technologies.mycatalogue.test.CustomRecyclerView>-->
+
                         <!--<android.support.v7.widget.RecyclerView
                             android:id="@+id/productsrecyclerview"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />-->
-                        <GridView
+                            android:layout_height="match_parent"/>-->
+                        <!--<GridView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/productsrecyclerview"
@@ -344,7 +351,18 @@
                             android:adjustViewBounds="true"
                             android:horizontalSpacing="0dp"
                             android:verticalSpacing="0dp"
-                            android:numColumns="3"></GridView>
+                            android:numColumns="3"></GridView>-->
+                        <com.centura_technologies.mycatalogue.test.GridViewItem
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/productsrecyclerview"
+                            android:scrollbars="none"
+                            android:adjustViewBounds="true"
+                            android:horizontalSpacing="0dp"
+                            android:verticalSpacing="0dp"
+                            android:numColumns="3">
+
+                        </com.centura_technologies.mycatalogue.test.GridViewItem>
 
 
                         <ScrollView

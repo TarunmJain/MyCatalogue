@@ -24,6 +24,6 @@ public class MyRelativeLayout extends LinearLayout {
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec/2); // This is the key that will make the height equivalent to its width
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec); // This is the key that will make the height equivalent to its width
     }
 }

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -16,10 +17,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -59,6 +63,9 @@ import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
+import com.centura_technologies.mycatalogue.test.CustomRecyclerView;
+import com.centura_technologies.mycatalogue.test.GridViewItem;
+import com.centura_technologies.mycatalogue.test.LinearLayoutManagerWithSmoothScroller;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -71,6 +78,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
+import static android.view.View.X;
+import static com.centura_technologies.mycatalogue.Catalogue.Controller.CatalogueDetails.context;
+import static com.centura_technologies.mycatalogue.Support.DBHelper.StaticData.position;
+import static java.security.AccessController.getContext;
 
 /**
  * Created by Centura User1 on 19-09-2016.
@@ -91,7 +103,8 @@ public class Catalogue extends AppCompatActivity {
     //FloatingActionButton fab;
     TextView apply, clear;
     static RecyclerView recyclerview, recyclerview1, sectionrecycler, categoryrecycler;
-    static GridView productsrecyclerview;
+    static GridViewItem productsrecyclerview;
+    //static CustomRecyclerView productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
     static LinearLayoutManager layoutManager1;
@@ -157,8 +170,9 @@ public class Catalogue extends AppCompatActivity {
         recyclerview1 = (RecyclerView) findViewById(R.id.recyclerview1);
         sectionrecycler = (RecyclerView) findViewById(R.id.sectionrecycler);
         categoryrecycler = (RecyclerView) findViewById(R.id.categoryrecycler);
-        productsrecyclerview = (GridView) findViewById(R.id.productsrecyclerview);
-        OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview);
+        productsrecyclerview = (GridViewItem) findViewById(R.id.productsrecyclerview);
+        //OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
+       // OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview,0);
         sectionrecycler.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         categoryrecycler.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
@@ -194,6 +208,7 @@ public class Catalogue extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
 
     public static void productslist() {
         products = new ArrayList<Products>();
