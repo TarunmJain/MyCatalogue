@@ -114,17 +114,6 @@ public class Sync {
                         DB.setInitialModel(temp);
                         db.saveinitialmodel();
                         db.loadinitialmodel();
-
-
-                        //ArrayList<Products> tempprod=DB.getInitialModel().getProducts();
-                        /*ArrayList<Sections> tempsec=DB.getInitialModel().getSections();
-                        ArrayList<Categories> tempcat=DB.getInitialModel().getCategories();
-                        ArrayList<Products> tempprod=DB.getInitialModel().getProducts();
-                        ArrayList<Categories> tempcats=DB.getInitialModel().getCategories();*/
-                        //DB.setCataloguemodel(gson.fromJson(jsonObject.toString(), Sections.class));
-
-                        /*temp=gson.fromJson(jsonObject.toString(), Sections.class);
-                        DB.getCategoryData().add(temp);*/
                         LoadAsyncData(allMedia, context);
                     } catch (JSONException e) {
                         e.printStackTrace();

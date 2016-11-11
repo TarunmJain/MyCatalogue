@@ -98,14 +98,6 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public String returnImage(String imagepath) {
-        /*SQLiteDatabase db = this.getReadableDatabase();
-        String pathtoimage="";
-        Cursor res =  db.rawQuery("select * from " + Table_Images + " where ImageURL = ?", new String[]{path});
-        if(res.getCount()>0)
-        while(res.isAfterLast() == false){
-            pathtoimage=(res.getString(1));
-            res.moveToNext();
-        }*/
         String data = "";
         SQLiteDatabase db = DbHelper.this.getReadableDatabase();
         Cursor res = db.rawQuery("select * from "+this.ImagesTable+" where "+this.ImageURL+"=?",new String[]{imagepath});
