@@ -63,8 +63,6 @@ import java.util.ArrayList;
  * Created by Centura User1 on 24-08-2016.
  */
 public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.ClickListner, DrawerLayout.DrawerListener {
-    Toolbar toolbar;
-    static PLManager plManager;
     ImageView hamburger, logff;
     TextView Title;
     static TextView shortlist;
@@ -84,7 +82,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static ScrollView scrollView;
     public static String videourl = "";
     public static String pdfurl = "";
-    //static ArrayList<Products> shortlisted;
     static RecyclerView menulyaout;
     static ImageView productImage;
     static VideoView productDetailvedio;
@@ -138,7 +135,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         menulyaout.setLayoutManager(new LinearLayoutManager(CatalogueDetails.this));
         UiManuplation();
 
-
         if (StaticData.ClickedProduct) {
             for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
                 if (DB.getInitialModel().getProducts().get(i).getSectionId().matches(StaticData.SelectedSectionId)) {
@@ -148,7 +144,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         } else {
             allproducts = Catalogue.products;
         }
-
 
         if (allproducts != null)
             if (allproducts.size() > 0)
@@ -180,9 +175,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
             params.width=ViewGroup.LayoutParams.MATCH_PARENT;
             params.addRule(RelativeLayout.CENTER_IN_PARENT);
             productDetailvedio.setLayoutParams(params);
-        }
-        else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
-        {
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             productDetailvedio.setLayoutParams(paramsNotFullscreen);
         }
     }
@@ -206,11 +199,9 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     private void setOnClicks() {
-
         openimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //EventBus.getDefault().postSticky(productModel.getOtherImages());
                 StaticData.SelectedProductImage = true;
                 startActivity(new Intent(CatalogueDetails.this, ImageViewer.class));
             }
@@ -223,7 +214,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 }
             }
         });
-
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,7 +222,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 }
             }
         });
-
         mediatext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -245,8 +234,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 panorama = (LinearLayout) dialog.findViewById(R.id.ppt);
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(dialog.getWindow().getAttributes());
-               /* lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;*/
                 lp.width = GenericData.convertDpToPixels(500, CatalogueDetails.this);
                 lp.height = GenericData.convertDpToPixels(500, CatalogueDetails.this);
                 dialog.getWindow().setAttributes(lp);
@@ -274,7 +261,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 panorama.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                     }
                 });
 
@@ -345,14 +331,10 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
 
         drawer_items_recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         drawer_items_recycler.setAdapter(new DrawerItemsAdapter(context, allproducts));
-
         scrollchild();
         LinearLayoutManager layoutManager1 = new GridLayoutManager(context, 2);
         layoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
         individual_product_images.setLayoutManager(layoutManager1);
-        /*int viewHeight1 = GenericData.convertDpToPixels(50, context);
-        viewHeight1 = viewHeight1 * (productModel.getProductImages().size());
-        individual_product_images.getLayoutParams().height = viewHeight;*/
         individual_product_images.setAdapter(new IndividualProdImageAdapter(context, productModel.getProductImages(), openimage));
         productClicks(productdetail);
 
@@ -375,7 +357,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 if (!found) {
                     shortlist.setText("- Remove Cart");
                     DB.shortlistedlist.add(productdetail);
-                    //StaticData.wishlistData.add(productdetail);
                 }
             }
         });
@@ -404,11 +385,9 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 }
                 return false;
             }
-
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
             }
-
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
             }

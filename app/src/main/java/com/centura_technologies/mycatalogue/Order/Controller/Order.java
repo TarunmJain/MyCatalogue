@@ -89,10 +89,6 @@ public class Order extends AppCompatActivity {
     static BillingProducts billingProducts;
     public static ArrayList<BillingProducts> billingProductsArrayList;
     static Double latitude, longitude;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     private GoogleApiClient client;
 
     @Override
@@ -222,15 +218,6 @@ public class Order extends AppCompatActivity {
             }
         });
 
-       /* Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                billdetailheader.setVisibility(View.GONE);
-                filterpane.setVisibility(View.VISIBLE);
-                placeorder.setText("SAVE BILL");
-            }
-        });*/
-
         placeorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,7 +252,6 @@ public class Order extends AppCompatActivity {
                         dbHelper.saveOrders();
                         clearBill.performClick();
                         DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
-                        //Shortlist.InitializeAdapter(Order.this);
                         finish();
                     } else {
                         Toast.makeText(Order.this, "No Products Selected", Toast.LENGTH_SHORT).show();
@@ -280,7 +266,6 @@ public class Order extends AppCompatActivity {
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //item = parent.getItemAtPosition(position).toString();
                 item = categoryids.get(position);
                 selectedcategories = true;
                 InitializeAdapter(Order.this);
@@ -292,7 +277,6 @@ public class Order extends AppCompatActivity {
     }
 
     private static void setLocation(final Context context) {
-        //info.setText("Searching for Location!");
         final LocationManager locationManager;
         LocationListener locationListener;
         locationManager = (LocationManager) context.getSystemService(context.LOCATION_SERVICE);
@@ -305,8 +289,6 @@ public class Order extends AppCompatActivity {
                     return;
                 }
                 locationManager.removeUpdates(this);
-                //info.setText("Location Recorder!");
-                //checkversion(context);
             }
 
             @Override
@@ -408,7 +390,6 @@ public class Order extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem register = menu.findItem(R.id.logout);
         register.setVisible(false);
@@ -421,9 +402,6 @@ public class Order extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
             finish();

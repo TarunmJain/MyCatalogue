@@ -22,13 +22,9 @@ import java.util.ArrayList;
  * Created by Centura User1 on 24-08-2016.
  */
 public class ImageViewer extends AppCompatActivity {
-    //   RecyclerView recyclerView1;
     Toolbar toolbar;
     ArrayList<String> Images;
     ViewPager mpager;
-    private static int currentPage = 0;
-    private static int NUM_PAGES = 0;
-    ViewPagerAdapter madapter_viewPager;
     ViewFlipper myViewFlipper;
     float initialXPoint, finalx;
 
@@ -55,42 +51,6 @@ public class ImageViewer extends AppCompatActivity {
         myViewFlipper.setAutoStart(true);
         myViewFlipper.setFlipInterval(5000);
         myViewFlipper.startFlipping();
-        /*madapter_viewPager = new ViewPagerAdapter(ImageViewer.this, Images);
-        mpager.setAdapter(madapter_viewPager);
-        final float density = getResources().getDisplayMetrics().density;
-        NUM_PAGES =Images.size();
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            public void run() {
-                if (currentPage == NUM_PAGES) {
-                    currentPage = 0;
-                }
-                mpager.setCurrentItem(currentPage++, true);
-               *//* if(currentPage<NUM_PAGES) {
-                    mpager.setCurrentItem(currentPage++, true);
-                }*//*
-            }
-        };
-        Timer swipeTimer = new Timer();
-        swipeTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, 2000, 5000);*/
-
-
-        //   recyclerView1=(RecyclerView)findViewById(R.id.my_recycler_view);
-       /* LinearLayoutManager layoutManagerimages
-                = new LinearLayoutManager(ImageViewer.this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView1.setLayoutManager(layoutManagerimages);
-        recyclerView1.setAdapter(new imageAdapter(ImageViewer.this, Images));*/
-        /*mpager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });*/
     }
 
     @Override
@@ -115,7 +75,6 @@ public class ImageViewer extends AppCompatActivity {
         return false;
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -124,7 +83,6 @@ public class ImageViewer extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem register = menu.findItem(R.id.logout);
         register.setVisible(false);
@@ -137,11 +95,7 @@ public class ImageViewer extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

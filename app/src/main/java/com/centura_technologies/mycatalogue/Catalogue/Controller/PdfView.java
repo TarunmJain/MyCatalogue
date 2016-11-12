@@ -48,42 +48,5 @@ public class PdfView extends PdfViewerActivity {
     public int getPdfPageNumberEditField() {
         return R.id.pagenum_edit;
     }
-    // @Override
-    // public int getNextPageImageResource() {
-    // return 0;
-    // }
-    //
-    // @Override
-    // public int getPdfPageNumberEditField() {
-    // return 0;
-    // }
-    //
-    // @Override
-    // public int getPdfPageNumberResource() {
-    // return 0;
-    // }
-    //
-    // @Override
-    // public int getPdfPasswordEditField() {
-    // return 0;
-    // }
-    //
-    // @Override
-    // public int getPdfPasswordExitButton() {
-    // // TODO Auto-generated method stub
-    // return 0;
-    // }
-    //
-    // @Override
-    // public int getPdfPasswordLayoutResource() {
-    // // TODO Auto-generated method stub
-    // return 0;
-    // }
-    //
-    // @Override
-    // public int getPdfPasswordOkButton() {
-    // // TODO Auto-generated method stub
-    // return 0;
-    // }
 }
 

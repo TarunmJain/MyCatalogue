@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
-import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Support.ApiData;
@@ -25,7 +24,6 @@ import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
  */
 public class Splash extends Activity {
     static SharedPreferences sharedPreferences;
-    static String Login_Status;
     static TextView info;
     static ProgressBar progressBar;
     public static final String MyPref = "MyPref";
@@ -47,7 +45,6 @@ public class Splash extends Activity {
             @Override
             public void run() {
                 if (sharedPreferences.getString(GenericData.Sp_Status, "").matches("LoggedIn")) {
-                    // SyncClass.syncFilters(Splash.this);
                     StaticData.Options = "Catalogue";
                     StaticData.DrawerTextDisable = "Catalogue";
                     if (DB.getInitialModel().getCollections().size() > 0)

@@ -29,7 +29,6 @@ public class VideoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         vidView = (VideoView)findViewById(R.id.myVideo);
-        //String vidAddress = "https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
         vidAddress=CatalogueDetails.videourl;
         Uri vidUri = Uri.parse(vidAddress);
         vidView.setVideoURI(vidUri);
@@ -52,11 +51,7 @@ public class VideoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

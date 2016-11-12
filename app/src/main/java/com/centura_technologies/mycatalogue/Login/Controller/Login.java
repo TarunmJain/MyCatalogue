@@ -22,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
-import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
 import com.centura_technologies.mycatalogue.GCMClientManager;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
@@ -50,15 +49,6 @@ public class Login extends Activity {
     Button button,button1;
     SharedPreferences sharedPreferences;
 
-
-    int images[] = {R.drawable.background_1,
-            R.drawable.background_2,
-            R.drawable.background_3,
-            R.drawable.background_4,
-            R.drawable.background_5,
-            R.drawable.background_6,
-            R.drawable.background_7};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +70,6 @@ public class Login extends Activity {
             public void onSuccess(String registrationId, boolean isNewRegistration) {
                 DeviceId = registrationId;
             }
-
             @Override
             public void onFailure(String ex) {
                 super.onFailure(ex);
@@ -133,7 +122,6 @@ public class Login extends Activity {
                                     GenericData.apiError(Login.this, volleyError);
                                 }
                             });
-                            // ApplicationClass.makerequest(jsonObjectRequest);
                             queue.add(jsonObjectRequest);
                         } else companyid.setError("Field cannot be empty");
                     } else password.setError("Field cannot be empty");

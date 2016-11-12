@@ -29,14 +29,6 @@ public class IntroductionClass extends Activity {
     ViewFlipper myViewFlipper;
     ArrayList<Integer> myImageList;
 
-    int images[] = {R.drawable.background_1,
-            R.drawable.background_2,
-            R.drawable.background_3,
-            R.drawable.background_4,
-            R.drawable.background_5,
-            R.drawable.background_6,
-            R.drawable.background_7};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

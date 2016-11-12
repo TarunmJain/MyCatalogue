@@ -58,27 +58,15 @@ import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
  */
 public class SectionCatalogue extends AppCompatActivity {
     static Toolbar toolbar;
-    //DrawerLayout Drawer;
-    //ActionBarDrawerToggle mDrawerToggle;
     static FeatureCoverFlow coverFlow;
     private static TextSwitcher mTitle;
     SharedPreferences sharedPreferences;
     public static ArrayList<CollectionModel> collectionmodel;
-    //TextView catalogtext,shortlisttext,ordertext,settingstext,logouttext;
-
-    public void animate(View view, final int position) {
-        view.setVisibility(View.VISIBLE);
-        view.animate().cancel();
-        view.setTranslationY(100);
-        view.setAlpha(0);
-        view.animate().alpha(1.0f).translationY(0).setDuration(1000);
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sectioncatalogue);
-
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setTitle("Collections");
@@ -99,11 +87,6 @@ public class SectionCatalogue extends AppCompatActivity {
         Animation out = AnimationUtils.loadAnimation(this, R.anim.slide_out_bottom);
         mTitle.setInAnimation(in);
         mTitle.setOutAnimation(out);
-        /*animate(catalogtext, 1);
-        animate(shortlisttext,1);
-        animate(ordertext,1);
-        animate(settingstext,1);
-        animate(logouttext,1);*/
         sharedPreferences = getSharedPreferences(GenericData.MyPref, SectionCatalogue.this.MODE_PRIVATE);
         InitializationCollectionAdapter(SectionCatalogue.this);
         StaticData.DrawerTextDisable = "Catalogue";
@@ -129,13 +112,11 @@ public class SectionCatalogue extends AppCompatActivity {
 
             }
         });
-
         coverFlow.setOnScrollPositionListener(new FeatureCoverFlow.OnScrollPositionListener() {
             @Override
             public void onScrolledToPosition(int position) {
                 mTitle.setText(collectionmodel.get(position).getTitle().toUpperCase());
             }
-
             @Override
             public void onScrolling() {
                 mTitle.setText("");
@@ -145,7 +126,6 @@ public class SectionCatalogue extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem register1 = menu.findItem(R.id.slideshow);
         register1.setVisible(false);
@@ -156,16 +136,12 @@ public class SectionCatalogue extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
             GenericData.logout(SectionCatalogue.this);
             return true;
         }
-        if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);

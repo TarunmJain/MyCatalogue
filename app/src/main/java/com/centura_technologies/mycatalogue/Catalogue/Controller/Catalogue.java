@@ -93,21 +93,17 @@ public class Catalogue extends AppCompatActivity {
     ImageView listicon;
     public static DrawerLayout drawer;
     public static ImageView searchicon;
-    RelativeLayout nocategory;
-    RelativeLayout quickview;
+    RelativeLayout nocategory,quickview;
     static RelativeLayout fabpane;
     static LinearLayout searchlayout, filterlayout, categorylayout, productlayout, filtericon, sortlay,fulllay;
     public static LinearLayout leftdrawer, rightdrawer;
     public static EditText editsearch;
     Spinner spinner;
-    //FloatingActionButton fab;
     TextView apply, clear;
     static RecyclerView recyclerview, recyclerview1, sectionrecycler, categoryrecycler;
     static GridViewItem productsrecyclerview;
-    //static CustomRecyclerView productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
-    static LinearLayoutManager layoutManager1;
     ArrayList<String> suggestionsData = new ArrayList<String>();
     public static ArrayList<Products> products;
     public static ArrayList<CategoryTree> categories;
@@ -122,16 +118,9 @@ public class Catalogue extends AppCompatActivity {
     static int SearchPageNumber = 0;
     static String item = "";
     TextView categoryicon;
-    public static TextView sectionbreadcrumb;
     public static TextView nocategorytext;
     public static boolean grid_to_listflag = false;
-    ActionBarDrawerToggle mDrawerToggle;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     private GoogleApiClient client;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -163,7 +152,6 @@ public class Catalogue extends AppCompatActivity {
         params = (RelativeLayout.LayoutParams) (specificationpane).getLayoutParams();
         editsearch = (EditText) findViewById(R.id.editsearch);
         spinner = (Spinner) findViewById(R.id.spinner);
-        //fab = (FloatingActionButton) findViewById(R.id.fab);
         apply = (TextView) findViewById(R.id.applyfilter);
         clear = (TextView) findViewById(R.id.cancelfiltertest);
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
@@ -171,8 +159,6 @@ public class Catalogue extends AppCompatActivity {
         sectionrecycler = (RecyclerView) findViewById(R.id.sectionrecycler);
         categoryrecycler = (RecyclerView) findViewById(R.id.categoryrecycler);
         productsrecyclerview = (GridViewItem) findViewById(R.id.productsrecyclerview);
-        //OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
-       // OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview,0);
         sectionrecycler.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         categoryrecycler.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
@@ -196,7 +182,6 @@ public class Catalogue extends AppCompatActivity {
         Sync.syncFilters(Catalogue.this, products);
         StaticData.ProductsInGrid = true;
         StaticData.ProductsInList = false;
-        //productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         InitializeAdapter(Catalogue.this);
         InitialzationSectionAdapter(Catalogue.this);
         InitialzationCategoryAdapter(Catalogue.this, null);
@@ -204,11 +189,8 @@ public class Catalogue extends AppCompatActivity {
             InitialzationSectionAdapter(Catalogue.this);
             InitialzationCategoryAdapter(Catalogue.this, null);
         }
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-
 
     public static void productslist() {
         products = new ArrayList<Products>();
@@ -236,7 +218,6 @@ public class Catalogue extends AppCompatActivity {
         }
     }
 
-
     public static void categorylist() {
         categories = new ArrayList<CategoryTree>();
         for (int i = 0; i < DB.getTreelist().size(); i++) {
@@ -245,8 +226,6 @@ public class Catalogue extends AppCompatActivity {
     }
 
     private void OnClicks() {
-
-
         filtericon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -325,7 +304,6 @@ public class Catalogue extends AppCompatActivity {
                 drawer.closeDrawer(rightdrawer);
                 drawer.openDrawer(leftdrawer);
                 InitialzationSectionAdapter(Catalogue.this);
-                //InitialzationCategoryAdapter(Catalogue.this, null);
             }
         });
 
@@ -338,20 +316,14 @@ public class Catalogue extends AppCompatActivity {
                     quickview.setVisibility(View.GONE);
                     StaticData.ProductsInGrid = true;
                     StaticData.ProductsInList = false;
-                    //productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
                     listicon.setImageResource(R.drawable.ic_format_list_bulleted_white_24dp);
-                    //product_recyclerview.setAdapter(new CatalogueAdapter(Catalogue.this, products));
-                    //productsrecyclerview.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
                     grid_to_listflag = false;
                 } else {
                     quickview.setVisibility(View.VISIBLE);
                     setspecificationstoRight();
                     StaticData.ProductsInGrid = false;
                     StaticData.ProductsInList = true;
-                    //productsrecyclerview.setLayoutManager(new LinearLayoutManager(Catalogue.this, LinearLayoutManager.VERTICAL, false));
                     listicon.setImageResource(R.drawable.ic_view_grid_white_24dp);
-                    // product_recyclerview.setAdapter(new CatalogueAdapter(Catalogue.this, products));
-                    //productsrecyclerview.getLayoutParams().width = GenericData.convertDpToPixels(300, Catalogue.this);
                     grid_to_listflag = true;
                 }
                 InitializeAdapter(Catalogue.this);
@@ -366,14 +338,6 @@ public class Catalogue extends AppCompatActivity {
                 SearchApi(Catalogue.this);
             }
         });
-
-        /*fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Catalogue.this, Shortlist.class));
-                finish();
-            }
-        });*/
 
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -404,7 +368,6 @@ public class Catalogue extends AppCompatActivity {
                     }
                     InitializeAdapter(Catalogue.this);
                     drawer.closeDrawer(rightdrawer);
-
                 } else {
                     Toast.makeText(Catalogue.this, "Filter cannot be apply without selected", Toast.LENGTH_SHORT).show();
                     InitializeAdapter(Catalogue.this);
@@ -413,7 +376,6 @@ public class Catalogue extends AppCompatActivity {
 
             }
         });
-
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -427,7 +389,6 @@ public class Catalogue extends AppCompatActivity {
                 cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
             }
         });
-
     }
 
     private void SortSpinner() {
@@ -452,8 +413,6 @@ public class Catalogue extends AppCompatActivity {
         } else {
             spinner.setBackgroundDrawable(spinnerDrawable);
         }
-
-
     }
 
     public void searchset() {
@@ -474,7 +433,6 @@ public class Catalogue extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 SearchProductsAdapter.data = new ArrayList<Products>();
@@ -499,7 +457,6 @@ public class Catalogue extends AppCompatActivity {
                     searchicon.performClick();
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
             }
@@ -584,8 +541,6 @@ public class Catalogue extends AppCompatActivity {
                 }
             });
         }
-
-        //productsrecyclerview.setNestedScrollingEnabled(false);
         productsrecyclerview.setAdapter(new CatalogueAdapterNew(context, products));
         Sync.syncFilters(context, products);
         if (StaticData.filtermodel.getItem() != null)
@@ -600,7 +555,6 @@ public class Catalogue extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem logout = menu.findItem(R.id.logout);
         logout.setVisible(false);
@@ -611,10 +565,6 @@ public class Catalogue extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
         if (item.getItemId() == R.id.shortlist) {
             startActivity(new Intent(Catalogue.this, Shortlist.class));
         }
@@ -642,10 +592,6 @@ public class Catalogue extends AppCompatActivity {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
                 .setName("Catalogue Page") // TODO: Define a title for the content shown.

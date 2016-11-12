@@ -31,14 +31,10 @@ public class AboutUs extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         version=(TextView)findViewById(R.id.version);
         version.setText("VERSION "+ BuildConfig.VERSION_NAME);
-       // GenericData.DrawerOnClicks(AboutUs.this);
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem register = menu.findItem(R.id.logout);
         register.setVisible(false);
@@ -51,16 +47,11 @@ public class AboutUs extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();

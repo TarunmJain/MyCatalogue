@@ -34,9 +34,6 @@ public class Panorama extends AppCompatActivity {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         String Url=i.getStringExtra("url");
         Bitmap bitmap = BitmapFactory.decodeFile(Url, options);
-        /*
-        int[] maxSize = new int[1];
-         GLES10.glGetIntegerv(GL10.GL_MAX_TEXTURE_SIZE, maxSize, 0);*/
         if(bitmap.getHeight()>=2048||bitmap.getWidth()>=2048){
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
