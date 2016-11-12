@@ -284,12 +284,16 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         for (String imagedata : productdetail.getProductImages()) {
             if (imagedata != null)
                 if (!imagedata.matches(""))
-                    menudata.add(new DescriptionMenuClass(imagedata,false));
+                {
+                    menudata.add(new DescriptionMenuClass(imagedata,false,"Image"));
+                }
         }
         for (AttchmentClass attachmentobject : productdetail.getAttachments()) {
             if (attachmentobject.AttachmentUrl != null)
                 if (!attachmentobject.AttachmentUrl.matches(""))
-                    menudata.add(new DescriptionMenuClass(attachmentobject.AttachmentUrl,true));
+                {
+                    menudata.add(new DescriptionMenuClass(attachmentobject.AttachmentUrl,true,attachmentobject.AttachmentTitle));
+                }
         }
 
         menulyaout.setAdapter(new DetailMenuAdapter(context, menudata));

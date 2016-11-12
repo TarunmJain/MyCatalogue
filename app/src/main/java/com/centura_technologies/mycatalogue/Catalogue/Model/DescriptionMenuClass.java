@@ -14,21 +14,28 @@ public class DescriptionMenuClass {
     public static int TYPE_Panorama = 5;
     public boolean isAttachment;
     public String URL;
+    public String Title;
+    public String Thumbnail;
     public String MimeString;
     public int MediaType;
 
-    public DescriptionMenuClass(String url, boolean attchment) {
+    public DescriptionMenuClass(String url, boolean attchment, String Title) {
         if (url != null)
             if (!url.matches("")) {
                 URL = url;
+                this.Title = Title;
+                Thumbnail = "";
                 MimeString = getMimeType(URL);
                 if (MimeString != null)
                     if (!MimeString.matches("")) {
-                        if (MimeString.toLowerCase().contains("image"))
+                        if (MimeString.toLowerCase().contains("image")) {
+                            Thumbnail = url;
                             if (attchment)
                                 MediaType = TYPE_Panorama;
                             else
                                 MediaType = TYPE_IMAGE;
+                        }
+
                         if (MimeString.toLowerCase().contains("video"))
                             MediaType = TYPE_VEDIO;
 

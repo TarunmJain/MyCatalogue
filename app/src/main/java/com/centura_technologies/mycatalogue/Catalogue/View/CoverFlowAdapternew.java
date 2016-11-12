@@ -1,4 +1,4 @@
-package com.centura_technologies.mycatalogue.test;
+package com.centura_technologies.mycatalogue.Catalogue.View;
 
 /**
  * Created by Centura on 27-10-2016.
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class CoverFlowAdapternew extends BaseAdapter {
 
-    private ArrayList<CollectionModel> data;
+    public static ArrayList<CollectionModel> data;
     private Context activity;
 
     public CoverFlowAdapternew(Context context, ArrayList<CollectionModel> objects) {

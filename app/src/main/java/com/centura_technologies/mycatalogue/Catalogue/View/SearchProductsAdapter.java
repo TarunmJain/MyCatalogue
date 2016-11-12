@@ -67,7 +67,6 @@ public class SearchProductsAdapter extends RecyclerView.Adapter<SearchProductsAd
     public void onBindViewHolder(final SearchProductsAdapter.ViewHolder holder, final int position) {
 
         GenericData.setImage(data.get(position).getImageUrl(), holder.image, mContext);
-        holder.title.setText(GenericData.Concatinate(data.get(position).getTitle(), 20));
         if (StaticData.ProductsInList) {
             product_specification.setLayoutManager(new LinearLayoutManager(mContext));
             holder.image.setOnClickListener(new View.OnClickListener() {
@@ -100,33 +99,7 @@ public class SearchProductsAdapter extends RecyclerView.Adapter<SearchProductsAd
             });
         }
 
-        for (Products model : StaticData.wishlistData) {
-            if (model.getId().matches(data.get(position).getId())) {
-                holder.wishlist.setImageResource(R.drawable.heart374);
-                break;
-            }
-        }
 
-        holder.wishlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean found = false;
-                for (Products model : StaticData.wishlistData) {
-                    if (model.getId().matches(data.get(position).getId())) {
-                        holder.wishlist.setImageResource(R.drawable.favorite7);
-                        StaticData.wishlistData.remove(model);
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found) {
-                    holder.wishlist.setImageResource(R.drawable.heart374);
-                    StaticData.Shortlisted = true;
-                    StaticData.wishlistData.add(data.get(position));
-                }
-            }
-        });
     }
 
     @Override
@@ -135,13 +108,10 @@ public class SearchProductsAdapter extends RecyclerView.Adapter<SearchProductsAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        ImageView image, wishlist;
+        ImageView image;
         public ViewHolder(View v) {
             super(v);
-            title = (TextView) v.findViewById(R.id.title);
             image = (ImageView) v.findViewById(R.id.image);
-            wishlist = (ImageView) v.findViewById(R.id.shortlist);
         }
     }
 }

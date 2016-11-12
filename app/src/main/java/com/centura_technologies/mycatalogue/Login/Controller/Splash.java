@@ -47,10 +47,7 @@ public class Splash extends Activity {
                 if (sharedPreferences.getString(GenericData.Sp_Status, "").matches("LoggedIn")) {
                     StaticData.Options = "Catalogue";
                     StaticData.DrawerTextDisable = "Catalogue";
-                    if (DB.getInitialModel().getCollections().size() > 0)
-                        startActivity(new Intent(Splash.this, IntroductionClass.class));
-                    else
-                        startActivity(new Intent(Splash.this, Settings.class));
+                    startActivity(new Intent(Splash.this, IntroductionClass.class));
                     finish();
                 } else {
                     Intent intent = new Intent(Splash.this, Login.class);

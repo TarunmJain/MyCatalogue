@@ -109,7 +109,7 @@ public class Login extends Activity {
                                         editor.commit();
                                         StaticData.Options = "Catalogue";
                                         StaticData.DrawerTextDisable="Catalogue";
-                                        startActivity(new Intent(Login.this, Settings.class));
+                                        startActivity(new Intent(Login.this, IntroductionClass.class));
                                         finish();
                                     } else {
                                         companyid.setError(response.optString("Errors"));

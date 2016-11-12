@@ -65,13 +65,12 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
     @Override
     public void onBindViewHolder(final CatalogueAdapter.ViewHolder holder, final int position) {
         GenericData.setImage(products.get(position).getImageUrl(), holder.image, mContext);
-        holder.title.setText(products.get(position).getTitle());
         if (StaticData.ProductsInList) {
             product_specification.setLayoutManager(new LinearLayoutManager(mContext));
             holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GenericData.setImage(products.get(position).getImageUrl(), product_image, mContext);
+                    GenericData.setThumbImage(products.get(position).getImageUrl(), product_image, mContext);
                     product_title.setText(products.get(position).getTitle());
                     product_description.setText(products.get(position).getDescription());
                     product_specification.setAdapter(new DescriptionAdapter(mContext, products.get(position).getAttributes()));
@@ -92,49 +91,10 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                 public void onClick(View v) {
                     StaticData.productposition = position;
                     StaticData.SelectedProductsId = products.get(position).getId();
-                    // EventBus.getDefault().postSticky(products);
                     ((Activity) mContext).startActivity(new Intent(mContext, CatalogueDetails.class));
                 }
             });
         }
-        for (Products model : DB.getShortlistedlist()) {
-            if (model.getId().matches(products.get(position).getId())) {
-                holder.wishlist.setImageResource(R.drawable.ic_cartnew);
-                break;
-            }else {
-                holder.wishlist.setImageResource(R.drawable.ic_cartoutline);
-            }
-        }
-
-        holder.image.setLongClickable(true);
-        holder.image.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                boolean found = false;
-                for (Products model : DB.getShortlistedlist()) {
-                    if (model.getId().matches(products.get(position).getId())) {
-                        holder.wishlist.setImageResource(R.drawable.ic_cart_outline_grey600_24dp);
-                        DB.getShortlistedlist().remove(model);
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found) {
-                    holder.wishlist.setImageResource(R.drawable.ic_cartnew);
-                    StaticData.Shortlisted = true;
-                    DB.shortlistedlist.add(products.get(position));
-                }
-                return true;
-            }
-        });
-
-        holder.wishlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
@@ -143,14 +103,11 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
 
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        ImageView image, wishlist;
+        ImageView image;
 
         public ViewHolder(View v) {
             super(v);
-            title = (TextView) v.findViewById(R.id.title);
             image = (ImageView) v.findViewById(R.id.image);
-            wishlist = (ImageView) v.findViewById(R.id.shortlist);
         }
     }
 }

@@ -50,6 +50,8 @@ public class StaticData {
     public static boolean ShortlistedOrder=false;
     public static SalesmanModel CurrentSalesMan = new SalesmanModel();
     public static ArrayList<CustomerModel> Customers = new ArrayList<CustomerModel>();
+    public static CustomerModel SelectedCustomers = new  CustomerModel();
+    public static ArrayList<CustomerModel> TempCustomers = new ArrayList<CustomerModel>();
     public static ArrayList<OrderModel> orders = new ArrayList<OrderModel>();
 
 

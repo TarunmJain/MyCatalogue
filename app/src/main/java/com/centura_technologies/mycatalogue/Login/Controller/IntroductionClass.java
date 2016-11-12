@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
@@ -15,6 +16,7 @@ import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.CustomerShortlist;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.SlideShow;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 
@@ -25,7 +27,7 @@ import java.util.ArrayList;
  */
 
 public class IntroductionClass extends Activity {
-    TextView catalogtext, shortlisttext, ordertext, settingstext, logouttext,collectiontext;
+    TextView productstext, shortlisttext, ordertext, settingstext, logouttext, catalougetext;
     ViewFlipper myViewFlipper;
     ArrayList<Integer> myImageList;
 
@@ -33,12 +35,12 @@ public class IntroductionClass extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introduction);
-        catalogtext = (TextView) findViewById(R.id.cataloguetext);
+        productstext = (TextView) findViewById(R.id.cataloguetext);
         shortlisttext = (TextView) findViewById(R.id.shortlisttext);
         ordertext = (TextView) findViewById(R.id.orderstext);
         settingstext = (TextView) findViewById(R.id.settingstext);
         logouttext = (TextView) findViewById(R.id.logouttext);
-        collectiontext = (TextView) findViewById(R.id.collectiontext);
+        catalougetext = (TextView) findViewById(R.id.collectiontext);
         myViewFlipper = (ViewFlipper) findViewById(R.id.myflipper);
         myImageList = new ArrayList<>();
         myImageList.add(R.drawable.background_1);
@@ -61,17 +63,26 @@ public class IntroductionClass extends Activity {
     }
 
     private void OnClicks() {
-        catalogtext.setOnClickListener(new View.OnClickListener() {
+        productstext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StaticData.SelectedCategoryId = "-1";
-                startActivity(new Intent(IntroductionClass.this, Catalogue.class));
+                if (DB.getInitialModel().getProducts().size() > 0) {
+                    StaticData.SelectedCategoryId = "-1";
+                    startActivity(new Intent(IntroductionClass.this, Catalogue.class));
+                } else
+                    Toast.makeText(IntroductionClass.this, "No Projects found Please Syncronise !", Toast.LENGTH_SHORT).show();
+
             }
         });
-        collectiontext.setOnClickListener(new View.OnClickListener() {
+        catalougetext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IntroductionClass.this, SectionCatalogue.class));
+
+                if (DB.getInitialModel().getCollections().size() > 0)
+                    startActivity(new Intent(IntroductionClass.this, SectionCatalogue.class));
+                else
+                    Toast.makeText(IntroductionClass.this, "No Catalougues found Please Syncronise !", Toast.LENGTH_SHORT).show();
+
             }
         });
         ordertext.setOnClickListener(new View.OnClickListener() {

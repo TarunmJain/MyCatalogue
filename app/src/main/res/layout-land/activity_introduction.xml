@@ -21,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Catalogue"
+            android:text="Projects"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:gravity="center"/>
@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Collections"
+            android:text="Catalogue"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:gravity="center"/>
@@ -81,7 +81,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Settings"
+            android:text="Syncronize"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:gravity="center"/>

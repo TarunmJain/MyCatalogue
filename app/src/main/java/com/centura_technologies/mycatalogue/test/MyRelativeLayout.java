@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.centura_technologies.mycatalogue.Support.GenericData;
+
 /**
  * Created by Centura User1 on 07-11-2016.
  */

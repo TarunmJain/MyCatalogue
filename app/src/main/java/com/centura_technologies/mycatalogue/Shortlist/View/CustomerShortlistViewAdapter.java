@@ -58,7 +58,6 @@ public class CustomerShortlistViewAdapter extends RecyclerView.Adapter<CustomerS
             }
         }
         holder.price.setText(model.get(position).getSellingPrice()+"");
-
     }
 
     @Override

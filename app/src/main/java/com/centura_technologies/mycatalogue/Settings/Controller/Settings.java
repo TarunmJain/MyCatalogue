@@ -31,7 +31,6 @@ public class Settings extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setTitle("Settings");
         setSupportActionBar(toolbar);
-        Sync.SyncSectionList(Settings.this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         syncall=(CardView)findViewById(R.id.syncall);
         syncsections=(CardView)findViewById(R.id.syncsections);

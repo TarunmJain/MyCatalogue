@@ -23,6 +23,6 @@ public class GridViewItem extends GridView {
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec/2); // This is the key that will make the height equivalent to its width
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec); // This is the key that will make the height equivalent to its width
     }
 }

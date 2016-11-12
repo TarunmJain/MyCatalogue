@@ -13,5 +13,3 @@ public class ApiData {
             StaticData.Customers.add(new CustomerModel(""+x));
     }
 }
-
-

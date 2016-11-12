@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Sync.View.SyncAdapter;
 
@@ -28,6 +29,7 @@ public class SyncClass extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync);
+        Sync.SyncSectionList(SyncClass.this);
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         appysync = (TextView) findViewById(R.id.appysync);
         cancel = (TextView) findViewById(R.id.cancel_sync);

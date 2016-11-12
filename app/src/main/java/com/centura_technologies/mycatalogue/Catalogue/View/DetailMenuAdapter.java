@@ -14,6 +14,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.DescriptionMenuClass
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
+import com.centura_technologies.mycatalogue.Support.GenericData;
 
 import java.util.ArrayList;
 
@@ -50,29 +51,29 @@ public class DetailMenuAdapter extends RecyclerView.Adapter<DetailMenuAdapter.Vi
         else {
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_IMAGE) {
                 {
-                    holder.attachmenttext.setText("Image");
-                    holder.srcimage.setImageResource(R.drawable.ic_imageicon);
+                    holder.attachmenttext.setText(descriptionMenuClasses.get(finalPosition).Title);
+                    GenericData.setImage(descriptionMenuClasses.get(finalPosition).URL,holder.srcimage,context);
                 }
             }
 
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_PDF) {
                 holder.srcimage.setImageResource(R.drawable.ic_pdficon);
-                holder.attachmenttext.setText("Pdf");
+                holder.attachmenttext.setText(descriptionMenuClasses.get(finalPosition).Title);
             }
 
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_Panorama) {
                 holder.srcimage.setImageResource(R.drawable.ic_ppticon);
-                holder.attachmenttext.setText("360 View");
+                holder.attachmenttext.setText(descriptionMenuClasses.get(finalPosition).Title);
             }
 
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_VEDIO) {
                 holder.srcimage.setImageResource(R.drawable.ic_vedioicon);
-                holder.attachmenttext.setText("Video");
+                holder.attachmenttext.setText(descriptionMenuClasses.get(finalPosition).Title);
             }
 
             if (descriptionMenuClasses.get(finalPosition).MediaType == DescriptionMenuClass.TYPE_WEB) {
                 holder.srcimage.setImageResource(R.drawable.ic_webicon);
-                holder.attachmenttext.setText("Web");
+                holder.attachmenttext.setText(descriptionMenuClasses.get(finalPosition).Title);
             }
         }
 

@@ -20,6 +20,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -42,12 +43,7 @@ import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.StringSignature;
 import com.centura_technologies.mycatalogue.AboutUs.Controller.AboutUs;
-import com.centura_technologies.mycatalogue.Activity.Controller.ActivityList;
-import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
-import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
-import com.centura_technologies.mycatalogue.Dashboard.Controller.Dashboard;
-import com.centura_technologies.mycatalogue.Leads.Controller.LeadsList;
 import com.centura_technologies.mycatalogue.Login.Controller.Login;
 import com.centura_technologies.mycatalogue.Order.Controller.Order;
 import com.centura_technologies.mycatalogue.Order.Controller.OrdersList;
@@ -62,6 +58,7 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -90,6 +87,7 @@ public class GenericData {
     public static boolean progressAlive = false;
     public static Button button;
     public static Button button1;
+    private static Bitmap bitmap;
     public static Activity a;
     public static SharedPreferences sharedPreferences;
     public static TextView maintext, subtext;
@@ -98,6 +96,7 @@ public class GenericData {
     static DrawerLayout Drawer;
     static boolean downloadAlive = false;
     static DbHelper db;
+    static final BitmapFactory.Options options = new BitmapFactory.Options();
     static ProgressDialog pDialog;
 
     public static void ShowdownloadingDialog(Context context, Boolean flag) {
@@ -147,6 +146,7 @@ public class GenericData {
             }
         }
     }
+
     public static void ShowDialogSync(Context context, String message, Boolean flag) {
         if (flag) {
             if (progressAlive) {
@@ -169,6 +169,7 @@ public class GenericData {
             }
         }
     }
+
     public static void SetDialogMessage(String message) {
         pDialog.setMessage(message);
     }
@@ -268,6 +269,24 @@ public class GenericData {
                 }
         }
     }*/
+    public static void setThumbImage(String url, ImageView image, Context context) {
+        DbHelper dbHelper = new DbHelper(context);
+        url = dbHelper.returnImage(Urls.parentIP + url);
+        if (url != null)
+            if (!url.matches("")) {
+                url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
+                bitmap = null;
+                try {
+                    bitmap = decodeUri(url, context);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                if (bitmap != null) {
+                    image.setImageBitmap(bitmap);
+                }
+            } else image.setImageResource(R.drawable.noimage);
+        else image.setImageResource(R.drawable.noimage);
+    }
 
     public static void setImage(String url, ImageView image, Context context) {
         DbHelper dbHelper = new DbHelper(context);
@@ -275,35 +294,38 @@ public class GenericData {
         if (url != null)
             if (!url.matches("")) {
                 url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
-                Bitmap bitmap = BitmapFactory.decodeFile(url);
+                bitmap = null;
+                options.inSampleSize = 1;
+                bitmap = BitmapFactory.decodeFile(url,options);
                 if (bitmap != null) {
-                    // bitmap = Bitmap.createBitmap(bitmap, 0, 0, 400, 1000);
                     image.setImageBitmap(bitmap);
                 }
             } else image.setImageResource(R.drawable.noimage);
         else image.setImageResource(R.drawable.noimage);
-
-                    /*String path = Environment.getExternalStorageDirectory() + image;
-                    File imgFile = new File(path);
-                    if (imgFile.exists()) {
-                        String abx = imgFile.getAbsolutePath();
-                        Bitmap myBitmap = BitmapFactory.decodeFile(abx);
-                        myBitmap = Bitmap.createBitmap(myBitmap, 0, 0, 400, 1000);
-                        img.setImageBitmap(myBitmap);
-                    }*/
-       /* if (url != null)
-            if (!url.matches(""))
-                //Picasso.with(context).load(Urls.parentIP + url).into(image);
-                Glide
-                        .with(context)
-                        .load(Urls.parentIP + url)
-                        .signature(new StringSignature(GLIDESIGNATURE + ""))
-                        .crossFade()
-                        .into(image);
-            else image.setImageResource(R.drawable.noimage);
-        else image.setImageResource(R.drawable.noimage);*/
     }
 
+    private static Bitmap decodeUri(String selectedImage, Context context) throws FileNotFoundException {
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(selectedImage, o);
+
+        final int REQUIRED_SIZE = 100;
+
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
+        int scale = 1;
+        while (true) {
+            if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE) {
+                break;
+            }
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
+
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        return BitmapFactory.decodeFile(selectedImage, o2);
+    }
 
     public static void setROUNDImage(String url, ImageView image, Context context) {
         DbHelper dbHelper = new DbHelper(context);
@@ -426,7 +448,7 @@ public class GenericData {
 
     public static void logout(final Context context) {
         a = ((Activity) context);
-        db=new DbHelper(context);
+        db = new DbHelper(context);
         sharedPreferences = a.getSharedPreferences(GenericData.MyPref, a.MODE_PRIVATE);
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -481,10 +503,10 @@ public class GenericData {
         products.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(StaticData.DrawerTextDisable.matches("Catalogue")){
+                if (StaticData.DrawerTextDisable.matches("Catalogue")) {
                     productstext.setTextColor(context.getResources().getColor(R.color.viewcolor));
                     Drawer.closeDrawer(Gravity.LEFT);
-                }else {
+                } else {
                     StaticData.SelectedCategoryId = "-1";
                     a.startActivity(new Intent(context, SectionCatalogue.class));
                     Drawer.closeDrawer(Gravity.LEFT);

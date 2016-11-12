@@ -58,7 +58,10 @@ import com.centura_technologies.mycatalogue.Catalogue.View.SearchProductsAdapter
 import com.centura_technologies.mycatalogue.Catalogue.View.SectionlistAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.TempFilterAdapter;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Shortlist.Controller.CustomerShortlist;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
+import com.centura_technologies.mycatalogue.Shortlist.Model.ShortlistModel;
+import com.centura_technologies.mycatalogue.Shortlist.View.CustomerShortlistAdapter;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -101,9 +104,11 @@ public class Catalogue extends AppCompatActivity {
     Spinner spinner;
     TextView apply, clear;
     static RecyclerView recyclerview, recyclerview1, sectionrecycler, categoryrecycler;
-    static GridViewItem productsrecyclerview;
+    static RecyclerView productsrecyclerview;
+    //static CustomRecyclerView productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
+    static LinearLayoutManager layoutManager1;
     ArrayList<String> suggestionsData = new ArrayList<String>();
     public static ArrayList<Products> products;
     public static ArrayList<CategoryTree> categories;
@@ -120,7 +125,15 @@ public class Catalogue extends AppCompatActivity {
     TextView categoryicon;
     public static TextView nocategorytext;
     public static boolean grid_to_listflag = false;
+    ActionBarDrawerToggle mDrawerToggle;
+    static ArrayList<Products> Localshortlist=new ArrayList<Products>();
+    ArrayList<Products> list;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
     private GoogleApiClient client;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -158,12 +171,15 @@ public class Catalogue extends AppCompatActivity {
         recyclerview1 = (RecyclerView) findViewById(R.id.recyclerview1);
         sectionrecycler = (RecyclerView) findViewById(R.id.sectionrecycler);
         categoryrecycler = (RecyclerView) findViewById(R.id.categoryrecycler);
-        productsrecyclerview = (GridViewItem) findViewById(R.id.productsrecyclerview);
+        productsrecyclerview = (RecyclerView) findViewById(R.id.productsrecyclerview);
+        //OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
+        //OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview);
         sectionrecycler.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         categoryrecycler.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         recyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         recyclerview1.setLayoutManager(new LinearLayoutManager(Catalogue.this));
+        productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
 
         adapter = new SearchProductsAdapter(Catalogue.this);
         adapter1 = new SearchAdapter(Catalogue.this, suggestionsData);
@@ -191,6 +207,40 @@ public class Catalogue extends AppCompatActivity {
         }
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+    private void SearchLogic() {
+        editsearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().matches(""))
+                {
+                    productsrecyclerview.setAdapter(new CatalogueAdapter(Catalogue.this,products));
+                }
+                else {
+                    DB.getInitialModel().setProducts(new ArrayList<Products>());
+                    list=new ArrayList<Products>();
+                    for (Products tempshortlist:Localshortlist) {
+                        Boolean matched=false;
+                        if(tempshortlist.getTitle().toLowerCase().contains(s.toString().toLowerCase()))
+                            matched=true;
+                        if(matched)
+                            list.add(tempshortlist);
+                    }
+                    productsrecyclerview.setAdapter(new CatalogueAdapter(Catalogue.this,list));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
 
     public static void productslist() {
         products = new ArrayList<Products>();
@@ -217,6 +267,7 @@ public class Catalogue extends AppCompatActivity {
             }
         }
     }
+
 
     public static void categorylist() {
         categories = new ArrayList<CategoryTree>();
@@ -304,6 +355,7 @@ public class Catalogue extends AppCompatActivity {
                 drawer.closeDrawer(rightdrawer);
                 drawer.openDrawer(leftdrawer);
                 InitialzationSectionAdapter(Catalogue.this);
+                //InitialzationCategoryAdapter(Catalogue.this, null);
             }
         });
 
@@ -316,6 +368,7 @@ public class Catalogue extends AppCompatActivity {
                     quickview.setVisibility(View.GONE);
                     StaticData.ProductsInGrid = true;
                     StaticData.ProductsInList = false;
+                    //productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
                     listicon.setImageResource(R.drawable.ic_format_list_bulleted_white_24dp);
                     grid_to_listflag = false;
                 } else {
@@ -336,9 +389,10 @@ public class Catalogue extends AppCompatActivity {
                 searchlayout.setVisibility(View.VISIBLE);
                 productlayout.setVisibility(View.GONE);
                 SearchApi(Catalogue.this);
+                //SearchLogic();
+
             }
         });
-
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -541,7 +595,10 @@ public class Catalogue extends AppCompatActivity {
                 }
             });
         }
-        productsrecyclerview.setAdapter(new CatalogueAdapterNew(context, products));
+
+        //productsrecyclerview.setNestedScrollingEnabled(false);
+        productsrecyclerview.setAdapter(new CatalogueAdapter(context, products));
+        //productsrecyclerview.setAdapter(new CatalogueAdapterNew(context, products));
         Sync.syncFilters(context, products);
         if (StaticData.filtermodel.getItem() != null)
             cat_filterlist.setAdapter(new TempFilterAdapter(context, StaticData.filtermodel.getItem()));

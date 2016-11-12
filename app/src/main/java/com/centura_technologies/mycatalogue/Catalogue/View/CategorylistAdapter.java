@@ -53,7 +53,6 @@ public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapte
     @Override
     public void onBindViewHolder(CategorylistAdapter.ViewHolder holder, int position) {
         {
-            GenericData.setImage(currentTree.getCategories().get(position).getImageUrl(), holder.categoryImage, mContext);
             holder.text.setText(currentTree.getCategories().get(position).getTitle());
             final int finalPosition = position;
             holder.lay.setOnClickListener(new View.OnClickListener() {
@@ -93,13 +92,11 @@ public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView categoryImage;
         TextView text;
         MaterialRippleLayout lay;
 
         public ViewHolder(View v) {
             super(v);
-            categoryImage = (ImageView) v.findViewById(R.id.catimage);
             text = (TextView) v.findViewById(R.id.text);
             lay= (MaterialRippleLayout) v.findViewById(R.id.lay);
         }

@@ -37,6 +37,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
 import com.centura_technologies.mycatalogue.Catalogue.View.CollectionAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.CollectionnewAdapter;
+import com.centura_technologies.mycatalogue.Catalogue.View.CoverFlowAdapternew;
 import com.centura_technologies.mycatalogue.Order.Controller.OrdersList;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.R;
@@ -47,7 +48,6 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
-import com.centura_technologies.mycatalogue.test.CoverFlowAdapternew;
 
 import java.util.ArrayList;
 

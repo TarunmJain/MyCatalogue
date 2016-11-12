@@ -1,60 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.centura_technologies.mycatalogue.test.MyRelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_image"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/viewcolor"
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="wrap_content">
         <ImageView
             android:background="@color/white"
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_height="150dp"
             android:layout_marginRight="1dp"
             android:layout_marginBottom="1dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/loginscreen" />
-
-        <android.support.v7.widget.CardView
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="4dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_toLeftOf="@+id/shortlist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="start"
-                    android:padding="10dp"
-                    android:layout_margin="5dp"
-                    android:text="Title"
-                    android:maxLines="1" />
-
-                <ImageView
-                    android:id="@+id/shortlist"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="5dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_cart_outline_grey600_24dp" />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
+            android:src="@drawable/noimage" />
     </RelativeLayout>
-</com.centura_technologies.mycatalogue.test.MyRelativeLayout>
 
