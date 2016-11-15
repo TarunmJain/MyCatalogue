@@ -40,17 +40,13 @@ import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.VolleyError;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.StringSignature;
 import com.centura_technologies.mycatalogue.AboutUs.Controller.AboutUs;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Login.Controller.Login;
-import com.centura_technologies.mycatalogue.Order.Controller.Order;
 import com.centura_technologies.mycatalogue.Order.Controller.OrdersList;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.CustomerShortlist;
-import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;

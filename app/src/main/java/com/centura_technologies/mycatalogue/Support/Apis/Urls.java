@@ -14,6 +14,8 @@ public class Urls {
     public static String SectionList=parent+"sectionlist";
     public static String collectionlist=parent+"collectionlist";
     public static String sectiondata=parent+"sectiondata";
+    public static String ServerSyncOrders=parent+"syncorder";
+    public static String ServerShortlistOrders=parent+"syncshortlist";
 
 
 

@@ -45,9 +45,7 @@ public class DB {
         return sectionlist;
     }
 
-    public static void setSectionlist(ArrayList<Sections> sectionlist) {
-        DB.sectionlist = sectionlist;
-    }
+    public static void setSectionlist(ArrayList<Sections> sectionlist) {DB.sectionlist = sectionlist;}
 
     public static Products getShortlisted() {
         return shortlisted;
@@ -60,10 +58,6 @@ public class DB {
     public static ArrayList<Products> getShortlistedlist() {
         return shortlistedlist;
     }
-
-  /*  public static void setShortlistedlist(ArrayList<Products> shortlistedlist) {
-        DB.shortlistedlist = shortlistedlist;
-    }*/
 
     public static CategoryTree getTree() {
         return tree;
@@ -85,39 +79,27 @@ public class DB {
         return billingProducts;
     }
 
-    public static void setBillingProducts(BillingProducts billingProducts) {
-        DB.billingProducts = billingProducts;
-    }
+    public static void setBillingProducts(BillingProducts billingProducts) {DB.billingProducts = billingProducts;}
 
     public static ArrayList<BillingProducts> getBillprodlist() {
         return billprodlist;
     }
 
-    public static void setBillprodlist(ArrayList<BillingProducts> billprodlist) {
-        DB.billprodlist = billprodlist;
-    }
+    public static void setBillprodlist(ArrayList<BillingProducts> billprodlist) {DB.billprodlist = billprodlist;}
 
     public static ShortlistModel getShortlistModel() {
         return shortlistModel;
     }
 
-    public static void setShortlistModel(ShortlistModel shortlistModel) {
-        DB.shortlistModel = shortlistModel;
-    }
+    public static void setShortlistModel(ShortlistModel shortlistModel) {DB.shortlistModel = shortlistModel;}
 
     public static ArrayList<ShortlistModel> getShortlistModels() {
         return shortlistModels;
     }
 
-    public static void setShortlistModels(ArrayList<ShortlistModel> shortlistModels) {
-        DB.shortlistModels = shortlistModels;
-    }
+    public static void setShortlistModels(ArrayList<ShortlistModel> shortlistModels) {DB.shortlistModels = shortlistModels;}
 
-
-
-    public static void setInitialModel(InitialModel initialModel) {
-        DB.initialModel = initialModel;
-    }
+    public static void setInitialModel(InitialModel initialModel) {DB.initialModel = initialModel;}
 
     public static void ClearAllDBData() {
         initialModel = new InitialModel();

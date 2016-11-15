@@ -26,6 +26,7 @@ import com.centura_technologies.mycatalogue.Login.Controller.IntroductionClass;
 import com.centura_technologies.mycatalogue.Login.Controller.Login;
 import com.centura_technologies.mycatalogue.Login.Controller.Splash;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
+import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
@@ -78,7 +79,7 @@ public class Sync {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.Initial, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                GenericData.ShowDialog(context,"Loading...",false);
+                GenericData.ShowDialog(context, "Loading...", false);
                 if (response.optString("IsSuccess").matches("true")) {
                     try {
                         ArrayList<ImageCache> allMedia = new ArrayList<ImageCache>();
@@ -123,7 +124,7 @@ public class Sync {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                GenericData.ShowDialog(context,"Loading...",false);
+                GenericData.ShowDialog(context, "Loading...", false);
                 Log.d("Error", "Error");
             }
         });
@@ -160,7 +161,7 @@ public class Sync {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                    loadnext(allMedia, finalGetImageFromUrl, context);
+                loadnext(allMedia, finalGetImageFromUrl, context);
             }
         }, 500);
     }
@@ -168,7 +169,6 @@ public class Sync {
 
     public static void SyncSectionList(final Context mContext) {
         sharedPreferences = mContext.getSharedPreferences(GenericData.MyPref, mContext.MODE_PRIVATE);
-
         RequestQueue queue = Volley.newRequestQueue(mContext);
         Map<String, String> params = new HashMap<String, String>();
         params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
@@ -220,11 +220,6 @@ public class Sync {
         StaticData.filtermodel.setMinprice(0.0);
 
         StaticData.filtermodel.item = new ArrayList<FilterItem>();
-        ArrayList<FilterItem> finalitems = new ArrayList<FilterItem>();
-
-        //ArrayList<AttributesList> attribute;
-        //ArrayList<attributesmodel> attributes;
-
         ArrayList<AttributeClass> allattr = new ArrayList<AttributeClass>();
         ArrayList<FilterItem> list = new ArrayList<FilterItem>();
         ArrayList<String> AttName = new ArrayList<String>();
@@ -258,71 +253,6 @@ public class Sync {
             att.setValue(finalValues);
             list.add(att);
         }
-
-
-       /* FilterItem temp = new FilterItem();
-        Valuepair choices = new Valuepair();
-        temp.Value = new ArrayList<Valuepair>();
-
-        temp.setTitle("Brand");
-        choices.ValueName = "Hindware";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-
-        choices.ValueName = "Kohler";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-
-        choices.ValueName = "Parryware";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-
-        choices.ValueName = "Jaguar";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-        finalitems.add(temp);
-
-
-        temp = new FilterItem();
-        temp.Value = new ArrayList<Valuepair>();
-        temp.setTitle("Color");
-        choices.ValueName = "White";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-
-        choices.ValueName = "Black";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-
-        choices.ValueName = "Light Blue";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-
-        choices.ValueName = "Almond";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-        finalitems.add(temp);
-
-
-        temp = new FilterItem();
-
-        temp.Value = new ArrayList<Valuepair>();
-        temp.setTitle("Material");
-        choices.ValueName = "Ceramic";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-
-        choices.ValueName = "Acrylic";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-
-        choices.ValueName = "Fiberglass";
-        temp.Value.add(choices);
-        choices = new Valuepair();
-
-        choices.ValueName = "Porcelain on Steel";
-        temp.Value.add(choices);
-        finalitems.add(temp);*/
         StaticData.filtermodel.setItem(list);
 
     }
@@ -574,5 +504,50 @@ public class Sync {
             billprodlist.add(billprod);
         }
         DB.setBillprodlist(billprodlist);
+    }
+
+
+    public static void ServerSyncOrders(final Context mContext) {
+        sharedPreferences = mContext.getSharedPreferences(GenericData.MyPref, mContext.MODE_PRIVATE);
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        final Map<String, String> params = new HashMap<String, String>();
+        params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.ServerSyncOrders, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response.optString("IsSuccess").matches("true"))
+                    Toast.makeText(mContext, "Synced Successfully", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(mContext, "Synced Failed", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", "error");
+            }
+        });
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void ServerSyncShortlist(final Context mContext) {
+        sharedPreferences = mContext.getSharedPreferences(GenericData.MyPref, mContext.MODE_PRIVATE);
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        final Map<String, String> params = new HashMap<String, String>();
+        params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.ServerShortlistOrders, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response.optString("IsSuccess").matches("true"))
+                    Toast.makeText(mContext, "Synced Successfully", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(mContext, "Synced Failed", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error", "error");
+            }
+        });
+        queue.add(jsonObjectRequest);
     }
 }

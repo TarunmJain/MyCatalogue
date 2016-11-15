@@ -61,7 +61,7 @@ public class Shortlist extends AppCompatActivity {
     static CardView details;
     static FloatingActionButton fab;
     ArrayList<ShortlistModel> list;
-    BillingProducts billprod;
+    BillingProducts billingProducts;
     ShortlistModel model;
     DbHelper db;
     DateFormat df;
@@ -77,7 +77,7 @@ public class Shortlist extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         df = new SimpleDateFormat("dd/MM/yy");
         dateobj = new Date();
-        StaticData.SelectedCustomers=new CustomerModel();
+        StaticData.SelectedCustomers = new CustomerModel();
         fab = (FloatingActionButton) findViewById(R.id.fab);
         emptyshortlist = (RelativeLayout) findViewById(R.id.empty_shortlist);
         footer = (RelativeLayout) findViewById(R.id.footer);
@@ -158,11 +158,9 @@ public class Shortlist extends AppCompatActivity {
                     save.setText("SAVE");
                     clear.setText("CANCEL");
                 } else {
-                    if(StaticData.SelectedCustomers==new CustomerModel())
-                    {
+                    if (StaticData.SelectedCustomers == new CustomerModel()) {
                         customername.setError("Please Select a customer!");
-                    }
-                    else {
+                    } else {
                         save.setText("SHORTLIST NOW");
                         details.setVisibility(View.VISIBLE);
                         list = new ArrayList<ShortlistModel>();
@@ -220,32 +218,39 @@ public class Shortlist extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ArrayList<BillingProducts> model = new ArrayList<BillingProducts>();
-                for (int i = 0; i < DB.getShortlistedlist().size(); i++) {
-                    billprod = new BillingProducts();
-                    billprod.setId(DB.getShortlistedlist().get(i).getId());
-                    billprod.setTitle(DB.getShortlistedlist().get(i).getTitle());
-                    billprod.setDescription(DB.getShortlistedlist().get(i).getDescription());
-                    billprod.setSectionId(DB.getShortlistedlist().get(i).getSectionId());
-                    billprod.setCategoryId(DB.getShortlistedlist().get(i).getCategoryId());
-                    billprod.setSKU(DB.getShortlistedlist().get(i).getSKU());
-                    billprod.setBarCode(DB.getShortlistedlist().get(i).getBarCode());
-                    billprod.setImageUrl(DB.getShortlistedlist().get(i).getImageUrl());
-                    billprod.setVideoUrl(DB.getShortlistedlist().get(i).getVideoUrl());
-                    billprod.setPdfUrl(DB.getShortlistedlist().get(i).getPdfUrl());
-                    billprod.setMRP(DB.getShortlistedlist().get(i).getMRP());
-                    billprod.setQuantity(0);
-                    billprod.setAmount(0.0);
-                    billprod.setPrice(DB.getShortlistedlist().get(i).getSellingPrice());
-                    billprod.setSellingPrice(DB.getShortlistedlist().get(i).getSellingPrice());
-                    billprod.setTags(DB.getShortlistedlist().get(i).getTags());
-                    billprod.setStatus(DB.getShortlistedlist().get(i).getStatus());
-                    billprod.setWeight(DB.getShortlistedlist().get(i).getWeight());
-                    billprod.setWishList(DB.getShortlistedlist().get(i).isWishList());
-                    billprod.setSelectedVarient(DB.getShortlistedlist().get(i).getSelectedVarient());
-                    billprod.setProductImages(DB.getShortlistedlist().get(i).getProductImages());
-                    billprod.setAttributes(DB.getShortlistedlist().get(i).getAttributes());
-                    billprod.setVariants(DB.getShortlistedlist().get(i).getVariants());
-                    model.add(billprod);
+                for (int j = 0; j < DB.getInitialModel().getProducts().size(); j++) {
+                    billingProducts = new BillingProducts();
+                    billingProducts.setId(DB.getInitialModel().getProducts().get(j).getId());
+                    billingProducts.setTitle(DB.getInitialModel().getProducts().get(j).getTitle());
+                    billingProducts.setDescription(DB.getInitialModel().getProducts().get(j).getDescription());
+                    billingProducts.setSectionId(DB.getInitialModel().getProducts().get(j).getSectionId());
+                    billingProducts.setCategoryId(DB.getInitialModel().getProducts().get(j).getCategoryId());
+                    billingProducts.setSKU(DB.getInitialModel().getProducts().get(j).getSKU());
+                    billingProducts.setBarCode(DB.getInitialModel().getProducts().get(j).getBarCode());
+                    billingProducts.setImageUrl(DB.getInitialModel().getProducts().get(j).getImageUrl());
+                    billingProducts.setVideoUrl(DB.getInitialModel().getProducts().get(j).getVideoUrl());
+                    billingProducts.setPdfUrl(DB.getInitialModel().getProducts().get(j).getPdfUrl());
+                    billingProducts.setMRP(DB.getInitialModel().getProducts().get(j).getMRP());
+                    billingProducts.setAmount(0.0);
+                    billingProducts.setQuantity(0);
+                    billingProducts.setPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                    billingProducts.setSellingPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                    billingProducts.setTags(DB.getInitialModel().getProducts().get(j).getTags());
+                    billingProducts.setStatus(DB.getInitialModel().getProducts().get(j).getStatus());
+                    billingProducts.setWeight(DB.getInitialModel().getProducts().get(j).getWeight());
+                    billingProducts.setWishList(DB.getInitialModel().getProducts().get(j).isWishList());
+                    billingProducts.setSelectedVarient(DB.getInitialModel().getProducts().get(j).getSelectedVarient());
+                    billingProducts.setProductImages(DB.getInitialModel().getProducts().get(j).getProductImages());
+                    billingProducts.setAttributes(DB.getInitialModel().getProducts().get(j).getAttributes());
+                    billingProducts.setVariants(DB.getInitialModel().getProducts().get(j).getVariants());
+                    for (Products ShorlistedProduct: DB.getShortlistedlist()) {
+                     if(ShorlistedProduct.getId().matches(DB.getInitialModel().getProducts().get(j).getId())){
+                         billingProducts.setAmount(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                         billingProducts.setQuantity(1);
+                         break;
+                     }
+                    }
+                    model.add(billingProducts);
                 }
                 DB.setBillprodlist(model);
                 Order.shortlistedorders = false;
@@ -257,7 +262,46 @@ public class Shortlist extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Shortlist.this, "Coming Soon", Toast.LENGTH_SHORT).show();
+                ArrayList<BillingProducts> model = new ArrayList<BillingProducts>();
+                DB.setBillprodlist(new ArrayList<BillingProducts>());
+                for (int j = 0; j < DB.getInitialModel().getProducts().size(); j++) {
+                    billingProducts = new BillingProducts();
+                    billingProducts.setId(DB.getInitialModel().getProducts().get(j).getId());
+                    billingProducts.setTitle(DB.getInitialModel().getProducts().get(j).getTitle());
+                    billingProducts.setDescription(DB.getInitialModel().getProducts().get(j).getDescription());
+                    billingProducts.setSectionId(DB.getInitialModel().getProducts().get(j).getSectionId());
+                    billingProducts.setCategoryId(DB.getInitialModel().getProducts().get(j).getCategoryId());
+                    billingProducts.setSKU(DB.getInitialModel().getProducts().get(j).getSKU());
+                    billingProducts.setBarCode(DB.getInitialModel().getProducts().get(j).getBarCode());
+                    billingProducts.setImageUrl(DB.getInitialModel().getProducts().get(j).getImageUrl());
+                    billingProducts.setVideoUrl(DB.getInitialModel().getProducts().get(j).getVideoUrl());
+                    billingProducts.setPdfUrl(DB.getInitialModel().getProducts().get(j).getPdfUrl());
+                    billingProducts.setMRP(DB.getInitialModel().getProducts().get(j).getMRP());
+                    billingProducts.setAmount(0.0);
+                    billingProducts.setQuantity(0);
+                    billingProducts.setPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                    billingProducts.setSellingPrice(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                    billingProducts.setTags(DB.getInitialModel().getProducts().get(j).getTags());
+                    billingProducts.setStatus(DB.getInitialModel().getProducts().get(j).getStatus());
+                    billingProducts.setWeight(DB.getInitialModel().getProducts().get(j).getWeight());
+                    billingProducts.setWishList(DB.getInitialModel().getProducts().get(j).isWishList());
+                    billingProducts.setSelectedVarient(DB.getInitialModel().getProducts().get(j).getSelectedVarient());
+                    billingProducts.setProductImages(DB.getInitialModel().getProducts().get(j).getProductImages());
+                    billingProducts.setAttributes(DB.getInitialModel().getProducts().get(j).getAttributes());
+                    billingProducts.setVariants(DB.getInitialModel().getProducts().get(j).getVariants());
+                    for (Products ShorlistedProduct: DB.getShortlistModels().get(StaticData.customershortlistpos).getShortlistedproducts()) {
+                        if(ShorlistedProduct.getId().matches(billingProducts.getId())){
+                            billingProducts.setAmount(DB.getInitialModel().getProducts().get(j).getSellingPrice());
+                            billingProducts.setQuantity(1);
+                            break;
+                        }
+                    }
+                    model.add(billingProducts);
+                }
+                DB.setBillprodlist(model);
+                Order.shortlistedorders = false;
+                StaticData.ShortlistedOrder = true;
+                startActivity(new Intent(Shortlist.this, Order.class));
             }
         });
 
