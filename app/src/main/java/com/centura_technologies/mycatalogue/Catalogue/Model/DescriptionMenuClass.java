@@ -58,6 +58,6 @@ public class DescriptionMenuClass {
         if (extension != null) {
             type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
         }
-        return type;
+        return type.toLowerCase();
     }
 }

@@ -16,6 +16,7 @@ public class Products {
     private String ImageUrl;
     private ArrayList<String> ProductImages;
     private ArrayList<AttchmentClass> Attachments;
+    public  ArrayList<AttachmentGroup> AttachementTree= new ArrayList<AttachmentGroup>();
     private String VideoUrl;
     private String PdfUrl;
     private Double MRP;
@@ -41,6 +42,7 @@ public class Products {
         ImageUrl="";
         ProductImages=new ArrayList<String>();
         Attachments=new ArrayList<AttchmentClass>();
+        AttachementTree= new ArrayList<AttachmentGroup>();
         VideoUrl="";
         PdfUrl="";
         MRP=0.0;
@@ -64,6 +66,14 @@ public class Products {
 
     public String getSectionId() {
         return SectionId;
+    }
+
+    public  ArrayList<AttachmentGroup> getAttachementTree() {
+        return AttachementTree;
+    }
+
+    public  void setAttachementTree(ArrayList<AttachmentGroup> attachementTree) {
+        AttachementTree = attachementTree;
     }
 
     public void setSectionId(String sectionId) {

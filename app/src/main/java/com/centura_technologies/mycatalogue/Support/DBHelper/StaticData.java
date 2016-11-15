@@ -2,6 +2,7 @@ package com.centura_technologies.mycatalogue.Support.DBHelper;
 
 import android.content.Context;
 
+import com.centura_technologies.mycatalogue.Catalogue.Model.AttachmentGroup;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CustomerModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Filter_model;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;

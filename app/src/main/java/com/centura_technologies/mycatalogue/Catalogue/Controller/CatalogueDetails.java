@@ -41,6 +41,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.AttchmentClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.DescriptionMenuClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.VarientModel;
+import com.centura_technologies.mycatalogue.Catalogue.View.AttchmentsAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.DescriptionAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.DetailMenuAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.DrawerItemsAdapter;
@@ -87,7 +88,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static VideoView productDetailvedio;
     RelativeLayout toppane;
     static WebView productDetailwebview;
-    static LinearLayout imagelayout,vediolayout,weblayout,pdflayout,panoramalayout,infolayout;
+    static LinearLayout imagelayout, vediolayout, weblayout, pdflayout, panoramalayout, infolayout;
     private int screenhight;
     private RelativeLayout.LayoutParams paramsNotFullscreen;
 
@@ -163,16 +164,15 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) //To fullscreen
         {
-            paramsNotFullscreen=(RelativeLayout.LayoutParams)productDetailvedio.getLayoutParams();
-            RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams(paramsNotFullscreen);
+            paramsNotFullscreen = (RelativeLayout.LayoutParams) productDetailvedio.getLayoutParams();
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(paramsNotFullscreen);
             params.setMargins(0, 0, 0, 0);
-            params.height=ViewGroup.LayoutParams.MATCH_PARENT;
-            params.width=ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
             params.addRule(RelativeLayout.CENTER_IN_PARENT);
             productDetailvedio.setLayoutParams(params);
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -182,20 +182,20 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
 
     @Override
     protected void previous() {
-            if (Draweropen == 0) {
-                if (StaticData.productposition > 0)
-                    RenderProduct(allproducts.get(--StaticData.productposition));
-            } else
-                drawer.openDrawer(Gravity.LEFT);
+        if (Draweropen == 0) {
+            if (StaticData.productposition > 0)
+                RenderProduct(allproducts.get(--StaticData.productposition));
+        } else
+            drawer.openDrawer(Gravity.LEFT);
     }
 
     @Override
     protected void next() {
-            if (Draweropen == 0) {
-                if (StaticData.productposition < allproducts.size() - 1)
-                    RenderProduct(allproducts.get(++StaticData.productposition));
-            } else
-                drawer.closeDrawer(Gravity.LEFT);
+        if (Draweropen == 0) {
+            if (StaticData.productposition < allproducts.size() - 1)
+                RenderProduct(allproducts.get(++StaticData.productposition));
+        } else
+            drawer.closeDrawer(Gravity.LEFT);
     }
 
     private void setOnClicks() {
@@ -280,23 +280,22 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         checkshortlist(productdetail);
         mRootView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fadein));
         LoadInfo();
-        ArrayList<DescriptionMenuClass> menudata = new ArrayList<DescriptionMenuClass>();
+        /*ArrayList<DescriptionMenuClass> menudata = new ArrayList<DescriptionMenuClass>();
         for (String imagedata : productdetail.getProductImages()) {
             if (imagedata != null)
-                if (!imagedata.matches(""))
-                {
-                    menudata.add(new DescriptionMenuClass(imagedata,false,"Image"));
-                }
-        }
-        for (AttchmentClass attachmentobject : productdetail.getAttachments()) {
-            if (attachmentobject.AttachmentUrl != null)
-                if (!attachmentobject.AttachmentUrl.matches(""))
-                {
-                    menudata.add(new DescriptionMenuClass(attachmentobject.AttachmentUrl,true,attachmentobject.AttachmentTitle));
+                if (!imagedata.matches("")) {
+                    menudata.add(new DescriptionMenuClass(imagedata, false, "Image"));
                 }
         }
 
-        menulyaout.setAdapter(new DetailMenuAdapter(context, menudata));
+        for (AttchmentClass attachmentobject : productdetail.getAttachments()) {
+            if (attachmentobject.AttachmentUrl != null)
+                if (!attachmentobject.AttachmentUrl.matches("")) {
+                    menudata.add(new DescriptionMenuClass(attachmentobject.AttachmentUrl, true, attachmentobject.AttachmentTitle));
+                }
+        }*/
+
+        menulyaout.setAdapter(new AttchmentsAdapter(context, productdetail.getAttachementTree()));
         productModel = productdetail;
         image = new ArrayList<String>();
         for (int i = 0; i < productModel.getProductImages().size(); i++)
@@ -366,11 +365,10 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         });
     }
 
-    private static void checkshortlist(Products product){
-        for (Products shorlisted:DB.shortlistedlist) {
+    private static void checkshortlist(Products product) {
+        for (Products shorlisted : DB.shortlistedlist) {
             shortlist.setText("+ Add To Cart");
-            if(product.getId().matches(shorlisted.getId()))
-            {
+            if (product.getId().matches(shorlisted.getId())) {
                 shortlist.setText("- Remove Cart");
                 break;
             }
@@ -389,9 +387,11 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 }
                 return false;
             }
+
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
             }
+
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
             }
@@ -517,7 +517,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.VISIBLE);
         Intent intent = new Intent(context, PdfActivity.class);
-        intent.putExtra("url",url);
+        intent.putExtra("url", url);
         productDetailvedio.stopPlayback();
         ((Activity) context).startActivity(intent);
     }
@@ -542,9 +542,9 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.VISIBLE);
         productDetailvedio.stopPlayback();
-        Intent i = new Intent(context,Panorama.class);
-        i.putExtra("url",url);
-        ((Activity)context).startActivity(i);
+        Intent i = new Intent(context, Panorama.class);
+        i.putExtra("url", url);
+        ((Activity) context).startActivity(i);
     }
 
     private void UiManuplation() {
