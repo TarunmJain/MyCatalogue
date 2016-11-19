@@ -17,6 +17,7 @@
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
             android:layout_height="64dp"
+            android:elevation="4dp"
             android:background="@color/primarycolor"
             android:minHeight="?attr/actionBarSize"
             android:titleTextColor="@color/white"
@@ -56,8 +57,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingRight="4dp"
-                android:paddingTop="4dp"
                 android:weightSum="5">
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -70,14 +69,14 @@
                         android:orientation="vertical"
                         android:paddingLeft="30dp"
                         android:paddingRight="30dp"
-                        android:paddingTop="30dp"
+                        android:paddingTop="20dp"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_above="@+id/optionslay">
                         <LinearLayout
-
                             android:id="@+id/search"
+                            android:elevation="2dp"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_centerInParent="true"
@@ -109,11 +108,12 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:padding="5dp"
                             android:text="Browse Categories"
-                            android:textColor="@color/black"
                             android:textSize="20sp"
                             android:textStyle="bold" />
+
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/sectionrecycler"
                             android:layout_width="match_parent"
@@ -330,6 +330,9 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:paddingTop="10dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="10dp"
                         android:id="@+id/productlayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

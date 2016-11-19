@@ -480,7 +480,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void LoadHTML(String url) {
-        url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
+        url = "file:///" +Environment.getExternalStorageDirectory().getAbsolutePath() + url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.VISIBLE);
@@ -489,6 +489,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         infolayout.setVisibility(View.GONE);
         productDetailwebview.getSettings().setJavaScriptEnabled(true);
         productDetailwebview.loadUrl(url);
+       // productDetailwebview.loadData(url+".html", "text/html", "UTF-8");
         productDetailvedio.stopPlayback();
     }
 

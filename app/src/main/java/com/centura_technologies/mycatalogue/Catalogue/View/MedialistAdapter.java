@@ -1,6 +1,7 @@
 package com.centura_technologies.mycatalogue.Catalogue.View;
 
 import android.content.Context;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,7 @@ public class MedialistAdapter extends RecyclerView.Adapter<MedialistAdapter.View
         holder.lay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String type = AttchmentClass.getMimeType(currentTree.getAttchments().get(position).getAttachmentUrl());
                 if (currentTree.getAttchments().get(position).MediaType == AttchmentClass.TYPE_IMAGE)
                     CatalogueDetails.LoadImage(mContext, currentTree.getAttchments().get(position).AttachmentUrl);
 
@@ -64,13 +66,15 @@ public class MedialistAdapter extends RecyclerView.Adapter<MedialistAdapter.View
                 if (currentTree.getAttchments().get(position).MediaType == AttchmentClass.TYPE_PDF)
                     CatalogueDetails.LoadPDF(mContext, dbHelper.returnImage(Urls.parentIP + currentTree.getAttchments().get(position).AttachmentUrl));
 
-                if (currentTree.getAttchments().get(position).MediaType == AttchmentClass.TYPE_PPT) {}
+                if (currentTree.getAttchments().get(position).MediaType == AttchmentClass.TYPE_PPT) {
+                }
 
                 if (currentTree.getAttchments().get(position).MediaType == AttchmentClass.TYPE_VEDIO)
                     CatalogueDetails.LoadVedio(mContext, dbHelper.returnImage(Urls.parentIP + currentTree.getAttchments().get(position).AttachmentUrl));
 
                 if (currentTree.getAttchments().get(position).MediaType == AttchmentClass.TYPE_WEB)
                     CatalogueDetails.LoadHTML(dbHelper.returnImage(Urls.parentIP + currentTree.getAttchments().get(position).AttachmentUrl));
+
             }
         });
     }

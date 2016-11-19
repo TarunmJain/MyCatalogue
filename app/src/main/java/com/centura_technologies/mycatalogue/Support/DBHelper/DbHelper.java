@@ -304,25 +304,30 @@ public class DbHelper extends SQLiteOpenHelper {
                 if (MimeString != null)
                     if (!MimeString.matches("")) {
                         if (MimeString.toLowerCase().contains(("image").toLowerCase()))
-                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("image").toLowerCase()))
-                                DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_IMAGE;
+                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()) != null)
+                                if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("image").toLowerCase()))
+                                    DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_IMAGE;
 
                         if (MimeString.toLowerCase().contains(("video").toLowerCase()))
-                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("video").toLowerCase()))
-                                DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_VEDIO;
+                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()) != null)
+                                if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("video").toLowerCase()))
+                                    DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_VEDIO;
 
                         if (MimeString.toLowerCase().contains(("html").toLowerCase()))
-                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("html").toLowerCase()))
-                                DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_WEB;
+                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()) != null)
+                                if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("html").toLowerCase()))
+                                    DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_WEB;
 
 
                         if (MimeString.toLowerCase().contains(("pdf").toLowerCase()))
-                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("pdf").toLowerCase()))
-                                DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_PDF;
+                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()) != null)
+                                if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("pdf").toLowerCase()))
+                                    DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_PDF;
 
                         if (MimeString.toLowerCase().contains(("Panaroma").toLowerCase()))
-                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("image").toLowerCase()))
-                                DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_Panorama;
+                            if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()) != null)
+                                if (AttchmentClass.getMimeType(DB.getInitialModel().getProducts().get(j).getAttachments().get(q).getAttachmentUrl()).contains(("image").toLowerCase()))
+                                    DB.getInitialModel().getProducts().get(j).getAttachments().get(q).MediaType = AttchmentClass.TYPE_Panorama;
                     }
 
 
@@ -341,7 +346,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 AttachmentGroup tempAttachmentTree = new AttachmentGroup();
                 tempAttachmentTree.setGroupTitle(groupname);
                 for (int attachmentposition = 0; attachmentposition < DB.getInitialModel().getProducts().get(productposition).getAttachments().size(); attachmentposition++) {
-                    if (DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition).getGroup().toLowerCase().matches(groupname.toLowerCase())&&DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition).MediaType!=-1) {
+                    if (DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition).getGroup().toLowerCase().matches(groupname.toLowerCase()) && DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition).MediaType != -1) {
                         foundattachment = true;
                         tempAttachmentTree.attchments.add(DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition));
                     }

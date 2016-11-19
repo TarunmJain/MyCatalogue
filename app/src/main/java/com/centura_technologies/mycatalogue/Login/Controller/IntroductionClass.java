@@ -57,7 +57,7 @@ public class IntroductionClass extends Activity {
             myViewFlipper.addView(imageView);
         }
         myViewFlipper.setAutoStart(true);
-        myViewFlipper.setFlipInterval(2000);
+        myViewFlipper.setFlipInterval(8000);
         myViewFlipper.startFlipping();
         OnClicks();
     }
