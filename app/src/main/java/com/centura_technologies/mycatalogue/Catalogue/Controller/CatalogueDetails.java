@@ -199,13 +199,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     private void setOnClicks() {
-        openimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StaticData.SelectedProductImage = true;
-                startActivity(new Intent(CatalogueDetails.this, ImageViewer.class));
-            }
-        });
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -299,7 +292,9 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         productModel = productdetail;
         image = new ArrayList<String>();
         for (int i = 0; i < productModel.getProductImages().size(); i++)
-            image.add(productModel.getProductImages().get(i));
+            if (productModel.getProductImages().get(i) != null)
+                if (!productModel.getProductImages().get(i).matches(""))
+                    image.add(productModel.getProductImages().get(i));
         if (productModel.getVariants().size() == 0) {
             varients.setVisibility(View.GONE);
         } else {
@@ -331,7 +326,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         viewHeight = viewHeight * (productModel.getAttributes().size());
         productdetaillist.getLayoutParams().height = viewHeight;
         productdetaillist.setAdapter(new DescriptionAdapter(context, productModel.getAttributes()));
-
         drawer_items_recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         drawer_items_recycler.setAdapter(new DrawerItemsAdapter(context, allproducts));
         scrollchild();
@@ -480,7 +474,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void LoadHTML(String url) {
-        url = "file:///" +Environment.getExternalStorageDirectory().getAbsolutePath() + url;
+        url = "file:///" + Environment.getExternalStorageDirectory().getAbsolutePath() + url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.VISIBLE);
@@ -489,7 +483,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         infolayout.setVisibility(View.GONE);
         productDetailwebview.getSettings().setJavaScriptEnabled(true);
         productDetailwebview.loadUrl(url);
-       // productDetailwebview.loadData(url+".html", "text/html", "UTF-8");
+        // productDetailwebview.loadData(url+".html", "text/html", "UTF-8");
         productDetailvedio.stopPlayback();
     }
 
@@ -523,7 +517,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         ((Activity) context).startActivity(intent);
     }
 
-    public static void LoadImage(Context context, String url) {
+    public static void LoadImage(final Context context, String url) {
         imagelayout.setVisibility(View.VISIBLE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
@@ -532,6 +526,12 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         infolayout.setVisibility(View.GONE);
         productDetailvedio.stopPlayback();
         GenericData.setImage(url, productImage, context);
+        productImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((Activity) context).startActivity(new Intent(context, ImageViewer.class));
+            }
+        });
     }
 
     public static void LoadPanorama(Context context, String url) {

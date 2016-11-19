@@ -20,34 +20,18 @@
                 android:layout_height="200dp">
                 <ImageView
                     android:id="@+id/openimage"
+                    android:scaleType="fitStart"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/loginscreen" />
-                <ImageView
-                    android:id="@+id/next"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/arrowright"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:background="@drawable/whitebackground"/>
-                <ImageView
-                    android:id="@+id/previous"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/arrowleft"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:background="@drawable/whitebackground"/>
+
 
                 <RelativeLayout
-                    android:padding="16dp"
+                    android:padding="25dp"
                     android:background="#90ffffff"
                     android:gravity="bottom"
                     android:id="@+id/rightpane"
-                    android:layout_width="400dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
@@ -157,6 +141,24 @@
                         android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
 
                 </RelativeLayout>
+                <ImageView
+                    android:id="@+id/next"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/arrowright"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:background="@drawable/whitebackground"/>
+                <ImageView
+                    android:id="@+id/previous"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/arrowleft"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:background="@drawable/whitebackground"/>
             </RelativeLayout>
 
             <LinearLayout

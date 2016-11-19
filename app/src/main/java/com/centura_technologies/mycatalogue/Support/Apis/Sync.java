@@ -155,6 +155,8 @@ public class Sync {
             } else {
                 if (context != null)
                     GenericData.ShowDialog(context, "Loading Media", false);
+                Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                Settings.allicon.setImageResource(R.drawable.checkcircle);
                 return;
             }
         }
@@ -165,8 +167,6 @@ public class Sync {
                 loadnext(allMedia, finalGetImageFromUrl, context);
             }
         }, 500);
-        Settings.allicon.setImageResource(R.drawable.checkcircle);
-        Toast.makeText(context,"Updated",Toast.LENGTH_SHORT).show();
 
     }
 

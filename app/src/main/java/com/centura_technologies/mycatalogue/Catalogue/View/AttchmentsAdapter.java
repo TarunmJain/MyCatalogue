@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,10 +54,14 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
         holder.SubCatagorieslist.setVisibility(View.GONE);
         holder.SubCatagorieslist.setLayoutManager(new LinearLayoutManager(mContext));
 
-        if (position == 0)
+        if (position == 0) {
             holder.text.setText("Info");
-        else
-            holder.text.setText(data.get(position-1).getGroupTitle());
+            holder.icon.setImageResource(R.drawable.ic_infoicon);
+        } else
+        {
+            holder.text.setText(data.get(position - 1).getGroupTitle());
+            holder.icon.setImageResource(R.drawable.mr_ic_play_light);
+        }
 
         final int finalPosition = position - 1;
         if (GroupView == position) {
@@ -105,11 +110,13 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView text;
+        ImageView icon;
         RecyclerView SubCatagorieslist;
         MaterialRippleLayout layview;
 
         public ViewHolder(View v) {
             super(v);
+            icon = (ImageView) v.findViewById(R.id.icon);
             text = (TextView) v.findViewById(R.id.text);
             layview = (MaterialRippleLayout) v.findViewById(R.id.layview);
             SubCatagorieslist = (RecyclerView) v.findViewById(R.id.SubCatagorieslist);

@@ -49,7 +49,7 @@ public class Settings extends AppCompatActivity {
         othersicon=(ImageView)findViewById(R.id.othersicon);
         OnClicks();
         rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotate.setDuration(5000);
+        rotate.setDuration(2000);
         rotate.setInterpolator(new LinearInterpolator());
 
     }

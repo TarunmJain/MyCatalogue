@@ -37,10 +37,7 @@ public class ImageViewer extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Images = new ArrayList<String>();
-        if (StaticData.SelectedProductImage)
-            Images = CatalogueDetails.image;
-        else
-            Images = IndividualProdImageAdapter.otherImages;
+        Images = CatalogueDetails.image;
         mpager = (ViewPager) findViewById(R.id.pager);
         myViewFlipper = (ViewFlipper) findViewById(R.id.myflipper);
         for (int i = 0; i < Images.size(); i++) {
