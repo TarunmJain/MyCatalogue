@@ -54,6 +54,8 @@ public class StaticData {
     public static CustomerModel SelectedCustomers = new  CustomerModel();
     public static ArrayList<CustomerModel> TempCustomers = new ArrayList<CustomerModel>();
     public static ArrayList<OrderModel> orders = new ArrayList<OrderModel>();
+    public static boolean syncall=false;
+    public static boolean syncsection=false;
 
 
     public static void ClearAllStaticData() {

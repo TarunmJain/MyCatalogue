@@ -9,6 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Login.Controller.Login;
@@ -22,7 +27,9 @@ import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
  */
 public class Settings extends AppCompatActivity {
     Toolbar toolbar;
-    CardView syncall,syncsections,synccollections,others;
+    RelativeLayout syncall,syncsections,synccollections,others;
+    public static ImageView allicon,sectionicon,collectionicon,othersicon;
+    RotateAnimation rotate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,19 +39,27 @@ public class Settings extends AppCompatActivity {
         toolbar.setTitle("Settings");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        syncall=(CardView)findViewById(R.id.syncall);
-        syncsections=(CardView)findViewById(R.id.syncsections);
-        synccollections=(CardView)findViewById(R.id.synccollections);
-        others=(CardView)findViewById(R.id.others);
+        syncall=(RelativeLayout)findViewById(R.id.syncall);
+        syncsections=(RelativeLayout)findViewById(R.id.syncsections);
+        synccollections=(RelativeLayout)findViewById(R.id.synccollections);
+        others=(RelativeLayout)findViewById(R.id.others);
+        allicon=(ImageView)findViewById(R.id.allicon);
+        sectionicon=(ImageView)findViewById(R.id.sectionicon);
+        collectionicon=(ImageView)findViewById(R.id.collectionicon);
+        othersicon=(ImageView)findViewById(R.id.othersicon);
         OnClicks();
+        rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(5000);
+        rotate.setInterpolator(new LinearInterpolator());
+
     }
 
     private void OnClicks() {
         syncall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                allicon.startAnimation(rotate);
                 Sync.initialapi(Settings.this);
-                Toast.makeText(Settings.this,"Updated",Toast.LENGTH_SHORT).show();
                 syncall.setClickable(false);
                 syncsections.setClickable(false);
                 synccollections.setClickable(false);

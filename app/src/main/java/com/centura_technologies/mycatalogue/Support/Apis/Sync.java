@@ -27,6 +27,7 @@ import com.centura_technologies.mycatalogue.Login.Controller.Login;
 import com.centura_technologies.mycatalogue.Login.Controller.Splash;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
+import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
@@ -164,6 +165,9 @@ public class Sync {
                 loadnext(allMedia, finalGetImageFromUrl, context);
             }
         }, 500);
+        Settings.allicon.setImageResource(R.drawable.checkcircle);
+        Toast.makeText(context,"Updated",Toast.LENGTH_SHORT).show();
+
     }
 
 
