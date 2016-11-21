@@ -12,7 +12,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:weightSum="4.8"
+            android:weightSum="5.8"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="0dp"
@@ -39,7 +39,7 @@
                 android:singleLine="true"
                 android:textColor="@color/black" />
             <TextView
-                android:id="@+id/section"
+                android:id="@+id/unit"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="1"
@@ -50,7 +50,7 @@
 
 
             <TextView
-                android:id="@+id/category"
+                android:id="@+id/amount"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="1"
@@ -67,6 +67,52 @@
                 android:text=""
                 android:singleLine="true"
                 android:textColor="@color/black" />
+            <!--<TextView
+                android:id="@+id/qty"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:singleLine="true"
+                android:textColor="@color/black" />-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+                <TextView
+                    android:id="@+id/minusincrement"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/accentcolor"
+                    android:text="-"/>
+                <TextView
+                    android:id="@+id/qty"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Qty"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/plusincrement"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:textColor="@color/accentcolor"
+                    android:text="+"/>
+
+            </LinearLayout>
             <ImageView
                 android:id="@+id/delete"
                 android:layout_width="0dp"

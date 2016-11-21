@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/fab_plus_icon"
+        android:visibility="gone" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -177,13 +186,14 @@
                         android:background="@color/material_grey_300"
                         android:orientation="horizontal"
                         android:padding="1dp"
-                        android:weightSum="4.8">
+                        android:weightSum="5.8">
 
                         <View
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight=".5"
-                            android:background="@color/white" />
+                            android:background="@color/white"
+                            android:id="@+id/view" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -203,7 +213,7 @@
                             android:layout_weight="1"
                             android:background="@color/white"
                             android:gravity="center"
-                            android:text="Section"
+                            android:text="Unit"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -214,7 +224,7 @@
                             android:layout_weight="1"
                             android:background="@color/white"
                             android:gravity="center"
-                            android:text="Category"
+                            android:text="Price"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -224,7 +234,16 @@
                             android:layout_weight="1"
                             android:background="@color/white"
                             android:gravity="center"
-                            android:text="Price"
+                            android:text="Amount"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:text="Quantity"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -257,6 +276,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/grandtotal"
+                        android:layout_marginRight="10dp"
+                        android:padding="10dp"
+                        android:text=" "
+                        android:textColor="@color/accentcolor"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/grandtotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
                         android:padding="10dp"
                         android:text=" "
                         android:textColor="@color/accentcolor"
@@ -268,7 +299,7 @@
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        android:layout_toLeftOf="@+id/save"
+                        android:layout_alignParentLeft="true"
                         android:background="@color/accentcolor"
                         android:padding="10dp"
                         android:text="CLEAR"
@@ -280,7 +311,7 @@
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        android:layout_toLeftOf="@+id/bill"
+                        android:layout_toRightOf="@+id/clear"
                         android:background="@color/accentcolor"
                         android:padding="10dp"
                         android:text="SHORTLIST NOW"
@@ -290,8 +321,8 @@
                         android:id="@+id/bill"
                         android:layout_width="150dp"
                         android:layout_height="40dp"
-                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/save"
                         android:background="@color/accentcolor"
                         android:padding="10dp"
                         android:text="ORDER NOW"
@@ -304,21 +335,12 @@
                     android:layout_width="500dp"
                     android:background="@android:color/transparent"
                     android:layout_height="400dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/details" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
         </android.support.v4.widget.DrawerLayout>
 
     </RelativeLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/fab_plus_icon"
-        android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>

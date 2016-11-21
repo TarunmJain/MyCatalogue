@@ -10,6 +10,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Controller.Collection;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.Order.Controller.OrdersList;
 import com.centura_technologies.mycatalogue.R;
@@ -79,7 +80,7 @@ public class IntroductionClass extends Activity {
             public void onClick(View v) {
 
                 if (DB.getInitialModel().getCollections().size() > 0)
-                    startActivity(new Intent(IntroductionClass.this, SectionCatalogue.class));
+                    startActivity(new Intent(IntroductionClass.this, Collection.class));
                 else
                     Toast.makeText(IntroductionClass.this, "No Catalougues found Please Syncronise !", Toast.LENGTH_SHORT).show();
 

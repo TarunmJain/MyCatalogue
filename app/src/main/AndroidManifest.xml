@@ -121,10 +121,14 @@
         <activity
             android:name=".Login.Controller.IntroductionClass"
             android:screenOrientation="landscape" />
-        <activity android:name=".Catalogue.Controller.Panorama"></activity>
+        <activity android:name=".Catalogue.Controller.Panorama" />
         <activity
             android:name=".Catalogue.Controller.PdfActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".Catalogue.Controller.Collection"
+            android:label="@string/title_activity_collection"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
