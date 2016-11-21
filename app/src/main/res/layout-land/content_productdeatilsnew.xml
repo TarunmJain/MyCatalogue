@@ -17,16 +17,15 @@
             <RelativeLayout
                 android:id="@+id/toppane"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/openimage"
                     android:scaleType="fitStart"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="200dp"
                     android:src="@drawable/loginscreen" />
-
-
                 <RelativeLayout
+                    android:layout_below="@+id/openimage"
                     android:padding="25dp"
                     android:background="#90ffffff"
                     android:gravity="bottom"
