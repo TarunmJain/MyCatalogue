@@ -80,5 +80,4 @@ public class Collection extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
-
 }
