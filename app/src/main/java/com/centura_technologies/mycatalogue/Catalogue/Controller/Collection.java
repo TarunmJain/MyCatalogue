@@ -42,7 +42,7 @@ public class Collection extends AppCompatActivity {
         collection_gridview=(RecyclerView)findViewById(R.id.collection_gridview);
         collectionproducts_recyclerview=(RecyclerView)findViewById(R.id.collectionproducts_recyclerview);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        collection_gridview.setLayoutManager(new GridLayoutManager(Collection.this,2));
+        collection_gridview.setLayoutManager(new LinearLayoutManager(Collection.this));
         collection_gridview.setAdapter(new CollectionProductsAdapter(Collection.this,collectionmodel));
         collectionproducts_recyclerview.setLayoutManager(new LinearLayoutManager(Collection.this,LinearLayoutManager.VERTICAL,false));
 

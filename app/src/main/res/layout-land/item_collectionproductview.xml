@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
+        android:elevation="10dp"
+        android:id="@+id/odd"
+        android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="170dp"
         android:weightSum="1"
         android:orientation="horizontal">
         <ImageView
@@ -17,46 +20,89 @@
             android:scaleType="centerCrop"
             android:src="@drawable/background_1"/>
         <LinearLayout
+
+            android:background="@color/white"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.7"
             android:orientation="vertical"
             android:padding="10dp">
             <TextView
+                android:gravity="center"
                 android:id="@+id/prodtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" "
-                android:textSize="18sp"
-                android:padding="2dp"
-                android:maxLines="1"
-                android:textColor="@color/accentcolor"/>
+                android:textSize="20sp"
+                android:padding="4dp"
+                android:maxLines="1"/>
             <TextView
                 android:id="@+id/proddescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" "
-                android:textSize="18sp"
-                android:padding="2dp"
-                android:maxLines="3"
-                android:textColor="@color/black"/>
+                android:padding="6dp"
+                android:maxLines="3"/>
             <TextView
                 android:id="@+id/prodprice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" "
-                android:textSize="18sp"
-                android:padding="2dp"
-                android:maxLines="1"
-                android:textColor="@color/black"/>
+                android:padding="4dp"
+                android:maxLines="1"/>
 
         </LinearLayout>
         </LinearLayout>
-    <View
+    <LinearLayout
+        android:elevation="10dp"
+        android:id="@+id/even"
+        android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/viewcolor"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"/>
+        android:layout_height="170dp"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:orientation="vertical"
+            android:padding="10dp">
+            <TextView
+                android:gravity="center"
+                android:id="@+id/prodtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:textSize="20sp"
+                android:padding="4dp"
+                android:maxLines="1"/>
+            <TextView
+                android:gravity="left"
+                android:id="@+id/proddescription1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:padding="6dp"
+                android:maxLines="3"/>
+            <TextView
+                android:gravity="right"
+                android:id="@+id/prodprice1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:padding="4dp"
+                android:maxLines="1"/>
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_1"/>
+    </LinearLayout>
 
 </LinearLayout>

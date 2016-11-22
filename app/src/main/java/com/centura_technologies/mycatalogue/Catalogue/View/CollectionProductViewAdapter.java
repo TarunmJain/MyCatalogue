@@ -28,10 +28,11 @@ public class CollectionProductViewAdapter extends RecyclerView.Adapter<Collectio
     Context mContext;
     ArrayList<String> prodlist;
     ArrayList<Products> model;
-    public CollectionProductViewAdapter(Context context, ArrayList<String> list){
-        this.mContext=context;
-        this.prodlist=list;
-        model=new ArrayList<Products>();
+
+    public CollectionProductViewAdapter(Context context, ArrayList<String> list) {
+        this.mContext = context;
+        this.prodlist = list;
+        model = new ArrayList<Products>();
         if (StaticData.SelectedCollection) {
             for (int j = 0; j < DB.getInitialModel().getProducts().size(); j++) {
                 for (int k = 0; k < prodlist.size(); k++) {
@@ -43,23 +44,33 @@ public class CollectionProductViewAdapter extends RecyclerView.Adapter<Collectio
             }
         }
     }
+
     @Override
     public CollectionProductViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collectionproductview,parent,false);
-        ViewHolder vh=new ViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collectionproductview, parent, false);
+        ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(CollectionProductViewAdapter.ViewHolder holder, int position) {
-        position=position%2;
-        if(position==0){
+        holder.odd.setVisibility(View.GONE);
+        holder.even.setVisibility(View.GONE);
+        if (position % 2 == 0)
+            holder.odd.setVisibility(View.VISIBLE);
+        else
+            holder.even.setVisibility(View.VISIBLE);
 
-        }
-        GenericData.setImage(model.get(position).getImageUrl(),holder.imageView,mContext);
+        GenericData.setImage(model.get(position).getImageUrl(), holder.imageView, mContext);
         holder.prodtitle.setText(model.get(position).getTitle());
         holder.proddescription.setText(GenericData.formatHtml(model.get(position).getDescription()));
-        holder.prodprice.setText(model.get(position).getSellingPrice()+"");
+        holder.prodprice.setText(model.get(position).getSellingPrice() + "");
+
+        GenericData.setImage(model.get(position).getImageUrl(), holder.imageView1, mContext);
+        holder.prodtitle1.setText(model.get(position).getTitle());
+        holder.proddescription1.setText(GenericData.formatHtml(model.get(position).getDescription()));
+        holder.prodprice1.setText(model.get(position).getSellingPrice() + "");
+
         final int finalPosition = position;
         holder.prodpane.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,16 +89,27 @@ public class CollectionProductViewAdapter extends RecyclerView.Adapter<Collectio
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView prodtitle,proddescription,prodprice;
-        ImageView imageView;
+        TextView prodtitle, proddescription, prodprice,prodtitle1, proddescription1, prodprice1;
+        ImageView imageView,imageView1;
         LinearLayout prodpane;
+        LinearLayout odd, even;
+
         public ViewHolder(View v) {
             super(v);
-            prodtitle=(TextView)v.findViewById(R.id.prodtitle);
-            proddescription=(TextView)v.findViewById(R.id.proddescription);
-            prodprice=(TextView)v.findViewById(R.id.prodprice);
-            imageView=(ImageView) v.findViewById(R.id.imageView);
-            prodpane=(LinearLayout)v.findViewById(R.id.prodpane);
+
+            prodprice1 = (TextView) v.findViewById(R.id.prodprice1);
+            imageView1 = (ImageView) v.findViewById(R.id.imageView1);
+            prodtitle1 = (TextView) v.findViewById(R.id.prodtitle1);
+            proddescription1 = (TextView) v.findViewById(R.id.proddescription1);
+
+            prodtitle = (TextView) v.findViewById(R.id.prodtitle);
+            prodprice = (TextView) v.findViewById(R.id.prodprice);
+            imageView = (ImageView) v.findViewById(R.id.imageView);
+            proddescription = (TextView) v.findViewById(R.id.proddescription);
+
+            prodpane = (LinearLayout) v.findViewById(R.id.prodpane);
+            odd = (LinearLayout) v.findViewById(R.id.odd);
+            even = (LinearLayout) v.findViewById(R.id.even);
         }
     }
 }

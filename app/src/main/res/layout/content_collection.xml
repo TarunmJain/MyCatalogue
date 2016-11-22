@@ -5,6 +5,7 @@
     android:id="@+id/content_collection"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#05000000"
     android:orientation="horizontal"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.centura_technologies.mycatalogue.Catalogue.Controller.Collection"
@@ -13,18 +14,21 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.3">
+        android:layout_weight="0.25">
         <android.support.v7.widget.RecyclerView
+            android:elevation="10dp"
+            android:background="@color/white"
             android:id="@+id/collection_gridview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp"/>
+            android:padding="4dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.7">
+        android:layout_weight="0.75">
         <android.support.v7.widget.RecyclerView
+            android:padding="10dp"
             android:id="@+id/collectionproducts_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
