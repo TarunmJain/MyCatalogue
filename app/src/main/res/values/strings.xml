@@ -20,5 +20,8 @@
     <string name="title_activity_catalogue_details_new">CatalogueDetailsNew</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_collection">Collection</string>
+    <string name="title_activity_storage_configuration">StorageConfiguration</string>
+    <string name="title_activity_folder_info">FolderInfo</string>
+    <string name="title_activity_sync_all">SyncAll</string>
 
 </resources>

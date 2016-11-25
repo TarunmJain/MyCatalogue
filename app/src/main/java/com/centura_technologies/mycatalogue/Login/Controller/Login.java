@@ -30,6 +30,7 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
+import com.centura_technologies.mycatalogue.configuration.StorageConfiguration;
 
 import org.json.JSONObject;
 
@@ -41,12 +42,12 @@ import java.util.Random;
  * Created by Centura User1 on 06-08-2016.
  */
 public class Login extends Activity {
-    EditText username, password,companyid;
+    EditText username, password, companyid;
     Button login;
     RelativeLayout background;
-    String DeviceId="";
-    String PROJECT_NUMBER="965562513385";
-    Button button,button1;
+    String DeviceId = "";
+    String PROJECT_NUMBER = "965562513385";
+    Button button, button1;
     SharedPreferences sharedPreferences;
 
     @Override
@@ -63,6 +64,7 @@ public class Login extends Activity {
         setDeviceId();
         onclick();
     }
+
     private void setDeviceId() {
         GCMClientManager pushClientManager = new GCMClientManager(Login.this, PROJECT_NUMBER);
         pushClientManager.registerIfNeeded(new GCMClientManager.RegistrationCompletedHandler() {
@@ -70,6 +72,7 @@ public class Login extends Activity {
             public void onSuccess(String registrationId, boolean isNewRegistration) {
                 DeviceId = registrationId;
             }
+
             @Override
             public void onFailure(String ex) {
                 super.onFailure(ex);
@@ -100,16 +103,21 @@ public class Login extends Activity {
                                         editor.putString(GenericData.Sp_Username, username.getText().toString());
                                         editor.putString(GenericData.Sp_Password, password.getText().toString());
                                         editor.putString(GenericData.Sp_StoreCode, companyid.getText().toString());
-                                        StaticData.CurrentSalesMan.Id=username.getText().toString();
-                                        StaticData.CurrentSalesMan.Username=username.getText().toString();
-                                        StaticData.CurrentSalesMan.Name=response.optJSONObject("Data").optString("UserName");
-                                        StaticData.CurrentSalesMan.Phone=response.optJSONObject("Data").optString("UserPhone");
-                                        StaticData.CurrentSalesMan.Email=response.optJSONObject("Data").optString("UserEmail");
+                                        StaticData.CurrentSalesMan.Id = username.getText().toString();
+                                        StaticData.CurrentSalesMan.Username = username.getText().toString();
+                                        StaticData.CurrentSalesMan.Name = response.optJSONObject("Data").optString("UserName");
+                                        StaticData.CurrentSalesMan.Phone = response.optJSONObject("Data").optString("UserPhone");
+                                        StaticData.CurrentSalesMan.Email = response.optJSONObject("Data").optString("UserEmail");
                                         editor.putString(GenericData.Sp_Status, "LoggedIn");
                                         editor.commit();
                                         StaticData.Options = "Catalogue";
-                                        StaticData.DrawerTextDisable="Catalogue";
-                                        startActivity(new Intent(Login.this, IntroductionClass.class));
+                                        StaticData.DrawerTextDisable = "Catalogue";
+
+                                        if (sharedPreferences.getString(GenericData.Configration, "").matches("Completed")) {
+                                            startActivity(new Intent(Login.this, IntroductionClass.class));
+                                        } else
+                                            startActivity(new Intent(Login.this, StorageConfiguration.class));
+
                                         finish();
                                     } else {
                                         companyid.setError(response.optString("Errors"));
@@ -131,16 +139,18 @@ public class Login extends Activity {
         });
 
     }
+
     public void loginslide() {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide);
         linearLayout.startAnimation(animation1);
     }
+
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setTitle("Really Exit "+sharedPreferences.getString(GenericData.Sp_StoreCode,"")+"?")
-                .setMessage("Are you sure you want to exit "+sharedPreferences.getString(GenericData.Sp_StoreCode,"")+"?")
+                .setTitle("Really Exit " + sharedPreferences.getString(GenericData.Sp_StoreCode, "") + "?")
+                .setMessage("Are you sure you want to exit " + sharedPreferences.getString(GenericData.Sp_StoreCode, "") + "?")
                 .setNegativeButton(android.R.string.no, null)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {

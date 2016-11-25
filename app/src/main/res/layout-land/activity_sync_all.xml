@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:padding="64dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:fitsSystemWindows="true"
+    tools:context="com.centura_technologies.mycatalogue.configuration.StorageConfiguration">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="You would like to Syncronise All Data ?"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        android:textStyle="bold" />
+    <View
+        android:layout_width="800dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/viewcolor" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="500dp"
+        android:padding="20dp"
+        android:textColor="@color/white90"
+        android:layout_height="300dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:background="@color/black"
+            android:id="@+id/SyncYes"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_margin="5dp"
+                android:id="@+id/syncimage"
+                android:gravity="center"
+                android:background="@drawable/roundedhallow"
+                android:textColor="@color/white"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:text="Sync"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:background="@color/black"
+            android:id="@+id/SyncLater"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_margin="5dp"
+                android:id="@+id/laterimage"
+                android:gravity="center"
+                android:background="@drawable/roundedhallow"
+                android:textColor="@color/white"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:text="Later"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_marginBottom="100dp"
+        android:layout_width="500dp"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/previous"
+            android:layout_width="50dp"
+            android:src="@drawable/arrowleft"
+            android:layout_height="50dp" />
+        <ImageView
+            android:id="@+id/next"
+            android:src="@drawable/arrowright"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+</LinearLayout>
+
+
+

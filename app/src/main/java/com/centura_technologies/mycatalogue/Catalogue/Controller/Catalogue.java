@@ -111,7 +111,7 @@ public class Catalogue extends AppCompatActivity {
     public static SearchAdapter adapter1;
     static LinearLayoutManager layoutManager1;
     ArrayList<String> suggestionsData = new ArrayList<String>();
-    public static ArrayList<Products> products;
+    //public static ArrayList<Products> products;
     public static ArrayList<CategoryTree> categories;
     Products filterprod;
     ArrayList<Products> categoryproducts = new ArrayList<Products>();
@@ -206,7 +206,7 @@ public class Catalogue extends AppCompatActivity {
         setsuggestiondata();
         searchset();
         OnClicks();
-        Sync.syncFilters(Catalogue.this, products);
+        Sync.syncFilters(Catalogue.this, StaticData.Currentproducts);
         StaticData.ProductsInGrid = true;
         StaticData.ProductsInList = false;
         InitializeAdapter(Catalogue.this);
@@ -229,7 +229,7 @@ public class Catalogue extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.toString().matches(""))
                 {
-                    productsrecyclerview.setAdapter(new CatalogueAdapter(Catalogue.this,products));
+                    productsrecyclerview.setAdapter(new CatalogueAdapter(Catalogue.this,StaticData.Currentproducts));
                 }
                 else {
                     DB.getInitialModel().setProducts(new ArrayList<Products>());
@@ -254,7 +254,7 @@ public class Catalogue extends AppCompatActivity {
 
 
     public static void productslist() {
-        products = new ArrayList<Products>();
+        StaticData.Currentproducts = new ArrayList<Products>();
         if (StaticData.SelectedSection) {
             StaticData.SelectedCategoryId = DB.getInitialModel().getCategories().get(0).getId();
         }
@@ -262,19 +262,19 @@ public class Catalogue extends AppCompatActivity {
             for (int j = 0; j < DB.getInitialModel().getProducts().size(); j++) {
                 for (int k = 0; k < StaticData.SelectedCollectionProducts.size(); k++) {
                     if (DB.getInitialModel().getProducts().get(j).getId().matches(StaticData.SelectedCollectionProducts.get(k))) {
-                        products.add(DB.getInitialModel().getProducts().get(j));
+                        StaticData.Currentproducts.add(DB.getInitialModel().getProducts().get(j));
                         StaticData.SelectedCollection = false;
                     }
                 }
             }
         } else if (StaticData.SelectedCategoryId.matches("-1")) {
             for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
-                products.add(DB.getInitialModel().getProducts().get(i));
+                StaticData.Currentproducts.add(DB.getInitialModel().getProducts().get(i));
             }
         } else {
             for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
                 if (DB.getInitialModel().getProducts().get(i).getCategoryId().matches(StaticData.SelectedCategoryId))
-                    products.add(DB.getInitialModel().getProducts().get(i));
+                    StaticData.Currentproducts.add(DB.getInitialModel().getProducts().get(i));
             }
         }
     }
@@ -445,11 +445,11 @@ public class Catalogue extends AppCompatActivity {
             public void onClick(View v) {
                 productslist();
                 categoryproducts = new ArrayList<Products>();
-                categoryproducts = products;
+                categoryproducts = StaticData.Currentproducts;
                 if (StaticData.filter != "") {
                     boolean matched = false;
                     filterprod = new Products();
-                    products = new ArrayList<Products>();
+                    StaticData.Currentproducts = new ArrayList<Products>();
                     StaticData.filter = StaticData.filter.substring(1, StaticData.filter.length());
                     filterlist = new ArrayList<String>(Arrays.asList(StaticData.filter.split(",")));
                     for (int i = 0; i < categoryproducts.size(); i++) {
@@ -460,7 +460,7 @@ public class Catalogue extends AppCompatActivity {
                             for (int k = 0; k < filterlist.size(); k++) {
                                 if (categoryproducts.get(i).getAttributes().get(j).getAttributeValue().matches(filterlist.get(k))) {
                                     filterprod = categoryproducts.get(i);
-                                    products.add(filterprod);
+                                    StaticData.Currentproducts.add(filterprod);
                                     matched = true;
                                     break;
                                 }
@@ -583,7 +583,7 @@ public class Catalogue extends AppCompatActivity {
             if (DB.getInitialModel().getProducts().get(i).getTitle().toLowerCase().contains(SearchString.toLowerCase()))
                 SearchProductsAdapter.data.add(DB.getInitialModel().getProducts().get(i));
         }
-        products = SearchProductsAdapter.data;
+        StaticData.Currentproducts = SearchProductsAdapter.data;
         adapter.notifyDataSetChanged();
         if (SearchProductsAdapter.data.size() == 0) {
             recyclerview.setVisibility(View.GONE);
@@ -610,7 +610,7 @@ public class Catalogue extends AppCompatActivity {
         searchlayout.setVisibility(View.GONE);
         productlayout.setVisibility(View.VISIBLE);
         if (item.matches("Price low-high")) {
-            Collections.sort(products, new Comparator<Products>() {
+            Collections.sort(StaticData.Currentproducts, new Comparator<Products>() {
                 public int compare(Products p1, Products p2) {
                     if (p1.getSellingPrice() == p2.getSellingPrice())
                         return 0;
@@ -618,7 +618,7 @@ public class Catalogue extends AppCompatActivity {
                 }
             });
         } else if (item.matches("Price high-low")) {
-            Collections.sort(products, new Comparator<Products>() {
+            Collections.sort(StaticData.Currentproducts, new Comparator<Products>() {
                 public int compare(Products p1, Products p2) {
                     if (p1.getSellingPrice() == p2.getSellingPrice())
                         return 0;
@@ -626,7 +626,7 @@ public class Catalogue extends AppCompatActivity {
                 }
             });
         } else if (item.matches("A to Z")) {
-            Collections.sort(products, new Comparator<Products>() {
+            Collections.sort(StaticData.Currentproducts, new Comparator<Products>() {
                 public int compare(Products v1, Products v2) {
                     if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
                         return 0;
@@ -634,7 +634,7 @@ public class Catalogue extends AppCompatActivity {
                 }
             });
         } else {
-            Collections.sort(products, new Comparator<Products>() {
+            Collections.sort(StaticData.Currentproducts, new Comparator<Products>() {
                 public int compare(Products v1, Products v2) {
                     if (v1.getTitle().toLowerCase() == v2.getTitle().toLowerCase())
                         return 0;
@@ -644,9 +644,9 @@ public class Catalogue extends AppCompatActivity {
         }
 
         //productsrecyclerview.setNestedScrollingEnabled(false);
-        productsrecyclerview.setAdapter(new CatalogueAdapter(context, products));
+        productsrecyclerview.setAdapter(new CatalogueAdapter(context, StaticData.Currentproducts));
         //productsrecyclerview.setAdapter(new CatalogueAdapterNew(context, products));
-        Sync.syncFilters(context, products);
+        Sync.syncFilters(context, StaticData.Currentproducts);
         if (StaticData.filtermodel.getItem() != null)
             cat_filterlist.setAdapter(new TempFilterAdapter(context, StaticData.filtermodel.getItem()));
     }

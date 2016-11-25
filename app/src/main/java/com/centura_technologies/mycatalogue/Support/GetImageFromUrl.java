@@ -59,7 +59,8 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
         try {
             String loaclurl="";
             result.strean = getHttpConnection(result.fileURL);
-            File folderDir = Environment.getExternalStoragePublicDirectory("/MyCatalogueLocalData");
+
+            File folderDir = new File(ConfigData.selectedStoregePath);
             File file = new File(folderDir, result.fName);
             if (file.exists()) {
                 file.delete();
@@ -99,7 +100,7 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
                         downloadedSize += len1;
                     }
                     DbHelper db = new DbHelper(result.context);
-                    db.saveImage(result.fileURL, "/MyCatalogueLocalData/" + loaclurl);
+                    db.saveImage(result.fileURL, ConfigData.selectedStoregePath+"/" + loaclurl);
                     bufferedInputStream.close();
                     fileOutputStream.close();
                     result.strean.close();

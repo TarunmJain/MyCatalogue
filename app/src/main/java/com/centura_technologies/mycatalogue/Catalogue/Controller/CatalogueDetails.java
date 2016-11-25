@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -146,7 +145,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 }
             }
         } else {
-            allproducts = Catalogue.products;
+            allproducts = StaticData.Currentproducts;
         }
 
         if (allproducts != null)
@@ -490,7 +489,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void LoadHTML(String url) {
-        url = "file:///" + Environment.getExternalStorageDirectory().getAbsolutePath() + url;
+        url = "file:///" +  url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.VISIBLE);
@@ -504,7 +503,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void LoadVedio(Context context, String url) {
-        url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.VISIBLE);
         weblayout.setVisibility(View.GONE);
@@ -522,7 +520,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void LoadPDF(final Context context, String url) {
-        url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
@@ -556,7 +553,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void LoadPanorama(Context context, String url) {
-        url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);

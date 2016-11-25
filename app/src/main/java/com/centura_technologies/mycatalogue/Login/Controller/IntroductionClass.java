@@ -20,8 +20,10 @@ import com.centura_technologies.mycatalogue.Shortlist.Controller.SlideShow;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
+import com.centura_technologies.mycatalogue.test.StorageUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Centura User1 on 02-11-2016.

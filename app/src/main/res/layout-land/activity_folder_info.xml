@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:padding="64dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:fitsSystemWindows="true"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    tools:context="com.centura_technologies.mycatalogue.configuration.StorageConfiguration">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="You would like to name the folder as?"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        android:textStyle="bold" />
+    <View
+        android:layout_width="800dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/viewcolor" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="500dp"
+        android:padding="20dp"
+        android:textColor="@color/white90"
+        android:layout_height="300dp">
+        <EditText
+            android:padding="20dp"
+            android:id="@+id/foldername"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:hint="CatalougeData"
+            android:gravity="center"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white90"
+            android:textSize="25sp"
+            android:background="@drawable/whiteborderround"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <RelativeLayout
+    android:layout_marginBottom="100dp"
+    android:layout_width="500dp"
+    android:layout_height="50dp">
+    <ImageView
+        android:id="@+id/previous"
+        android:layout_width="50dp"
+        android:src="@drawable/arrowleft"
+        android:layout_height="50dp" />
+    <ImageView
+        android:id="@+id/next"
+        android:src="@drawable/arrowright"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
+</LinearLayout>
+
+

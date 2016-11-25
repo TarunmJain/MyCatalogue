@@ -89,14 +89,25 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
             holder.text.setText(data.get(position).getTitle());
             final int finalPosition = position;
             if (categoriesView == finalPosition) {
-                holder.SubCatagorieslist.setVisibility(View.VISIBLE);
-                holder.SubCatagorieslist.setAdapter(new CategorylistAdapter(mContext, data.get(finalPosition)));
-                int viewHeight = GenericData.convertDpToPixels(37, mContext);
-                viewHeight = viewHeight * (data.get(finalPosition).getCategories().size());
-                holder.SubCatagorieslist.getLayoutParams().height = viewHeight;
+                if (data.get(finalPosition).getCategories().size() == 1) {
+                    BreadCrumb.Category = data.get(finalPosition).getCategories().get(0).getTitle();
+                    Catalogue.toolbar.setTitle(BreadCrumb.Category);
+                    StaticData.SelectedCategoryId = data.get(finalPosition).getCategories().get(0).getId();
+                    StaticData.position = 0;
+                    if (DB.getInitialModel().getProducts().size() != 0) {
+                        Catalogue.productslist();
+                        Catalogue.InitializeAdapter(mContext);
+                    } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
+                } else {
+                    holder.SubCatagorieslist.setVisibility(View.VISIBLE);
+                    holder.SubCatagorieslist.setAdapter(new CategorylistAdapter(mContext, data.get(finalPosition)));
+                    int viewHeight = GenericData.convertDpToPixels(37, mContext);
+                    viewHeight = viewHeight * (data.get(finalPosition).getCategories().size());
+                    holder.SubCatagorieslist.getLayoutParams().height = viewHeight;
+                }
             } else
                 holder.SubCatagorieslist.setVisibility(View.GONE);
-                holder.layview.setOnClickListener(new View.OnClickListener() {
+            holder.layview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     BreadCrumb.Section = data.get(finalPosition).getTitle();
@@ -104,13 +115,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
                     if (finalPosition == categoriesView) {
                         categoriesView = -1;
                         notifyDataSetChanged();
-                    }
-                    //Catalogue.InitialzationCategoryAdapter(mContext, data.get(finalPosition));
-                    else if (data.get(finalPosition).getCategories().size() > 0) {
-                      /*  holder.SubCatagorieslist.setAdapter(new CategorylistAdapter(mContext, data.get(finalPosition)));
-                        int viewHeight = GenericData.convertDpToPixels(45, mContext);
-                        viewHeight = viewHeight * (data.get(finalPosition).getCategories().size());
-                        holder.SubCatagorieslist.getLayoutParams().height = viewHeight;*/
+                    } else if (data.get(finalPosition).getCategories().size() > 0) {
                         categoriesView = finalPosition;
                         notifyDataSetChanged();
                     }

@@ -28,21 +28,28 @@ import java.util.ArrayList;
 public class CollectionProductsAdapter extends RecyclerView.Adapter<CollectionProductsAdapter.ViewHolder> {
     Context mContext;
     ArrayList<CollectionModel> data;
-    public CollectionProductsAdapter(Context context, ArrayList<CollectionModel> model){
-        this.mContext=context;
-        this.data=model;
+
+    public CollectionProductsAdapter(Context context, ArrayList<CollectionModel> model) {
+        this.mContext = context;
+        this.data = model;
+        if (data.size() > 0) {
+            StaticData.SelectedCollectionProducts = new ArrayList<String>();
+            StaticData.SelectedCollection = true;
+            StaticData.SelectedCollectionProducts = data.get(0).getProductIds();
+            Collection.collectionproducts_recyclerview.setAdapter(new CollectionProductViewAdapter(mContext, StaticData.SelectedCollectionProducts));
+        }
     }
 
     @Override
     public CollectionProductsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collectionproducts,parent,false);
-        ViewHolder vh=new ViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_collectionproducts, parent, false);
+        ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(CollectionProductsAdapter.ViewHolder holder, final int position) {
-        GenericData.setImage(data.get(position).getImageUrl(),holder.image,mContext);
+        GenericData.setImage(data.get(position).getImageUrl(), holder.image, mContext);
         holder.title.setText(data.get(position).getTitle());
         holder.pane.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +57,7 @@ public class CollectionProductsAdapter extends RecyclerView.Adapter<CollectionPr
                 StaticData.SelectedCollectionProducts = new ArrayList<String>();
                 StaticData.SelectedCollection = true;
                 StaticData.SelectedCollectionProducts = data.get(position).getProductIds();
-                Collection.collectionproducts_recyclerview.setAdapter(new CollectionProductViewAdapter(mContext,StaticData.SelectedCollectionProducts));
+                Collection.collectionproducts_recyclerview.setAdapter(new CollectionProductViewAdapter(mContext, StaticData.SelectedCollectionProducts));
             }
         });
     }
@@ -64,11 +71,12 @@ public class CollectionProductsAdapter extends RecyclerView.Adapter<CollectionPr
         TextView title;
         ImageView image;
         RelativeLayout pane;
+
         public ViewHolder(View v) {
             super(v);
-            title=(TextView)v.findViewById(R.id.title);
-            image=(ImageView)v.findViewById(R.id.image);
-            pane=(RelativeLayout)v.findViewById(R.id.pane);
+            title = (TextView) v.findViewById(R.id.title);
+            image = (ImageView) v.findViewById(R.id.image);
+            pane = (RelativeLayout) v.findViewById(R.id.pane);
         }
     }
 }

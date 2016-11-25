@@ -80,6 +80,9 @@ public class GenericData {
     public static final String Sp_Username = "Username";
     public static final String Sp_Password = "Password";
     public static final String Sp_DeviceId = "DeviceId";
+    public static final String Configration = "Configration";
+    public static final String StoragePath = "path";
+
     public static final String Sp_StoreProductType = "StoreProductType";
     public static ArrayList<Bundle> notificationList = new ArrayList<Bundle>();
     public static boolean progressAlive = false;
@@ -273,7 +276,6 @@ public class GenericData {
         url = dbHelper.returnImage(Urls.parentIP + url);
         if (url != null)
             if (!url.matches("")) {
-                url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
                 bitmap = null;
                 try {
                     bitmap = decodeUri(url, context);
@@ -292,7 +294,6 @@ public class GenericData {
         url = dbHelper.returnImage(Urls.parentIP + url);
         if (url != null)
             if (!url.matches("")) {
-                url = Environment.getExternalStorageDirectory().getAbsolutePath() + url;
                 bitmap = null;
                 options.inSampleSize = 1;
                 bitmap = BitmapFactory.decodeFile(url,options);

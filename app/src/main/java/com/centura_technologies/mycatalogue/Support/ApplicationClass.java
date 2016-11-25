@@ -28,19 +28,6 @@ public class ApplicationClass extends Application {
       mRequestQueue = Volley.newRequestQueue(getApplicationContext());
    }
 
-   /*public static void makerequest(JsonObjectRequest req,Context context){
-      GenericData.NetCheck(context);
-      if(mRequestQueue!=null){
-         req.setRetryPolicy(new DefaultRetryPolicy(5000,
-                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-         mRequestQueue.add(req);
-      }
-      else {
-         makerequest(req,context);
-      }
-   }*/
-
    public static void makerequest(JsonObjectRequest req)  {
       lastreq=null;
       lastreq=req;

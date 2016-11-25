@@ -130,6 +130,18 @@
         <activity
             android:name=".Catalogue.Controller.Collection"
             android:label="@string/title_activity_collection"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".configuration.StorageConfiguration"
+            android:label="@string/title_activity_storage_configuration"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".configuration.FolderInfo"
+            android:label="@string/title_activity_folder_info"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".configuration.SyncAll"
+            android:label="@string/title_activity_sync_all"
             android:theme="@style/AppTheme"></activity>
     </application>
 

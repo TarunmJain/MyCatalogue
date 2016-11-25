@@ -29,6 +29,7 @@ import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.Order.Model.OrderModel;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
+import com.centura_technologies.mycatalogue.Support.ConfigData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -36,6 +37,7 @@ import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.GetImageFromUrl;
 import com.centura_technologies.mycatalogue.Support.ImageCache;
 import com.centura_technologies.mycatalogue.Sync.model.SyncSectionsClass;
+import com.centura_technologies.mycatalogue.configuration.SyncAll;
 import com.google.gson.Gson;
 
 
@@ -155,8 +157,11 @@ public class Sync {
             } else {
                 if (context != null)
                     GenericData.ShowDialog(context, "Loading Media", false);
-                Toast.makeText(context,"Updated",Toast.LENGTH_SHORT).show();
-                Settings.allicon.setImageResource(R.drawable.checkcircle);
+                Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                if (ConfigData.SYNCNOW) {
+                    SyncAll.done();
+                } else
+                    Settings.allicon.setImageResource(R.drawable.checkcircle);
                 return;
             }
         }

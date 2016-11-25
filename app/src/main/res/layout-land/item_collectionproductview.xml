@@ -9,22 +9,21 @@
         android:id="@+id/odd"
         android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="250dp"
         android:weightSum="1"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/imageView"
-            android:layout_weight="0.3"
+            android:layout_weight="0.45"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/background_1"/>
         <LinearLayout
-
             android:background="@color/white"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.7"
+            android:layout_weight="0.55"
             android:orientation="vertical"
             android:padding="10dp">
             <TextView
@@ -42,13 +41,13 @@
                 android:layout_height="wrap_content"
                 android:text=" "
                 android:padding="6dp"
-                android:maxLines="3"/>
+                android:maxLines="5"/>
             <TextView
                 android:id="@+id/prodprice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" "
-                android:padding="4dp"
+                android:padding="15dp"
                 android:maxLines="1"/>
 
         </LinearLayout>
@@ -58,7 +57,7 @@
         android:id="@+id/even"
         android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="250dp"
         android:weightSum="1"
         android:orientation="horizontal">
 
@@ -66,7 +65,7 @@
             android:background="@color/white"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.7"
+            android:layout_weight="0.55"
             android:orientation="vertical"
             android:padding="10dp">
             <TextView
@@ -85,20 +84,20 @@
                 android:layout_height="wrap_content"
                 android:text=" "
                 android:padding="6dp"
-                android:maxLines="3"/>
+                android:maxLines="5"/>
             <TextView
                 android:gravity="right"
                 android:id="@+id/prodprice1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=" "
-                android:padding="4dp"
+                android:padding="15dp"
                 android:maxLines="1"/>
 
         </LinearLayout>
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_weight="0.3"
+            android:layout_weight="0.45"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"

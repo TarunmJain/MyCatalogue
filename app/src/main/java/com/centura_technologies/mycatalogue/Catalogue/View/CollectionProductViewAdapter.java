@@ -77,7 +77,8 @@ public class CollectionProductViewAdapter extends RecyclerView.Adapter<Collectio
             public void onClick(View v) {
                 StaticData.productposition = finalPosition;
                 StaticData.SelectedProductsId = model.get(finalPosition).getId();
-                //EventBus.getDefault().postSticky(products);
+                StaticData.Currentproducts=new ArrayList<Products>();
+                StaticData.Currentproducts=model;
                 ((Activity) mContext).startActivity(new Intent(mContext, CatalogueDetails.class));
             }
         });

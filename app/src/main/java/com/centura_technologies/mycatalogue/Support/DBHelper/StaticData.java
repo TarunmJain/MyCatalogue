@@ -56,7 +56,7 @@ public class StaticData {
     public static ArrayList<OrderModel> orders = new ArrayList<OrderModel>();
     public static boolean syncall=false;
     public static boolean syncsection=false;
-
+    public static ArrayList<Products> Currentproducts = new ArrayList<Products>();
 
     public static void ClearAllStaticData() {
         ViewPosition = -1;
