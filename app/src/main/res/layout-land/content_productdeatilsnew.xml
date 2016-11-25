@@ -20,21 +20,19 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/openimage"
-                    android:scaleType="fitStart"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="350dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/loginscreen" />
                 <RelativeLayout
                     android:layout_below="@+id/openimage"
-                    android:padding="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="25dp"
                     android:background="#90ffffff"
-                    android:gravity="bottom"
                     android:id="@+id/rightpane"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/title"
@@ -140,84 +138,70 @@
                         android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
 
                 </RelativeLayout>
-                <ImageView
-                    android:id="@+id/next"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/arrowright"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:background="@drawable/whitebackground"/>
-                <ImageView
-                    android:id="@+id/previous"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/arrowleft"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:padding="10dp"
-                    android:background="@drawable/whitebackground"/>
+                <LinearLayout
+                    android:id="@+id/scrollview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rightpane"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:paddingTop="5dp"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:text="Description"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:padding="10dp"
+                            android:text=""
+                            android:textColor="@color/black"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:padding="26dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/specpane"
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:gravity="center"
+                            android:text="Specifications"
+                            android:background="#05000000"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/productdetaillist"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="#05000000" />
+                    </LinearLayout>
+                </LinearLayout>
+
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/scrollview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/toppane"
-                android:layout_margin="5dp"
-                android:orientation="vertical">
 
-                <LinearLayout
-                    android:padding="26dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Description"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:padding="10dp"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="14dp" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:padding="26dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:padding="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:gravity="center"
-                        android:text="Specifications"
-                        android:background="#05000000"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/productdetaillist"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="#05000000" />
-                </LinearLayout>
-            </LinearLayout>
 
             <RelativeLayout
                 android:visibility="gone"

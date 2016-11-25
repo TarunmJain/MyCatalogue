@@ -57,8 +57,7 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
         if (position == 0) {
             holder.text.setText("Info");
             holder.icon.setImageResource(R.drawable.ic_infoicon);
-        } else
-        {
+        } else {
             holder.text.setText(data.get(position - 1).getGroupTitle());
             holder.icon.setImageResource(R.drawable.mr_ic_play_light);
         }
@@ -68,6 +67,12 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
             if (position == 0) {
                 holder.SubCatagorieslist.setVisibility(View.GONE);
                 CatalogueDetails.LoadInfo();
+            } else if (data.get(finalPosition).getAttchments().size() == 1) {
+                    holder.SubCatagorieslist.setVisibility(View.VISIBLE);
+                    holder.SubCatagorieslist.setAdapter(new MedialistAdapter(mContext, data.get(finalPosition)));
+                    int viewHeight = GenericData.convertDpToPixels(37, mContext);
+                    viewHeight = viewHeight * (data.get(finalPosition).getAttchments().size());
+                    holder.SubCatagorieslist.getLayoutParams().height = viewHeight;
             } else {
                 holder.SubCatagorieslist.setVisibility(View.VISIBLE);
                 holder.SubCatagorieslist.setAdapter(new MedialistAdapter(mContext, data.get(finalPosition)));

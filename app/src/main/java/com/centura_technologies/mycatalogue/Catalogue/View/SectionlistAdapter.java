@@ -73,7 +73,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
                     BreadCrumb.Section = "All Products";
                     StaticData.SelectedCategoryId = "-1";
                     BreadCrumb.Category = "";
-                    Catalogue.toolbar.setTitle("All Products");
+                    Catalogue.AppbarTittle.setText("All Products");
                     if (DB.getInitialModel().getProducts().size() != 0) {
                         Catalogue.productslist();
                         Catalogue.InitializeAdapter(mContext);

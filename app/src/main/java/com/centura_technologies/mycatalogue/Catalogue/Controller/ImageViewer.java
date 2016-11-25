@@ -1,5 +1,6 @@
 package com.centura_technologies.mycatalogue.Catalogue.Controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
  */
 public class ImageViewer extends AppCompatActivity {
     Toolbar toolbar;
-    ArrayList<String> Images;
+    //ArrayList<String> Images;
     ViewPager mpager;
     ViewFlipper myViewFlipper;
     float initialXPoint, finalx;
@@ -36,21 +37,23 @@ public class ImageViewer extends AppCompatActivity {
         toolbar.setTitle("Product Images");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Images = new ArrayList<String>();
-        Images = CatalogueDetails.image;
+        Intent i=getIntent();
+        String Url=i.getStringExtra("url");
+        //Images = new ArrayList<String>();
+        //Images = CatalogueDetails.image;
         mpager = (ViewPager) findViewById(R.id.pager);
         myViewFlipper = (ViewFlipper) findViewById(R.id.myflipper);
-        for (int i = 0; i < Images.size(); i++) {
+        //for (int i = 0; i < Images.size(); i++) {
             ImageView imageView = new ImageView(ImageViewer.this);
-            GenericData.setImage(Images.get(i), imageView, ImageViewer.this);
+            GenericData.setImage(Url, imageView, ImageViewer.this);
             myViewFlipper.addView(imageView);
-        }
+        //}
         myViewFlipper.setAutoStart(true);
         myViewFlipper.setFlipInterval(5000);
         myViewFlipper.startFlipping();
     }
 
-    @Override
+    /*@Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -70,7 +73,7 @@ public class ImageViewer extends AppCompatActivity {
                 break;
         }
         return false;
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

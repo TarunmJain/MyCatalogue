@@ -1,5 +1,6 @@
 package com.centura_technologies.mycatalogue.Catalogue.Controller;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,8 +29,10 @@ public class VideoActivity extends AppCompatActivity {
         toolbar.setTitle("Video");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent i = getIntent();
+        String Url=i.getStringExtra("url");
         vidView = (VideoView)findViewById(R.id.myVideo);
-        vidAddress=CatalogueDetails.videourl;
+        vidAddress=Url;
         Uri vidUri = Uri.parse(vidAddress);
         vidView.setVideoURI(vidUri);
         vidView.start();
@@ -46,6 +49,8 @@ public class VideoActivity extends AppCompatActivity {
         register.setVisible(false);
         MenuItem register1 = menu.findItem(R.id.slideshow);
         register1.setVisible(false);
+        MenuItem register2 = menu.findItem(R.id.shortlist);
+        register2.setVisible(false);
         return true;
     }
 

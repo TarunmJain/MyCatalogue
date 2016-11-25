@@ -42,6 +42,7 @@ public class DetailMenuAdapter extends RecyclerView.Adapter<DetailMenuAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
+
         final int finalPosition = position-1;
         if (position == 0)
         {

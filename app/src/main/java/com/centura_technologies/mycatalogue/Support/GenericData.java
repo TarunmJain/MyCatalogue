@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.TypedValue;
@@ -94,6 +96,7 @@ public class GenericData {
     static DbHelper db;
     static final BitmapFactory.Options options = new BitmapFactory.Options();
     static ProgressDialog pDialog;
+    static boolean loggingout=false;
 
     public static void ShowdownloadingDialog(Context context, Boolean flag) {
         context = context.getApplicationContext();
@@ -445,6 +448,7 @@ public class GenericData {
     public static void logout(final Context context) {
         a = ((Activity) context);
         db = new DbHelper(context);
+        loggingout=true;
         sharedPreferences = a.getSharedPreferences(GenericData.MyPref, a.MODE_PRIVATE);
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -459,13 +463,13 @@ public class GenericData {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                context.startActivity(new Intent(context, Login.class));
+                DeleteAllData(context);
+
                 //StaticData.clearcachedata();
                 StaticData.ClearAllStaticData();
                 DB.ClearAllDBData();
-                db.ClearAllData();
                 editor.clear().commit();
-                a.finish();
+
             }
         });
         button.setOnClickListener(new View.OnClickListener() {
@@ -477,6 +481,32 @@ public class GenericData {
         dialog.show();
     }
 
+    public static void DeleteAllData(final Context context){
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setMessage("Do you want to remove all data from storage?");
+        alertDialogBuilder.setPositiveButton("yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        db.ClearAllData();
+                        context.startActivity(new Intent(context, Login.class));
+                        ((Activity)context).finish();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog alertDialog1 = alertDialogBuilder.create();
+                        alertDialog1.cancel();
+                        context.startActivity(new Intent(context, Login.class));
+                        ((Activity)context).finish();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 
     public static void DrawerOnClicks(final Context context) {
         final Activity a = ((Activity) context);

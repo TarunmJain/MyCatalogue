@@ -59,7 +59,7 @@ public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapte
                 @Override
                 public void onClick(View v) {
                     BreadCrumb.Category=currentTree.getCategories().get(finalPosition).getTitle();
-                    Catalogue.toolbar.setTitle(BreadCrumb.Category);
+                    Catalogue.AppbarTittle.setText(BreadCrumb.Category);
                     StaticData.SelectedCategoryId = currentTree.getCategories().get(finalPosition).getId();
                     StaticData.position = finalPosition;
                     if (DB.getInitialModel().getProducts().size() != 0) {

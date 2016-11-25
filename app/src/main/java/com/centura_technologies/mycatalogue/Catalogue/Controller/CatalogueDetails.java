@@ -48,6 +48,7 @@ import com.centura_technologies.mycatalogue.Catalogue.View.DrawerItemsAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.IndividualProdImageAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.VarientsAdapter;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
@@ -60,13 +61,15 @@ import com.panoramagl.PLManager;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.centura_technologies.mycatalogue.R.id.logoff;
+
 /**
  * Created by Centura User1 on 24-08-2016.
  */
 public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.ClickListner, DrawerLayout.DrawerListener {
     ImageView hamburger, logff;
     TextView Title;
-    static TextView shortlist;
+    static TextView shortlist,specpane;
     static RecyclerView productdetaillist, drawer_items_recycler, individual_product_images;
     public static ArrayList<Products> allproducts;
     static ImageView openimage, next, previous, media, arrow;
@@ -101,8 +104,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         Title.setText("Product Details");
         hamburger = (ImageView) findViewById(R.id.hamburger);
-        logff = (ImageView) findViewById(R.id.logoff);
-        logff.setVisibility(View.GONE);
+        logff = (ImageView) findViewById(logoff);
         context = CatalogueDetails.this;
         mRootView = (ViewGroup) findViewById(R.id.fulllay);
         allproducts = new ArrayList<Products>();
@@ -116,6 +118,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         title = (TextView) findViewById(R.id.title);
         description = (TextView) findViewById(R.id.description);
         amount = (TextView) findViewById(R.id.amount);
+        specpane=(TextView)findViewById(R.id.specpane);
         varients = (LinearLayout) findViewById(R.id.varients);
         arrow = (ImageView) findViewById(R.id.arrow);
         shortlist = (TextView) findViewById(R.id.shortlist);
@@ -266,6 +269,13 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 finish();
             }
         });
+
+        logff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CatalogueDetails.this, Shortlist.class));
+            }
+        });
     }
 
     public static void RenderProduct(final Products productdetail) {
@@ -325,7 +335,13 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         int viewHeight = GenericData.convertDpToPixels(50, context);
         viewHeight = viewHeight * (productModel.getAttributes().size());
         productdetaillist.getLayoutParams().height = viewHeight;
-        productdetaillist.setAdapter(new DescriptionAdapter(context, productModel.getAttributes()));
+        if(productModel.getAttributes().size()!=0){
+            specpane.setVisibility(View.VISIBLE);
+            productdetaillist.setAdapter(new DescriptionAdapter(context, productModel.getAttributes()));
+        }else {
+            specpane.setVisibility(View.GONE);
+            productdetaillist.setVisibility(View.GONE);
+        }
         drawer_items_recycler.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         drawer_items_recycler.setAdapter(new DrawerItemsAdapter(context, allproducts));
         scrollchild();
@@ -495,12 +511,14 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         pdflayout.setVisibility(View.GONE);
         panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.GONE);
-        Uri vidUri = Uri.parse(url);
-        productDetailvedio.setVideoURI(vidUri);
+        Intent i = new Intent(context, VideoActivity.class);
+        i.putExtra("url", url);
+        ((Activity) context).startActivity(i);
+        /*productDetailvedio.setVideoURI(vidUri);
         productDetailvedio.start();
         MediaController vidControl = new MediaController(context);
         vidControl.setAnchorView(productDetailvedio);
-        productDetailvedio.setMediaController(vidControl);
+        productDetailvedio.setMediaController(vidControl);*/
     }
 
     public static void LoadPDF(final Context context, String url) {
@@ -517,7 +535,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         ((Activity) context).startActivity(intent);
     }
 
-    public static void LoadImage(final Context context, String url) {
+    public static void LoadImage(final Context context, final String url) {
         imagelayout.setVisibility(View.VISIBLE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
@@ -529,7 +547,10 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((Activity) context).startActivity(new Intent(context, ImageViewer.class));
+                Intent i = new Intent(context, ImageViewer.class);
+                i.putExtra("url", url);
+                ((Activity) context).startActivity(i);
+                //((Activity) context).startActivity(new Intent(context, ImageViewer.class));
             }
         });
     }

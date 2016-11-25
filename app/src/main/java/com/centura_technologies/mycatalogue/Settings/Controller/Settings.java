@@ -1,5 +1,6 @@
 package com.centura_technologies.mycatalogue.Settings.Controller;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.centura_technologies.mycatalogue.Login.Controller.Login;
@@ -27,9 +32,12 @@ import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
  */
 public class Settings extends AppCompatActivity {
     Toolbar toolbar;
-    RelativeLayout syncall,syncsections,synccollections,others;
+    RelativeLayout syncall,syncsections,synccollections,others,taxpane;
     public static ImageView allicon,sectionicon,collectionicon,othersicon;
     RotateAnimation rotate;
+    TextView taxval;
+    Button set,cancel;
+    EditText enterval;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +51,12 @@ public class Settings extends AppCompatActivity {
         syncsections=(RelativeLayout)findViewById(R.id.syncsections);
         synccollections=(RelativeLayout)findViewById(R.id.synccollections);
         others=(RelativeLayout)findViewById(R.id.others);
+        taxpane=(RelativeLayout)findViewById(R.id.taxpane);
         allicon=(ImageView)findViewById(R.id.allicon);
         sectionicon=(ImageView)findViewById(R.id.sectionicon);
         collectionicon=(ImageView)findViewById(R.id.collectionicon);
         othersicon=(ImageView)findViewById(R.id.othersicon);
+        taxval=(TextView)findViewById(R.id.taxval);
         OnClicks();
         rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(2000);
@@ -84,6 +94,31 @@ public class Settings extends AppCompatActivity {
                 syncsections.setClickable(true);
                 synccollections.setClickable(true);
                 others.setClickable(true);
+            }
+        });
+        taxpane.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog=new Dialog(Settings.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_taxval);
+                enterval=(EditText)dialog.findViewById(R.id.enterval);
+                set=(Button)dialog.findViewById(R.id.set);
+                cancel=(Button)dialog.findViewById(R.id.cancel);
+                dialog.show();
+                set.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        taxval.setText(enterval.getText().toString());
+                        dialog.cancel();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
             }
         });
     }

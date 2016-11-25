@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="400dp"
+    android:layout_height="300dp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/settaxlabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Vat"
+        android:textSize="24sp"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:background="@color/black"/>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/set"
+            android:elevation="5dp"
+            android:layout_toLeftOf="@+id/cancel"
+            android:background="@drawable/transparentsquarebutton"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="SET"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/accentcolor"
+            android:layout_marginRight="8dp" />
+        <Button
+            android:id="@+id/cancel"
+            android:background="@drawable/transparentsquarebutton"
+            android:elevation="5dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:text="CANCEL"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:hint="Enter Vat"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:id="@+id/enterval"
+        android:inputType="numberDecimal"
+        android:background="@drawable/transparentsquarebutton"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
