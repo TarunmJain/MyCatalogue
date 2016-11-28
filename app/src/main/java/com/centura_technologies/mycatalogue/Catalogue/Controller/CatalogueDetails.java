@@ -26,6 +26,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -497,8 +498,9 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.GONE);
         productDetailwebview.getSettings().setJavaScriptEnabled(true);
+        productDetailwebview.getSettings().setDomStorageEnabled(true);
+        productDetailwebview.addJavascriptInterface(new WebAppInterface(context), "Android");
         productDetailwebview.loadUrl(url);
-        // productDetailwebview.loadData(url+".html", "text/html", "UTF-8");
         productDetailvedio.stopPlayback();
     }
 
@@ -583,5 +585,25 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     protected void onResume() {
         super.onResume();
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+}
+
+class WebAppInterface {
+
+    Context mContext;
+
+    /**
+     * Instantiate the interface and set the context
+     */
+    WebAppInterface(Context c) {
+        mContext = c;
+    }
+
+    /**
+     * Show a toast from the web page
+     */
+    @JavascriptInterface
+    public void nextScreen(String pro_cat_id) {
+        Toast.makeText(mContext,pro_cat_id,Toast.LENGTH_LONG).show();
     }
 }

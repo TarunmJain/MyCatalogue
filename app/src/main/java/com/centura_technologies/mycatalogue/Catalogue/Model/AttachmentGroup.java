@@ -8,11 +8,31 @@ import java.util.ArrayList;
 
 public class AttachmentGroup {
     public String GroupTitle;
+    public int Type=AttchmentClass.GROUP;
     public ArrayList<AttchmentClass> attchments;
+    public AttchmentClass IndividualAttachment;
 
     public AttachmentGroup(){
         GroupTitle="";
+        Type=AttchmentClass.GROUP;
         attchments=new ArrayList<AttchmentClass>();
+        IndividualAttachment=new AttchmentClass();
+    }
+
+    public AttchmentClass getIndividualAttachment() {
+        return IndividualAttachment;
+    }
+
+    public void setIndividualAttachment(AttchmentClass individualAttachment) {
+        IndividualAttachment = individualAttachment;
+    }
+
+    public int getType() {
+        return Type;
+    }
+
+    public void setType(int type) {
+        Type = type;
     }
 
     public String getGroupTitle() {

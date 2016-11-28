@@ -4,7 +4,6 @@ package com.centura_technologies.mycatalogue.Support.Apis;
  * Created by RVU on 5/10/2016.
  */
 public class Urls {
-
     //public static String parent = "http://192.168.0.144:8080/api/Catalogue/";
     //public static String parentIP = "http://192.168.0.144";
     public static String parentIP = "http://mystoreseller.azurewebsites.net";

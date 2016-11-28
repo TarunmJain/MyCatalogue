@@ -18,6 +18,7 @@
         layout="@layout/toolbar"></include>
 
     <include layout="@layout/content_image_viewer"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tool_bar"/>

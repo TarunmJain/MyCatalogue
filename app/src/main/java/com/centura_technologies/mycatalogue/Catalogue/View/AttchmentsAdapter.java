@@ -19,7 +19,9 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.R;
+import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
+import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 
@@ -35,10 +37,12 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
     ArrayList<AttachmentGroup> data;
     ArrayList<AttchmentClass> model;
     int GroupView = -1;
+    DbHelper dbHelper;
 
     public AttchmentsAdapter(Context context, ArrayList<AttachmentGroup> tree) {
         this.mContext = context;
         this.data = tree;
+        dbHelper = new DbHelper(mContext);
     }
 
     @Override
@@ -57,47 +61,82 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
         if (position == 0) {
             holder.text.setText("Info");
             holder.icon.setImageResource(R.drawable.ic_infoicon);
-        } else {
+        } else if (data.get(position - 1).getType() == AttchmentClass.GROUP) {
             holder.text.setText(data.get(position - 1).getGroupTitle());
             holder.icon.setImageResource(R.drawable.mr_ic_play_light);
+        } else {
+            holder.text.setText(data.get(position - 1).getIndividualAttachment().AttachmentTitle);
+            holder.icon.setImageResource(R.drawable.thumb_image);
         }
-
         final int finalPosition = position - 1;
         if (GroupView == position) {
+            //common code
             if (position == 0) {
                 holder.SubCatagorieslist.setVisibility(View.GONE);
                 CatalogueDetails.LoadInfo();
-            } else if (data.get(finalPosition).getAttchments().size() == 1) {
-                    holder.SubCatagorieslist.setVisibility(View.VISIBLE);
-                    holder.SubCatagorieslist.setAdapter(new MedialistAdapter(mContext, data.get(finalPosition)));
-                    int viewHeight = GenericData.convertDpToPixels(37, mContext);
-                    viewHeight = viewHeight * (data.get(finalPosition).getAttchments().size());
-                    holder.SubCatagorieslist.getLayoutParams().height = viewHeight;
-            } else {
+            } else if (data.get(finalPosition).getType() == AttchmentClass.GROUP) {
                 holder.SubCatagorieslist.setVisibility(View.VISIBLE);
                 holder.SubCatagorieslist.setAdapter(new MedialistAdapter(mContext, data.get(finalPosition)));
                 int viewHeight = GenericData.convertDpToPixels(37, mContext);
                 viewHeight = viewHeight * (data.get(finalPosition).getAttchments().size());
                 holder.SubCatagorieslist.getLayoutParams().height = viewHeight;
+            } else {
+                //attchment is clicked change background color
             }
         } else
             holder.SubCatagorieslist.setVisibility(View.GONE);
+        if (position == 0)
+            holder.layview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GroupView = position;
+                    notifyDataSetChanged();
 
-        holder.layview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (position == 0) {
-                    GroupView = position;
-                    notifyDataSetChanged();
-                } else if (position == GroupView) {
-                    GroupView = -1;
-                    notifyDataSetChanged();
-                } else if (data.get(finalPosition).getAttchments().size() > 0) {
-                    GroupView = position;
-                    notifyDataSetChanged();
                 }
-            }
-        });
+            });
+        else if (data.get(finalPosition).getType() == AttchmentClass.GROUP)
+            holder.layview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position == GroupView) {
+                        GroupView = -1;
+                        notifyDataSetChanged();
+                    } else if (data.get(finalPosition).getAttchments().size() > 0) {
+                        GroupView = position;
+                        notifyDataSetChanged();
+                    }
+                }
+            });
+
+        else
+            holder.layview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position != GroupView) {
+                        GroupView = position;
+                        String type = AttchmentClass.getMimeType(data.get(finalPosition).getIndividualAttachment().getAttachmentUrl());
+                        if (data.get(finalPosition).getIndividualAttachment().MediaType == AttchmentClass.TYPE_IMAGE)
+                            CatalogueDetails.LoadImage(mContext, data.get(finalPosition).getIndividualAttachment().AttachmentUrl);
+
+                        if (data.get(finalPosition).getIndividualAttachment().MediaType == AttchmentClass.TYPE_Panorama)
+                            CatalogueDetails.LoadPanorama(mContext, dbHelper.returnImage(Urls.parentIP + data.get(finalPosition).getIndividualAttachment().AttachmentUrl));
+
+                        if (data.get(finalPosition).getIndividualAttachment().MediaType == AttchmentClass.TYPE_PDF)
+                            CatalogueDetails.LoadPDF(mContext, dbHelper.returnImage(Urls.parentIP + data.get(finalPosition).getIndividualAttachment().AttachmentUrl));
+
+                        if (data.get(finalPosition).getIndividualAttachment().MediaType == AttchmentClass.TYPE_PPT) {
+                        }
+
+                        if (data.get(finalPosition).getIndividualAttachment().MediaType == AttchmentClass.TYPE_VEDIO)
+                            CatalogueDetails.LoadVedio(mContext, dbHelper.returnImage(Urls.parentIP + data.get(finalPosition).getIndividualAttachment().AttachmentUrl));
+
+                        if (data.get(finalPosition).getIndividualAttachment().MediaType == AttchmentClass.TYPE_WEB)
+                            CatalogueDetails.LoadHTML(dbHelper.returnImage(Urls.parentIP + data.get(finalPosition).getIndividualAttachment().AttachmentUrl));
+
+                        notifyDataSetChanged();
+                    }
+                }
+            });
 
     }
 
