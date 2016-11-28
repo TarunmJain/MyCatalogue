@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
         <include
             android:id="@+id/tool_bar"
-            layout="@layout/custom_toolbar"></include>
+            layout="@layout/toolbar"></include>
 
         <!--<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -70,7 +70,8 @@
                     android:id="@+id/leftlay"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.7">
+                    android:layout_weight="1.7"
+                    android:background="#F5F5F5">
                     <LinearLayout
                         android:gravity="center"
                         android:layout_width="match_parent"
@@ -126,7 +127,8 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/sectionrecycler"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:background="#F5F5F5"/>
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/optionslay"
@@ -139,7 +141,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:background="#95FFFFFF">
+                        android:background="#F5F5F5">
                         <Spinner
                             android:visibility="gone"
                             android:id="@+id/spinner"

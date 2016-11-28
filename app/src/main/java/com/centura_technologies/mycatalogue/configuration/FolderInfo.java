@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StatFs;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -40,11 +41,11 @@ public class FolderInfo extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         String folderNameStr = foldername.getText().toString();
-
                                         if (folderNameStr != null)
                                             if (!folderNameStr.matches(""))
                                                 if (!folderNameStr.contains(" ")) {
                                                     //File folderDir = new File("/" + ConfigData.selectedStoregePath + "/" + folderNameStr);
+                                                    isExternalStoragePresent(FolderInfo.this);
                                                     ConfigData.selectedStoregePath += "/" + folderNameStr;
                                                     File folderDir = new File(ConfigData.selectedStoregePath);
                                                     String secStore = System.getenv("SECONDARY_STORAGE");

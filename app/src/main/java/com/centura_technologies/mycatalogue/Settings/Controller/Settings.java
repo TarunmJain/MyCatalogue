@@ -17,6 +17,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,8 +33,10 @@ import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
  */
 public class Settings extends AppCompatActivity {
     Toolbar toolbar;
-    RelativeLayout syncall,syncsections,synccollections,others,taxpane;
-    public static ImageView allicon,sectionicon,collectionicon,othersicon;
+    RelativeLayout syncall,syncsections,taxpane;
+    LinearLayout sync,vat;
+    public static ImageView allicon,sectionicon;
+    CardView cardview_vat,cardview_sync;
     RotateAnimation rotate;
     TextView taxval;
     Button set,cancel;
@@ -49,13 +52,13 @@ public class Settings extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         syncall=(RelativeLayout)findViewById(R.id.syncall);
         syncsections=(RelativeLayout)findViewById(R.id.syncsections);
-        synccollections=(RelativeLayout)findViewById(R.id.synccollections);
-        others=(RelativeLayout)findViewById(R.id.others);
         taxpane=(RelativeLayout)findViewById(R.id.taxpane);
+        sync=(LinearLayout)findViewById(R.id.sync);
+        vat=(LinearLayout)findViewById(R.id.vat);
+        cardview_vat=(CardView)findViewById(R.id.cardview_vat);
+        cardview_sync=(CardView)findViewById(R.id.cardview_sync);
         allicon=(ImageView)findViewById(R.id.allicon);
         sectionicon=(ImageView)findViewById(R.id.sectionicon);
-        collectionicon=(ImageView)findViewById(R.id.collectionicon);
-        othersicon=(ImageView)findViewById(R.id.othersicon);
         taxval=(TextView)findViewById(R.id.taxval);
         OnClicks();
         rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -72,8 +75,6 @@ public class Settings extends AppCompatActivity {
                 Sync.initialapi(Settings.this);
                 syncall.setClickable(false);
                 syncsections.setClickable(false);
-                synccollections.setClickable(false);
-                others.setClickable(false);
             }
         });
         syncsections.setOnClickListener(new View.OnClickListener() {
@@ -82,20 +83,25 @@ public class Settings extends AppCompatActivity {
                 startActivity(new Intent(Settings.this, SyncClass.class));
                 syncall.setClickable(true);
                 syncsections.setClickable(true);
-                synccollections.setClickable(true);
-                others.setClickable(true);
             }
         });
-        synccollections.setOnClickListener(new View.OnClickListener() {
+
+        sync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Settings.this, SyncClass.class));
-                syncall.setClickable(true);
-                syncsections.setClickable(true);
-                synccollections.setClickable(true);
-                others.setClickable(true);
+                cardview_sync.setVisibility(View.VISIBLE);
+                cardview_vat.setVisibility(View.GONE);
             }
         });
+
+        vat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardview_vat.setVisibility(View.VISIBLE);
+                cardview_sync.setVisibility(View.GONE);
+            }
+        });
+
         taxpane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

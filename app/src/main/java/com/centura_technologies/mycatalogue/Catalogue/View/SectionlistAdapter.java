@@ -73,7 +73,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
                     BreadCrumb.Section = "All Products";
                     StaticData.SelectedCategoryId = "-1";
                     BreadCrumb.Category = "";
-                    Catalogue.AppbarTittle.setText("All Products");
+                    Catalogue.toolbar.setTitle("All Products");
                     if (DB.getInitialModel().getProducts().size() != 0) {
                         Catalogue.productslist();
                         Catalogue.InitializeAdapter(mContext);
@@ -91,7 +91,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
             if (categoriesView == finalPosition) {
                 if (data.get(finalPosition).getCategories().size() == 1) {
                     BreadCrumb.Category = data.get(finalPosition).getCategories().get(0).getTitle();
-                    Catalogue.AppbarTittle.setText(BreadCrumb.Category);
+                    Catalogue.toolbar.setTitle(BreadCrumb.Category);
                     StaticData.SelectedCategoryId = data.get(finalPosition).getCategories().get(0).getId();
                     StaticData.position = 0;
                     if (DB.getInitialModel().getProducts().size() != 0) {

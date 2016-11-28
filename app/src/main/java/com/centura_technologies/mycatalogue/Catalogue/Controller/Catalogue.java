@@ -91,9 +91,9 @@ import static java.security.AccessController.getContext;
  * Created by Centura User1 on 19-09-2016.
  */
 public class Catalogue extends AppCompatActivity {
-    //public static Toolbar toolbar;
+    public static Toolbar toolbar;
     static RecyclerView cat_filterlist;
-    ImageView listicon,hamburger,logoff;
+    ImageView listicon;
     public static DrawerLayout drawer;
     public static ImageView searchicon;
     RelativeLayout nocategory,quickview;
@@ -102,7 +102,6 @@ public class Catalogue extends AppCompatActivity {
     public static LinearLayout leftdrawer, rightdrawer;
     public static EditText editsearch;
     Spinner spinner;
-    public static TextView AppbarTittle;
     TextView apply, clear;
     static RecyclerView recyclerview, recyclerview1, sectionrecycler, categoryrecycler;
     static RecyclerView productsrecyclerview;
@@ -141,15 +140,12 @@ public class Catalogue extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalogue);
-        //toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        //toolbar.setTitle("My Catalogue");
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        AppbarTittle=(TextView)findViewById(R.id.AppbarTittle);
-        AppbarTittle.setText("My Catalogue");
-        hamburger=(ImageView)findViewById(R.id.hamburger);
-        logoff=(ImageView)findViewById(R.id.logoff);
+        toolbar.setTitle("My Catalogue");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         leftlay=(RelativeLayout)findViewById(R.id.leftlay);
         leftdrawer = (LinearLayout) findViewById(R.id.leftdrawer);
         rightdrawer = (LinearLayout) findViewById(R.id.rightdrawer);
@@ -288,41 +284,6 @@ public class Catalogue extends AppCompatActivity {
     }
 
     private void OnClicks() {
-
-        hamburger.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(leftdraweropen){
-                    if (drawer.isDrawerOpen(leftdrawer))//On Back Arrow pressed
-                        drawer.closeDrawer(leftdrawer);
-                    else if (drawer.isDrawerOpen(rightdrawer))
-                        drawer.closeDrawer(rightdrawer);
-                    else {
-                        hamburger.setImageResource(R.drawable.ic_dehaze_white_24dp);
-                        leftlay.setVisibility(View.GONE);
-                        recyclerviewlayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-                        productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 5));
-                        InitializeAdapter(Catalogue.this);
-                        leftdraweropen = false;
-                    }
-                }else {
-                    hamburger.setImageResource(R.drawable.ic_arrow_back_white_24dp);
-                    leftlay.setVisibility(View.VISIBLE);
-                    recyclerviewlayout.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT,3.3f));
-                    productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
-                    InitializeAdapter(Catalogue.this);
-                    leftdraweropen=true;
-                }
-            }
-        });
-
-        logoff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Catalogue.this, Shortlist.class));
-            }
-        });
-
 
         filtericon.setOnClickListener(new View.OnClickListener() {
             @Override
