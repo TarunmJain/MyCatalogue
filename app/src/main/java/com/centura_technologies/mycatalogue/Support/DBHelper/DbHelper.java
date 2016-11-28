@@ -26,6 +26,7 @@ import com.centura_technologies.mycatalogue.Shortlist.Model.ShortlistModel;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.ApplicationClass;
 import com.centura_technologies.mycatalogue.Support.GenericData;
+import com.github.barteksc.pdfviewer.util.ArrayUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -33,7 +34,9 @@ import java.io.File;
 import java.lang.reflect.Type;
 import java.security.acl.Group;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class DbHelper extends SQLiteOpenHelper {

@@ -10,12 +10,14 @@ public class CollectionModel {
     private String Id;
     private String Title;
     private String ImageUrl;
+    private int Version;
     private ArrayList<String> ProductIds;
 
     public CollectionModel(){
         Id="";
         Title="";
         ImageUrl="";
+        Version=0;
         ProductIds=new ArrayList<String>();
     }
 
@@ -41,6 +43,14 @@ public class CollectionModel {
 
     public void setImageUrl(String imageUrl) {
         ImageUrl = imageUrl;
+    }
+
+    public int getVersion() {
+        return Version;
+    }
+
+    public void setVersion(int version) {
+        Version = version;
     }
 
     public ArrayList<String> getProductIds() {

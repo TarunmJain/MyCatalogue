@@ -27,6 +27,7 @@ public class Products {
     private String Status;
     private Double Weight;
     private boolean WishList;
+    private int Version;
     private String SelectedVarient;
 
 
@@ -53,6 +54,7 @@ public class Products {
         Status="";
         Weight=0.0;
         WishList=false;
+        Version=0;
         SelectedVarient="";
     }
 
@@ -222,6 +224,14 @@ public class Products {
 
     public void setWishList(boolean wishList) {
         WishList = wishList;
+    }
+
+    public int getVersion() {
+        return Version;
+    }
+
+    public void setVersion(int version) {
+        Version = version;
     }
 
     public String getSelectedVarient() {

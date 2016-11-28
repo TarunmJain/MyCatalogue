@@ -37,6 +37,7 @@ import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.GetImageFromUrl;
 import com.centura_technologies.mycatalogue.Support.ImageCache;
 import com.centura_technologies.mycatalogue.Sync.model.SyncSectionsClass;
+import com.centura_technologies.mycatalogue.configuration.DataVersion;
 import com.centura_technologies.mycatalogue.configuration.SyncAll;
 import com.google.gson.Gson;
 
@@ -58,6 +59,7 @@ public class Sync {
     static Gson gson = new Gson();
     static SharedPreferences sharedPreferences;
     static DbHelper db;
+    static ArrayList<InitialModel> im;
 
     public static ArrayList<String> SelectedSectionSync = new ArrayList<>();
     public static boolean SyncCollections = false;
@@ -73,11 +75,16 @@ public class Sync {
 
     public static void initialapi(final Context context) {
         db = new DbHelper(context);
+        im = new ArrayList<InitialModel>();
         sharedPreferences = context.getSharedPreferences(GenericData.MyPref, context.MODE_PRIVATE);
         ArrayList<Sections> model = new ArrayList<Sections>();
         RequestQueue queue = Volley.newRequestQueue(context);
         final Map<String, String> params = new HashMap<String, String>();
         params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
+        params.put("SectionVersion", DataVersion.SectionVersion + "");
+        params.put("CategoryVersion", DataVersion.CategoryVersion + "");
+        params.put("ProductVersion", DataVersion.ProductVersion + "");
+        params.put("CollectionVersion", DataVersion.CollectionVersion + "");
         GenericData.ShowDialog(context, "Loading...", true);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.Initial, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
@@ -90,6 +97,8 @@ public class Sync {
                         JSONObject jsonObject = response.getJSONObject("Data");
                         temp = gson.fromJson(jsonObject.toString(), InitialModel.class);
                         for (int i = 0; i < temp.getProducts().size(); i++) {
+                            if (DataVersion.ProductVersion < temp.getProducts().get(i).getVersion())
+                                DataVersion.ProductVersion = temp.getProducts().get(i).getVersion();
                             ImageCache param = new ImageCache(temp.getProducts().get(i).getImageUrl(), temp.getProducts().get(i).getId(), context);
                             allMedia.add(param);
                             for (int d = 0; d < temp.getProducts().get(i).getProductImages().size(); d++) {
@@ -103,21 +112,25 @@ public class Sync {
                             }
                         }
                         for (int i = 0; i < temp.getSections().size(); i++) {
+                            if (DataVersion.SectionVersion < temp.getSections().get(i).getVersion())
+                                DataVersion.SectionVersion = temp.getSections().get(i).getVersion();
                             ImageCache param = new ImageCache(temp.getSections().get(i).getImageUrl(), temp.getSections().get(i).getId(), context);
                             allMedia.add(param);
                         }
                         for (int i = 0; i < temp.getCategories().size(); i++) {
+                            if (DataVersion.CategoryVersion < temp.getCategories().get(i).getVersion())
+                                DataVersion.CategoryVersion = temp.getCategories().get(i).getVersion();
                             ImageCache param = new ImageCache(temp.getCategories().get(i).getImageUrl(), temp.getCategories().get(i).getId(), context);
                             allMedia.add(param);
                         }
                         for (int j = 0; j < temp.getCollections().size(); j++) {
+                            if (DataVersion.CollectionVersion < temp.getCollections().get(j).getVersion())
+                                DataVersion.CollectionVersion = temp.getCollections().get(j).getVersion();
                             ImageCache param = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
                             allMedia.add(param);
                         }
                         GenericData.imagesChached = true;
-                        DB.setInitialModel(temp);
-                        db.saveinitialmodel();
-                        db.loadinitialmodel();
+                        updateInitialmodel(temp,context);
                         LoadAsyncData(allMedia, context);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -181,6 +194,7 @@ public class Sync {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         Map<String, String> params = new HashMap<String, String>();
         params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
+        params.put("Version", DataVersion.SectionVersion + "");
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.SectionList, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -194,14 +208,13 @@ public class Sync {
                         temp = gson.fromJson(jsonObject.toString(), InitialModel.class);
                         model = (temp.getSections());
                         for (int i = 0; i < model.size(); i++) {
+                            if (DataVersion.SectionVersion < model.get(i).getVersion())
+                                DataVersion.SectionVersion = model.get(i).getVersion();
                             ImageCache param = new ImageCache(model.get(i).getImageUrl(), model.get(i).getId(), mContext);
                             allMedia.add(param);
                         }
                         GenericData.imagesChached = true;
-                        DB.setSectionlist(model);
-                        db = new DbHelper(mContext);
-                        db.savesectionlist();
-                        db.loadsectionlist();
+                        updateInitialmodel(temp,mContext);
                         LoadAsyncData(allMedia, mContext);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -282,6 +295,7 @@ public class Sync {
         RequestQueue queue = Volley.newRequestQueue(context);
         Map<String, String> params = new HashMap<String, String>();
         params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
+        params.put("Version", DataVersion.CollectionVersion + "");
         //GenericData.ShowDialog(context, "Loading...", true);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.collectionlist, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
@@ -294,6 +308,8 @@ public class Sync {
                         JSONObject jsonObject = response.getJSONObject("Data");
                         temp = gson.fromJson(jsonObject.toString(), InitialModel.class);
                         for (int i = 0; i < temp.getProducts().size(); i++) {
+                            if (DataVersion.ProductVersion < temp.getProducts().get(i).getVersion())
+                                DataVersion.ProductVersion = temp.getProducts().get(i).getVersion();
                             ImageCache param = new ImageCache(temp.getProducts().get(i).getImageUrl(), temp.getProducts().get(i).getId(), context);
                             allMedia.add(param);
                             for (int d = 0; d < temp.getProducts().get(i).getProductImages().size(); d++) {
@@ -307,11 +323,16 @@ public class Sync {
                         }
 
                         for (int i = 0; i < temp.getCategories().size(); i++) {
+                            if (DataVersion.CategoryVersion < temp.getCategories().get(i).getVersion())
+                                DataVersion.CategoryVersion = temp.getCategories().get(i).getVersion();
                             ImageCache param = new ImageCache(temp.getCategories().get(i).getImageUrl(), temp.getCategories().get(i).getId(), context);
                             allMedia.add(param);
                         }
 
                         for (int j = 0; j < temp.getCollections().size(); j++) {
+
+                            if (DataVersion.CollectionVersion < temp.getCollections().get(j).getVersion())
+                                DataVersion.CollectionVersion = temp.getCollections().get(j).getVersion();
                             ImageCache param = new ImageCache(temp.getCollections().get(j).getImageUrl(), temp.getCollections().get(j).getId(), context);
                             allMedia.add(param);
                         }
@@ -371,11 +392,15 @@ public class Sync {
                         }
 
                         for (int i = 0; i < temp.getCategories().size(); i++) {
+                            if (DataVersion.CategoryVersion < temp.getCategories().get(i).getVersion())
+                                DataVersion.CategoryVersion = temp.getCategories().get(i).getVersion();
                             ImageCache param = new ImageCache(temp.getCategories().get(i).getImageUrl(), temp.getCategories().get(i).getId(), context);
                             allMedia.add(param);
                         }
 
                         for (int i = 0; i < temp.getProducts().size(); i++) {
+                            if (DataVersion.ProductVersion < temp.getProducts().get(i).getVersion())
+                                DataVersion.ProductVersion = temp.getProducts().get(i).getVersion();
                             ImageCache param = new ImageCache(temp.getProducts().get(i).getImageUrl(), temp.getProducts().get(i).getId(), context);
                             allMedia.add(param);
                             for (int d = 0; d < temp.getProducts().get(i).getProductImages().size(); d++) {
@@ -395,7 +420,6 @@ public class Sync {
                         LoadAsyncData(allMedia, context);
                         GenericData.imagesChached = true;
                         updateInitialmodel(temp, context);
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -412,7 +436,8 @@ public class Sync {
     }
 
     public static void updateInitialmodel(InitialModel temp, Context context) {
-
+        //collections Update
+        ArrayList<CollectionModel> newcollections = new ArrayList<CollectionModel>();
         for (CollectionModel newcollection : temp.getCollections()) {
             boolean matched = false;
             for (int i = 0; i < DB.getInitialModel().getCollections().size(); i++) {
@@ -426,9 +451,15 @@ public class Sync {
                 }
             }
             if (!matched)
-                DB.getInitialModel().getCollections().add(newcollection);
+                newcollections.add(newcollection);
+        }
+        for (CollectionModel collection : newcollections) {
+            DB.getInitialModel().getCollections().add(collection);
         }
 
+
+        //products update
+        ArrayList<Products> newProducts = new ArrayList<Products>();
         for (Products newproduct : temp.getProducts()) {
             boolean matched = false;
             for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
@@ -442,9 +473,15 @@ public class Sync {
                 }
             }
             if (!matched)
-                DB.getInitialModel().getProducts().add(newproduct);
+                newProducts.add(newproduct);
+        }
+        for (Products newproduct : newProducts) {
+            DB.getInitialModel().getProducts().add(newproduct);
         }
 
+
+        //Sections Update
+        ArrayList<Sections> newSections = new ArrayList<Sections>();
         for (Sections newSection : temp.getSections()) {
             boolean matched = false;
             for (int i = 0; i < DB.getInitialModel().getSections().size(); i++) {
@@ -458,9 +495,15 @@ public class Sync {
                 }
             }
             if (!matched)
-                DB.getInitialModel().getSections().add(newSection);
+                newSections.add(newSection);
+        }
+        for (Sections newSection : newSections) {
+            DB.getInitialModel().getSections().add(newSection);
         }
 
+
+        //Sections Update
+        ArrayList<Categories> newCategories = new ArrayList<Categories>();
         for (Categories newCategory : temp.getCategories()) {
             boolean matched = false;
             for (int i = 0; i < DB.getInitialModel().getCategories().size(); i++) {
@@ -473,7 +516,11 @@ public class Sync {
                     break;
                 }
             }
-            if (!matched) DB.getInitialModel().getCategories().add(newCategory);
+            if (!matched)
+                newCategories.add(newCategory);
+        }
+        for (Categories newCatagory : newCategories) {
+            DB.getInitialModel().getCategories().add(newCatagory);
         }
         db = new DbHelper(context);
         db.saveinitialmodel();

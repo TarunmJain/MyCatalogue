@@ -43,7 +43,12 @@ import android.widget.Toast;
 import com.android.volley.NoConnectionError;
 import com.android.volley.VolleyError;
 import com.centura_technologies.mycatalogue.AboutUs.Controller.AboutUs;
+import com.centura_technologies.mycatalogue.Catalogue.Controller.Collection;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.Login.Controller.Login;
 import com.centura_technologies.mycatalogue.Order.Controller.OrdersList;
 import com.centura_technologies.mycatalogue.R;
@@ -100,6 +105,7 @@ public class GenericData {
     static final BitmapFactory.Options options = new BitmapFactory.Options();
     static ProgressDialog pDialog;
     static boolean loggingout=false;
+    static int max;
 
     public static void ShowdownloadingDialog(Context context, Boolean flag) {
         context = context.getApplicationContext();
@@ -576,4 +582,48 @@ public class GenericData {
             }
         });
     }
+
+   /* public static int SectionVersion(){
+        int secvermax=0;
+        ArrayList<Sections> a = DB.getInitialModel().getSections();
+        for(int i=0;i<DB.getInitialModel().getSections().size();i++){
+            if(a.get(i).getVersion()>secvermax){
+                secvermax=a.get(i).getVersion();
+            }
+        }
+        return secvermax;
+    }
+
+    public static int CategoryVersion(){
+        int catvermax=0;
+        ArrayList<Categories> b = DB.getInitialModel().getCategories();
+        for(int i=0;i<DB.getInitialModel().getCategories().size();i++){
+            if(b.get(i).getVersion()>catvermax){
+                catvermax=b.get(i).getVersion();
+            }
+        }
+        return catvermax;
+    }
+
+    public static int ProductsVersion(){
+        int prodvermax=0;
+        ArrayList<Products> c = DB.getInitialModel().getProducts();
+        for(int i=0;i<DB.getInitialModel().getProducts().size();i++){
+            if(c.get(i).getVersion()>prodvermax){
+                prodvermax=c.get(i).getVersion();
+            }
+        }
+        return prodvermax;
+    }
+
+    public static int CollectionsVersion(){
+        int collvermax=0;
+        ArrayList<CollectionModel> d = DB.getInitialModel().getCollections();
+        for(int i=0;i<DB.getInitialModel().getCollections().size();i++){
+            if(d.get(i).getVersion()>collvermax){
+                collvermax=d.get(i).getVersion();
+            }
+        }
+        return collvermax;
+    }*/
 }

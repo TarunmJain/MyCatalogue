@@ -10,12 +10,15 @@ public class Sections {
     private String ImageUrl;
     private String Id;
     private String Priority;
+    private int Version;
     public boolean Selected;
+
 
     public Sections(){
         Title="";
         ImageUrl="";
         Id="";
+        Version=0;
         Selected=false;
     }
 
@@ -49,6 +52,14 @@ public class Sections {
 
     public void setPriority(String priority) {
         Priority = priority;
+    }
+
+    public int getVersion() {
+        return Version;
+    }
+
+    public void setVersion(int version) {
+        Version = version;
     }
 
     public boolean isSelected() {
