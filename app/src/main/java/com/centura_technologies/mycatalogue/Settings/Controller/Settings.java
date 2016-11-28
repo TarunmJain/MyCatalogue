@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -20,27 +23,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.centura_technologies.mycatalogue.Login.Controller.Login;
 import com.centura_technologies.mycatalogue.R;
-import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
+import com.centura_technologies.mycatalogue.Support.ConfigData;
 import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
+import com.centura_technologies.mycatalogue.test.StorageUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Centura User1 on 23-09-2016.
  */
 public class Settings extends AppCompatActivity {
     Toolbar toolbar;
-    RelativeLayout syncall,syncsections,taxpane;
-    LinearLayout sync,vat;
+    RelativeLayout syncall,syncsections,taxpane,filestorage,foldername;
+    LinearLayout sync,vat,filemanager;
     public static ImageView allicon,sectionicon;
-    CardView cardview_vat,cardview_sync;
+    CardView cardview_vat,cardview_sync,cardview_folder;
     RotateAnimation rotate;
-    TextView taxval;
+    TextView taxval,storagepath,name;
     Button set,cancel;
-    EditText enterval;
+    EditText enterval,setfoldername;
+    RecyclerView StorageOptions;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,13 +59,21 @@ public class Settings extends AppCompatActivity {
         syncall=(RelativeLayout)findViewById(R.id.syncall);
         syncsections=(RelativeLayout)findViewById(R.id.syncsections);
         taxpane=(RelativeLayout)findViewById(R.id.taxpane);
+        filestorage=(RelativeLayout)findViewById(R.id.filestorage);
+        foldername=(RelativeLayout)findViewById(R.id.foldername);
+        filemanager=(LinearLayout)findViewById(R.id.filemanager);
         sync=(LinearLayout)findViewById(R.id.sync);
         vat=(LinearLayout)findViewById(R.id.vat);
         cardview_vat=(CardView)findViewById(R.id.cardview_vat);
         cardview_sync=(CardView)findViewById(R.id.cardview_sync);
+        cardview_folder=(CardView)findViewById(R.id.cardview_folder);
         allicon=(ImageView)findViewById(R.id.allicon);
         sectionicon=(ImageView)findViewById(R.id.sectionicon);
         taxval=(TextView)findViewById(R.id.taxval);
+        name=(TextView)findViewById(R.id.name);
+        name.setText("MyCatalogueData");
+
+
         OnClicks();
         rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(2000);
@@ -91,6 +105,8 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 cardview_sync.setVisibility(View.VISIBLE);
                 cardview_vat.setVisibility(View.GONE);
+                cardview_folder.setVisibility(View.GONE);
+
             }
         });
 
@@ -99,6 +115,74 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 cardview_vat.setVisibility(View.VISIBLE);
                 cardview_sync.setVisibility(View.GONE);
+                cardview_folder.setVisibility(View.GONE);
+
+            }
+        });
+        filemanager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardview_folder.setVisibility(View.VISIBLE);
+                cardview_vat.setVisibility(View.GONE);
+                cardview_sync.setVisibility(View.GONE);
+            }
+        });
+
+        filestorage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog storagedialog=new Dialog(Settings.this);
+                storagedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                storagedialog.setContentView(R.layout.dialog_filestorage);
+                StorageOptions = (RecyclerView)storagedialog.findViewById(R.id.storegeOptions);
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                List<StorageUtils.StorageInfo> lists = StorageUtils.getStorageList();
+                ConfigData.StorageList = new ArrayList<>();
+                for (int x = 0; x < lists.size(); x++)
+                    ConfigData.StorageList.add(lists.get(x));
+                StorageOptions.setLayoutManager(new LinearLayoutManager(Settings.this));
+                StorageOptions.setAdapter(new StorageAdapter(Settings.this));
+                set=(Button)storagedialog.findViewById(R.id.filestorageset);
+                cancel=(Button)storagedialog.findViewById(R.id.filestoragecancel);
+                storagedialog.show();
+                set.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        storagedialog.cancel();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        storagedialog.cancel();
+                    }
+                });
+            }
+        });
+
+        foldername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog namedialog=new Dialog(Settings.this);
+                namedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                namedialog.setContentView(R.layout.dialog_foldername);
+                setfoldername=(EditText)namedialog.findViewById(R.id.setfoldername);
+                set=(Button)namedialog.findViewById(R.id.folderset);
+                cancel=(Button)namedialog.findViewById(R.id.foldercancel);
+                namedialog.show();
+                set.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        name.setText(setfoldername.getText().toString());
+                        namedialog.cancel();
+                    }
+                });
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        namedialog.cancel();
+                    }
+                });
             }
         });
 

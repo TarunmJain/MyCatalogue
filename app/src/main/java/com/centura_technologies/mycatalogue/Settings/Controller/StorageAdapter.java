@@ -1,4 +1,4 @@
-package com.centura_technologies.mycatalogue.configuration;
+package com.centura_technologies.mycatalogue.Settings.Controller;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,23 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.centura_technologies.mycatalogue.Catalogue.Model.CustomerModel;
 import com.centura_technologies.mycatalogue.R;
-import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.ConfigData;
-import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
+import com.centura_technologies.mycatalogue.configuration.FolderInfo;
 
 /**
  * Created by Centura User1 on 25-08-2016.
  */
 public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHolder> {
     Context mContext;
+    TextView storagepath;
+    Activity a;
 
     public StorageAdapter(final Context context) {
         this.mContext = context;
+        a=(Activity)context;
+        storagepath=(TextView)a.findViewById(R.id.storagepath);
     }
 
     @Override
@@ -38,10 +39,10 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
     @Override
     public void onBindViewHolder(final StorageAdapter.ViewHolder holder, final int position) {
         holder.text.setText(ConfigData.StorageList.get(position).getDisplayName());
-        holder.text.setTextColor(mContext.getResources().getColor(R.color.white90));
+        holder.text.setTextColor(mContext.getResources().getColor(R.color.black));
         holder.radio.setImageResource(R.drawable.roundedhallow);
         if (ConfigData.selectedStoregePosition == position) {
-            holder.text.setTextColor(mContext.getResources().getColor(R.color.white));
+            holder.text.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.radio.setImageResource(R.drawable.roundedsolid);
         }
         holder.layout.setOnClickListener(new View.OnClickListener() {
@@ -49,18 +50,21 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
             public void onClick(View v) {
                 ConfigData.selectedStoregePosition = position;
 
-                if (ConfigData.StorageList.get(position).getDisplayName().contains("Internal"))
+                if (ConfigData.StorageList.get(position).getDisplayName().contains("Internal")){
                     ConfigData.selectedStoregePath = ConfigData.StorageList.get(position).path;
+                    storagepath.setText("Internal Storage");
+                }
                 else
                 {
                     String[] parts = (ConfigData.StorageList.get(position).path).split("/");
                     String pathtemp = parts[parts.length - 1];
                     ConfigData.selectedStoregePath = "/storage/"+pathtemp;
+                    storagepath.setText(pathtemp);
                 }
-                holder.text.setTextColor(mContext.getResources().getColor(R.color.white));
+                holder.text.setTextColor(mContext.getResources().getColor(R.color.black));
                 holder.radio.setImageResource(R.drawable.roundedsolid);
-                ((Activity) mContext).startActivity(new Intent(mContext, FolderInfo.class));
-                ((Activity) mContext).finish();
+                /*((Activity) mContext).startActivity(new Intent(mContext, FolderInfo.class));
+                ((Activity) mContext).finish();*/
             }
         });
     }

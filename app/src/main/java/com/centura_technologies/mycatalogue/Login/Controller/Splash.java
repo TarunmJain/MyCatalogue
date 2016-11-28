@@ -44,9 +44,9 @@ public class Splash extends Activity {
         sharedPreferences = this.getSharedPreferences(GenericData.MyPref, this.MODE_PRIVATE);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        if (sharedPreferences.getString(GenericData.Configration, "").matches("Completed")) {
+        /*if (sharedPreferences.getString(GenericData.Configration, "").matches("Completed")) {
             ConfigData.selectedStoregePath=sharedPreferences.getString(GenericData.StoragePath,"");
-        }
+        }*/
 
         new Handler().postDelayed(new Runnable() {
             @Override

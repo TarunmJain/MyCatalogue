@@ -112,12 +112,7 @@ public class Login extends Activity {
                                         editor.commit();
                                         StaticData.Options = "Catalogue";
                                         StaticData.DrawerTextDisable = "Catalogue";
-
-                                        if (sharedPreferences.getString(GenericData.Configration, "").matches("Completed")) {
-                                            startActivity(new Intent(Login.this, IntroductionClass.class));
-                                        } else
-                                            startActivity(new Intent(Login.this, StorageConfiguration.class));
-
+                                        startActivity(new Intent(Login.this, IntroductionClass.class));
                                         finish();
                                     } else {
                                         companyid.setError(response.optString("Errors"));

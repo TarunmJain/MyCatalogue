@@ -31,8 +31,7 @@ import java.util.List;
 
 public class IntroductionClass extends Activity {
     TextView productstext, shortlisttext, ordertext, settingstext, logouttext, catalougetext;
-    ViewFlipper myViewFlipper;
-    ArrayList<Integer> myImageList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class IntroductionClass extends Activity {
         settingstext = (TextView) findViewById(R.id.settingstext);
         logouttext = (TextView) findViewById(R.id.logouttext);
         catalougetext = (TextView) findViewById(R.id.collectiontext);
-        myViewFlipper = (ViewFlipper) findViewById(R.id.myflipper);
+       /* myViewFlipper = (ViewFlipper) findViewById(R.id.myflipper);
         myImageList = new ArrayList<>();
         myImageList.add(R.drawable.background_1);
         myImageList.add(R.drawable.background_2);
@@ -61,7 +60,7 @@ public class IntroductionClass extends Activity {
         }
         myViewFlipper.setAutoStart(true);
         myViewFlipper.setFlipInterval(8000);
-        myViewFlipper.startFlipping();
+        myViewFlipper.startFlipping();*/
         OnClicks();
     }
 
