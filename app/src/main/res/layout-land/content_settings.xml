@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="11dp">
+                android:padding="10dp">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="4dp"
                     android:background="@color/viewcolor"/>
 
                 <LinearLayout
@@ -40,20 +40,16 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/sync"
-                        android:padding="5dp"
                         android:layout_gravity="center_vertical"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Sync"
                         android:textColor="@color/black"
-                        android:paddingTop="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="7dp"
-                        android:paddingLeft="5dp"
+                        android:padding="7.5dp"
                         android:textSize="14sp"/>
                 </LinearLayout>
                 <View
@@ -67,20 +63,16 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/tax"
-                        android:padding="5dp"
                         android:layout_gravity="center_vertical"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Vat"
                         android:textColor="@color/black"
-                        android:paddingTop="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="8dp"
-                        android:paddingLeft="5dp"
+                        android:padding="7.5dp"
                         android:textSize="14sp"/>
                 </LinearLayout>
                 <View
@@ -94,20 +86,16 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/folder"
-                        android:padding="5dp"
                         android:layout_gravity="center_vertical"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="File Manager"
                         android:textColor="@color/black"
-                        android:paddingTop="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="8dp"
-                        android:paddingLeft="5dp"
+                        android:padding="7.5dp"
                         android:textSize="14sp"/>
                 </LinearLayout>
                 <View
@@ -163,7 +151,7 @@
 
                         <ImageView
                             android:id="@+id/allicon"
-                            android:layout_width="wrap_content"
+                            android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_autorenew_grey600_24dp"
                             android:layout_centerVertical="true"

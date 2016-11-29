@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ConfigData {
 
-    public static int selectedStoregePosition=-1;
+    public static int selectedStoregePosition=0;
     public static String selectedStoregePath="";
     public static String selectedStoregefolder="";
     public static boolean SYNCNOW = false;

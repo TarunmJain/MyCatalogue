@@ -47,7 +47,7 @@ public class FolderInfo extends AppCompatActivity {
                                                     File folderDir = new File("/" + ConfigData.selectedStoregePath + "/" + folderNameStr);
                                                     if (!folderDir.exists())
                                                         proceed(folderDir);
-                                                    else alert(file);
+                                                    else alert(folderDir);
                                                 } else
                                                     Toast.makeText(FolderInfo.this, "Error Occoured, Directory Name Should be a Single Word !", Toast.LENGTH_SHORT).show();
                                             else

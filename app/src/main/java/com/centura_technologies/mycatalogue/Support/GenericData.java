@@ -58,6 +58,7 @@ import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
+import com.centura_technologies.mycatalogue.configuration.DataVersion;
 
 import org.json.JSONObject;
 
@@ -471,7 +472,10 @@ public class GenericData {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 DeleteAllData(context);
-
+                DataVersion.SectionVersion=0;
+                DataVersion.CategoryVersion=0;
+                DataVersion.ProductVersion=0;
+                DataVersion.CollectionVersion=0;
                 //StaticData.clearcachedata();
                 StaticData.ClearAllStaticData();
                 DB.ClearAllDBData();

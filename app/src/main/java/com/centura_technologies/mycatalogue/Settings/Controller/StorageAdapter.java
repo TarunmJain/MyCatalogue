@@ -20,13 +20,10 @@ import com.centura_technologies.mycatalogue.configuration.FolderInfo;
  */
 public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHolder> {
     Context mContext;
-    TextView storagepath;
     Activity a;
 
     public StorageAdapter(final Context context) {
         this.mContext = context;
-        a=(Activity)context;
-        storagepath=(TextView)a.findViewById(R.id.storagepath);
     }
 
     @Override
@@ -41,30 +38,28 @@ public class StorageAdapter extends RecyclerView.Adapter<StorageAdapter.ViewHold
         holder.text.setText(ConfigData.StorageList.get(position).getDisplayName());
         holder.text.setTextColor(mContext.getResources().getColor(R.color.black));
         holder.radio.setImageResource(R.drawable.roundedhallow);
-        if (ConfigData.selectedStoregePosition == position) {
+        if (Settings.tempselectedStoregePosition == position) {
             holder.text.setTextColor(mContext.getResources().getColor(R.color.black));
             holder.radio.setImageResource(R.drawable.roundedsolid);
-        }
+        } else
+            holder.radio.setImageResource(R.drawable.roundedhallow);
+
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfigData.selectedStoregePosition = position;
-
-                if (ConfigData.StorageList.get(position).getDisplayName().contains("Internal")){
-                    ConfigData.selectedStoregePath = ConfigData.StorageList.get(position).path;
-                    storagepath.setText("Internal Storage");
-                }
-                else
-                {
+                if (ConfigData.StorageList.get(position).getDisplayName().contains("Internal")) {
+                    Settings.tempPath = ConfigData.StorageList.get(position).path;
+                    Settings.StpragePathName = ("Internal Storage");
+                } else {
                     String[] parts = (ConfigData.StorageList.get(position).path).split("/");
                     String pathtemp = parts[parts.length - 1];
-                    ConfigData.selectedStoregePath = "/storage/"+pathtemp;
-                    storagepath.setText(pathtemp);
+                    Settings.tempPath = "/storage/" + pathtemp;
+                    Settings.StpragePathName = (pathtemp);
                 }
+                Settings.tempselectedStoregePosition = position;
                 holder.text.setTextColor(mContext.getResources().getColor(R.color.black));
                 holder.radio.setImageResource(R.drawable.roundedsolid);
-                /*((Activity) mContext).startActivity(new Intent(mContext, FolderInfo.class));
-                ((Activity) mContext).finish();*/
+                notifyDataSetChanged();
             }
         });
     }

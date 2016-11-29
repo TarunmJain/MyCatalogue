@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.DescriptionMenuClass;
+import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import java.io.BufferedInputStream;
@@ -60,7 +61,7 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
             String loaclurl="";
             result.strean = getHttpConnection(result.fileURL);
 
-            File folderDir = new File(ConfigData.selectedStoregePath);
+            File folderDir = new File(ConfigData.selectedStoregePath+"/"+ ConfigData.selectedStoregefolder);
             File file = new File(folderDir, result.fName);
             if (file.exists()) {
                 file.delete();
@@ -100,7 +101,7 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
                         downloadedSize += len1;
                     }
                     DbHelper db = new DbHelper(result.context);
-                    db.saveImage(result.fileURL, ConfigData.selectedStoregePath+"/" + loaclurl);
+                    db.saveImage(result.fileURL, ConfigData.selectedStoregePath+"/"+ConfigData.selectedStoregefolder+"/" + loaclurl);
                     bufferedInputStream.close();
                     fileOutputStream.close();
                     result.strean.close();

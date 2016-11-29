@@ -43,11 +43,15 @@ public class Settings extends AppCompatActivity {
     public static ImageView allicon,sectionicon;
     CardView cardview_vat,cardview_sync,cardview_folder;
     RotateAnimation rotate;
-    TextView taxval,storagepath,name;
+    TextView taxval;
+    public static TextView name;
     Button set,cancel;
+    TextView storagepath;
     EditText enterval,setfoldername;
     RecyclerView StorageOptions;
-
+    public static String tempPath="";
+    public static String StpragePathName="";
+    public static int tempselectedStoregePosition=0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +64,7 @@ public class Settings extends AppCompatActivity {
         syncsections=(RelativeLayout)findViewById(R.id.syncsections);
         taxpane=(RelativeLayout)findViewById(R.id.taxpane);
         filestorage=(RelativeLayout)findViewById(R.id.filestorage);
+        storagepath = (TextView)findViewById(R.id.storagepath);
         foldername=(RelativeLayout)findViewById(R.id.foldername);
         filemanager=(LinearLayout)findViewById(R.id.filemanager);
         sync=(LinearLayout)findViewById(R.id.sync);
@@ -72,7 +77,18 @@ public class Settings extends AppCompatActivity {
         taxval=(TextView)findViewById(R.id.taxval);
         name=(TextView)findViewById(R.id.name);
         name.setText("MyCatalogueData");
+        ConfigData.selectedStoregefolder="MyCatalogueData";
 
+        List<StorageUtils.StorageInfo> lists = StorageUtils.getStorageList();
+        ConfigData.StorageList = new ArrayList<>();
+        for (int x = 0; x < lists.size(); x++)
+            ConfigData.StorageList.add(lists.get(x));
+        if (ConfigData.selectedStoregePath.matches("")) {
+            ConfigData.selectedStoregePath = ConfigData.StorageList.get(0).path;
+            storagepath.setText("Internal Storage");
+            ConfigData.selectedStoregePosition = 0;
+            tempselectedStoregePosition=0;
+        }
 
         OnClicks();
         rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -136,10 +152,7 @@ public class Settings extends AppCompatActivity {
                 storagedialog.setContentView(R.layout.dialog_filestorage);
                 StorageOptions = (RecyclerView)storagedialog.findViewById(R.id.storegeOptions);
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-                List<StorageUtils.StorageInfo> lists = StorageUtils.getStorageList();
-                ConfigData.StorageList = new ArrayList<>();
-                for (int x = 0; x < lists.size(); x++)
-                    ConfigData.StorageList.add(lists.get(x));
+                tempselectedStoregePosition=ConfigData.selectedStoregePosition;
                 StorageOptions.setLayoutManager(new LinearLayoutManager(Settings.this));
                 StorageOptions.setAdapter(new StorageAdapter(Settings.this));
                 set=(Button)storagedialog.findViewById(R.id.filestorageset);
@@ -148,12 +161,16 @@ public class Settings extends AppCompatActivity {
                 set.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ConfigData.selectedStoregePath=tempPath;
+                        ConfigData.selectedStoregePosition=tempselectedStoregePosition;
+                        storagepath.setText(StpragePathName);
                         storagedialog.cancel();
                     }
                 });
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         storagedialog.cancel();
                     }
                 });
@@ -163,7 +180,7 @@ public class Settings extends AppCompatActivity {
         foldername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog namedialog=new Dialog(Settings.this);
+               /* final Dialog namedialog=new Dialog(Settings.this);
                 namedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 namedialog.setContentView(R.layout.dialog_foldername);
                 setfoldername=(EditText)namedialog.findViewById(R.id.setfoldername);
@@ -174,6 +191,7 @@ public class Settings extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         name.setText(setfoldername.getText().toString());
+                        filename=setfoldername.getText().toString();
                         namedialog.cancel();
                     }
                 });
@@ -182,7 +200,7 @@ public class Settings extends AppCompatActivity {
                     public void onClick(View v) {
                         namedialog.cancel();
                     }
-                });
+                });*/
             }
         });
 
