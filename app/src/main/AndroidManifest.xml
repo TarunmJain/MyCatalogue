@@ -97,8 +97,9 @@
         <activity
             android:name=".Catalogue.Controller.PdfView"
             android:screenOrientation="landscape" />
-        <activity android:name=".Catalogue.Controller.VideoActivity"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".Catalogue.Controller.VideoActivity"
+            android:screenOrientation="landscape" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -142,6 +143,10 @@
         <activity
             android:name=".configuration.SyncAll"
             android:label="@string/title_activity_sync_all"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Catalogue.Controller.HTMLPage"
+            android:label="@string/title_activity_htmlpage"
             android:theme="@style/AppTheme"></activity>
     </application>
 

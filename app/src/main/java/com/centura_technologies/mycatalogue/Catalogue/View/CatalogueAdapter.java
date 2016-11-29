@@ -79,7 +79,7 @@ public class CatalogueAdapter extends RecyclerView.Adapter<CatalogueAdapter.View
                         public void onClick(View v) {
                             StaticData.productposition = position;
                             StaticData.SelectedProductsId = products.get(position).getId();
-                            //EventBus.getDefault().postSticky(products);
+                            //EventBus.getNDefault().postSticky(products);
                             ((Activity) mContext).startActivity(new Intent(mContext, CatalogueDetails.class));
                         }
                     });

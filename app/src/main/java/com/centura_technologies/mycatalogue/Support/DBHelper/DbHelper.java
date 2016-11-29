@@ -343,7 +343,6 @@ public class DbHelper extends SQLiteOpenHelper {
 
         Set<String> attrname = new HashSet<String>(AttName);
         for (int productposition = 0; productposition < DB.getInitialModel().getProducts().size(); productposition++) {
-            boolean groupfound = false;
             ArrayList<AttachmentGroup> allgroups = new ArrayList<AttachmentGroup>();
             for (String groupname : attrname) {
                 boolean foundattachment = false;
@@ -357,12 +356,10 @@ public class DbHelper extends SQLiteOpenHelper {
                 }
                 if (foundattachment) {
                     allgroups.add(tempAttachmentTree);
-                    groupfound = true;
                 }
             }
             for (int attachmentposition = 0; attachmentposition < DB.getInitialModel().getProducts().get(productposition).getAttachments().size(); attachmentposition++) {
-                if (DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition).getGroup().length()==0)
-                {
+                if (DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition).getGroup().length() == 0) {
                     AttachmentGroup tempAttachmentTree = new AttachmentGroup();
                     tempAttachmentTree.setGroupTitle("");
                     tempAttachmentTree.setIndividualAttachment(DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition));
@@ -370,8 +367,9 @@ public class DbHelper extends SQLiteOpenHelper {
                     allgroups.add(tempAttachmentTree);
                 }
             }
-            if (groupfound)
-                DB.getInitialModel().getProducts().get(productposition).setAttachementTree(allgroups);
+
+            DB.getInitialModel().getProducts().get(productposition).setAttachementTree(allgroups);
+
         }
 
 

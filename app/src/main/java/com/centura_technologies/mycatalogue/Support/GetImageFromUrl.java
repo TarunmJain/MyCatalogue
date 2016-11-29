@@ -60,7 +60,6 @@ public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
         try {
             String loaclurl="";
             result.strean = getHttpConnection(result.fileURL);
-
             File folderDir = new File(ConfigData.selectedStoregePath+"/"+ ConfigData.selectedStoregefolder);
             File file = new File(folderDir, result.fName);
             if (file.exists()) {

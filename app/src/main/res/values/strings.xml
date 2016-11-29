@@ -23,5 +23,6 @@
     <string name="title_activity_storage_configuration">StorageConfiguration</string>
     <string name="title_activity_folder_info">FolderInfo</string>
     <string name="title_activity_sync_all">SyncAll</string>
+    <string name="title_activity_htmlpage">HTMLPage</string>
 
 </resources>

@@ -75,6 +75,7 @@ public class CollectionProductViewAdapter extends RecyclerView.Adapter<Collectio
         holder.prodpane.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StaticData.ClickedProduct=false;
                 StaticData.productposition = finalPosition;
                 StaticData.SelectedProductsId = model.get(finalPosition).getId();
                 StaticData.Currentproducts=new ArrayList<Products>();

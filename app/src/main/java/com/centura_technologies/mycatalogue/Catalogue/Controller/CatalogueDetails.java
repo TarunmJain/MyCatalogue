@@ -90,7 +90,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static ImageView productImage;
     static VideoView productDetailvedio;
     RelativeLayout toppane;
-    static WebView productDetailwebview;
     static LinearLayout imagelayout, vediolayout, weblayout, pdflayout, panoramalayout, infolayout;
     private int screenhight;
     private RelativeLayout.LayoutParams paramsNotFullscreen;
@@ -135,7 +134,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         infolayout = (LinearLayout) findViewById(R.id.infolayout);
         productImage = (ImageView) findViewById(R.id.productDetailImageview);
         productDetailvedio = (VideoView) findViewById(R.id.productDetailvedio);
-        productDetailwebview = (WebView) findViewById(R.id.productDetailwebview);
         menulyaout.setLayoutManager(new LinearLayoutManager(CatalogueDetails.this));
         UiManuplation();
 
@@ -493,14 +491,14 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         url = "file:///" +  url;
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
-        weblayout.setVisibility(View.VISIBLE);
+        weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.VISIBLE);
         panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.GONE);
-        productDetailwebview.getSettings().setJavaScriptEnabled(true);
-        productDetailwebview.getSettings().setDomStorageEnabled(true);
-        productDetailwebview.addJavascriptInterface(new WebAppInterface(context), "Android");
-        productDetailwebview.loadUrl(url);
+        Intent intent=new Intent(context,HTMLPage.class);
+        intent.putExtra("URL",url);
+        ((Activity)context).startActivity(intent);
         productDetailvedio.stopPlayback();
     }
 
@@ -585,25 +583,5 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     protected void onResume() {
         super.onResume();
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-    }
-}
-
-class WebAppInterface {
-
-    Context mContext;
-
-    /**
-     * Instantiate the interface and set the context
-     */
-    WebAppInterface(Context c) {
-        mContext = c;
-    }
-
-    /**
-     * Show a toast from the web page
-     */
-    @JavascriptInterface
-    public void nextScreen(String pro_cat_id) {
-        Toast.makeText(mContext,pro_cat_id,Toast.LENGTH_LONG).show();
     }
 }
