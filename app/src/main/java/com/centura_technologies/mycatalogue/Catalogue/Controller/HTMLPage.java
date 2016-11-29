@@ -88,7 +88,7 @@ class WebAppInterface {
     public void nextScreen(String pro_cat_id) {
         ArrayList<Products> model= new ArrayList<Products>();
         for (int i = 0; i < DB.getInitialModel().getProducts().size(); i++) {
-            if (DB.getInitialModel().getProducts().get(i).getSectionId().matches(pro_cat_id)) {
+            if (DB.getInitialModel().getProducts().get(i).getId().matches(pro_cat_id)) {
                 model.add(DB.getInitialModel().getProducts().get(i));
                 break;
             }

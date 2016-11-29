@@ -83,6 +83,7 @@ public class Settings extends AppCompatActivity {
         ConfigData.StorageList = new ArrayList<>();
         for (int x = 0; x < lists.size(); x++)
             ConfigData.StorageList.add(lists.get(x));
+        storagepath.setText(StpragePathName);
         if (ConfigData.selectedStoregePath.matches("")) {
             ConfigData.selectedStoregePath = ConfigData.StorageList.get(0).path;
             storagepath.setText("Internal Storage");

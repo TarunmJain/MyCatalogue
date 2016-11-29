@@ -495,7 +495,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         pdflayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.VISIBLE);
         panoramalayout.setVisibility(View.GONE);
-        infolayout.setVisibility(View.GONE);
         Intent intent=new Intent(context,HTMLPage.class);
         intent.putExtra("URL",url);
         ((Activity)context).startActivity(intent);
@@ -504,11 +503,11 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
 
     public static void LoadVedio(Context context, String url) {
         imagelayout.setVisibility(View.GONE);
-        vediolayout.setVisibility(View.VISIBLE);
+        vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.GONE);
         panoramalayout.setVisibility(View.GONE);
-        infolayout.setVisibility(View.GONE);
+        infolayout.setVisibility(View.VISIBLE);
         Intent i = new Intent(context, VideoActivity.class);
         i.putExtra("url", url);
         ((Activity) context).startActivity(i);
