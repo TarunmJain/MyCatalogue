@@ -94,7 +94,6 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     private int screenhight;
     private RelativeLayout.LayoutParams paramsNotFullscreen;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
