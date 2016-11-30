@@ -66,7 +66,25 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
             holder.icon.setImageResource(R.drawable.mr_ic_play_light);
         } else {
             holder.text.setText(data.get(position - 1).getIndividualAttachment().AttachmentTitle);
-            holder.icon.setImageResource(R.drawable.thumb_image);
+            if (data.get(position - 1).getIndividualAttachment().MediaType == AttchmentClass.TYPE_IMAGE)
+                holder.icon.setImageResource(R.drawable.image);
+
+            if (data.get(position - 1).getIndividualAttachment().MediaType == AttchmentClass.TYPE_Panorama)
+                holder.icon.setImageResource(R.drawable.panorama);
+
+            if (data.get(position - 1).getIndividualAttachment().MediaType == AttchmentClass.TYPE_PDF)
+                holder.icon.setImageResource(R.drawable.pdficon);
+
+            if (data.get(position - 1).getIndividualAttachment().MediaType == AttchmentClass.TYPE_PPT)
+                holder.icon.setImageResource(R.drawable.ppticon);
+
+            if (data.get(position - 1).getIndividualAttachment().MediaType == AttchmentClass.TYPE_VEDIO)
+                holder.icon.setImageResource(R.drawable.videoicon);
+
+            if (data.get(position - 1).getIndividualAttachment().MediaType == AttchmentClass.TYPE_WEB)
+                holder.icon.setImageResource(R.drawable.html);
+
+            //holder.icon.setImageResource(R.drawable.thumb_image);
         }
         final int finalPosition = position - 1;
         if (GroupView == position) {

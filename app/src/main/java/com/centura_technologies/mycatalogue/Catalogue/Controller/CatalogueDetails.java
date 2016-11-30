@@ -335,6 +335,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         productdetaillist.getLayoutParams().height = viewHeight;
         if(productModel.getAttributes().size()!=0){
             specpane.setVisibility(View.VISIBLE);
+            productdetaillist.setVisibility(View.VISIBLE);
             productdetaillist.setAdapter(new DescriptionAdapter(context, productModel.getAttributes()));
         }else {
             specpane.setVisibility(View.GONE);
