@@ -101,6 +101,9 @@ public class Login extends Activity {
                                     if (GenericData.sucess(response, Login.this)) {
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString(GenericData.Sp_Username, username.getText().toString());
+                                        editor.putString(GenericData.Sp_StoragePath,"");
+                                        editor.putString(GenericData.Sp_StorageFolder,"");
+                                        editor.putString(GenericData.Sp_StorageLoaction,"");
                                         editor.putString(GenericData.Sp_Password, password.getText().toString());
                                         editor.putString(GenericData.Sp_StoreCode, companyid.getText().toString());
                                         StaticData.CurrentSalesMan.Id = username.getText().toString();

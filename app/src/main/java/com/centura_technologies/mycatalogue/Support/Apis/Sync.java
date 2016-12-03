@@ -131,6 +131,7 @@ public class Sync {
                         }
                         GenericData.imagesChached = true;
                         updateInitialmodel(temp,context);
+
                         LoadAsyncData(allMedia, context);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -151,10 +152,11 @@ public class Sync {
     static int syncSize = 0;
 
     private static void LoadAsyncData(final ArrayList<ImageCache> allMedia, Context context) {
-        if (context != null)
-            GenericData.ShowDialog(context, "Loading Media", true);
         syncposition = -1;
         syncSize = allMedia.size();
+        if (context != null && syncSize>0)
+            GenericData.ShowDialog(context, "Loading Media", true);
+
         final GetImageFromUrl getImageFromUrl = new GetImageFromUrl();
         loadnext(allMedia, getImageFromUrl, context);
     }
@@ -163,14 +165,13 @@ public class Sync {
         if (getImageFromUrl.getStatus() != AsyncTask.Status.RUNNING) {
             if (syncSize - 1 > syncposition) {
                 syncposition++;
-                if (context != null)
+                if (context != null && syncSize>0)
                     GenericData.SetDialogMessage("Loading " + syncposition + " out of " + syncSize);
                 getImageFromUrl = new GetImageFromUrl();
                 getImageFromUrl.execute(allMedia.get(syncposition));
             } else {
                 if (context != null)
                     GenericData.ShowDialog(context, "Loading Media", false);
-                Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
                 if (ConfigData.SYNCNOW) {
                     SyncAll.done();
                 } else
@@ -524,8 +525,21 @@ public class Sync {
         }
         db = new DbHelper(context);
         db.saveinitialmodel();
+
+        sharedPreferences = context.getSharedPreferences(GenericData.MyPref, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(GenericData.Sp_StoragePath,ConfigData.selectedStoregePath);
+        editor.putString(GenericData.Sp_StorageLoaction,ConfigData.selectedStoregelocation);
+        editor.putString(GenericData.Sp_StorageFolder,ConfigData.selectedStoregefolder);
+        editor.putString(GenericData.Sp_CategoryVersion,DataVersion.CategoryVersion+"");
+        editor.putString(GenericData.Sp_CollectionVersion,DataVersion.CollectionVersion+"");
+        editor.putString(GenericData.Sp_ProductVersion,DataVersion.ProductVersion+"");
+        editor.putString(GenericData.Sp_SectionVersion,DataVersion.SectionVersion+"");
+        editor.commit();
+
         db.loadinitialmodel();
-        Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+
+
     }
 
     public static void BillingProducts() {

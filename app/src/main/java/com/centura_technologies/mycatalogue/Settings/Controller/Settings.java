@@ -2,6 +2,7 @@ package com.centura_technologies.mycatalogue.Settings.Controller;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.ConfigData;
+import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
 import com.centura_technologies.mycatalogue.test.StorageUtils;
 
@@ -52,6 +54,7 @@ public class Settings extends AppCompatActivity {
     public static String tempPath="";
     public static String StpragePathName="";
     public static int tempselectedStoregePosition=0;
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,26 +79,36 @@ public class Settings extends AppCompatActivity {
         sectionicon=(ImageView)findViewById(R.id.sectionicon);
         taxval=(TextView)findViewById(R.id.taxval);
         name=(TextView)findViewById(R.id.name);
-        name.setText("MyCatalogueData");
         ConfigData.selectedStoregefolder="MyCatalogueData";
-
+        sharedPreferences= getSharedPreferences(GenericData.MyPref, this.MODE_PRIVATE);
         List<StorageUtils.StorageInfo> lists = StorageUtils.getStorageList();
         ConfigData.StorageList = new ArrayList<>();
         for (int x = 0; x < lists.size(); x++)
             ConfigData.StorageList.add(lists.get(x));
         storagepath.setText(StpragePathName);
-        if (ConfigData.selectedStoregePath.matches("")) {
+        if (sharedPreferences.getString(GenericData.Sp_StoragePath,"").matches("")) {
             ConfigData.selectedStoregePath = ConfigData.StorageList.get(0).path;
-            storagepath.setText("Internal Storage");
+            SharedPreferences.Editor editor= sharedPreferences.edit();
+            editor.putString(GenericData.Sp_StoragePath,ConfigData.selectedStoregePath);
+            editor.putString(GenericData.Sp_StorageLoaction,"Internal Storage");
+            ConfigData.selectedStoregelocation="Internal Storage";
+            editor.putString(GenericData.Sp_StorageFolder,"MyCatalogueData");
+            editor.commit();
             ConfigData.selectedStoregePosition = 0;
             tempselectedStoregePosition=0;
         }
-
+        else {
+            ConfigData.selectedStoregePath = sharedPreferences.getString(GenericData.Sp_StoragePath,"");
+            storagepath.setText(sharedPreferences.getString(GenericData.Sp_StorageLoaction,""));
+            ConfigData.selectedStoregelocation=sharedPreferences.getString(GenericData.Sp_StorageLoaction,"");
+            ConfigData.selectedStoregefolder=sharedPreferences.getString(GenericData.Sp_StorageFolder,"");
+        }
+        storagepath.setText(ConfigData.selectedStoregelocation);
+        name.setText("MyCatalogueData");
         OnClicks();
         rotate = new RotateAnimation(0, 180, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setDuration(2000);
         rotate.setInterpolator(new LinearInterpolator());
-
     }
 
     private void OnClicks() {
@@ -214,11 +227,11 @@ public class Settings extends AppCompatActivity {
                 enterval=(EditText)dialog.findViewById(R.id.enterval);
                 set=(Button)dialog.findViewById(R.id.set);
                 cancel=(Button)dialog.findViewById(R.id.cancel);
-                dialog.show();
                 set.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         taxval.setText(enterval.getText().toString());
+                        dialog.show();
                         dialog.cancel();
                     }
                 });

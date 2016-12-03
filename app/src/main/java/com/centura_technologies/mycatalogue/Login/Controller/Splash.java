@@ -19,6 +19,7 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
+import com.centura_technologies.mycatalogue.configuration.DataVersion;
 import com.centura_technologies.mycatalogue.configuration.StorageConfiguration;
 
 /**
@@ -42,8 +43,15 @@ public class Splash extends Activity {
         db.loadinitialmodel();
         ApiData.renderCustomers();
         sharedPreferences = this.getSharedPreferences(GenericData.MyPref, this.MODE_PRIVATE);
+        ConfigData.selectedStoregePath=sharedPreferences.getString(GenericData.Sp_StoragePath,"");
+        ConfigData.selectedStoregelocation=sharedPreferences.getString(GenericData.Sp_StorageLoaction,"");
+        ConfigData.selectedStoregefolder=sharedPreferences.getString(GenericData.Sp_StorageFolder,"");
+        DataVersion.SectionVersion=Integer.parseInt(sharedPreferences.getString(GenericData.Sp_SectionVersion,"0"));
+        String asd=sharedPreferences.getString(GenericData.Sp_ProductVersion,"0");
+        DataVersion.ProductVersion=Integer.parseInt(sharedPreferences.getString(GenericData.Sp_ProductVersion,"0"));
+        DataVersion.CategoryVersion=Integer.parseInt(sharedPreferences.getString(GenericData.Sp_CategoryVersion,"0"));
+        DataVersion.SectionVersion=Integer.parseInt(sharedPreferences.getString(GenericData.Sp_SectionVersion,"0"));
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
         /*if (sharedPreferences.getString(GenericData.Configration, "").matches("Completed")) {
             ConfigData.selectedStoregePath=sharedPreferences.getString(GenericData.StoragePath,"");
         }*/

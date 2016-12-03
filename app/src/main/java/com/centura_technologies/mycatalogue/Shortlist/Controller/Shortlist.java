@@ -255,8 +255,8 @@ public class Shortlist extends AppCompatActivity {
                     billingProducts.setVariants(DB.getInitialModel().getProducts().get(j).getVariants());
                     for (ShortlistProductModel ShorlistedProduct: DB.getShortlistproductmodel()) {
                      if(ShorlistedProduct.getId().matches(DB.getInitialModel().getProducts().get(j).getId())){
-                         billingProducts.setAmount(DB.getInitialModel().getProducts().get(j).getSellingPrice());
-                         billingProducts.setQuantity(1);
+                         billingProducts.setAmount(DB.getInitialModel().getProducts().get(j).getSellingPrice()*ShorlistedProduct.getQuantity());
+                         billingProducts.setQuantity(ShorlistedProduct.getQuantity());
                          break;
                      }
                     }

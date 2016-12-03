@@ -86,6 +86,13 @@ public class GenericData {
     public static final String Sp_Username = "Username";
     public static final String Sp_Password = "Password";
     public static final String Sp_DeviceId = "DeviceId";
+    public static final String Sp_StoragePath = "Sp_StoragePath";
+    public static final String Sp_StorageLoaction="Sp_StorageLoaction";
+    public static final String Sp_SectionVersion="Sp_SectionVersion";
+    public static final String Sp_CategoryVersion="Sp_CategoryVersion";
+    public static final String Sp_ProductVersion="Sp_ProductVersion";
+    public static final String Sp_CollectionVersion="Sp_CollectionVersion";
+    public static String Sp_StorageFolder="Sp_StorageFolder";
     public static final String Configration = "Configration";
     public static final String StoragePath = "path";
 
