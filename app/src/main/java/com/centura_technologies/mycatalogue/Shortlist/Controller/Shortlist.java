@@ -96,7 +96,7 @@ public class Shortlist extends AppCompatActivity {
         shortlistrecyclerview = (RecyclerView) findViewById(R.id.shortlistrecyclerview);
         shortlistrecyclerview.setLayoutManager(new LinearLayoutManager(Shortlist.this, LinearLayoutManager.VERTICAL, false));
         totalproducts.setText("Total Products - " + DB.getShortlistproductmodel().size() + "");
-        int i=DB.getShortlistproductmodel().size();
+        //int i=DB.getShortlistproductmodel().size();
         OnClicks();
         InitializeAdapter(Shortlist.this);
 
@@ -117,6 +117,7 @@ public class Shortlist extends AppCompatActivity {
                 shortlistlayout.setVisibility(View.VISIBLE);
                 footer.setVisibility(View.VISIBLE);
                 details.setVisibility(View.VISIBLE);
+                customerslist.setVisibility(View.GONE);
                 emptyshortlist.setVisibility(View.GONE);
                 shortlistrecyclerview.setAdapter(new ShortlistAdapter(context));
             } else {
@@ -138,9 +139,11 @@ public class Shortlist extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().matches("")) {
+                    customerslist.setVisibility(View.VISIBLE);
                     StaticData.TempCustomers = new ArrayList<CustomerModel>();
                     customerslist.setAdapter(new CustomersAdapter(Shortlist.this));
                 } else {
+                    customerslist.setVisibility(View.VISIBLE);
                     StaticData.TempCustomers = new ArrayList<CustomerModel>();
                     if (!StaticData.SelectedCustomers.getName().toLowerCase().matches(s.toString().toLowerCase()))
                         for (CustomerModel customer : StaticData.Customers) {
@@ -151,7 +154,6 @@ public class Shortlist extends AppCompatActivity {
                     customerslist.setAdapter(new CustomersAdapter(Shortlist.this));
                 }
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -333,7 +335,7 @@ public class Shortlist extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (item.getItemId() == R.id.slideshow) {
-            if (DB.getShortlistedlist().size() != 0) {
+            if (DB.getShortlistproductmodel().size() != 0) {
                 startActivity(new Intent(Shortlist.this, SlideShow.class));
             } else {
                 Toast.makeText(Shortlist.this, "Please add Products for Shortlist", Toast.LENGTH_SHORT).show();

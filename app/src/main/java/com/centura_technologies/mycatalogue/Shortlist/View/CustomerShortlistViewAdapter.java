@@ -48,17 +48,10 @@ public class CustomerShortlistViewAdapter extends RecyclerView.Adapter<CustomerS
     public void onBindViewHolder(CustomerShortlistViewAdapter.ViewHolder holder, final int position) {
         GenericData.setImage(model.get(position).getImageUrl(), holder.image, mContext);
         holder.text.setText(model.get(position).getTitle());
-        for(int i=0;i<DB.getInitialModel().getSections().size();i++){
-            if(DB.getInitialModel().getSections().get(i).getId().matches(model.get(position).getSectionId())){
-                holder.section.setText(DB.getInitialModel().getSections().get(i).getTitle());
-            }
-        }
-        for(int j=0;j<DB.getInitialModel().getCategories().size();j++){
-            if(DB.getInitialModel().getCategories().get(j).getId().matches(model.get(position).getCategoryId())){
-                holder.category.setText(DB.getInitialModel().getCategories().get(j).getTitle());
-            }
-        }
-        holder.price.setText(model.get(position).getSellingPrice()+"");
+        holder.unit.setText(model.get(position).getWeight()+"");
+        holder.price.setText(model.get(position).getPrice()+"");
+        holder.amount.setText(model.get(position).getAmount()+"");
+        holder.qty.setText(model.get(position).getQuantity()+"");
     }
 
     @Override
@@ -67,15 +60,16 @@ public class CustomerShortlistViewAdapter extends RecyclerView.Adapter<CustomerS
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView text,section,category,price;
+        TextView text,unit,price,amount,qty;
         ImageView image;
         LinearLayout pane;
         public ViewHolder(View itemView) {
             super(itemView);
             text=(TextView)itemView.findViewById(R.id.title);
-            section=(TextView)itemView.findViewById(R.id.section);
-            category=(TextView)itemView.findViewById(R.id.category);
+            unit=(TextView)itemView.findViewById(R.id.unit);
             price=(TextView)itemView.findViewById(R.id.price);
+            amount=(TextView)itemView.findViewById(R.id.amount);
+            qty=(TextView)itemView.findViewById(R.id.qty);
             image=(ImageView)itemView.findViewById(R.id.image);
             pane=(LinearLayout)itemView.findViewById(R.id.pane);
         }

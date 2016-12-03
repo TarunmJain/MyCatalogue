@@ -88,7 +88,7 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
             @Override
             public void onClick(View v) {
                 StaticData.productposition = position;
-                //StaticData.SelectedProductsId=model.get(position).getId();
+                StaticData.SelectedSectionId=model.get(position).getSectionId();
                 ((Activity)mContext).startActivity(new Intent(mContext, CatalogueDetails.class));
             }
         });
@@ -149,7 +149,7 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
                 increment(position);
                 notifyDataSetChanged();
                 //data.get(position).setQuantity(data.get(position).getQuantity() + 1);
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
             }
         });
 

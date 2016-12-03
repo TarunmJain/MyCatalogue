@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
+import com.centura_technologies.mycatalogue.Catalogue.Model.ShortlistProductModel;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.GenericData;
@@ -29,7 +30,7 @@ public class SlideShow extends AppCompatActivity{
     Toolbar toolbar;
     ViewFlipper myViewFlipper;
     float initialXPoint, finalx;
-    ArrayList<Products> model;
+    ArrayList<ShortlistProductModel> model;
     ArrayList<String> images;
     Button play;
     SeekBar seekBar1;
@@ -47,8 +48,8 @@ public class SlideShow extends AppCompatActivity{
         play=(Button)findViewById(R.id.play);
         seekBar1=(SeekBar)findViewById(R.id.seekBar1);
         myViewFlipper = (ViewFlipper) findViewById(R.id.myflipper);
-        model=new ArrayList<Products>();
-        model= DB.getShortlistedlist();
+        model=new ArrayList<ShortlistProductModel>();
+        model= DB.getShortlistproductmodel();
         images=new ArrayList<String>();
         for(int j=0;j<model.size();j++){
             images.add(model.get(j).getImageUrl());
