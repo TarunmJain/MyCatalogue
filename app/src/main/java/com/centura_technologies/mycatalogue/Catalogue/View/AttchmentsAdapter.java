@@ -130,8 +130,7 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
             holder.layview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (position != GroupView) {
-                        GroupView = finalPosition;
+                        GroupView = position;
                         String type = AttchmentClass.getMimeType(data.get(finalPosition).getIndividualAttachment().getAttachmentUrl());
                         if (data.get(finalPosition).getIndividualAttachment().MediaType == AttchmentClass.TYPE_IMAGE)
                             CatalogueDetails.LoadImage(mContext, data.get(finalPosition).getIndividualAttachment().AttachmentUrl);
@@ -152,7 +151,7 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
                             CatalogueDetails.LoadHTML(dbHelper.returnImage(Urls.parentIP + data.get(finalPosition).getIndividualAttachment().AttachmentUrl));
 
                         notifyDataSetChanged();
-                    }
+
                 }
             });
 

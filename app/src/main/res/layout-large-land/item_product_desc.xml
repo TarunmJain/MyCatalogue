@@ -12,11 +12,12 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/title"
                 android:padding="10dp"
+                android:maxLines="1"
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:text="Specification Tittle"
@@ -29,9 +30,9 @@
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/data"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:padding="10dp"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_width="match_parent"
                 android:text="Specification Data"
                 android:layout_height="match_parent" />

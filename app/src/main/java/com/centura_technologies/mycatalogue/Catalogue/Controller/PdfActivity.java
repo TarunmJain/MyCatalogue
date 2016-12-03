@@ -44,7 +44,7 @@ public class PdfActivity extends AppCompatActivity {
             pdfView.fromFile(file).defaultPage(1).swipeVertical(true).onLoad(new OnLoadCompleteListener() {
                 @Override
                 public void loadComplete(int nbPages) {
-                    Toast.makeText(PdfActivity.this, String.valueOf(nbPages), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(PdfActivity.this, String.valueOf(nbPages), Toast.LENGTH_LONG).show();
                 }
             }).load();
         }

@@ -591,13 +591,13 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     }
 
     public static void LoadPanorama(Context context, String url) {
+        productDetailvedio.stopPlayback();
         imagelayout.setVisibility(View.GONE);
         vediolayout.setVisibility(View.GONE);
         weblayout.setVisibility(View.GONE);
         pdflayout.setVisibility(View.GONE);
         panoramalayout.setVisibility(View.GONE);
         infolayout.setVisibility(View.VISIBLE);
-        productDetailvedio.stopPlayback();
         Intent i = new Intent(context, Panorama.class);
         i.putExtra("url", url);
         ((Activity) context).startActivity(i);

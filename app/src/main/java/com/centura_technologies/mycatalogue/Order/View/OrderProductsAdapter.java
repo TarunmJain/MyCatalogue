@@ -47,13 +47,17 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     public static Double total_amount = 0.0;
     int viewHeight;
     int selected_position = 0;
-    Double Quantity=0.0;
-    private int TYPE_NUMBER_FLAG_DECIMAL=0;
+    Double Quantity = 0.0;
+    private int TYPE_NUMBER_FLAG_DECIMAL = 0;
 
     public OrderProductsAdapter(Context context) {
         this.mContext = context;
         a = (Activity) mContext;
         this.data = DB.getBillprodlist();
+        total_amount = 0.0;
+        for (BillingProducts product : data) {
+            total_amount += product.getAmount();
+        }
         grandtotal = (TextView) a.findViewById(R.id.grandtotal);
         grandtotal.setText("Rs " + total_amount + "");
        /* if (Order.shortlistedorders)
@@ -84,7 +88,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             if (data.get(position).getQuantity() > 0) {
                 holder.orderlistlayout.setVisibility(View.VISIBLE);
                 //Order.orderlist_recyclerview.getLayoutParams().height += viewHeight;
-                GenericData.setImage(data.get(position).getImageUrl(),holder.productimage,mContext);
+                GenericData.setImage(data.get(position).getImageUrl(), holder.productimage, mContext);
                 holder.name.setText(data.get(position).getTitle());
                 holder.unit.setText(data.get(position).getWeight() + "");
                 holder.qty.setText(data.get(position).getQuantity() + "");
@@ -103,11 +107,11 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                     holder.name.setSelected(true);
                     holder.name.setSingleLine(true);
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
-                } else{
+                } else {
                     holder.name.setEllipsize(TextUtils.TruncateAt.END);
                     holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
                 }
-                GenericData.setImage(data.get(position).getImageUrl(),holder.productimage,mContext);
+                GenericData.setImage(data.get(position).getImageUrl(), holder.productimage, mContext);
                 holder.name.setText(data.get(position).getTitle());
                 holder.unit.setText(data.get(position).getWeight() + "");
                 holder.qty.setText(data.get(position).getQuantity() + "");
@@ -124,11 +128,11 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
                         holder.name.setSelected(true);
                         holder.name.setSingleLine(true);
                         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.selectedcolor));
-                    } else{
+                    } else {
                         holder.name.setEllipsize(TextUtils.TruncateAt.END);
                         holder.orderlistlayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
                     }
-                    GenericData.setImage(data.get(position).getImageUrl(),holder.productimage,mContext);
+                    GenericData.setImage(data.get(position).getImageUrl(), holder.productimage, mContext);
                     holder.name.setText(data.get(position).getTitle());
                     holder.unit.setText(data.get(position).getWeight() + "");
                     holder.qty.setText(data.get(position).getQuantity() + "");
@@ -337,7 +341,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
             plusincrement = (TextView) v.findViewById(R.id.plusincrement);
             minusincrement = (TextView) v.findViewById(R.id.minusincrement);
             orderlistlayout = (LinearLayout) v.findViewById(R.id.orderlistlayout);
-            productimage=(ImageView)v.findViewById(R.id.productimage);
+            productimage = (ImageView) v.findViewById(R.id.productimage);
         }
     }
 }
