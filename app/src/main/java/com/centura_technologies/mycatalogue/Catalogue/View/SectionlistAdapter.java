@@ -78,7 +78,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
                         Catalogue.productslist();
                         Catalogue.InitializeAdapter(mContext);
                     } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
-                    Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
+                    //Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
                     categoriesView = -1;
                     notifyDataSetChanged();
                 }

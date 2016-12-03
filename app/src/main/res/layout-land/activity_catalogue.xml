@@ -497,7 +497,7 @@
             </LinearLayout>
 
             <!-- left drawer-->
-            <LinearLayout
+           <!-- <LinearLayout
                 android:id="@+id/leftdrawer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -506,7 +506,7 @@
                 android:orientation="vertical">
 
 
-                <!-- filter layout-->
+                &lt;!&ndash; filter layout&ndash;&gt;
                 <LinearLayout
                     android:id="@+id/categorylayout"
                     android:layout_width="match_parent"
@@ -537,7 +537,7 @@
                     </RelativeLayout>
 
                 </LinearLayout>
-            </LinearLayout>
+            </LinearLayout>-->
             <!-- Right drawer-->
             <LinearLayout
                 android:id="@+id/rightdrawer"

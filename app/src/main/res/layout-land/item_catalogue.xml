@@ -12,6 +12,8 @@
         android:layout_height="match_parent"
         android:background="@drawable/transparentsquarebutton"
         android:scaleType="fitXY"
-        android:src="@drawable/noimage" />
+        android:src="@drawable/noimage"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
 

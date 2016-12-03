@@ -108,6 +108,7 @@ public class Shortlist extends AppCompatActivity {
             details.setVisibility(View.VISIBLE);
             emptyshortlist.setVisibility(View.GONE);
             fab.setVisibility(View.VISIBLE);
+            customername.setEnabled(false);
             StaticData.customershortlistedview = false;
             shortlistrecyclerview.setAdapter(new CustomerShortlistViewAdapter(context));
         } else {

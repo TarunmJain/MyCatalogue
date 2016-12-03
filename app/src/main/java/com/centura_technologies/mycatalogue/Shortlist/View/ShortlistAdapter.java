@@ -193,13 +193,13 @@ public class ShortlistAdapter extends RecyclerView.Adapter<ShortlistAdapter.View
 
     @Override
     public int getItemCount() {
-        Collections.sort(model, new Comparator<ShortlistProductModel>() {
+       /* Collections.sort(model, new Comparator<ShortlistProductModel>() {
             public int compare(ShortlistProductModel v1, ShortlistProductModel v2) {
                 if (v1.getTitle() == v2.getTitle())
                     return 0;
                 return v1.getTitle().compareTo(v2.getTitle());
             }
-        });
+        });*/
         return model.size();
     }
 

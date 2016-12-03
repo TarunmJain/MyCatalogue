@@ -99,19 +99,16 @@ public class Catalogue extends AppCompatActivity {
     public static ImageView searchicon;
     RelativeLayout nocategory,quickview;
     static RelativeLayout fabpane,leftlay;
-    static LinearLayout searchlayout, filterlayout, categorylayout, productlayout, filtericon, sortlay,fulllay,recyclerviewlayout;
-    public static LinearLayout leftdrawer, rightdrawer;
+    static LinearLayout searchlayout, filterlayout, productlayout, filtericon, sortlay,fulllay,recyclerviewlayout;
+    public static LinearLayout rightdrawer;
     public static EditText editsearch;
     Spinner spinner;
     TextView apply, clear;
-    static RecyclerView recyclerview, recyclerview1, sectionrecycler, categoryrecycler;
+    static RecyclerView recyclerview, recyclerview1, sectionrecycler;
     static RecyclerView productsrecyclerview;
-    //static CustomRecyclerView productsrecyclerview;
     public static SearchProductsAdapter adapter;
     public static SearchAdapter adapter1;
-    static LinearLayoutManager layoutManager1;
     ArrayList<String> suggestionsData = new ArrayList<String>();
-    //public static ArrayList<Products> products;
     public static ArrayList<CategoryTree> categories;
     Products filterprod;
     ArrayList<Products> categoryproducts = new ArrayList<Products>();
@@ -124,9 +121,7 @@ public class Catalogue extends AppCompatActivity {
     static int SearchPageNumber = 0;
     static String item = "";
     TextView categoryicon;
-    public static TextView nocategorytext;
     public static boolean grid_to_listflag = false;
-    ActionBarDrawerToggle mDrawerToggle;
     static ArrayList<Products> Localshortlist=new ArrayList<Products>();
     static ArrayList<Products> filterattr=new ArrayList<Products>();
     ArrayList<Products> list;
@@ -149,11 +144,9 @@ public class Catalogue extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         leftlay=(RelativeLayout)findViewById(R.id.leftlay);
-        leftdrawer = (LinearLayout) findViewById(R.id.leftdrawer);
         rightdrawer = (LinearLayout) findViewById(R.id.rightdrawer);
         filtericon = (LinearLayout) findViewById(R.id.filtericon);
         sortlay = (LinearLayout) findViewById(R.id.sortlay);
-        nocategorytext = (TextView) findViewById(R.id.nocategorytext);
         categoryicon = (TextView) findViewById(R.id.categoryicon);
         fulllay= (LinearLayout) findViewById(R.id.fulllay);
         listicon = (ImageView) findViewById(R.id.listicon);
@@ -164,7 +157,6 @@ public class Catalogue extends AppCompatActivity {
         nocategory = (RelativeLayout) findViewById(R.id.nocategory);
         searchlayout = (LinearLayout) findViewById(R.id.searchlayout);
         filterlayout = (LinearLayout) findViewById(R.id.filterlayout);
-        categorylayout = (LinearLayout) findViewById(R.id.categorylayout);
         productlayout = (LinearLayout) findViewById(R.id.productlayout);
         recyclerviewlayout=(LinearLayout)findViewById(R.id.recyclerviewlayout);
         fabpane = (RelativeLayout) findViewById(R.id.fabpane);
@@ -177,12 +169,10 @@ public class Catalogue extends AppCompatActivity {
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         recyclerview1 = (RecyclerView) findViewById(R.id.recyclerview1);
         sectionrecycler = (RecyclerView) findViewById(R.id.sectionrecycler);
-        categoryrecycler = (RecyclerView) findViewById(R.id.categoryrecycler);
         productsrecyclerview = (RecyclerView) findViewById(R.id.productsrecyclerview);
         //OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
         //OverScrollDecoratorHelper.setUpOverScroll(productsrecyclerview);
         sectionrecycler.setLayoutManager(new LinearLayoutManager(Catalogue.this));
-        categoryrecycler.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         recyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         recyclerview1.setLayoutManager(new LinearLayoutManager(Catalogue.this));
@@ -213,7 +203,7 @@ public class Catalogue extends AppCompatActivity {
         double diagonalInches = Math.sqrt((widthInches * widthInches) + (heightInches * heightInches));
         if (diagonalInches >= 8 && diagonalInches <= 10) {
             //Device is a 10" tablet
-            productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 5));
+            productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 4));
         }
         else if (diagonalInches >= 5 && diagonalInches <= 8) {
             //Device is a 7" tablet
@@ -243,10 +233,10 @@ public class Catalogue extends AppCompatActivity {
         InitializeAdapter(Catalogue.this);
         InitialzationSectionAdapter(Catalogue.this);
         InitialzationCategoryAdapter(Catalogue.this, null);
-        if (drawer.isDrawerOpen(leftdrawer)) {
+        /*if (drawer.isDrawerOpen(leftdrawer)) {
             InitialzationSectionAdapter(Catalogue.this);
             InitialzationCategoryAdapter(Catalogue.this, null);
-        }
+        }*/
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
     private void SearchLogic() {
@@ -324,7 +314,6 @@ public class Catalogue extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 drawer.openDrawer(rightdrawer);
-                drawer.closeDrawer(leftdrawer);
                 cat_filterlist.setAdapter(new TempFilterAdapter(Catalogue.this, StaticData.filtermodel.getItem()));
                 searchlayout.setVisibility(View.GONE);
             }
@@ -396,7 +385,6 @@ public class Catalogue extends AppCompatActivity {
             public void onClick(View v) {
                 searchlayout.setVisibility(View.GONE);
                 drawer.closeDrawer(rightdrawer);
-                drawer.openDrawer(leftdrawer);
                 InitialzationSectionAdapter(Catalogue.this);
                 //InitialzationCategoryAdapter(Catalogue.this, null);
             }
@@ -593,8 +581,6 @@ public class Catalogue extends AppCompatActivity {
     }
 
     public static void InitialzationCategoryAdapter(Context context, CategoryTree categoryTree) {
-        if (categoryTree != null)
-            categoryrecycler.setAdapter(new CategorylistAdapter(context, categoryTree));
     }
 
     public static void InitialzationSectionAdapter(Context context) {
@@ -672,9 +658,7 @@ public class Catalogue extends AppCompatActivity {
             startActivity(new Intent(Catalogue.this, Shortlist.class));
         }
         if (item.getItemId() == android.R.id.home) {
-            if (drawer.isDrawerOpen(leftdrawer))//On Back Arrow pressed
-                drawer.closeDrawer(leftdrawer);
-            else if (drawer.isDrawerOpen(rightdrawer))
+            if (drawer.isDrawerOpen(rightdrawer))
                 drawer.closeDrawer(rightdrawer);
             else
                 onBackPressed();
