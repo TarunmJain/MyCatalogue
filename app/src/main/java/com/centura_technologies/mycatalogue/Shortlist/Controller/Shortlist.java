@@ -28,6 +28,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Controller.Catalogue;
 import com.centura_technologies.mycatalogue.Catalogue.Model.BreadCrumb;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CustomerModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
+import com.centura_technologies.mycatalogue.Catalogue.Model.ShortlistProductModel;
 import com.centura_technologies.mycatalogue.Order.Controller.Order;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.Order.View.OrderProductsAdapter;
@@ -94,7 +95,8 @@ public class Shortlist extends AppCompatActivity {
         totalproducts = (TextView) findViewById(R.id.totalproducts);
         shortlistrecyclerview = (RecyclerView) findViewById(R.id.shortlistrecyclerview);
         shortlistrecyclerview.setLayoutManager(new LinearLayoutManager(Shortlist.this, LinearLayoutManager.VERTICAL, false));
-        totalproducts.setText("Total Products - " + DB.getShortlistedlist().size() + "");
+        totalproducts.setText("Total Products - " + DB.getShortlistproductmodel().size() + "");
+        int i=DB.getShortlistproductmodel().size();
         OnClicks();
         InitializeAdapter(Shortlist.this);
 
@@ -110,7 +112,12 @@ public class Shortlist extends AppCompatActivity {
             shortlistrecyclerview.setAdapter(new CustomerShortlistViewAdapter(context));
         } else {
             fab.setVisibility(View.GONE);
-            if (DB.getShortlistedlist().size() != 0) {
+            if (DB.getShortlistproductmodel().size() != 0) {
+                shortlistrecyclerview.setVisibility(View.VISIBLE);
+                shortlistlayout.setVisibility(View.VISIBLE);
+                footer.setVisibility(View.VISIBLE);
+                details.setVisibility(View.VISIBLE);
+                emptyshortlist.setVisibility(View.GONE);
                 shortlistrecyclerview.setAdapter(new ShortlistAdapter(context));
             } else {
                 shortlistrecyclerview.setVisibility(View.GONE);
@@ -153,51 +160,52 @@ public class Shortlist extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (save.getText().toString().matches("SHORTLIST NOW")) {
-                    details.setVisibility(View.VISIBLE);
+                if (StaticData.SelectedCustomers == new CustomerModel()) {
+                    customername.setError("Please Select a customer!");
+                } else {
+                    list = new ArrayList<ShortlistModel>();
+                    list = DB.getShortlistModels();
+                    if (DB.getShortlistproductmodel().size() != 0) {
+                        model = new ShortlistModel();
+                        model.setShortlistNumber(UUID.randomUUID().toString());
+                        model.setShortlistedDate(System.currentTimeMillis() + "");
+                        model.setShortlistedDate(df.format(dateobj));
+                        model.setCustomer(StaticData.Customers.get(0));
+                        model.setSalesman(StaticData.CurrentSalesMan);
+                        model.setShortlistedproducts(DB.getShortlistproductmodel());
+                        list.add(model);
+                        DB.setShortlistModels(list);
+                        db = new DbHelper(Shortlist.this);
+                        db.saveShortlisted();
+                        DB.setShortlistproductmodel(new ArrayList<ShortlistProductModel>());
+                        clear.performClick();
+                        DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
+                        Toast.makeText(Shortlist.this, "Successfully Added", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else
+                        Toast.makeText(Shortlist.this, "No Shortlisted Products", Toast.LENGTH_SHORT).show();
+                }
+                /*if (save.getText().toString().matches("SHORTLIST NOW")) {
                     save.setText("SAVE");
                     clear.setText("CANCEL");
                 } else {
-                    if (StaticData.SelectedCustomers == new CustomerModel()) {
-                        customername.setError("Please Select a customer!");
-                    } else {
-                        save.setText("SHORTLIST NOW");
-                        details.setVisibility(View.VISIBLE);
-                        list = new ArrayList<ShortlistModel>();
-                        list = DB.getShortlistModels();
-                        if (DB.getShortlistedlist().size() != 0) {
-                            model = new ShortlistModel();
-                            model.setShortlistNumber(UUID.randomUUID().toString());
-                            model.setShortlistedDate(System.currentTimeMillis() + "");
-                            model.setShortlistedDate(df.format(dateobj));
-                            model.setCustomer(StaticData.Customers.get(0));
-                            model.setSalesman(StaticData.CurrentSalesMan);
-                            model.setShortlistedproducts(DB.getShortlistedlist());
-                            list.add(model);
-                            DB.setShortlistModels(list);
-                            db = new DbHelper(Shortlist.this);
-                            db.saveShortlisted();
-                            DB.shortlistedlist = new ArrayList<Products>();
-                            Toast.makeText(Shortlist.this, "Successfully Added", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else
-                            Toast.makeText(Shortlist.this, "No Shortlisted Products", Toast.LENGTH_SHORT).show();
-                    }
-                }
+
+                }*/
             }
         });
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (clear.getText().toString().matches("CLEAR")) {
-                    DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
-                    DB.getBillprodlist().removeAll(DB.getBillprodlist());
-                    InitializeAdapter(Shortlist.this);
+                DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
+                DB.getBillprodlist().removeAll(DB.getBillprodlist());
+                InitializeAdapter(Shortlist.this);
+                ShortlistAdapter.clearBill();
+               /* if (clear.getText().toString().matches("CLEAR")) {
+
                 } else {
                     clear.setText("CLEAR");
                     save.setText("SAVE");
-                    details.setVisibility(View.VISIBLE);
-                }
+                }*/
             }
         });
 
@@ -243,7 +251,7 @@ public class Shortlist extends AppCompatActivity {
                     billingProducts.setProductImages(DB.getInitialModel().getProducts().get(j).getProductImages());
                     billingProducts.setAttributes(DB.getInitialModel().getProducts().get(j).getAttributes());
                     billingProducts.setVariants(DB.getInitialModel().getProducts().get(j).getVariants());
-                    for (Products ShorlistedProduct: DB.getShortlistedlist()) {
+                    for (ShortlistProductModel ShorlistedProduct: DB.getShortlistproductmodel()) {
                      if(ShorlistedProduct.getId().matches(DB.getInitialModel().getProducts().get(j).getId())){
                          billingProducts.setAmount(DB.getInitialModel().getProducts().get(j).getSellingPrice());
                          billingProducts.setQuantity(1);
@@ -289,7 +297,7 @@ public class Shortlist extends AppCompatActivity {
                     billingProducts.setProductImages(DB.getInitialModel().getProducts().get(j).getProductImages());
                     billingProducts.setAttributes(DB.getInitialModel().getProducts().get(j).getAttributes());
                     billingProducts.setVariants(DB.getInitialModel().getProducts().get(j).getVariants());
-                    for (Products ShorlistedProduct: DB.getShortlistModels().get(StaticData.customershortlistpos).getShortlistedproducts()) {
+                    for (ShortlistProductModel ShorlistedProduct: DB.getShortlistModels().get(StaticData.customershortlistpos).getShortlistedproducts()) {
                         if(ShorlistedProduct.getId().matches(billingProducts.getId())){
                             billingProducts.setAmount(DB.getInitialModel().getProducts().get(j).getSellingPrice());
                             billingProducts.setQuantity(1);

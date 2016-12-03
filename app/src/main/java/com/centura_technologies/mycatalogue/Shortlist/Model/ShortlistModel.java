@@ -2,6 +2,7 @@ package com.centura_technologies.mycatalogue.Shortlist.Model;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.CustomerModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
+import com.centura_technologies.mycatalogue.Catalogue.Model.ShortlistProductModel;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.Order.Model.SalesmanModel;
 
@@ -12,14 +13,14 @@ import java.util.ArrayList;
  */
 public class ShortlistModel {
     public CustomerModel customer ;
-    public ArrayList<Products> shortlistedproducts ;
+    public ArrayList<ShortlistProductModel> shortlistedproducts ;
     public SalesmanModel salesman ;
     public String ShortlistedDate;
     public String ShortlistNumber;
 
     public ShortlistModel(){
         customer = new CustomerModel();
-        shortlistedproducts = new ArrayList<Products>();
+        shortlistedproducts = new ArrayList<ShortlistProductModel>();
         salesman = new SalesmanModel();
         ShortlistedDate="";
         ShortlistNumber="";
@@ -33,11 +34,11 @@ public class ShortlistModel {
         this.customer = customer;
     }
 
-    public ArrayList<Products> getShortlistedproducts() {
+    public ArrayList<ShortlistProductModel> getShortlistedproducts() {
         return shortlistedproducts;
     }
 
-    public void setShortlistedproducts(ArrayList<Products> shortlistedproducts) {
+    public void setShortlistedproducts(ArrayList<ShortlistProductModel> shortlistedproducts) {
         this.shortlistedproducts = shortlistedproducts;
     }
 

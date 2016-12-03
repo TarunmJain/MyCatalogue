@@ -8,21 +8,15 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/toppane"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
                 <ImageView
                     android:id="@+id/openimage"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:scaleType="centerInside"
                     android:src="@drawable/loginscreen" />
                 <RelativeLayout
                     android:layout_below="@+id/openimage"
@@ -174,71 +168,33 @@
                     </LinearLayout>
 
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="26dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/specpane"
-                            android:padding="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:gravity="center"
-                            android:text="Specifications"
-                            android:background="#05000000"
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/productdetaillist"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#05000000" />
-                    </LinearLayout>
                 </LinearLayout>
-
-            </RelativeLayout>
-
-
-
-            <RelativeLayout
-                android:visibility="gone"
-                android:id="@+id/paging"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_below="@+id/scrollview"
-                android:padding="10dp"
-                android:paddingBottom="20dp">
-
-                <RelativeLayout
-                    android:visibility="gone"
-                    android:id="@+id/mediapane"
+                <LinearLayout
+                    android:layout_below="@+id/scrollview"
+                    android:orientation="vertical"
+                    android:padding="26dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-                    <ImageView
-                        android:id="@+id/media"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginRight="0dp"
-                        android:padding="5dp"
-                        android:src="@drawable/ic_book_multiple_grey600_24dp" />
+                    android:layout_height="wrap_content">
+
                     <TextView
-                        android:id="@+id/mediatext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@+id/media"
-                        android:gravity="center"
+                        android:id="@+id/specpane"
                         android:padding="10dp"
-                        android:text="Media"
-                        android:textSize="16sp"
-                        android:textColor="#000000" />
-                </RelativeLayout>
-            </RelativeLayout>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:text="Specifications"
+                        android:background="#05000000"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/productdetaillist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#05000000" />
+                </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

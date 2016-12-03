@@ -83,6 +83,7 @@ import java.util.List;
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static android.view.View.X;
+import static android.view.View.getDefaultSize;
 import static com.centura_technologies.mycatalogue.Catalogue.Controller.CatalogueDetails.context;
 import static com.centura_technologies.mycatalogue.Support.DBHelper.StaticData.position;
 import static java.security.AccessController.getContext;
@@ -127,6 +128,7 @@ public class Catalogue extends AppCompatActivity {
     public static boolean grid_to_listflag = false;
     ActionBarDrawerToggle mDrawerToggle;
     static ArrayList<Products> Localshortlist=new ArrayList<Products>();
+    static ArrayList<Products> filterattr=new ArrayList<Products>();
     ArrayList<Products> list;
     boolean leftdraweropen=false;
     /**
@@ -184,7 +186,40 @@ public class Catalogue extends AppCompatActivity {
         cat_filterlist.setLayoutManager(new LinearLayoutManager(Catalogue.this));
         recyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
         recyclerview1.setLayoutManager(new LinearLayoutManager(Catalogue.this));
-        productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int widthPixels = metrics.widthPixels;
+        int heightPixels = metrics.heightPixels;
+        /*float scaleFactor = metrics.density;
+        float widthDp = widthPixels / scaleFactor;
+        float heightDp = heightPixels / scaleFactor;
+        float smallestWidth = Math.min(widthDp, heightDp);
+        if (smallestWidth > 720) {
+            //Device is a 10" tablet
+            productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 5));
+
+        }
+        else if (smallestWidth > 600) {
+            //Device is a 7" tablet
+            productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
+
+        }*/
+
+        float widthDpi = metrics.xdpi;
+        float heightDpi = metrics.ydpi;
+        float widthInches = widthPixels / widthDpi;
+        float heightInches = heightPixels / heightDpi;
+        double diagonalInches = Math.sqrt((widthInches * widthInches) + (heightInches * heightInches));
+        if (diagonalInches >= 8 && diagonalInches <= 10) {
+            //Device is a 10" tablet
+            productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 5));
+        }
+        else if (diagonalInches >= 5 && diagonalInches <= 8) {
+            //Device is a 7" tablet
+            productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 3));
+        }
+       // productsrecyclerview.setLayoutManager(new GridLayoutManager(Catalogue.this, 5));
 
         adapter = new SearchProductsAdapter(Catalogue.this);
         adapter1 = new SearchAdapter(Catalogue.this, suggestionsData);
@@ -607,7 +642,10 @@ public class Catalogue extends AppCompatActivity {
         //productsrecyclerview.setNestedScrollingEnabled(false);
         productsrecyclerview.setAdapter(new CatalogueAdapter(context, StaticData.Currentproducts));
         //productsrecyclerview.setAdapter(new CatalogueAdapterNew(context, products));
-        Sync.syncFilters(context, StaticData.Currentproducts);
+        for (int k=0;k<DB.getInitialModel().getProducts().size();k++){
+            filterattr.add(DB.getInitialModel().getProducts().get(k));
+        }
+        Sync.syncFilters(context, filterattr);
         if (StaticData.filtermodel.getItem() != null)
             cat_filterlist.setAdapter(new TempFilterAdapter(context, StaticData.filtermodel.getItem()));
     }

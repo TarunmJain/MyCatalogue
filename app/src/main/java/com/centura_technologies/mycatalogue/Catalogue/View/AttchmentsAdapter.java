@@ -131,7 +131,7 @@ public class AttchmentsAdapter extends RecyclerView.Adapter<AttchmentsAdapter.Vi
                 @Override
                 public void onClick(View v) {
                     if (position != GroupView) {
-                        GroupView = position;
+                        GroupView = finalPosition;
                         String type = AttchmentClass.getMimeType(data.get(finalPosition).getIndividualAttachment().getAttachmentUrl());
                         if (data.get(finalPosition).getIndividualAttachment().MediaType == AttchmentClass.TYPE_IMAGE)
                             CatalogueDetails.LoadImage(mContext, data.get(finalPosition).getIndividualAttachment().AttachmentUrl);

@@ -3,32 +3,38 @@ package com.centura_technologies.mycatalogue.Catalogue.Controller;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.opengl.GLES10;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.centura_technologies.mycatalogue.R;
 import com.panoramagl.PLImage;
 import com.panoramagl.PLManager;
 import com.panoramagl.PLSphericalPanorama;
 
-import java.io.IOException;
-import java.net.URL;
-
-import javax.microedition.khronos.opengles.GL10;
-
-public class Panorama extends AppCompatActivity {
+public class PanoramaNew extends AppCompatActivity {
     Toolbar toolbar;
     PLManager plManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_panorama_new);
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("3D View");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         plManager = new PLManager(this);
-        plManager.setContentView(R.layout.activity_panorama);
+        plManager.setContentView(R.layout.activity_panorama_new);
         plManager.onCreate();
         Intent i = getIntent();
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -47,16 +53,24 @@ public class Panorama extends AppCompatActivity {
         panorama.setImage(new PLImage(bitmap, false));
         plManager.setPanorama(panorama);
 
-        toolbar=(Toolbar)findViewById(R.id.tool_bar) ;
-        toolbar.setTitle("3D View");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem register = menu.findItem(R.id.logout);
+        register.setVisible(false);
+        MenuItem register1 = menu.findItem(R.id.slideshow);
+        register1.setVisible(false);
+        MenuItem register2 = menu.findItem(R.id.shortlist);
+        register2.setVisible(false);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (item.getItemId() == android.R.id.home) {                //On Back Arrow pressed
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
@@ -89,4 +103,5 @@ public class Panorama extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         return plManager.onTouchEvent(event);
     }
+
 }

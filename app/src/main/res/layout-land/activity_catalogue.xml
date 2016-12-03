@@ -64,14 +64,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="horizontal"
-                android:weightSum="5">
+                android:orientation="horizontal">
                 <RelativeLayout
                     android:id="@+id/leftlay"
-                    android:layout_width="0dp"
+                    android:layout_width="350dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:background="#F5F5F5">
+                    android:background="@color/white">
                     <LinearLayout
                         android:gravity="center"
                         android:layout_width="match_parent"
@@ -128,7 +126,7 @@
                             android:id="@+id/sectionrecycler"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#F5F5F5"/>
+                            android:background="@color/white"/>
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/optionslay"
@@ -141,7 +139,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:background="#F5F5F5">
+                        android:background="@color/white">
                         <Spinner
                             android:visibility="gone"
                             android:id="@+id/spinner"
@@ -351,6 +349,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
+                        android:background="#F5F5F5"
                         android:visibility="visible">
 
                         <!--<com.centura_technologies.mycatalogue.test.CustomRecyclerView
@@ -368,12 +367,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/productsrecyclerview"
-                            android:scrollbars="none"
                             android:background="@color/viewcolor"
-                            android:adjustViewBounds="true"
-                            android:horizontalSpacing="0dp"
-                            android:verticalSpacing="0dp"
-                            android:numColumns="3"></GridView>-->
+                            android:numColumns="5"
+                            android:gravity="center"></GridView>-->
                       <!--  <com.centura_technologies.mycatalogue.test.GridViewItem
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

@@ -25,7 +25,7 @@ import static com.centura_technologies.mycatalogue.Support.GenericData.pDialog;
 /**
  * Created by Centura on 12-05-2016.
  */
-public class GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
+public class  GetImageFromUrl extends AsyncTask<ImageCache, Void, ImageCache> {
     public static StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
     int downloadedSize = 0;
     int totalSize=0;

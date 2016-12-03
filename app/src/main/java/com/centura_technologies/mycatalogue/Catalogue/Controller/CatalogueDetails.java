@@ -40,6 +40,7 @@ import android.widget.VideoView;
 import com.centura_technologies.mycatalogue.Catalogue.Model.AttchmentClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.DescriptionMenuClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
+import com.centura_technologies.mycatalogue.Catalogue.Model.ShortlistProductModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.VarientModel;
 import com.centura_technologies.mycatalogue.Catalogue.View.AttchmentsAdapter;
 import com.centura_technologies.mycatalogue.Catalogue.View.DescriptionAdapter;
@@ -73,7 +74,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static RecyclerView productdetaillist, drawer_items_recycler, individual_product_images;
     public static ArrayList<Products> allproducts;
     static ImageView openimage, next, previous, media, arrow;
-    static TextView title, description, amount, mediatext, variencetext;
+    static TextView title, description, amount, variencetext;
     static LinearLayout varients;
     LinearLayout images, videos, pdfs, panorama;
     static Context context;
@@ -89,10 +90,12 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
     static RecyclerView menulyaout;
     static ImageView productImage;
     static VideoView productDetailvedio;
-    RelativeLayout toppane;
+    LinearLayout toppane;
     static LinearLayout imagelayout, vediolayout, weblayout, pdflayout, panoramalayout, infolayout;
     private int screenhight;
     private RelativeLayout.LayoutParams paramsNotFullscreen;
+    static ArrayList<ShortlistProductModel> list;
+    static ShortlistProductModel model;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,10 +123,9 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         varients = (LinearLayout) findViewById(R.id.varients);
         arrow = (ImageView) findViewById(R.id.arrow);
         shortlist = (TextView) findViewById(R.id.shortlist);
-        mediatext = (TextView) findViewById(R.id.mediatext);
         media = (ImageView) findViewById(R.id.media);
         scrollView = (ScrollView) findViewById(R.id.scrollView);
-        toppane = (RelativeLayout) findViewById(R.id.toppane);
+        toppane = (LinearLayout) findViewById(R.id.toppane);
         menulyaout = (RecyclerView) findViewById(R.id.menulyaout);
         imagelayout = (LinearLayout) findViewById(R.id.imagelayout);
         vediolayout = (LinearLayout) findViewById(R.id.vediolayout);
@@ -134,6 +136,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         productImage = (ImageView) findViewById(R.id.productDetailImageview);
         productDetailvedio = (VideoView) findViewById(R.id.productDetailvedio);
         menulyaout.setLayoutManager(new LinearLayoutManager(CatalogueDetails.this));
+        list =new ArrayList<ShortlistProductModel>();
         UiManuplation();
 
         if (StaticData.ClickedProduct) {
@@ -215,7 +218,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 }
             }
         });
-        mediatext.setOnClickListener(new View.OnClickListener() {
+        /*mediatext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Dialog dialog = new Dialog(CatalogueDetails.this);
@@ -258,7 +261,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
                 });
 
             }
-        });
+        });*/
 
         hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,6 +274,7 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(CatalogueDetails.this, Shortlist.class));
+                finish();
             }
         });
     }
@@ -325,6 +329,14 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
         });
 
         GenericData.setImage(productModel.getImageUrl(), openimage, context);
+        openimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, ImageViewer.class);
+                i.putExtra("url", productModel.getImageUrl());
+                ((Activity) context).startActivity(i);
+            }
+        });
         title.setText(productModel.getTitle());
         description.setText(GenericData.formatHtml(productModel.getDescription()));
         amount.setText(productModel.getSellingPrice() + "");
@@ -356,10 +368,10 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
             @Override
             public void onClick(View v) {
                 boolean found = false;
-                for (Products model : DB.getShortlistedlist()) {
+                for (ShortlistProductModel model : DB.getShortlistproductmodel()) {
                     if (model.getId().matches(productdetail.getId())) {
                         shortlist.setText("+ Add To Cart");
-                        DB.getShortlistedlist().remove(model);
+                        DB.getShortlistproductmodel().remove(model);
                         found = true;
                         break;
                     }
@@ -367,14 +379,41 @@ public class CatalogueDetails extends SwipeActivity implements VarientsAdapter.C
 
                 if (!found) {
                     shortlist.setText("- Remove Cart");
-                    DB.shortlistedlist.add(productdetail);
+                    model=new ShortlistProductModel();
+                    model.setId(productdetail.getId());
+                    model.setSectionId(productdetail.getSectionId());
+                    model.setCategoryId(productdetail.getCategoryId());
+                    model.setImageUrl(productdetail.getImageUrl());
+                    model.setProductImages(productdetail.getProductImages());
+                    model.setTitle(productdetail.getTitle());
+                    model.setDescription(productdetail.getDescription());
+                    model.setSKU(productdetail.getSKU());
+                    model.setBarCode(productdetail.getBarCode());
+                    model.setAttachments(productdetail.getAttachments());
+                    model.setVideoUrl(productdetail.getVideoUrl());
+                    model.setPdfUrl(productdetail.getPdfUrl());
+                    model.setMRP(productdetail.getMRP());
+                    model.setAmount(0.0);
+                    model.setQuantity(0);
+                    model.setPrice(productdetail.getSellingPrice());
+                    model.setSellingPrice(productdetail.getSellingPrice());
+                    model.setAttributes(productdetail.getAttributes());
+                    model.setVariants(productdetail.getVariants());
+                    model.setTags(productdetail.getTags());
+                    model.setStatus(productdetail.getStatus());
+                    model.setWeight(productdetail.getWeight());
+                    model.setWishList(productdetail.isWishList());
+                    model.setVersion(productdetail.getVersion());
+                    model.setSelectedVarient(productdetail.getSelectedVarient());
+                    list.add(model);
+                    DB.setShortlistproductmodel(list);
                 }
             }
         });
     }
 
     private static void checkshortlist(Products product) {
-        for (Products shorlisted : DB.shortlistedlist) {
+        for (ShortlistProductModel shorlisted : DB.getShortlistproductmodel()) {
             shortlist.setText("+ Add To Cart");
             if (product.getId().matches(shorlisted.getId())) {
                 shortlist.setText("- Remove Cart");

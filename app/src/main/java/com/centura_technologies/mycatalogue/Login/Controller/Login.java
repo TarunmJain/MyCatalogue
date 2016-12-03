@@ -92,7 +92,7 @@ public class Login extends Activity {
                             param.put("UserName", username.getText().toString().trim());
                             param.put("Password", password.getText().toString().replaceAll("\\s+", ""));
                             param.put("StoreCode", companyid.getText().toString().trim());
-                            param.put("DevideId", DeviceId);
+                            param.put("DeviceId", DeviceId);
                             GenericData.ShowDialog(Login.this, "Loading...", true);
                             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.Login, new JSONObject(param), new Response.Listener<JSONObject>() {
                                 @Override

@@ -147,6 +147,11 @@
         <activity
             android:name=".Catalogue.Controller.HTMLPage"
             android:label="@string/title_activity_htmlpage"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Catalogue.Controller.PanoramaNew"
+            android:label="@string/title_activity_panorama_new"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme"></activity>
     </application>
 

@@ -3,6 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="interiortest">interiortest</string>
     <string name="opendrawer">open</string>
     <string name="closedrawer">close</string>
     <string name="ic_folder"></string>
@@ -24,5 +25,6 @@
     <string name="title_activity_folder_info">FolderInfo</string>
     <string name="title_activity_sync_all">SyncAll</string>
     <string name="title_activity_htmlpage">HTMLPage</string>
+    <string name="title_activity_panorama_new">PanoramaNew</string>
 
 </resources>

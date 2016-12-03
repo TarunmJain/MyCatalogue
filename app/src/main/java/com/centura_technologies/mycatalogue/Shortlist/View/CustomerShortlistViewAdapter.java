@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.CatalogueDetails;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
+import com.centura_technologies.mycatalogue.Catalogue.Model.ShortlistProductModel;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Shortlist.Controller.Shortlist;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
@@ -29,10 +30,10 @@ import java.util.Comparator;
  */
 public class CustomerShortlistViewAdapter extends RecyclerView.Adapter<CustomerShortlistViewAdapter.ViewHolder> {
     Context mContext;
-    ArrayList<Products> model;
+    ArrayList<ShortlistProductModel> model;
     public CustomerShortlistViewAdapter(final Context context){
         this.mContext=context;
-        this.model= new ArrayList<Products>();
+        this.model= new ArrayList<ShortlistProductModel>();
         this.model= DB.getShortlistModels().get(StaticData.customershortlistpos).getShortlistedproducts();
     }
 
