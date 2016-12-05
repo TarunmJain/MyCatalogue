@@ -199,7 +199,7 @@ public class Shortlist extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DB.getShortlistedlist().removeAll(DB.getShortlistedlist());
+                DB.getShortlistproductmodel().removeAll(DB.getShortlistproductmodel());
                 DB.getBillprodlist().removeAll(DB.getBillprodlist());
                 InitializeAdapter(Shortlist.this);
                 ShortlistAdapter.clearBill();
