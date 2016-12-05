@@ -5,27 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include
-        android:id="@+id/tool_bar"
-        layout="@layout/custom_toolbar"></include>
 
-    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drawer"
-        android:layout_below="@+id/tool_bar"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/content_catalogue_details_new" />
         <include
-            layout="@layout/nav_menu"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start" />
-    </android.support.v4.widget.DrawerLayout>
-</RelativeLayout>
+            android:id="@+id/tool_bar"
+            layout="@layout/custom_toolbar"></include>
+
+        <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:fab="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/drawer"
+            android:layout_below="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include layout="@layout/content_catalogue_details_new" />
+            <include
+                layout="@layout/nav_menu"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start" />
+        </android.support.v4.widget.DrawerLayout>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
