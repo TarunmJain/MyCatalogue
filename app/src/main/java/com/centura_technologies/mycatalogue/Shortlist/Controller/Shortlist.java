@@ -54,8 +54,10 @@ public class Shortlist extends AppCompatActivity {
     Toolbar toolbar;
     static RecyclerView shortlistrecyclerview, customerslist;
     public static EditText customername, salespersonname;
+    public static TextView customerdisplay;
     Button save, clear, bill;
     TextView totalproducts;
+    public static LinearLayout searchcustomerslayout;
     static RelativeLayout emptyshortlist, footer;
     static LinearLayout shortlistlayout;
     static CardView shortlistnow;
@@ -78,6 +80,7 @@ public class Shortlist extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         df = new SimpleDateFormat("dd/MM/yy");
         dateobj = new Date();
+        searchcustomerslayout= (LinearLayout) findViewById(R.id.searchcustomerslayout);
         StaticData.SelectedCustomers = new CustomerModel();
         fab = (FloatingActionButton) findViewById(R.id.fab);
         emptyshortlist = (RelativeLayout) findViewById(R.id.empty_shortlist);
@@ -87,6 +90,7 @@ public class Shortlist extends AppCompatActivity {
         customerslist.setLayoutManager(new LinearLayoutManager(Shortlist.this));
         details = (CardView) findViewById(R.id.details);
         customername = (EditText) findViewById(R.id.customername);
+        customerdisplay= (TextView) findViewById(R.id.customerdisplay);
         salespersonname = (EditText) findViewById(R.id.salespersonname);
         shortlistlayout = (LinearLayout) findViewById(R.id.shortlistlayout);
         save = (Button) findViewById(R.id.save);
@@ -99,7 +103,7 @@ public class Shortlist extends AppCompatActivity {
         //int i=DB.getShortlistproductmodel().size();
         OnClicks();
         InitializeAdapter(Shortlist.this);
-
+        salespersonname.setText(StaticData.CurrentSalesMan.getName());
     }
 
     public static void InitializeAdapter(final Context context) {
@@ -132,6 +136,12 @@ public class Shortlist extends AppCompatActivity {
     }
 
     private void OnClicks() {
+        customerdisplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchcustomerslayout.setVisibility(View.VISIBLE);
+            }
+        });
         customername.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -50,6 +50,8 @@ public class CustomersAdapter extends RecyclerView.Adapter<CustomersAdapter.View
                 StaticData.SelectedCustomers=new CustomerModel();
                 StaticData.SelectedCustomers = StaticData.TempCustomers.get(position);
                 Shortlist.customername.setText(StaticData.SelectedCustomers.getName());
+                Shortlist.customerdisplay.setText(StaticData.SelectedCustomers.getName());
+                Shortlist.searchcustomerslayout.setVisibility(View.GONE);
             }
         });
     }

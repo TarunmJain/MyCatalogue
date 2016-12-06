@@ -8,8 +8,5 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
  */
 public class ApiData {
 
-    public static void renderCustomers(){
-        for (int x=1;x<21;x++)
-            StaticData.Customers.add(new CustomerModel(""+x));
-    }
+
 }

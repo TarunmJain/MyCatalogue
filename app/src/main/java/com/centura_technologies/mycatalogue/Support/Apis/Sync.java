@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.centura_technologies.mycatalogue.Catalogue.Model.AttributeClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CustomerModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.Catalogue.Model.FilterItem;
@@ -40,11 +41,14 @@ import com.centura_technologies.mycatalogue.Sync.model.SyncSectionsClass;
 import com.centura_technologies.mycatalogue.configuration.DataVersion;
 import com.centura_technologies.mycatalogue.configuration.SyncAll;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -76,6 +80,7 @@ public class Sync {
     public static void initialapi(final Context context) {
         db = new DbHelper(context);
         im = new ArrayList<InitialModel>();
+        SyncCustomerList(context);
         sharedPreferences = context.getSharedPreferences(GenericData.MyPref, context.MODE_PRIVATE);
         ArrayList<Sections> model = new ArrayList<Sections>();
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -142,6 +147,34 @@ public class Sync {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 GenericData.ShowDialog(context, "Loading...", false);
+                Log.d("Error", "Error");
+            }
+        });
+        queue.add(jsonObjectRequest);
+    }
+
+    public static void SyncCustomerList(final Context mContext) {
+        sharedPreferences = mContext.getSharedPreferences(GenericData.MyPref, mContext.MODE_PRIVATE);
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("StoreCode", sharedPreferences.getString(GenericData.Sp_StoreCode, ""));
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Urls.CustomerInitial, new JSONObject(params), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (response.optString("IsSuccess").matches("true")) {
+                    ArrayList<CustomerModel> model = new ArrayList<CustomerModel>();
+                    try {
+                        Type customertype = new TypeToken<ArrayList<CustomerModel>>() {}.getType();
+                        model = gson.fromJson(response.getJSONObject("Data").getString("Customers").toString(), customertype);
+                        StaticData.Customers = model;
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
                 Log.d("Error", "Error");
             }
         });

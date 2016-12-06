@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
 import com.centura_technologies.mycatalogue.GCMClientManager;
+import com.centura_technologies.mycatalogue.Order.Model.SalesmanModel;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
 import com.centura_technologies.mycatalogue.Support.GenericData;
@@ -31,7 +32,9 @@ import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
 import com.centura_technologies.mycatalogue.configuration.StorageConfiguration;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -99,24 +102,30 @@ public class Login extends Activity {
                                 public void onResponse(JSONObject response) {
                                     GenericData.ShowDialog(Login.this, "Loading...", false);
                                     if (GenericData.sucess(response, Login.this)) {
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString(GenericData.Sp_Username, username.getText().toString());
-                                        editor.putString(GenericData.Sp_StoragePath,"");
-                                        editor.putString(GenericData.Sp_StorageFolder,"");
-                                        editor.putString(GenericData.Sp_StorageLoaction,"");
-                                        editor.putString(GenericData.Sp_Password, password.getText().toString());
-                                        editor.putString(GenericData.Sp_StoreCode, companyid.getText().toString());
-                                        StaticData.CurrentSalesMan.Id = username.getText().toString();
-                                        StaticData.CurrentSalesMan.Username = username.getText().toString();
-                                        StaticData.CurrentSalesMan.Name = response.optJSONObject("Data").optString("UserName");
-                                        StaticData.CurrentSalesMan.Phone = response.optJSONObject("Data").optString("UserPhone");
-                                        StaticData.CurrentSalesMan.Email = response.optJSONObject("Data").optString("UserEmail");
-                                        editor.putString(GenericData.Sp_Status, "LoggedIn");
-                                        editor.commit();
-                                        StaticData.Options = "Catalogue";
-                                        StaticData.DrawerTextDisable = "Catalogue";
-                                        startActivity(new Intent(Login.this, IntroductionClass.class));
-                                        finish();
+                                        Gson gson;
+                                        gson = new Gson();
+                                        try {
+                                            JSONObject jsonObject = response.getJSONObject("Data");
+                                            SalesmanModel salesmanModel = new SalesmanModel();
+                                            salesmanModel = gson.fromJson(jsonObject.toString(), SalesmanModel.class);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            String asd=response.getString("Data");
+                                            editor.putString(GenericData.Sp_Userdata, response.getString("Data"));
+                                            editor.putString(GenericData.Sp_StoragePath, "");
+                                            editor.putString(GenericData.Sp_StorageFolder, "");
+                                            editor.putString(GenericData.Sp_StorageLoaction, "");
+                                            editor.putString(GenericData.Sp_Password, password.getText().toString());
+                                            editor.putString(GenericData.Sp_StoreCode, companyid.getText().toString());
+                                            editor.putString(GenericData.Sp_Status, "LoggedIn");
+                                            editor.commit();
+                                            StaticData.CurrentSalesMan = salesmanModel;
+                                            StaticData.Options = "Catalogue";
+                                            StaticData.DrawerTextDisable = "Catalogue";
+                                            startActivity(new Intent(Login.this, IntroductionClass.class));
+                                            finish();
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                     } else {
                                         companyid.setError(response.optString("Errors"));
                                     }

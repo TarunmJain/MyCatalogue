@@ -9,7 +9,7 @@ public class CustomerModel {
     String Id;
     String Name;
     String Gender;
-    String DOB;
+    String DoB;
     String Phone;
     String Email;
     String UserName;
@@ -21,11 +21,12 @@ public class CustomerModel {
     boolean IsActive;
 
 
+
     public CustomerModel(){
         Id="";
         Name="";
         Gender="";
-        DOB="";
+        DoB="";
         Phone="";
         Email="";
         UserName="";
@@ -41,7 +42,7 @@ public class CustomerModel {
         Id= UUID.randomUUID().toString();
         Name="Customer"+name;
         Gender="Male";
-        DOB="";
+        DoB="";
         Phone="123456781"+name;
         Email="email"+name+"@gmail.com";
     }
@@ -71,11 +72,11 @@ public class CustomerModel {
     }
 
     public String getDOB() {
-        return DOB;
+        return DoB;
     }
 
     public void setDOB(String DOB) {
-        this.DOB = DOB;
+        this.DoB = DOB;
     }
 
     public String getPhone() {

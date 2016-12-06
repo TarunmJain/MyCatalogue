@@ -124,6 +124,7 @@ public class Order extends AppCompatActivity {
         categoryids = new ArrayList<String>();
         categories.add("All Products");
         categoryids.add("-1");
+        salespersonname.setText(StaticData.CurrentSalesMan.Name);
         for (int i = 0; i < DB.getInitialModel().getCategories().size(); i++) {
             categoryids.add(DB.getInitialModel().getCategories().get(i).getId());
             categories.add(DB.getInitialModel().getCategories().get(i).getTitle());

@@ -83,7 +83,7 @@ public class GenericData {
     public static final String MyPref = "MyPref";
     public static final String Sp_Status = "Status";
     public static final String Sp_StoreCode = "StoreCode";
-    public static final String Sp_Username = "Username";
+    public static final String Sp_Userdata = "Sp_Userdata";
     public static final String Sp_Password = "Password";
     public static final String Sp_DeviceId = "DeviceId";
     public static final String Sp_StoragePath = "Sp_StoragePath";
