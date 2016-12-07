@@ -46,6 +46,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
     int categoriesView = -1;
     ArrayList<Categories> model;
 
+
     public SectionlistAdapter(Context context, CategoryTree tree) {
         this.mContext = context;
         currentTree = new CategoryTree();
@@ -91,7 +92,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
             if (categoriesView == finalPosition) {
                 if (data.get(finalPosition).getCategories().size() == 1) {
                     BreadCrumb.Category = data.get(finalPosition).getCategories().get(0).getTitle();
-                    Catalogue.toolbar.setTitle(BreadCrumb.Category);
+                    Catalogue.AppbarTittle.setText(BreadCrumb.Category);
                     StaticData.SelectedCategoryId = data.get(finalPosition).getCategories().get(0).getId();
                     StaticData.position = 0;
                     if (DB.getInitialModel().getProducts().size() != 0) {
