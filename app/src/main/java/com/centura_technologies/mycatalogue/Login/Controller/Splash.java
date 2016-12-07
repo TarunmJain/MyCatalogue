@@ -43,6 +43,7 @@ public class Splash extends Activity {
         GenericData.requestStorage(Splash.this);
         db = new DbHelper(Splash.this);
         db.loadinitialmodel();
+        db.loadcustomers();
         gson= new Gson();
         sharedPreferences = this.getSharedPreferences(GenericData.MyPref, this.MODE_PRIVATE);
         ConfigData.selectedStoregePath=sharedPreferences.getString(GenericData.Sp_StoragePath,"");
@@ -58,7 +59,6 @@ public class Splash extends Activity {
         /*if (sharedPreferences.getString(GenericData.Configration, "").matches("Completed")) {
             ConfigData.selectedStoregePath=sharedPreferences.getString(GenericData.StoragePath,"");
         }*/
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -73,6 +73,5 @@ public class Splash extends Activity {
                 finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
-
     }
 }

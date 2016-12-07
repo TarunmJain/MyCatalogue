@@ -1,6 +1,7 @@
 package com.centura_technologies.mycatalogue.Support.DBHelper;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CustomerModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
@@ -27,7 +28,15 @@ public class DB {
     private static ShortlistProductModel shortlistProductobj = new ShortlistProductModel();
     private static ShortlistModel shortlistModel = new ShortlistModel();
     private static ArrayList<ShortlistModel> shortlistModels = new ArrayList<ShortlistModel>();
+    private static ArrayList<CustomerModel> Customers = new ArrayList<CustomerModel>();
 
+    public static ArrayList<CustomerModel> getCustomers() {
+        return Customers;
+    }
+
+    public static void setCustomers(ArrayList<CustomerModel> customers) {
+        Customers = customers;
+    }
 
     public static InitialModel getInitialModel() {
         return initialModel;

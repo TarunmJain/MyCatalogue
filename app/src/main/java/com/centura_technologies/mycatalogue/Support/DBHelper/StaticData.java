@@ -50,7 +50,6 @@ public class StaticData {
     public static String DrawerTextDisable = "";
     public static boolean ShortlistedOrder=false;
     public static SalesmanModel CurrentSalesMan = new SalesmanModel();
-    public static ArrayList<CustomerModel> Customers = new ArrayList<CustomerModel>();
     public static CustomerModel SelectedCustomers = new  CustomerModel();
     public static ArrayList<CustomerModel> TempCustomers = new ArrayList<CustomerModel>();
     public static ArrayList<OrderModel> orders = new ArrayList<OrderModel>();
@@ -86,7 +85,7 @@ public class StaticData {
         Options = "";
         DrawerTextDisable = "";
         CurrentSalesMan = new SalesmanModel();
-        Customers = new ArrayList<CustomerModel>();
+
         orders = new ArrayList<OrderModel>();
     }
 }

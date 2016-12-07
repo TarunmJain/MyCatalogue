@@ -138,7 +138,7 @@ public class Order extends AppCompatActivity {
         }
         InitializeAdapter(Order.this);
         onClicks();
-
+        custname.setText(DB.getCustomers().get(0).getName());
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
@@ -244,7 +244,7 @@ public class Order extends AppCompatActivity {
                         OrderModel temporder = new OrderModel();
                         temporder.billingProducts = (ArrayList<BillingProducts>) shorlistedmodel.clone();
                         temporder.Amount = OrderProductsAdapter.total_amount;
-                        temporder.customer = StaticData.Customers.get(0);
+                        temporder.customer = DB.getCustomers().get(0);
                         temporder.OrderDate = billdate.getText().toString();
                         temporder.OrderNumber = billno.getText().toString();
                         temporder.salesman = StaticData.CurrentSalesMan;

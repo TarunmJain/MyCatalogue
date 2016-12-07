@@ -136,7 +136,6 @@ public class Sync {
                         }
                         GenericData.imagesChached = true;
                         updateInitialmodel(temp,context);
-
                         LoadAsyncData(allMedia, context);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -166,7 +165,7 @@ public class Sync {
                     try {
                         Type customertype = new TypeToken<ArrayList<CustomerModel>>() {}.getType();
                         model = gson.fromJson(response.getJSONObject("Data").getString("Customers").toString(), customertype);
-                        StaticData.Customers = model;
+                        DB.setCustomers(model);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -467,6 +466,36 @@ public class Sync {
             }
         });
         queue.add(jsonObjectRequest);
+    }
+
+    public static void updateCustomerData(ArrayList<CustomerModel> model,Context context){
+        ArrayList<CustomerModel> newCustomers = new ArrayList<CustomerModel>();
+        for (CustomerModel newcustomer :model) {
+            boolean matched = false;
+            for (int i = 0; i < DB.getCustomers().size(); i++) {
+                CustomerModel maincustomer = new CustomerModel();
+                maincustomer = DB.getCustomers().get(i);
+                if (newcustomer.getId().matches(maincustomer.getId())) {
+                    matched = true;
+                    DB.getCustomers().remove(maincustomer);
+                    DB.getCustomers().add(i, newcustomer);
+                    break;
+                }
+            }
+            if (!matched)
+                newCustomers.add(newcustomer);
+        }
+        for (CustomerModel customer : newCustomers) {
+            DB.getCustomers().add(customer);
+        }
+        db = new DbHelper(context);
+        db.savecustomers();
+        sharedPreferences = context.getSharedPreferences(GenericData.MyPref, context.MODE_PRIVATE);
+        /*SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(GenericData.Sp_SectionVersion,DataVersion.SectionVersion+"");
+        editor.commit();*/
+        db.loadinitialmodel();
+        db.loadcustomers();
     }
 
     public static void updateInitialmodel(InitialModel temp, Context context) {

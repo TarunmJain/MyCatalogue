@@ -15,6 +15,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.AttributeClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CustomerModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.DescriptionMenuClass;
 import com.centura_technologies.mycatalogue.Catalogue.Model.FilterItem;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
@@ -162,6 +163,16 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void savecustomers() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        contentValues = new ContentValues();
+        contentValues.put(this.TableName, "Customers");
+        contentValues.put(this.Data, gson.toJsonTree(DB.getCustomers()).getAsJsonArray().toString());
+        db.delete(this.InitialData, "TableName=?", new String[]{"Customers"});
+        db.insert(this.InitialData, null, contentValues);
+        db.close();
+    }
+
     private void saveSectionList() {
         SQLiteDatabase db = this.getWritableDatabase();
         contentValues = new ContentValues();
@@ -259,6 +270,21 @@ public class DbHelper extends SQLiteOpenHelper {
             ArrayList<Sections> sec = new ArrayList<Sections>();
             sec = gson.fromJson(res.getString(res.getColumnIndex("Data")).toString(), listType);
             DB.setSectionlist(sec);
+            res.moveToNext();
+        }
+        db.close();
+    }
+
+    public void loadcustomers() {
+        SQLiteDatabase db = DbHelper.this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from InitialData where " + this.TableName + "=?", new String[]{"Customers"});
+        res.moveToFirst();
+        while (res.isAfterLast() == false) {
+            //initialModel.setSections(gson.fromJson(res.getString(res.getColumnIndex("Data")).toString(), ArrayList.class));
+            Type listType = new TypeToken<ArrayList<CustomerModel>>() {}.getType();
+            ArrayList<CustomerModel> customrs = new ArrayList<CustomerModel>();
+            customrs = gson.fromJson(res.getString(res.getColumnIndex("Data")).toString(), listType);
+            DB.setCustomers(customrs);
             res.moveToNext();
         }
         db.close();

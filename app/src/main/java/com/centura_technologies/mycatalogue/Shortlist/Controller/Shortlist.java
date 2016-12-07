@@ -157,7 +157,7 @@ public class Shortlist extends AppCompatActivity {
                     customerslist.setVisibility(View.VISIBLE);
                     StaticData.TempCustomers = new ArrayList<CustomerModel>();
                     if (!StaticData.SelectedCustomers.getName().toLowerCase().matches(s.toString().toLowerCase()))
-                        for (CustomerModel customer : StaticData.Customers) {
+                        for (CustomerModel customer : DB.getCustomers()) {
                             if (customer.getName().toString().toLowerCase().contains(s.toString().toLowerCase())) {
                                 StaticData.TempCustomers.add(customer);
                             }
@@ -183,7 +183,7 @@ public class Shortlist extends AppCompatActivity {
                         model.setShortlistNumber(UUID.randomUUID().toString());
                         model.setShortlistedDate(System.currentTimeMillis() + "");
                         model.setShortlistedDate(df.format(dateobj));
-                        model.setCustomer(StaticData.Customers.get(0));
+                        model.setCustomer(DB.getCustomers().get(0));
                         model.setSalesman(StaticData.CurrentSalesMan);
                         model.setShortlistedproducts(DB.getShortlistproductmodel());
                         list.add(model);

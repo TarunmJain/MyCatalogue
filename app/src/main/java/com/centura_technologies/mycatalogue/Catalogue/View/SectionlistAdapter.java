@@ -92,7 +92,7 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
             if (categoriesView == finalPosition) {
                 if (data.get(finalPosition).getCategories().size() == 1) {
                     BreadCrumb.Category = data.get(finalPosition).getCategories().get(0).getTitle();
-                    Catalogue.AppbarTittle.setText(BreadCrumb.Category);
+                    Catalogue.toolbar.setTitle(BreadCrumb.Category);
                     StaticData.SelectedCategoryId = data.get(finalPosition).getCategories().get(0).getId();
                     StaticData.position = 0;
                     if (DB.getInitialModel().getProducts().size() != 0) {
@@ -141,7 +141,6 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
         TextView text;
         RecyclerView SubCatagorieslist;
         MaterialRippleLayout layview;
-
         public ViewHolder(View v) {
             super(v);
             text = (TextView) v.findViewById(R.id.text);
