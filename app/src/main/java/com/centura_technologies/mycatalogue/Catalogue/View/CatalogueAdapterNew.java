@@ -79,11 +79,11 @@ public class CatalogueAdapterNew extends BaseAdapter {
         }
             // get layout from mobile.xml
             gridView = inflater.inflate(R.layout.item_catalogue, null);
-            TextView title = (TextView) gridView.findViewById(R.id.title);
+            //TextView title = (TextView) gridView.findViewById(R.id.title);
             ImageView image = (ImageView) gridView.findViewById(R.id.image);
-            final ImageView wishlist = (ImageView) gridView.findViewById(R.id.shortlist);
+            //final ImageView wishlist = (ImageView) gridView.findViewById(R.id.shortlist);
             GenericData.setImage(products.get(position).getImageUrl(), image, mContext);
-            title.setText(products.get(position).getTitle());
+            //title.setText(products.get(position).getTitle().toString());
             if (StaticData.ProductsInList) {
                 product_specification.setLayoutManager(new LinearLayoutManager(mContext));
                 image.setOnClickListener(new View.OnClickListener() {
@@ -115,14 +115,14 @@ public class CatalogueAdapterNew extends BaseAdapter {
                     }
                 });
             }
-            for (Products model : DB.getShortlistedlist()) {
+            /*for (Products model : DB.getShortlistedlist()) {
                 if (model.getId().matches(products.get(position).getId())) {
                     wishlist.setImageResource(R.drawable.ic_cartnew);
                     break;
                 }else {
                     wishlist.setImageResource(R.drawable.ic_cartoutline);
                 }
-            }
+            }*/
 
             image.setLongClickable(true);
             image.setOnLongClickListener(new View.OnLongClickListener() {
@@ -131,28 +131,22 @@ public class CatalogueAdapterNew extends BaseAdapter {
                     boolean found = false;
                     for (Products model : DB.getShortlistedlist()) {
                         if (model.getId().matches(products.get(position).getId())) {
-                            wishlist.setImageResource(R.drawable.ic_cart_outline_grey600_24dp);
+                            //wishlist.setImageResource(R.drawable.ic_cart_outline_grey600_24dp);
                             DB.getShortlistedlist().remove(model);
                             found = true;
                             break;
                         }
                     }
 
-                    if (!found) {
+                    /*if (!found) {
                         wishlist.setImageResource(R.drawable.ic_cartnew);
                         StaticData.Shortlisted = true;
                         DB.shortlistedlist.add(products.get(position));
-                    }
+                    }*/
                     return true;
                 }
             });
 
-            wishlist.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
 
 
         return gridView;

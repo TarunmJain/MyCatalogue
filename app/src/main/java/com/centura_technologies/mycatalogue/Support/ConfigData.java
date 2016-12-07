@@ -10,9 +10,10 @@ import java.util.ArrayList;
 
 public class ConfigData {
 
-    public static int selectedStoregePosition=-1;
+    public static int selectedStoregePosition=0;
     public static String selectedStoregePath="";
     public static String selectedStoregefolder="";
+    public static String selectedStoregelocation="";//internal or external
     public static boolean SYNCNOW = false;
     public static boolean CloseConfigPage=false;
     public static ArrayList<StorageUtils.StorageInfo> StorageList = new ArrayList<>();

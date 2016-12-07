@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="300dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/settaxlabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:padding="10dp"
+        android:text="Set Folder Name"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/setfoldername"
+        android:layout_width="280dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/transparentsquarebutton"
+        android:gravity="center"
+        android:hint="Enter Folder Name"
+        android:textColor="@color/black"/>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp">
+
+        <Button
+            android:id="@+id/folderset"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/foldercancel"
+            android:background="@drawable/transparentsquarebutton"
+            android:elevation="5dp"
+            android:text="SET"
+            android:textColor="@color/accentcolor"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/foldercancel"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/transparentsquarebutton"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:text="CANCEL"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

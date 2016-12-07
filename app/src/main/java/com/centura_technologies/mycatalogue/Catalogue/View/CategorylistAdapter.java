@@ -59,14 +59,14 @@ public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapte
                 @Override
                 public void onClick(View v) {
                     BreadCrumb.Category=currentTree.getCategories().get(finalPosition).getTitle();
-                    Catalogue.AppbarTittle.setText(BreadCrumb.Category);
+                    Catalogue.toolbar.setTitle(BreadCrumb.Category);
                     StaticData.SelectedCategoryId = currentTree.getCategories().get(finalPosition).getId();
                     StaticData.position = finalPosition;
                     if (DB.getInitialModel().getProducts().size() != 0) {
                         Catalogue.productslist();
                         Catalogue.InitializeAdapter(mContext);
                     } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
-                    Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
+                    //Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
                 }
             });
         }
@@ -82,12 +82,6 @@ public class CategorylistAdapter extends RecyclerView.Adapter<CategorylistAdapte
                 return v1.getTitle().toLowerCase().compareTo(v2.getTitle().toLowerCase());
             }
         });
-        if (currentTree.getCategories().size() == 0){
-            Catalogue.nocategorytext.setVisibility(View.VISIBLE);
-            Catalogue.nocategorytext.setText("There are no Categories Under the "+currentTree.getTitle()+" Section ");
-        }
-        else
-            Catalogue.nocategorytext.setVisibility(View.GONE);
         return currentTree.getCategories().size();
     }
 

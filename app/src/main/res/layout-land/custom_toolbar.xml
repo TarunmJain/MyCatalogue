@@ -32,7 +32,6 @@
             android:focusableInTouchMode="true"
             android:scrollHorizontally="true"/>
         <ImageView
-            android:layout_marginRight="8dp"
             android:id="@+id/logoff"
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"

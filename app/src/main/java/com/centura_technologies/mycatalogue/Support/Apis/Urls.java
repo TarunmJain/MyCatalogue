@@ -4,13 +4,13 @@ package com.centura_technologies.mycatalogue.Support.Apis;
  * Created by RVU on 5/10/2016.
  */
 public class Urls {
-
-    //public static String parent = "http://192.168.0.144:8080/api/Catalogue/";
-    //public static String parentIP = "http://192.168.0.144";
-    public static String parentIP = "http://mystoreseller.azurewebsites.net";
-    public static String parent ="http://mystoreservices.azurewebsites.net/api/Catalogue/";
+    public static String parent = "http://192.168.0.144:8080/api/Catalogue/";
+    public static String parentIP = "http://192.168.0.144";
+   /* public static String parentIP = "http://mystoreseller.azurewebsites.net";
+    public static String parent ="http://mystoreservices.azurewebsites.net/api/Catalogue/";*/
     public static String Login=parent+"login";
     public static String Initial=parent+"initial";
+    public static String CustomerInitial=parent+"Customerinitial";
     public static String SectionList=parent+"sectionlist";
     public static String collectionlist=parent+"collectionlist";
     public static String sectiondata=parent+"sectiondata";

@@ -26,6 +26,7 @@ import com.centura_technologies.mycatalogue.Shortlist.Model.ShortlistModel;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.ApplicationClass;
 import com.centura_technologies.mycatalogue.Support.GenericData;
+import com.github.barteksc.pdfviewer.util.ArrayUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -33,7 +34,9 @@ import java.io.File;
 import java.lang.reflect.Type;
 import java.security.acl.Group;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class DbHelper extends SQLiteOpenHelper {
@@ -337,9 +340,9 @@ public class DbHelper extends SQLiteOpenHelper {
             }
 
         }
+
         Set<String> attrname = new HashSet<String>(AttName);
         for (int productposition = 0; productposition < DB.getInitialModel().getProducts().size(); productposition++) {
-            boolean groupfound = false;
             ArrayList<AttachmentGroup> allgroups = new ArrayList<AttachmentGroup>();
             for (String groupname : attrname) {
                 boolean foundattachment = false;
@@ -353,11 +356,20 @@ public class DbHelper extends SQLiteOpenHelper {
                 }
                 if (foundattachment) {
                     allgroups.add(tempAttachmentTree);
-                    groupfound = true;
                 }
             }
-            if (groupfound)
-                DB.getInitialModel().getProducts().get(productposition).setAttachementTree(allgroups);
+            for (int attachmentposition = 0; attachmentposition < DB.getInitialModel().getProducts().get(productposition).getAttachments().size(); attachmentposition++) {
+                if (DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition).getGroup().length() == 0) {
+                    AttachmentGroup tempAttachmentTree = new AttachmentGroup();
+                    tempAttachmentTree.setGroupTitle("");
+                    tempAttachmentTree.setIndividualAttachment(DB.getInitialModel().getProducts().get(productposition).getAttachments().get(attachmentposition));
+                    tempAttachmentTree.setType(AttchmentClass.ATTCHMENT);
+                    allgroups.add(tempAttachmentTree);
+                }
+            }
+
+            DB.getInitialModel().getProducts().get(productposition).setAttachementTree(allgroups);
+
         }
 
 

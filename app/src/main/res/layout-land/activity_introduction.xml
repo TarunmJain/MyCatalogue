@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/backgroundpic">
+    android:id="@+id/backgroundpic"
+    android:background="@drawable/background_3">
     <ViewFlipper
         android:id="@+id/myflipper"
         android:layout_width="match_parent"
@@ -86,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Syncronize"
+            android:text="Settings"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:gravity="center"/>

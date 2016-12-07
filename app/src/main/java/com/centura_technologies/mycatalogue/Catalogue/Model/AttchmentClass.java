@@ -13,6 +13,8 @@ public class AttchmentClass {
     public static int TYPE_PDF = 3;
     public static int TYPE_PPT = 4;
     public static int TYPE_Panorama = 5;
+    public static int GROUP=101;
+    public static int ATTCHMENT=102;
 
     public String AttachmentUrl;
     public String AttachmentTitle;

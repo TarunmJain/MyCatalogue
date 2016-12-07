@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StatFs;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -40,18 +41,13 @@ public class FolderInfo extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         String folderNameStr = foldername.getText().toString();
-
                                         if (folderNameStr != null)
                                             if (!folderNameStr.matches(""))
                                                 if (!folderNameStr.contains(" ")) {
-                                                    //File folderDir = new File("/" + ConfigData.selectedStoregePath + "/" + folderNameStr);
-                                                    ConfigData.selectedStoregePath += "/" + folderNameStr;
-                                                    File folderDir = new File(ConfigData.selectedStoregePath);
-                                                    String secStore = System.getenv("SECONDARY_STORAGE");
-                                                    File file = new File(secStore + "/" + folderNameStr);
-                                                    if (!file.exists())
+                                                    File folderDir = new File("/" + ConfigData.selectedStoregePath + "/" + folderNameStr);
+                                                    if (!folderDir.exists())
                                                         proceed(folderDir);
-                                                    else alert(file);
+                                                    else alert(folderDir);
                                                 } else
                                                     Toast.makeText(FolderInfo.this, "Error Occoured, Directory Name Should be a Single Word !", Toast.LENGTH_SHORT).show();
                                             else

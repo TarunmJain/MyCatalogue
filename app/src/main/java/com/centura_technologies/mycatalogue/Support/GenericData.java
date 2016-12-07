@@ -43,7 +43,12 @@ import android.widget.Toast;
 import com.android.volley.NoConnectionError;
 import com.android.volley.VolleyError;
 import com.centura_technologies.mycatalogue.AboutUs.Controller.AboutUs;
+import com.centura_technologies.mycatalogue.Catalogue.Controller.Collection;
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Categories;
+import com.centura_technologies.mycatalogue.Catalogue.Model.CollectionModel;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
+import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
 import com.centura_technologies.mycatalogue.Login.Controller.Login;
 import com.centura_technologies.mycatalogue.Order.Controller.OrdersList;
 import com.centura_technologies.mycatalogue.R;
@@ -53,6 +58,7 @@ import com.centura_technologies.mycatalogue.Support.Apis.Urls;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
+import com.centura_technologies.mycatalogue.configuration.DataVersion;
 
 import org.json.JSONObject;
 
@@ -77,9 +83,16 @@ public class GenericData {
     public static final String MyPref = "MyPref";
     public static final String Sp_Status = "Status";
     public static final String Sp_StoreCode = "StoreCode";
-    public static final String Sp_Username = "Username";
+    public static final String Sp_Userdata = "Sp_Userdata";
     public static final String Sp_Password = "Password";
     public static final String Sp_DeviceId = "DeviceId";
+    public static final String Sp_StoragePath = "Sp_StoragePath";
+    public static final String Sp_StorageLoaction="Sp_StorageLoaction";
+    public static final String Sp_SectionVersion="Sp_SectionVersion";
+    public static final String Sp_CategoryVersion="Sp_CategoryVersion";
+    public static final String Sp_ProductVersion="Sp_ProductVersion";
+    public static final String Sp_CollectionVersion="Sp_CollectionVersion";
+    public static String Sp_StorageFolder="Sp_StorageFolder";
     public static final String Configration = "Configration";
     public static final String StoragePath = "path";
 
@@ -100,6 +113,7 @@ public class GenericData {
     static final BitmapFactory.Options options = new BitmapFactory.Options();
     static ProgressDialog pDialog;
     static boolean loggingout=false;
+    static int max;
 
     public static void ShowdownloadingDialog(Context context, Boolean flag) {
         context = context.getApplicationContext();
@@ -465,7 +479,10 @@ public class GenericData {
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 DeleteAllData(context);
-
+                DataVersion.SectionVersion=0;
+                DataVersion.CategoryVersion=0;
+                DataVersion.ProductVersion=0;
+                DataVersion.CollectionVersion=0;
                 //StaticData.clearcachedata();
                 StaticData.ClearAllStaticData();
                 DB.ClearAllDBData();
@@ -576,4 +593,48 @@ public class GenericData {
             }
         });
     }
+
+   /* public static int SectionVersion(){
+        int secvermax=0;
+        ArrayList<Sections> a = DB.getInitialModel().getSections();
+        for(int i=0;i<DB.getInitialModel().getSections().size();i++){
+            if(a.get(i).getVersion()>secvermax){
+                secvermax=a.get(i).getVersion();
+            }
+        }
+        return secvermax;
+    }
+
+    public static int CategoryVersion(){
+        int catvermax=0;
+        ArrayList<Categories> b = DB.getInitialModel().getCategories();
+        for(int i=0;i<DB.getInitialModel().getCategories().size();i++){
+            if(b.get(i).getVersion()>catvermax){
+                catvermax=b.get(i).getVersion();
+            }
+        }
+        return catvermax;
+    }
+
+    public static int ProductsVersion(){
+        int prodvermax=0;
+        ArrayList<Products> c = DB.getInitialModel().getProducts();
+        for(int i=0;i<DB.getInitialModel().getProducts().size();i++){
+            if(c.get(i).getVersion()>prodvermax){
+                prodvermax=c.get(i).getVersion();
+            }
+        }
+        return prodvermax;
+    }
+
+    public static int CollectionsVersion(){
+        int collvermax=0;
+        ArrayList<CollectionModel> d = DB.getInitialModel().getCollections();
+        for(int i=0;i<DB.getInitialModel().getCollections().size();i++){
+            if(d.get(i).getVersion()>collvermax){
+                collvermax=d.get(i).getVersion();
+            }
+        }
+        return collvermax;
+    }*/
 }

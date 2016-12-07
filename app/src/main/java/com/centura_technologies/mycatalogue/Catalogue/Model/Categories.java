@@ -8,12 +8,15 @@ public class Categories {
     private String SectionId;
     private String Title;
     private String ImageUrl;
+    private int Version;
+
 
     public Categories(){
         Id="";
         SectionId="";
         Title="";
         ImageUrl="";
+        Version=0;
     }
 
     public String getId() {
@@ -46,5 +49,13 @@ public class Categories {
 
     public void setImageUrl(String imageUrl) {
         ImageUrl = imageUrl;
+    }
+
+    public int getVersion() {
+        return Version;
+    }
+
+    public void setVersion(int version) {
+        Version = version;
     }
 }

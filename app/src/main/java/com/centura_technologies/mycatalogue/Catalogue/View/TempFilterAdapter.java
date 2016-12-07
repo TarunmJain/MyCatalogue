@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Catalogue.Model.FilterItem;
@@ -37,6 +38,11 @@ public class TempFilterAdapter extends RecyclerView.Adapter<TempFilterAdapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        if(position%2==0)
+            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.white));
+        else
+            holder.textView.setBackgroundColor(context.getResources().getColor(R.color.black05));
         holder.textView.setText(model.get(position).getTitle());
         int finallines=0;
         int viewHeight = GenericData.convertDpToPixels(55, context);
@@ -63,12 +69,14 @@ public class TempFilterAdapter extends RecyclerView.Adapter<TempFilterAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         RecyclerView recyclerView;
+        LinearLayout backgroundlay;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.cat_filtertitle);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.cat_filterdata);
             recyclerView.setLayoutManager(new GridLayoutManager(context,3));
+            backgroundlay= (LinearLayout) itemView.findViewById(R.id.backgroundlay);
         }
     }
 }

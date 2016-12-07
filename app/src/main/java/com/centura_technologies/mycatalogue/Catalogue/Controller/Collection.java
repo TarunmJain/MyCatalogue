@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,7 +45,24 @@ public class Collection extends AppCompatActivity {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         collection_gridview.setLayoutManager(new LinearLayoutManager(Collection.this));
         collection_gridview.setAdapter(new CollectionProductsAdapter(Collection.this,collectionmodel));
-        collectionproducts_recyclerview.setLayoutManager(new LinearLayoutManager(Collection.this,LinearLayoutManager.VERTICAL,false));
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int widthPixels = metrics.widthPixels;
+        int heightPixels = metrics.heightPixels;
+        float widthDpi = metrics.xdpi;
+        float heightDpi = metrics.ydpi;
+        float widthInches = widthPixels / widthDpi;
+        float heightInches = heightPixels / heightDpi;
+        double diagonalInches = Math.sqrt((widthInches * widthInches) + (heightInches * heightInches));
+        if (diagonalInches >= 8 && diagonalInches <= 10) {
+            //Device is a 10" tablet
+            collectionproducts_recyclerview.setLayoutManager(new GridLayoutManager(Collection.this,4));
+        }
+        else if (diagonalInches >= 5 && diagonalInches <= 8) {
+            //Device is a 7" tablet
+            collectionproducts_recyclerview.setLayoutManager(new GridLayoutManager(Collection.this,3));
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

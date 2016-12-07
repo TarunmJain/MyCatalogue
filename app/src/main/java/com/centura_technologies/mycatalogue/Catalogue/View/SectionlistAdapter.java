@@ -74,12 +74,12 @@ public class SectionlistAdapter extends RecyclerView.Adapter<SectionlistAdapter.
                     BreadCrumb.Section = "All Products";
                     StaticData.SelectedCategoryId = "-1";
                     BreadCrumb.Category = "";
-                    Catalogue.AppbarTittle.setText("All Products");
+                    Catalogue.toolbar.setTitle("All Products");
                     if (DB.getInitialModel().getProducts().size() != 0) {
                         Catalogue.productslist();
                         Catalogue.InitializeAdapter(mContext);
                     } else Toast.makeText(mContext, "No Products", Toast.LENGTH_SHORT).show();
-                    Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
+                    //Catalogue.drawer.closeDrawer(Catalogue.leftdrawer);
                     categoriesView = -1;
                     notifyDataSetChanged();
                 }

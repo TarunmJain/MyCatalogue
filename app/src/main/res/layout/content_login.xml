@@ -54,7 +54,7 @@
                     android:background="@android:color/transparent"
                     android:inputType="textPersonName"
                     android:hint="Username"
-                    android:text="8147676008"
+                    android:text="admin"
                     android:singleLine="true"
                     android:id="@+id/username"
                     android:layout_marginTop="8dp"/>
@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
-                    android:text="123456"
+                    android:text="Password"
                     android:background="@android:color/transparent"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
@@ -110,7 +110,7 @@
                     android:background="@android:color/transparent"
                     android:inputType="textPersonName"
                     android:hint="Company ID"
-                    android:text="interiortest"
+                    android:text="godesi"
                     android:singleLine="true"
                     android:layout_marginTop="8dp"
                     android:id="@+id/companyid" />

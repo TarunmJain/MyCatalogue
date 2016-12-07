@@ -7,101 +7,16 @@
     <LinearLayout
         android:elevation="10dp"
         android:id="@+id/odd"
-        android:padding="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:weightSum="1"
+        android:layout_margin="1dp"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/imageView"
-            android:layout_weight="0.45"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/background_1"/>
-        <LinearLayout
-            android:background="@color/white"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.55"
-            android:orientation="vertical"
-            android:padding="10dp">
-            <TextView
-                android:gravity="center"
-                android:id="@+id/prodtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="20sp"
-                android:padding="4dp"
-                android:maxLines="1"/>
-            <TextView
-                android:id="@+id/proddescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:padding="6dp"
-                android:maxLines="5"/>
-            <TextView
-                android:id="@+id/prodprice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:padding="15dp"
-                android:maxLines="1"/>
-
         </LinearLayout>
-        </LinearLayout>
-    <LinearLayout
-        android:elevation="10dp"
-        android:id="@+id/even"
-        android:padding="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:weightSum="1"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:background="@color/white"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.55"
-            android:orientation="vertical"
-            android:padding="10dp">
-            <TextView
-                android:gravity="center"
-                android:id="@+id/prodtitle1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textSize="20sp"
-                android:padding="4dp"
-                android:maxLines="1"/>
-            <TextView
-                android:gravity="left"
-                android:id="@+id/proddescription1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:padding="6dp"
-                android:maxLines="5"/>
-            <TextView
-                android:gravity="right"
-                android:id="@+id/prodprice1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:padding="15dp"
-                android:maxLines="1"/>
-
-        </LinearLayout>
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_weight="0.45"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/background_1"/>
-    </LinearLayout>
 
 </LinearLayout>

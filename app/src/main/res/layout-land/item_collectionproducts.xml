@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="4dp"
+    android:paddingRight="35dp"
+    android:paddingLeft="35dp"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,13 +13,12 @@
         android:padding="2dp"
         android:id="@+id/pane"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:orientation="vertical">
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
             android:src="@drawable/background_1" />
         <TextView
             android:id="@+id/title"

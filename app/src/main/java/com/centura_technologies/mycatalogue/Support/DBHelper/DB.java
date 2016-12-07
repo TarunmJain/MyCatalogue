@@ -4,6 +4,7 @@ import com.centura_technologies.mycatalogue.Catalogue.Model.CategoryTree;
 import com.centura_technologies.mycatalogue.Catalogue.Model.InitialModel;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Products;
 import com.centura_technologies.mycatalogue.Catalogue.Model.Sections;
+import com.centura_technologies.mycatalogue.Catalogue.Model.ShortlistProductModel;
 import com.centura_technologies.mycatalogue.Order.Model.BillingProducts;
 import com.centura_technologies.mycatalogue.Shortlist.Model.ShortlistModel;
 
@@ -21,7 +22,9 @@ public class DB {
     private static BillingProducts billingProducts = new BillingProducts();
     private static ArrayList<BillingProducts> billprodlist = new ArrayList<BillingProducts>();
     private static Products shortlisted = new Products();
-    public static ArrayList<Products> shortlistedlist = new ArrayList<Products>();
+    private static ArrayList<Products> shortlistedlist = new ArrayList<Products>();
+    private static ArrayList<ShortlistProductModel> shortlistproductmodel = new ArrayList<ShortlistProductModel>();
+    private static ShortlistProductModel shortlistProductobj = new ShortlistProductModel();
     private static ShortlistModel shortlistModel = new ShortlistModel();
     private static ArrayList<ShortlistModel> shortlistModels = new ArrayList<ShortlistModel>();
 
@@ -29,14 +32,9 @@ public class DB {
     public static InitialModel getInitialModel() {
         return initialModel;
     }
-
-
-
     public static Sections getSectionmodel() {
         return sectionmodel;
     }
-
-
     public static void setSectionmodel(Sections sectionmodel) {
         DB.sectionmodel = sectionmodel;
     }
@@ -101,6 +99,26 @@ public class DB {
 
     public static void setInitialModel(InitialModel initialModel) {DB.initialModel = initialModel;}
 
+    public static void setShortlistedlist(ArrayList<Products> shortlistedlist) {
+        DB.shortlistedlist = shortlistedlist;
+    }
+
+    public static ArrayList<ShortlistProductModel> getShortlistproductmodel() {
+        return shortlistproductmodel;
+    }
+
+    public static void setShortlistproductmodel(ArrayList<ShortlistProductModel> shortlistproductmodel) {
+        DB.shortlistproductmodel = shortlistproductmodel;
+    }
+
+    public static ShortlistProductModel getShortlistProductobj() {
+        return shortlistProductobj;
+    }
+
+    public static void setShortlistProductobj(ShortlistProductModel shortlistProductobj) {
+        DB.shortlistProductobj = shortlistProductobj;
+    }
+
     public static void ClearAllDBData() {
         initialModel = new InitialModel();
         sectionmodel = new Sections();
@@ -113,5 +131,7 @@ public class DB {
         shortlistedlist = new ArrayList<Products>();
         shortlistModel = new ShortlistModel();
         shortlistModels = new ArrayList<ShortlistModel>();
+        shortlistproductmodel=new ArrayList<ShortlistProductModel>();
+        shortlistProductobj=new ShortlistProductModel();
     }
 }

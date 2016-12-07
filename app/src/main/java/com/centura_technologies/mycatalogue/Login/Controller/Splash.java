@@ -9,9 +9,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.centura_technologies.mycatalogue.Catalogue.Controller.SectionCatalogue;
+import com.centura_technologies.mycatalogue.Order.Model.SalesmanModel;
 import com.centura_technologies.mycatalogue.R;
 import com.centura_technologies.mycatalogue.Settings.Controller.Settings;
-import com.centura_technologies.mycatalogue.Support.ApiData;
 import com.centura_technologies.mycatalogue.Support.Apis.Sync;
 import com.centura_technologies.mycatalogue.Support.ConfigData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.DB;
@@ -19,7 +19,9 @@ import com.centura_technologies.mycatalogue.Support.DBHelper.DbHelper;
 import com.centura_technologies.mycatalogue.Support.GenericData;
 import com.centura_technologies.mycatalogue.Support.DBHelper.StaticData;
 import com.centura_technologies.mycatalogue.Sync.Controller.SyncClass;
+import com.centura_technologies.mycatalogue.configuration.DataVersion;
 import com.centura_technologies.mycatalogue.configuration.StorageConfiguration;
+import com.google.gson.Gson;
 
 /**
  * Created by Centura User1 on 06-08-2016.
@@ -31,6 +33,7 @@ public class Splash extends Activity {
     public static final String MyPref = "MyPref";
     public static final int SPLASH_DISPLAY_LENGTH = 1000;
     DbHelper db;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +43,21 @@ public class Splash extends Activity {
         GenericData.requestStorage(Splash.this);
         db = new DbHelper(Splash.this);
         db.loadinitialmodel();
-        ApiData.renderCustomers();
+        gson= new Gson();
         sharedPreferences = this.getSharedPreferences(GenericData.MyPref, this.MODE_PRIVATE);
+        ConfigData.selectedStoregePath=sharedPreferences.getString(GenericData.Sp_StoragePath,"");
+        ConfigData.selectedStoregelocation=sharedPreferences.getString(GenericData.Sp_StorageLoaction,"");
+        ConfigData.selectedStoregefolder=sharedPreferences.getString(GenericData.Sp_StorageFolder,"");
+        StaticData.CurrentSalesMan=gson.fromJson(sharedPreferences.getString(GenericData.Sp_Userdata,""), SalesmanModel.class);
+        DataVersion.SectionVersion=Integer.parseInt(sharedPreferences.getString(GenericData.Sp_SectionVersion,"0"));
+        String asd=sharedPreferences.getString(GenericData.Sp_ProductVersion,"0");
+        DataVersion.ProductVersion=Integer.parseInt(sharedPreferences.getString(GenericData.Sp_ProductVersion,"0"));
+        DataVersion.CategoryVersion=Integer.parseInt(sharedPreferences.getString(GenericData.Sp_CategoryVersion,"0"));
+        DataVersion.SectionVersion=Integer.parseInt(sharedPreferences.getString(GenericData.Sp_SectionVersion,"0"));
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-        if (sharedPreferences.getString(GenericData.Configration, "").matches("Completed")) {
+        /*if (sharedPreferences.getString(GenericData.Configration, "").matches("Completed")) {
             ConfigData.selectedStoregePath=sharedPreferences.getString(GenericData.StoragePath,"");
-        }
+        }*/
 
         new Handler().postDelayed(new Runnable() {
             @Override

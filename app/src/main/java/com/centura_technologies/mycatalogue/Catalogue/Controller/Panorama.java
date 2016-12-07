@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLES10;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,11 +22,11 @@ import java.net.URL;
 import javax.microedition.khronos.opengles.GL10;
 
 public class Panorama extends AppCompatActivity {
+    Toolbar toolbar;
     PLManager plManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_panorama);
         plManager = new PLManager(this);
         plManager.setContentView(R.layout.activity_panorama);
         plManager.onCreate();
@@ -45,6 +46,11 @@ public class Panorama extends AppCompatActivity {
         panorama.getCamera().lookAt(30.0f, 90.0f);
         panorama.setImage(new PLImage(bitmap, false));
         plManager.setPanorama(panorama);
+
+        toolbar=(Toolbar)findViewById(R.id.tool_bar) ;
+        toolbar.setTitle("3D View");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
     @Override
