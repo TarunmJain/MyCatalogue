@@ -449,5 +449,42 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:padding="1dp"
+        android:id="@+id/searchcustomerslayout"
+        android:background="@drawable/transparentsquarebutton"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp"
+        android:layout_width="500dp"
+        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:padding="10dp"
+                android:layout_width="50dp"
+                android:src="@drawable/places_ic_search"
+                android:layout_height="match_parent" />
+            <EditText
+                android:background="@color/transparent"
+                android:id="@+id/customername"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/viewcolor"/>
+        <android.support.v7.widget.RecyclerView
+            android:padding="15dp"
+            android:id="@+id/customerslist"
+            android:layout_width="500dp"
+            android:background="@android:color/transparent"
+            android:layout_height="200dp"/>
+    </LinearLayout>
 
 </RelativeLayout>
